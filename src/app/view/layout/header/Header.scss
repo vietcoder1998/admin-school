@@ -1,0 +1,135 @@
+@import "../../scss/variable";
+.header {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background-color: white;
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $color_border;
+  // box-shadow: 0 0 8px 0 rgba(0,0,0,.3);
+
+  .triagle-up {
+    position: absolute;
+    bottom: -1px;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #ffffff;
+  }
+
+  .triagle-shadow {
+    position: absolute;
+    bottom: 0px;
+    bottom: -1px;
+    z-index: 0;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #252525;
+  }
+
+  .search_box_container {
+    position: absolute;
+    left: 25%;
+  }
+
+  .logo {
+    position: relative;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .direct-page {
+    position: absolute;
+    left: 20%;
+
+    a {
+      color: gray;
+      height: 100%;
+      padding: 20px;
+      font-size: 0.93rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Function Link
+  .function {
+    display: flex;
+    width: auto;
+    height: 100%;
+    margin: 0px;
+
+    // MenuProfile
+    .label-function {
+      padding: 15px 20px;
+      font-size: 20px;
+      position: relative;
+      width: auto;
+      color: gray;
+      font-family: IBMPlexSanLights;
+
+      i {
+        font-size: 20px;
+        :hover {
+          color: bisque;
+        }
+      }
+
+      .label_name {
+        color: gray;
+        height: 100%;
+        font-size: 0.93rem;
+        font-weight: 450;
+        padding: 0px 10px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    #borderLeft {
+      border-left: 2px solid gray;
+      position: absolute;
+      height: 30px;
+      top: 15px;
+      right: 0px;
+    }
+
+    // Login Logout Register
+    .label-login {
+      font-size: 15px;
+      padding: 0px 10px;
+      a {
+        &:hover {
+          color: #1890ff;
+          text-decoration: underline;
+        }
+        line-height: 60px;
+        padding: 5px 5px;
+        font-size: 0.9pc;
+      }
+    }
+  }
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+  #profile-function {
+    display: none;
+  }
+
+  .function {
+    margin-right: 60px;
+  }
+}

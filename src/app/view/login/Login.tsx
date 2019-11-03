@@ -1,0 +1,169 @@
+import React, { PureComponent } from 'react'
+import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
+import { _requestToServer } from '../../../services/exec';
+import './Login.scss';
+import { POST } from '../../../common/const/method';
+import { oauth2_host } from '../../../environment/dev';
+import { admin_login } from '../../../services/api/public.api';
+import { loginHeaders } from '../../../services/auth';
+import Header from '../layout/header/Header';
+import Footer from '../layout/footer/Footer';
+import Cookies from 'universal-cookie';
+
+interface LoginState {
+    email?: string;
+    exactly?: boolean;
+    is_loading?: boolean;
+    err_msg?: string;
+    password?: string;
+    username?: string;
+}
+
+interface LoginProps {
+    form?: any
+}
+
+class Login extends PureComponent<LoginProps, LoginState> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            exactly: false,
+            is_loading: true,
+            err_msg: "",
+            password: null,
+            username: null,
+        }
+    }
+
+    createRequest = async () => {
+        let { password, username } = this.state;
+        let res = await _requestToServer(
+            POST,
+            { username, password },
+            admin_login,
+            oauth2_host,
+            loginHeaders("worksvn-admin-web", "worksvn-admin-web@works.vn"),
+            null,
+            true
+        )
+
+        if (res.code === 200) {
+            let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate)/1000)
+            let cookie = new Cookies()
+            cookie.set("actk", res.data.accessToken, { expires: exp, path: "/" });
+            window.location.href = '/admin';
+        } 
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                this.createRequest()
+                console.log('Received values of form: ', values);
+            }
+        });
+    };
+
+    render() {
+        let { err_msg, password, username } = this.state;
+        const { getFieldDecorator } = this.props.form;
+        let icon = {
+            color: "red",
+            type: "close"
+        }
+        let exactly = false;
+
+        if (username && password && username.length > 1 && password.length >= 6) {
+            icon.color = "greenyellow";
+            icon.type = "check";
+            exactly = true;
+        }
+
+        return (
+
+            <div className='all-content'>
+                <Header />
+                <div
+                    className="login"
+                >
+                    <Row>
+                        <Col xs={0} sm={4} md={8} lg={8} xl={9} xxl={8}  ></Col>
+                        <Col xs={24} sm={16} md={8} lg={8} xl={6} >
+                            <div className="r-p-content test">
+                                <div className='msg-noti '>
+                                    <Form onSubmit={this.handleSubmit} className="login-form">
+                                        <p>Tên đăng nhập</p>
+                                        <Form.Item>
+                                            {getFieldDecorator('username', {
+                                                rules: [{ required: true, message: 'Vui lòng điền tên đăng nhập' }],
+                                            })(
+                                                <Input
+                                                    prefix={<Icon type="lock"
+                                                        style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                                    maxLength={160}
+                                                    size="large"
+                                                    type="text"
+                                                    placeholder="Tên đăng nhập"
+                                                    onChange={
+                                                        event => this.setState({ username: event.target.value })
+                                                    }
+                                                    onPressEnter={
+                                                        (event) => { if (exactly) { this.handleSubmit(event) } }
+                                                    }
+                                                />,
+                                            )}
+                                        </Form.Item>
+                                        <p>Mật khẩu mới</p>
+                                        <Form.Item>
+                                            {getFieldDecorator('password', {
+                                                rules: [{ required: true, message: 'Vui lòng điền mật khẩu ' }],
+                                            })(
+                                                <Input
+                                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                                    size="large"
+                                                    placeholder="Mật khẩu"
+                                                    type="password"
+                                                    maxLength={160}
+                                                    onChange={event => this.setState({ password: event.target.value })}
+                                                />,
+                                            )}
+                                        </Form.Item>
+                                        <Checkbox onChange={() => { }} >Tự động đăng nhập</Checkbox>
+                                    </Form>
+                                    {exactly ? "" : <p>{err_msg}</p>}
+                                </div>
+                                <p className='a_c'>
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        size="large"
+                                        className="login-form-button"
+                                        style={{ width: "100%" }}
+                                        onClick={this.handleSubmit}
+                                        disabled={!exactly}
+                                    >
+                                        Xác nhận
+                                    </Button>
+                                </p>
+                                {/* <p className='a_c'>
+                                    <a href='/'
+                                        style={{ textDecoration: "underline" }}
+                                    >
+                                        Trợ giúp ?
+                                    </a>
+                                </p> */}
+                            </div>
+                        </Col>
+                        <Col xs={0} sm={4} md={8} lg={8} xl={9}></Col>
+                    </Row>
+                </div>
+                <Footer />
+            </div>
+
+        )
+    }
+}
+
+export default Form.create()(Login)

@@ -1,0 +1,370 @@
+// @font-face {
+//   font-family: DinoRegular;
+//   src: url("../../assets/font/DINPro-Regular_13937.ttf");
+// }
+
+// @font-face {
+//   font-family: ProximaRegular;
+//   src: url("../../assets/font/proximanova-regular.otf");
+// }
+
+// @font-face {
+//   font-family: AlegreyaRegular;
+//   src: url("../../assets/font/Alegreya-Regular.otf");
+// }
+
+// @font-face {
+//   font-family: BaterExchangeRegular;
+//   src: url("../../assets/font/BarterExchange-Regular.otf");
+// }
+
+@font-face {
+  font-family: IBMPlexSanLights;
+  src: url("../../../assets//font/IBMPlexSans-Light.otf");
+}
+
+@import "./variable";
+@import "./responsive";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.ant-layout {
+  height: 100vh;
+}
+
+.all-content {
+  background-color: whitesmoke;
+  height: calc(100vh - 120px) ;
+}
+
+.ant-layout-header {
+  margin: 0px 15px;
+  padding: 0px 10px !important;
+}
+
+//
+.content {
+  background-color: #f7f7f7;
+  min-height: calc(100vh - 354px);
+}
+
+.swal-text {
+  text-align: center;
+  margin: 0px 25px;
+}
+
+.swal-footer {
+  text-align: center;
+}
+
+.none-footer {
+  height: calc(100vh - 120px);
+  background-color: whitesmoke;
+}
+
+.important-letter {
+  padding: 0px;
+  margin: 0px;
+  font-weight: 500;
+  color: black;
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+.text-icon {
+  margin: 0px 5px;
+}
+
+.title-label {
+  font-weight: 350;
+  margin-bottom: 5px;
+}
+
+.ant-tabs-ink-bar {
+  z-index: 0 !important;
+}
+
+// wrapper
+.wrapper {
+  i {
+    &:hover {
+      color: rgb(190, 188, 188);
+    }
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    box-shadow: rgba(71, 71, 71, 0.2) 0px 0px 5px 0px;
+  }
+
+  .header-experience {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  height: auto;
+
+  .fa-pen {
+    float: right;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -60px;
+    right: 40px;
+    cursor: pointer;
+  }
+
+  pre {
+    p {
+      font-family: $font_base;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// div to fix icon in complete
+.edit-delete {
+  display: block;
+  width: 100%;
+  span {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  i {
+    margin: 5px;
+    font-size: 15px;
+  }
+}
+
+// Button
+.holder-button {
+  height: 60px;
+  margin-top: 10px;
+  text-align: center;
+  .button-request {
+    margin-left: 50%;
+    margin-right: 50%;
+    height: 40px;
+    margin: 10px 5px;
+    width: 120px;
+    border: solid #29b5e3 2px;
+    border-radius: 3px;
+    font: small;
+    color: #29b5e3;
+    background-color: #fff;
+
+    &:hover {
+      color: #fff;
+      background-color: #29b5e3;
+    }
+  }
+}
+
+.fa-trash {
+  color: rgb(255, 38, 0);
+}
+
+.rowling {
+  width: 100%;
+  display: flex;
+}
+
+#facebook_square {
+  margin-right: 10px;
+  color: blue;
+}
+
+.first-letter {
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+// Tiltle
+.title {
+  margin: 10px 0px;
+  padding: 20px 0px;
+  font-size: 20px;
+}
+
+.icon_label {
+  font-size: 20px;
+  grid-template-rows: auto auto;
+}
+
+// Align
+.a_r {
+  text-align: right;
+}
+
+.a_l {
+  text-align: left;
+}
+
+.a_c {
+  text-align: center;
+}
+
+// loading page
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  padding: calc((100% - 20px) / 2) calc((100% - 20px) / 2);
+  color: #29b5e3;
+  background-color: white;
+}
+
+.loading-app {
+  width: 100vw;
+  height: 100vh;
+  padding: calc(50vh - 20px) calc(50vw - 20px);
+
+  i {
+    font-size: 40px;
+    color: #29b5e3;
+  }
+}
+
+i {
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.tab-content {
+  border-top: none;
+}
+
+.anticon {
+  right: 10px;
+}
+
+.column {
+  padding: 0px 10px;
+}
+
+.ant-row {
+  position: relative;
+  padding: 0px;
+  width: auto;
+}
+
+.test {
+  border: solid $color_border 1px;
+  border-radius: 3px;
+}
+
+// For Border
+.b_b {
+  border-bottom: solid $color_border 1px;
+}
+
+.b_r {
+  border-right: solid $color_border 1px;
+}
+
+.b_l {
+  border-left: solid $color_border 1px;
+}
+
+.b_t {
+  border-top: solid $color_border 1px;
+}
+
+.timer {
+  font-size: 0.7rem;
+  padding: 0px;
+  margin: 0px 5px;
+  width: auto;
+}
+
+// Panigition
+.pagination-result {
+  text-align: center;
+  li {
+    padding: 0px;
+    width: 5px;
+  }
+
+  .ant-pagination {
+    margin: 10px 0px;
+  }
+
+  .ant-pagination-item-active {
+    background-color: rgb(0, 132, 255);
+    color: white !important;
+  }
+
+  .ant-select-dropdown-menu-item {
+    width: 100%;
+  }
+}
+
+// text-tranform
+
+.l_c {
+  text-transform: lowercase;
+  list-style-type: none;
+  margin: 0px !important;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.l_ca {
+  text-transform: capitalize;
+  list-style-type: none;
+  margin: 0px !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: capitalize;
+}
+
+// Grid
+
+.ant-modal-body {
+  padding: 15px !important;
+}
+
+.wt-container {
+  * {
+    box-sizing: border-box;
+  }
+
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  // /* For mobile phones: */
+  // [class*="col-"] {
+  //   width: 100%;
+  // }
+}

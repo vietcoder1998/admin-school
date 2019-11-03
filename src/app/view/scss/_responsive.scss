@@ -1,0 +1,159 @@
+// tablet
+@media (min-width: 768px) and (max-width: 1060px) {
+  .content {
+    padding: 0px 50px;
+  }
+
+  .content-footer {
+    padding: 20px 20px;
+  }
+
+  .direct-page {
+    display: none;
+  }
+
+  .tab-search {
+    padding: 0px 50px;
+  }
+
+  .wrapper {
+    padding: 20px 25px;
+  }
+
+  .block-header {
+    padding: 20px 25px;
+  }
+
+  .image-content {
+    padding: 25% 15%;
+  }
+}
+
+// phone
+@media (min-width: 0px) and (max-width: 767px) {
+  .content {
+    padding: 0px 2px;
+  }
+
+  .content-footer {
+    padding: 10px 2px;
+  }
+
+  .direct-page {
+    display: none;
+  }
+
+  .label-login {
+    display: none;
+  }
+
+  .wrapper {
+    padding: 20px 10px;
+  }
+
+  .block-header {
+    padding: 20px 10px;
+  }
+
+  .image-content {
+    padding: 35% 0%;
+  }
+}
+
+// desktop
+@media only screen and (min-width: 1061px) {
+  .content {
+    padding: 0px 10%;
+  }
+
+  .content-footer {
+    padding: 20px 15%;
+  }
+
+  .hidden-mobile {
+    display: block;
+  }
+
+  .show-mobile {
+    display: none;
+  }
+
+  .candicate-info {
+    display: none;
+  }
+
+  .tab-search {
+    padding: 20px 130px;
+  }
+
+  .search-content {
+    padding-right: 10vw;
+    padding-left: 10vw;
+  }
+
+  .wrapper {
+    padding: 20px 50px;
+  }
+
+  .block-header {
+    padding: 20px 50px;
+  }
+
+  .image-content {
+    padding: 15% 10%;
+  }
+
+  .description-job {
+    border-left: solid $color_border 1px;
+  }
+}
+
+//
+@media (min-width: 0px) and (max-width: 961px) {
+  .hidden-mobile {
+    display: none;
+  }
+
+  .show-mobile {
+    display: block;
+  }
+
+  .detail-job {
+    border-bottom: solid $color_border 1px  ;
+  }
+}
+
+// for phone
+@media (min-width: 0px) and (max-width: 560px) {
+  .show-only-phone {
+    display: visible !important;
+  }
+
+  .hidden-only-phone {
+    display: none !important;
+  }
+
+  [class*="col-"] {
+    padding: 0px !important;
+  }
+
+  .tab-search {
+    padding: 20px 10px;
+  }
+}
+
+@media only screen and (min-width: 560px) {
+  .show-only-phone {
+    display: none !important;
+  }
+
+  .hidden-only-phone {
+    display: visible !important;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .tab-search {
+    padding: 20px 50px;
+  }
+}
