@@ -10,7 +10,7 @@ export const createAuthozization = (username, password) => {
 // Check invalid header
 export const authHeaders = {
     "Access-Control-Allow-Headers": "*",
-    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
 }
 
 // Check Login User

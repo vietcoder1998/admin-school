@@ -5,15 +5,21 @@ import './app/view/scss/_common.scss'
 import App from './App';
 import ErrorBoundary from './app/view/layout/common/ErrorBoudary';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import { store } from './redux/store/store';
+
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
+
 require('dotenv').config();
 
 const rootEl = document.getElementById('root');
 const appRenderer = Component => ReactDOM.render(
     <ErrorBoundary >
-        <Component />
+        <Provider store={store}>
+            <Component />
+        </Provider>
     </ErrorBoundary>, rootEl);
 
 appRenderer(App);

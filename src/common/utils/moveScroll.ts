@@ -1,8 +1,7 @@
 export function moveScroll(top, left , type) {
     let state = ({top, left, behavior: 'smooth'})
     if (type == null || type === undefined){
-        state = ({top, left})
+        state = ({top, left, behavior: null})
     }
-    window.scroll(state);
     return ;
 };

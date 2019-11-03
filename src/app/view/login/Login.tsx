@@ -3,8 +3,8 @@ import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
 import { _requestToServer } from '../../../services/exec';
 import './Login.scss';
 import { POST } from '../../../common/const/method';
-import { oauth2_host } from '../../../environment/dev';
-import { admin_login } from '../../../services/api/public.api';
+import { OAUTH2_HOST } from '../../../environment/dev';
+import { ADMIN_LOGIN } from '../../../services/api/public.api';
 import { loginHeaders } from '../../../services/auth';
 import Header from '../layout/header/Header';
 import Footer from '../layout/footer/Footer';
@@ -41,19 +41,20 @@ class Login extends PureComponent<LoginProps, LoginState> {
         let res = await _requestToServer(
             POST,
             { username, password },
-            admin_login,
-            oauth2_host,
+            ADMIN_LOGIN,
+            OAUTH2_HOST,
             loginHeaders("worksvn-admin-web", "worksvn-admin-web@works.vn"),
             null,
             true
         )
 
         if (res.code === 200) {
-            let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate)/1000)
+            let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate) / 1000)
             let cookie = new Cookies()
             cookie.set("actk", res.data.accessToken, { expires: exp, path: "/" });
+            localStorage.setItem("token", res.data.accessToken);
             window.location.href = '/admin';
-        } 
+        }
     }
 
     handleSubmit = e => {

@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon } from 'antd';
+import { Layout, Icon, Avatar } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
-import Student from './student/Student';
-import Friend from './friend/Friend';
+import PendingJobs from './pending-jobs/PendingJobs';
+import { REDUX_SAGA } from '../../../common/const/actions';
+import { connect } from 'react-redux';
+import JobManagement from './job-management/JobManagement';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -13,8 +15,9 @@ interface AdminState {
     show_menu: boolean;
 }
 
-interface AdminProps {
+interface AdminProps extends StateProps, DispatchProps {
     match: Readonly<any>;
+    getJobTypes: Function
 }
 
 class Admin extends PureComponent<AdminProps, AdminState> {
@@ -25,10 +28,14 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         }
     }
 
+    componentDidMount() {
+        this.props.getJobTypes()
+    }
+
     render() {
         let { show_menu } = this.state;
         let { match } = this.props;
-        console.log(this.props);
+
         return (
             <Layout>
                 <MenuNavigation show_menu={show_menu} />
@@ -37,8 +44,20 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         <Icon
                             className="trigger"
                             type={show_menu ? 'menu-unfold' : 'menu-fold'}
+                            style={{
+                                marginTop: "20px"
+                            }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
+                        <div className="avatar-header" >
+                            <Avatar 
+                                icon="user"
+                                style={{
+                                    width: "30px",
+                                    height: "30px",
+                                }}
+                            />
+                        </div>
                     </Header>
                     <Content
                         style={{
@@ -49,8 +68,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         }}
                     >
                         <Switch>
-                            <ErrorBoundaryRoute path={`${match.url}/student`} component={Student} />
-                            <ErrorBoundaryRoute path={`${match.url}/friend`} component={Friend} />
+                            <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
+                            <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
                         </Switch>
                     </Content>
                 </Layout>
@@ -60,4 +79,18 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 }
 
-export default Admin
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    getJobTypes: (body) => dispatch({
+        type: REDUX_SAGA.JOB_TYPE.GET_JOB_TYPE,
+        body
+    })
+})
+
+const mapStateToProps = (state, ownProps) => ({
+    list_jobs_type: state.JobType.items
+})
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin)

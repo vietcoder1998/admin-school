@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { authHeaders } from './auth';
-import { oauth2_host } from '../environment/dev';
+import { OAUTH2_HOST } from '../environment/dev';
 
 // POST
 export const _post = async (data?: any, api?: string, another_host?: string, headers?: any, params?: any) => {
-    let host = oauth2_host;
+    let host = OAUTH2_HOST;
     if (another_host) {
         host = another_host
     }
@@ -21,7 +21,7 @@ export const _post = async (data?: any, api?: string, another_host?: string, hea
 
 //GET
 export const _get = async (params?: any, api?: string, another_host?: string, headers?: any) => {
-    let host = oauth2_host;
+    let host = OAUTH2_HOST;
     if (another_host) {
         host = another_host
     }
@@ -38,7 +38,7 @@ export const _get = async (params?: any, api?: string, another_host?: string, he
 
 // DELETE
 export const _delete = async (data?: any, api?: string, another_host?: string, headers?: any, params?: string) => {
-    let host = oauth2_host;
+    let host = OAUTH2_HOST;
     if (another_host) {
         host = another_host;
     }
@@ -56,7 +56,7 @@ export const _delete = async (data?: any, api?: string, another_host?: string, h
 
 // PUT
 export const _put = async (data?: any, api?: string, another_host?: string, headers?: any, params?: string) => {
-    let host = oauth2_host;
+    let host = OAUTH2_HOST;
     if (another_host) {
         host = another_host
     }

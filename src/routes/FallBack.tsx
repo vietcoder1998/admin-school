@@ -10,7 +10,7 @@ export default function FallBack(props) {
             <Row>
                 <Col xs={0} sm={4} md={8} lg={8} xl={9}></Col>
                 <Col xs={24} sm={16} md={8} lg={8} xl={6} >
-                    <div className="FallBack-content test">
+                    <div className="fallback-content test">
                         <h4 className=' a_c'>
                             Trang wed đang được tải , vui lòng chờ
                                 </h4>
@@ -24,9 +24,7 @@ export default function FallBack(props) {
                                 />
                             </p>
                         </div>
-                        <p className='a_c'>
-                        </p> */}
-                            </div>
+                    </div>
                 </Col>
                 <Col xs={0} sm={4} md={8} lg={8} xl={9}></Col>
             </Row>

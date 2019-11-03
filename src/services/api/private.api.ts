@@ -1,0 +1,1 @@
+export const PENDING_JOBS_API = "/api/admins/pendingJobs"

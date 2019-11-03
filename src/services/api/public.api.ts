@@ -1,4 +1,5 @@
-export const oauth2 = "/api/users/emailVerification";
-export const reset_password = "/api/users/password/reset";
-export const admin_login = "/api/authentication/admins/username-password";
+export const OAUTH2 = "/api/users/emailVerification";
+export const ADMIN_LOGIN = "/api/authentication/admins/username-password";
+export const JOB_TYPE = "/api/jobGroups";
+
 
