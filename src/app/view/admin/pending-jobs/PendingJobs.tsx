@@ -25,7 +25,7 @@ interface AdminState {
 const columns = [
     {
         title: '#',
-        width: 30,
+        width: 20,
         dataIndex: 'index',
         key: 'index',
         fixed: 'left',
@@ -64,7 +64,7 @@ const columns = [
         title: 'Tên nhà tuyển dụng',
         dataIndex: 'employerName',
         key: 'employerName',
-        width: 100,
+        width: 150,
     },
     {
         title: 'Trạng thái',
@@ -90,7 +90,7 @@ const columns = [
         key: 'operation',
         fixed: 'right',
         width: 100,
-        render: () => <Button><Icon type="fix" /><Icon type="edit" /></Button>,
+        render: () => <Button onClick={event => console.log(event)}><Icon type="eye" /></Button>,
     },
 ];
 
@@ -104,7 +104,8 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
             state: null,
             employerID: null,
             jobType: null,
-            jobNameID: null
+            jobNameID: null,
+            pageIndex: 0
         }
     }
 
@@ -113,30 +114,39 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
     }
 
     searchJob = () => {
-        let { employerID, state, jobType, jobNameID } = this.state;
+        let { employerID, state, jobType, jobNameID, pageIndex } = this.state;
         this.props.getPendingJobs({
             employerID,
             state,
             jobType,
             jobNameID,
+            pageIndex
         })
+    }
+
+    setPageIndex = async (event) => {
+        await this.setState({ pageIndex: event.current - 1 });
+        await this.searchJob();
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.list_jobs && nextProps.list_jobs !== prevState.list_jobs) {
             let data_table = [];
+            let { pageIndex } = prevState;
             nextProps.list_jobs.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index,
+                    index: (index + pageIndex * 10 + 1),
                     jobName: item.jobName.name,
                     state: item.state,
-                    address: item.address,
-                    employerName: item.employer.employerName,
+                    address: item.address ? item.address: "Chưa cập nhật địa chỉ",
+                    employerName: item.employer.employerName ? item.employer.employerName: "Không xác định",
                     title: item.jobTitle,
                     createdDate: timeConverter(item.createdDate, 1000),
                     jobTitle: item.jobTitle,
                     employerBranchName: item.employerBranchName,
+                    jobType: item.jobType,
+                    repliedDate: item.repliedDate !== -1 ? timeConverter(item.repliedDate, 1000) : "Chưa có "
                 });
             })
 
@@ -168,10 +178,10 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
 
     render() {
         let { data_table } = this.state;
-        let { list_jobs_group } = this.props;
+        let { list_jobs_group, totalItems } = this.props;
         return (
             <div className="pending-jobs_content">
-                <h5> 
+                <h5>
                     Danh sách công việc đang chờ
                </h5>
                 <div>
@@ -236,21 +246,30 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                 </Select>
                             </Col>
                         </Row>
-                    </div>
-                    <div>
-                        <Button
-                            onClick={this.searchJob}
-                            type="primary"
-                            style={{
-                                float: "right",
-                                margin: "10px 10px"
-                            }}
-                        >
-                            <Icon type="filter" />
-                            Lọc
+                        <div className="filter">
+                            <Button
+                                onClick={() => this.searchJob()}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                    margin: "20px 10px"
+                                }}
+                            >
+                                <Icon type="filter" />
+                                Lọc
                         </Button>
+                        </div>
                     </div>
-                    <Table columns={columns} dataSource={data_table} scroll={{ x: 1500, y: 600 }} />
+
+                    <Table
+                        columns={columns}
+                        dataSource={data_table} scroll={{ x: 1500 }}
+                        bordered
+                        pagination={{ total: totalItems }}
+                        size="middle"
+                        onChange={this.setPageIndex}
+                        onRowClick={event => console.log(event)}
+                    />
                 </div>
             </div>
         )
@@ -266,6 +285,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state, ownProps) => ({
     list_jobs: state.PendingJobs.list_jobs,
+    totalItems: state.PendingJobs.totalItems,
     list_jobs_group: state.JobType.items,
 })
 
