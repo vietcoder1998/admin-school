@@ -29,7 +29,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 
     componentDidMount() {
-        this.props.getJobTypes()
+        this.props.getJobTypes();
+        
     }
 
     render() {

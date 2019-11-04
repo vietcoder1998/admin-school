@@ -38,6 +38,15 @@ code {
   position: fixed;
 }
 
+.ant-modal-body {
+  height: 60vh;
+  overflow: auto;
+}
+
+.ant-modal {
+  width: 80vw!important;
+}
+
 th {
   &:hover {
     background-color: rgb(209, 209, 209) !important;

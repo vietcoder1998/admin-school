@@ -5,7 +5,7 @@ interface IArrReturn {
 
 export const convertStringToArray = (value?: string): Array<IArrReturn> => {
     let arr: Array<IArrReturn> = [];
-    if (value) {
+    if (value && (value.indexOf(".") || value.indexOf("+") || value.indexOf("\n") || value.indexOf("-"))) {
         let length_v = value.length;
 
         if (length_v && length_v > 0) {
@@ -13,7 +13,11 @@ export const convertStringToArray = (value?: string): Array<IArrReturn> => {
             let index = 0;
             let temp = 0;
             while (i < length_v) {
-                if ((value[i] === "." && value[i+1] === " ")  || (value[i] === "\n" && value[i-1] !== ".")) {
+                if (
+                    (value[i] === "." && value[i + 1] === " ") ||
+                    (value[i] === "\n" && value[i - 1] !== ".") ||
+                    i === length_v - 1
+                ) {
                     let item = { index, value: "" };
 
                     for (let j = temp; j <= i; j++) {
@@ -28,6 +32,10 @@ export const convertStringToArray = (value?: string): Array<IArrReturn> => {
             }
         }
 
+        return arr;
+
+    } else {
+        arr.push({ index: 1, value: "-" + value });
         return arr;
     }
 

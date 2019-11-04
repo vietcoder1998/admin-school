@@ -43,7 +43,7 @@ function callPendingJobs(action) {
         PENDING_JOBS_API,
         ADMIN_HOST,
         authHeaders,
-        { pageIndex: action.body.pageIndex, pageSize: 5 },
+        { pageIndex: action.body.pageIndex, pageSize: 10 },
     )
 }
 

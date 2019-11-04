@@ -11,14 +11,15 @@ const Login = lazy(() => import('./../app/view/login/Login'));
 export default function Routes(props) {
   const cookies = new Cookies();
   let is_authen = cookies.get("actk") ? true : false;
+  
   return (
     <Fragment>
       <Router>
         <Suspense fallback={<FallBack />}>
-          <Route exact path="/login" component={Login} />
+          {is_authen ? <Redirect to={'/admin/pending-jobs'} /> : <Route path="/admin" component={Login} /> }
         </Suspense>
         <Suspense fallback={<FallBack />}>
-          {is_authen ? <Route is_authen={is_authen} path="/admin" component={Admin} /> : <Redirect to={'/login'} /> }
+          {is_authen ? <Route is_authen={is_authen} path="/admin" component={Admin} /> : <Redirect to={'/login'} />}
         </Suspense>
       </Router>
     </Fragment >
