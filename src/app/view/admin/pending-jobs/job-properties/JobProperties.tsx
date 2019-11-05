@@ -20,6 +20,27 @@ export default class JobProperties extends PureComponent<JobPropertiesProps, Job
         return (
             <div className='job-detail'>
                 <div className='detail-job b_b'>
+                    <h6>CHI TIẾT</h6>
+                    <ul>
+                        <li className='d_j_t'>
+                            <IptLetter value={"Tiêu đề:"} />
+
+                            <label> {job_detail && job_detail.data.jobTitle}
+                            </label>
+                        </li>
+                        <li className='d_j_t'>
+                            <IptLetter value={"Tên công việc: "} />
+                            <label> {job_detail && job_detail.data.jobName ? job_detail.data.jobName : "Không có"}
+                            </label>
+                        </li>
+                        <li className='d_j_t'>
+                            <IptLetter value={"Ngày hết hạn: "} />
+                            <label> {job_detail && job_detail.employer.employerName ? job_detail.employer.employerName : "Không có"}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div className='detail-job b_b'>
                     <h6>MÔ TẢ CHUNG</h6>
                     <ul>
                         <li className='d_j_t'>

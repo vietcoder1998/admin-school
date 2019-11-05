@@ -108,24 +108,28 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
         {
             title: 'Trạng thái',
             dataIndex: 'state',
+            className: 'action',
             key: 'state',
             width: 75,
         },
         {
             title: 'Loại công việc',
             dataIndex: 'jobType',
+            className: 'action',
             key: 'jobType',
             width: 100,
         },
         {
             title: 'Ngày đăng',
             dataIndex: 'createdDate',
+            className: 'action',
             key: 'createdDate',
             width: 100,
         },
         {
             title: 'Ngày phản hồi',
             dataIndex: 'repliedDate',
+            className: 'action',
             key: 'repliedDate',
             width: 120,
         },
