@@ -45,6 +45,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
             OAUTH2_HOST,
             loginHeaders("worksvn-admin-web", "worksvn-admin-web@works.vn"),
             null,
+            false,
             true
         )
 

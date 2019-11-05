@@ -94,6 +94,7 @@ textarea {
   background-color: rgb(254, 240, 255);
   border: solid #e32977 1px;
   border-radius: 5px;
+  color: #e32977;
 }
 
 .accpeted {
@@ -116,6 +117,10 @@ textarea {
 
 .action{
   text-align: center!important;
+  label {
+    min-width: 80px;
+    text-align: center;
+  }
 }
 
 .fulltime {

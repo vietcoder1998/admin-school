@@ -1,18 +1,9 @@
-import swal from "sweetalert";
-import { TYPE } from "../common/const/type";
+import { notification } from 'antd';
 
-export const exceptionShowNoti = async (err: any, show_alert) => {
+export const exceptionShowNoti = async (err: any) => {
     if (err && err && err.response && err.response.data) {
-        if (show_alert) {
-            let msg = err.response.data.msg;
-            swal({
-                title: "Worksvn thông báo",
-                text: msg,
-                icon: TYPE.ERROR,
-                dangerMode: true,
-            });
-        }
-
+        let res = err.response.data;
+        notification.error({ description: `${res.msg} (code=${res.code})`, message: "Worksvn thông báo" })
         return err.response.data;
     }
 

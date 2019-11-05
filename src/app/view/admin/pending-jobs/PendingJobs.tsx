@@ -360,7 +360,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
-                                    <p>Chọn ten công việc </p>
+                                    <p>Chọn công việc </p>
                                     <Select
                                         showSearch
                                         style={{ width: 200 }}
