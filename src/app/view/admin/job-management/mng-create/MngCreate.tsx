@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Dropdown, Menu } from 'antd';
+import { Layout, Icon, Avatar, Dropdown, Menu, Divider } from 'antd';
 import './MngCreate.scss';
 import { connect } from 'react-redux';
+import CKEditor from 'ckeditor4-react';
 
 const Switch = require("react-router-dom").Switch;
-const { Content, Header } = Layout;
 
 interface MngCreateState {
 }
@@ -16,7 +16,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
     constructor(props) {
         super(props);
         this.state = {
-         
+
         }
     }
 
@@ -25,9 +25,33 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 
     render() {
         return (
-         <div>
-             create
-         </div>
+            <div className='common-content'>
+                <h5>
+                    Tạo bài viết mới
+                </h5>
+                <div>
+                    <Divider orientation="left" >Nội dung bài viết</Divider>
+                    <CKEditor
+                        id={"yeah"}
+                        editorName="editor2"
+                        config={{
+                            extraPlugins: 'stylesheetparser'
+                        }}
+                        onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+                        onInit={event => {
+                            console.log(event);
+                        }} fa-address-book
+                        data="<p>Hello from CKEditor 4!</p>"
+                    />
+                </div>
+                <div>
+                    <Divider orientation="right" >Thêm ảnh</Divider>
+                </div>
+                <div></div>
+                <div></div>
+
+
+            </div>
         )
     }
 }

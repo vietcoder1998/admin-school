@@ -274,7 +274,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     ]}
                 >
                 </Modal>
-                <div className="pending-jobs_content">
+                <div className="common-content">
                     <h5>
                         Quản lí bài viết
                         <Button

@@ -311,7 +311,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                 >
                     <JobProperties job_detail={pendingJob} />
                 </Modal>
-                <div className="pending-jobs_content">
+                <div className="common-content">
                     <h5>
                         Danh sách công việc đang chờ
                         <Button
