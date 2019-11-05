@@ -1,4 +1,4 @@
-export interface IJobType {
+export interface IJobName {
     id?: number;
     name?: string;
     priority?: string;

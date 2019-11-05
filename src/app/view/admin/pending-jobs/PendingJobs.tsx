@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../common/const/actions';
-import { Button, Table, Icon, Select, Row, Col, Modal } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Modal, Input } from 'antd';
 import { timeConverter } from '../../../../common/utils/convertTime';
 import './PendingJobs.scss';
 import { _requestToServer } from '../../../../services/exec';
@@ -13,9 +13,9 @@ import JobProperties from './job-properties/JobProperties';
 import { TYPE } from './../../../../common/const/type';
 
 let { Option } = Select;
+const { TextArea } = Input
 
 const Label = (props) => {
-    console.log(props.type);
     let value = "";
     switch (props.type) {
         case TYPE.PENDING:
@@ -58,6 +58,7 @@ interface AdminState {
     show_job?: boolean;
     loading?: boolean;
     pendingJob?: any;
+    message?: string;
 }
 
 class PendingJobs extends PureComponent<AdminProps, AdminState> {
@@ -217,10 +218,14 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
     }
 
     onToggleModal = () => {
-        let { show_job } = this.state;
-        this.setState({ show_job: !show_job });
+        let { show_job, message } = this.state;
+        if (show_job) {
+            message = ""
+        }
+        this.setState({ show_job: !show_job, message });
     }
 
+    // Get single pending job
     getPendingJobs = async (jobId) => {
         let res = await _requestToServer(
             GET,
@@ -232,17 +237,21 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
 
         if (res.code === 200) {
             await this.setState({ pendingJob: res.data })
+
+            if (res.data.message) {
+                this.setState({ message: res.data.message })
+            }
         }
 
-        this.setState({ jobId })
+        this.setState({ jobId });
     }
 
     handlePendingJob = async (state?: string) => {
-        let { jobId } = this.state;
+        let { jobId, message } = this.state;
         await this.setState({ loading: true });
         await _requestToServer(
             POST,
-            null,
+            {message},
             PENDING_JOBS_API + `/${jobId}/${state}`,
             ADMIN_HOST,
             authHeaders,
@@ -255,21 +264,43 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
     }
 
     render() {
-        let { data_table, show_job, loading, pendingJob } = this.state;
+        let { data_table, show_job, loading, pendingJob, message } = this.state;
         let { list_jobs_group, totalItems } = this.props;
+
+        let is_reject = message && message.trim() !== "" ? true : false
 
         return (
             <Fragment>
                 <Modal
                     visible={show_job}
-                    title="Title"
+                    title="CHI TIẾT CÔNG VIỆC"
                     onCancel={this.onToggleModal}
-                    style={{ top: "10vh" }}
+                    style={{ top: "5vh" }}
                     footer={[
-                        <Button key="back" type="danger" onClick={async () => await this.handlePendingJob("rejected")}>
+                        <h6 key="reason" style={{ float: "left" }}> Lí do từ chối</h6>,
+                        <TextArea
+                            key="reason-msg"
+                            value={message}
+                            placeholder="Vui lòng điền lí do từ chối"
+                            onChange={event => this.setState({ message: event.target.value })}
+                            rows={3}
+                            style={{ margin: "10px 0px", }}
+                        />,
+                        <Button
+                            key="back"
+                            type="danger"
+                            onClick={async () => await this.handlePendingJob("rejected")}
+                            disabled={!is_reject}
+                        >
                             Từ chối
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={async () => await this.handlePendingJob("accepted")}>
+                        <Button
+                            key="submit"
+                            type="primary"
+                            loading={loading}
+                            onClick={async () => await this.handlePendingJob("accepted")}
+                            disabled={is_reject}
+                        >
                             Chấp nhận
                         </Button>
                     ]}
@@ -320,13 +351,12 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                         onChange={this.onChangeState}
                                     >
                                         <Option value="PENDING">Đang chờ</Option>
-                                        <Option value="ACCEPTED">Đã duyệt</Option>
                                         <Option value="REJECTED">Từ chối</Option>
                                         <Option value={null}>Tất cả</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
-                                    <p>Chọn nhóm công việc </p>
+                                    <p>Chọn ten công việc </p>
                                     <Select
                                         showSearch
                                         style={{ width: 200 }}
@@ -384,7 +414,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const mapStateToProps = (state, ownProps) => ({
     list_jobs: state.PendingJobs.list_jobs,
     totalItems: state.PendingJobs.totalItems,
-    list_jobs_group: state.JobType.items,
+    list_jobs_group: state.JobName.items,
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;

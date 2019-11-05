@@ -17,7 +17,6 @@ export const typeJob = (type?: string) => {
                 break;
         }
 
-        console.log(new_type, value)
         return { new_type, value };
     }
 }

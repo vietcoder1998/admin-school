@@ -1,4 +1,4 @@
-import { REDUX } from './../../common/const/actions';
+import { REDUX } from '../../common/const/actions';
 
 let initState = {
     items: [],
@@ -7,11 +7,11 @@ let initState = {
     totalItems: 0,
 }
 
-export const JobType = (state = initState, action) => {
+export const JobName = (state = initState, action) => {
     console.log(action)
  
     switch (action.type) {
-        case REDUX.JOB_TYPE.GET_JOB_TYPE:
+        case REDUX.JOB_NAME.GET_JOB_NAME:
             return {
                 ...state, 
                 items: action.data.items,

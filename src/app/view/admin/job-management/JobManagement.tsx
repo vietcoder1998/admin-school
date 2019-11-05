@@ -38,7 +38,7 @@ class JobManagement extends PureComponent<AdminProps, AdminState> {
         this.setState({ state: event })
     }
 
-    onChangeJobType = (event) => {
+    onChangeJobName = (event) => {
         this.setState({ jobType: event })
     }
 

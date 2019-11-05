@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import {PendingJobs} from './../reducers/pending-jobs';
-import {JobType} from './../reducers/job-type';
+import {JobName} from '../reducers/job-name';
 
 const myReducer = combineReducers({
     PendingJobs,
-    JobType
+    JobName
 })
 
 export default myReducer

@@ -39,8 +39,9 @@ code {
 }
 
 .ant-modal-body {
-  height: 60vh;
+  height: 55vh;
   overflow: auto;
+  background-color: #f1f1f1;
 }
 
 .ant-modal {
@@ -71,6 +72,12 @@ code {
   /* Handle */
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+}
+
+textarea {
+  &:placeholder-shown{
+    font-style: italic!important;
   }
 }
 

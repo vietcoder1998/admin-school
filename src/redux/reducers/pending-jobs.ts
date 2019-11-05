@@ -9,8 +9,6 @@ let initState: IPendingJobs = {
 }
 
 export const PendingJobs = (state = initState, action): IPendingJobs => {
-    console.log(action)
- 
     switch (action.type) {
         case REDUX.PENDING_JOBS.GET_PENDING_JOBS:
             return {
