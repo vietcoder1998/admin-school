@@ -67,7 +67,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
         this.state = {
             data_table: [],
             pageSize: 10,
-            state: null,
+            state: TYPE.PENDING,
             employerID: null,
             jobType: null,
             jobNameID: null,
@@ -84,6 +84,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
             width: 20,
             dataIndex: 'index',
             key: 'index',
+            className: 'action',
             fixed: 'left',
         },
         {
@@ -131,7 +132,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
             dataIndex: 'repliedDate',
             className: 'action',
             key: 'repliedDate',
-            width: 120,
+            width: 100,
         },
         {
             title: 'Chi nhánh',
@@ -255,7 +256,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
         await this.setState({ loading: true });
         await _requestToServer(
             POST,
-            {message},
+            { message },
             PENDING_JOBS_API + `/${jobId}/${state}`,
             ADMIN_HOST,
             authHeaders,
@@ -281,7 +282,6 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                     onCancel={this.onToggleModal}
                     style={{ top: "5vh" }}
                     footer={[
-                        <h6 key="reason" style={{ float: "left" }}> Lí do từ chối</h6>,
                         <TextArea
                             key="reason-msg"
                             value={message}
@@ -314,6 +314,16 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                 <div className="pending-jobs_content">
                     <h5>
                         Danh sách công việc đang chờ
+                        <Button
+                            onClick={() => this.searchJob()}
+                            type="primary"
+                            style={{
+                                float: "right",
+                            }}
+                        >
+                            <Icon type="filter" />
+                            Tìm kiếm
+                        </Button>
                     </h5>
                     <div>
                         <div className="table-operations">
@@ -322,75 +332,61 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                     <p>Chọn tên nhà tuyển dụng</p>
                                     <Select
                                         showSearch
-                                        style={{ width: 200 }}
                                         placeholder="Tất cả nhà tuyển dụng"
                                         optionFilterProp="children"
+                                        style={{ width: "100%" }}
                                     >
+                                        <Option value={null}>Tất cả</Option>
                                         <Option value="jack">Jack</Option>
                                         <Option value="lucy">Lucy</Option>
                                         <Option value="tom">Tom</Option>
-                                        <Option value={null}>Tất cả</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn loại công việc</p>
                                     <Select
                                         showSearch
-                                        style={{ width: 200 }}
                                         defaultValue="Tất cả"
+                                        style={{ width: "100%" }}
                                         onChange={this.onChangeJobType}
                                     >
-                                        <Option value="PARTTIME">Bán thời gian</Option>
-                                        <Option value="FULLTIME">Toàn thời gian</Option>
-                                        <Option value="INTERN">Thực tập</Option>
                                         <Option value={null}>Tất cả</Option>
+                                        <Option value={TYPE.PARTTIME}>Bán thời gian</Option>
+                                        <Option value={TYPE.FULLTIME}>Toàn thời gian</Option>
+                                        <Option value={TYPE.INTERSHIP}>Thực tập</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn trạng thái công việc</p>
                                     <Select
                                         showSearch
-                                        style={{ width: 200 }}
-                                        defaultValue="Tất cả"
+                                        style={{ width: "100%" }}
+                                        defaultValue="Đang chờ"
                                         onChange={this.onChangeState}
                                     >
-                                        <Option value="PENDING">Đang chờ</Option>
-                                        <Option value="REJECTED">Từ chối</Option>
                                         <Option value={null}>Tất cả</Option>
+                                        <Option value={TYPE.PENDING}>Đang chờ</Option>
+                                        <Option value={TYPE.REJECTED}>Từ chối</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn công việc </p>
                                     <Select
                                         showSearch
-                                        style={{ width: 200 }}
+                                        style={{ width: "100%" }}
                                         placeholder="Tất cả  công việc"
                                         optionFilterProp="children"
                                         onChange={this.onChangeJobName}
                                     >
+                                        <Option value={null}>Tất cả</Option>
                                         {
                                             list_jobs_group &&
                                             list_jobs_group.map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
                                         }
-                                        <Option value={null}>Tất cả</Option>
                                     </Select>
                                 </Col>
                             </Row>
-                            <div className="filter">
-                                <Button
-                                    onClick={() => this.searchJob()}
-                                    type="primary"
-                                    style={{
-                                        float: "right",
-                                        margin: "20px 10px"
-                                    }}
-                                >
-                                    <Icon type="filter" />
-                                    Lọc
-                                </Button>
-                            </div>
                         </div>
-
                         <Table
                             columns={this.columns}
                             dataSource={data_table} scroll={{ x: 2000 }}

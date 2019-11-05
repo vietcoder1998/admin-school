@@ -34,7 +34,7 @@ export default class JobProperties extends PureComponent<JobPropertiesProps, Job
                             </label>
                         </li>
                         <li className='d_j_t'>
-                            <IptLetter value={"Ngày hết hạn: "} />
+                            <IptLetter value={"Tên nhà tuyển dụng: "} />
                             <label> {job_detail && job_detail.employer.employerName ? job_detail.employer.employerName : "Không có"}
                             </label>
                         </li>
