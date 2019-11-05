@@ -34,7 +34,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                     <Menu.Item key="2">
                         <Link to='/admin/job-management' >
                             <Icon type="book" />
-                            <span>Quản lí bài đăng</span>
+                            <span>Quản lí bài viết</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="3">

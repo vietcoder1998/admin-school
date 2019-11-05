@@ -41,12 +41,12 @@ const Label = (props) => {
     return <label className={props.type.toLowerCase()}>{value}</label>
 }
 
-interface AdminProps extends StateProps, DispatchProps {
+interface PendingJobProps extends StateProps, DispatchProps {
     match?: any,
     getPendingJobs: Function
 }
 
-interface AdminState {
+interface PendingJobState {
     data_table?: Array<any>;
     pageIndex?: number;
     pageSize?: number;
@@ -61,7 +61,7 @@ interface AdminState {
     message?: string;
 }
 
-class PendingJobs extends PureComponent<AdminProps, AdminState> {
+class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -399,7 +399,6 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                     </div>
                 </div>
             </Fragment>
-
         )
     }
 }

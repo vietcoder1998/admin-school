@@ -10,6 +10,14 @@ export const REDUX = {
     JOB_NAME: {
         GET_JOB_NAME: "GET_JOB_NAME",
     },
+
+    TYPE_MANAGEMENT: {
+        GET_TYPE_MANAGEMENT: "GET_TYPE_MANAGEMENT",
+    },
+
+    ANNOUNCEMENTS: {
+        GET_ANNOUNCEMENTS: "GET_ANNOUNCEMENTS"
+    }
 }
 
 export const REDUX_SAGA = {
@@ -21,4 +29,12 @@ export const REDUX_SAGA = {
     JOB_NAME: {
         GET_JOB_NAME: "GET_JOB_NAME_DATA",
     },
+
+    TYPE_MANAGEMENT: {
+        GET_TYPE_MANAGEMENT: "GET_TYPE_MANAGEMENT_DATA",
+    },
+
+    ANNOUNCEMENTS: {
+        GET_ANNOUNCEMENTS: "GET_ANNOUNCEMENTS_DATA"
+    }
 }

@@ -19,7 +19,8 @@ interface AdminState {
 
 interface AdminProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function
+    getJobNames: Function;
+    getTypeManagement: Function;
 }
 
 class Admin extends PureComponent<AdminProps, AdminState> {
@@ -31,15 +32,16 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         }
     }
 
-    componentDidMount() {
-        this.props.getJobNames();
+    async componentDidMount() {
+        await this.props.getJobNames();
+        await this.props.getTypeManagement({target: null});
     }
 
     menu = (
         <Menu>
-            <Menu.Item onClick ={() => clearStorage()}>
+            <Menu.Item onClick={() => clearStorage()}>
                 <span>
-                   Đăng xuất
+                    Đăng xuất
                 </span>
             </Menu.Item>
         </Menu>
@@ -108,11 +110,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getJobNames: (body) => dispatch({
         type: REDUX_SAGA.JOB_NAME.GET_JOB_NAME,
         body
+    }),
+    getTypeManagement: (data) => dispatch({
+        type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,data
     })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_jobs_type: state.JobName.items
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
