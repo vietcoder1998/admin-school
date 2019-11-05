@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar } from 'antd';
+import { Layout, Icon, Avatar, Dropdown, Menu } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -7,12 +7,14 @@ import PendingJobs from './pending-jobs/PendingJobs';
 import { REDUX_SAGA } from '../../../common/const/actions';
 import { connect } from 'react-redux';
 import JobManagement from './job-management/JobManagement';
+import clearStorage from '../../../services/clearStorage';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
 
 interface AdminState {
     show_menu: boolean;
+    to_logout: boolean;
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -25,16 +27,26 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         super(props);
         this.state = {
             show_menu: true,
+            to_logout: false,
         }
     }
 
     componentDidMount() {
         this.props.getJobTypes();
-        
     }
 
+    menu = (
+        <Menu>
+            <Menu.Item onClick ={() => clearStorage()}>
+                <span>
+                   Đăng xuất
+                </span>
+            </Menu.Item>
+        </Menu>
+    );
+
     render() {
-        let { show_menu } = this.state;
+        let { show_menu, to_logout } = this.state;
         let { match } = this.props;
 
         return (
@@ -51,13 +63,25 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
                         <div className="avatar-header" >
-                            <Avatar 
+                            <Avatar
                                 icon="user"
                                 style={{
                                     width: "30px",
                                     height: "30px",
                                 }}
                             />
+                            <Dropdown
+                                overlay={this.menu}
+                                placement="topRight"
+                            >
+                                <Icon
+                                    type={"down"}
+                                    style={{
+                                        padding: "20px 10px"
+                                    }}
+                                    onClick={() => this.setState({ to_logout: !to_logout })}
+                                />
+                            </Dropdown>
                         </div>
                     </Header>
                     <Content

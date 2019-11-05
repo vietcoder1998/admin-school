@@ -90,8 +90,8 @@ class Login extends PureComponent<LoginProps, LoginState> {
                     className="login"
                 >
                     <Row>
-                        <Col xs={0} sm={4} md={8} lg={8} xl={9} xxl={8}  ></Col>
-                        <Col xs={24} sm={16} md={8} lg={8} xl={6} >
+                        <Col xs={0} sm={4} md={6} lg={8} xl={9} xxl={8}  ></Col>
+                        <Col xs={24} sm={16} md={12} lg={8} xl={6} >
                             <div className="r-p-content test">
                                 <div className='msg-noti '>
                                     <Form onSubmit={this.handleSubmit} className="login-form">
@@ -131,7 +131,9 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                                 />,
                                             )}
                                         </Form.Item>
-                                        <Checkbox onChange={() => { }} >Tự động đăng nhập</Checkbox>
+                                        <p>
+                                            <Checkbox onChange={() => { }} >Tự động đăng nhập</Checkbox>
+                                        </p>
                                     </Form>
                                     {exactly ? "" : <p>{err_msg}</p>}
                                 </div>
@@ -148,16 +150,16 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                         Xác nhận
                                     </Button>
                                 </p>
-                                {/* <p className='a_c'>
+                                <p className='a_c'>
                                     <a href='/'
                                         style={{ textDecoration: "underline" }}
                                     >
                                         Trợ giúp ?
                                     </a>
-                                </p> */}
+                                </p>
                             </div>
                         </Col>
-                        <Col xs={0} sm={4} md={8} lg={8} xl={9}></Col>
+                        <Col xs={0} sm={4} md={6} lg={8} xl={9}></Col>
                     </Row>
                 </div>
                 <Footer />

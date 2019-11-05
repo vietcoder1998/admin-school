@@ -26,7 +26,7 @@ code {
   margin: 60px 10px 10px !important;
   padding: 20px 10px !important;
   background-color: none;
-  min-height: 100vh!important;
+  min-height: 100vh !important;
 }
 
 .all-content {
@@ -34,7 +34,7 @@ code {
   height: calc(100vh - 120px);
 }
 
-.ant-layout-sider-children{
+.ant-layout-sider-children {
   position: fixed;
 }
 
@@ -44,7 +44,93 @@ code {
 }
 
 .ant-modal {
-  width: 80vw!important;
+  width: 80vw !important;
+}
+
+.ant-table-body {
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+  }
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    color: whitesmoke;
+    width: 5px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.pending {
+  padding: 5px 10px;
+  background-color: rgba(229, 255, 0, 0.346);
+  border: solid #f1e976bf 1px;
+  border-radius: 5px;
+  color: rgba(37, 37, 10, 0.584);
+}
+
+.rejected {
+  padding: 5px 10px;
+  background-color: rgb(254, 240, 255);
+  border: solid #e32977 1px;
+  border-radius: 5px;
+}
+
+.accpeted {
+  padding: 5px 10px;
+  background-color: rgb(240, 255, 244);
+  border: solid #29e348 1px;
+  border-radius: 5px;
+}
+
+.parttime {
+  padding: 5px 10px;
+  background-color: rgba(255, 187, 0, 0.897);
+  border: solid #f1e976bf 1px;
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.959);
+  &:hover {
+    background-color: rgba(192, 142, 5, 0.897);
+  }
+}
+
+.action{
+  text-align: center!important;
+}
+
+.fulltime {
+  padding: 5px 10px;
+  background-color: rgba(65, 119, 255, 0.754);
+  border: solid #2977e3 1px;
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.993);
+  &:hover {
+    background-color: #0d0db88e;
+  }
+}
+
+.internship {
+  padding: 5px 10px;
+  background-color: rgba(20, 202, 63, 0.72);
+  border: solid #29e348 1px;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  &:hover {
+    background-color: rgb(8, 216, 63);
+  }
 }
 
 th {
@@ -63,7 +149,7 @@ td {
 h5 {
   font-family: $font_base !important;
   color: black !important;
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
 
 .ant-layout-header {

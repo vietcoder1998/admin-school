@@ -10,8 +10,36 @@ import { PENDING_JOBS_API } from '../../../../services/api/private.api';
 import { authHeaders } from '../../../../services/auth';
 import { ADMIN_HOST } from '../../../../environment/dev';
 import JobProperties from './job-properties/JobProperties';
+import { TYPE } from './../../../../common/const/type';
 
 let { Option } = Select;
+
+const Label = (props) => {
+    console.log(props.type);
+    let value = "";
+    switch (props.type) {
+        case TYPE.PENDING:
+            value = "Đang chờ"
+            break;
+        case TYPE.ACCEPTED:
+            value = "Đã chấp nhận"
+            break;
+        case TYPE.REJECTED:
+            value = "Từ chối"
+            break;
+        case TYPE.PARTTIME:
+            value = "Bán thời gian"
+            break;
+        case TYPE.FULLTIME:
+            value = "Toàn thời gian"
+            break;
+        case TYPE.INTERSHIP:
+            value = "Thực tập sinh"
+            break;
+    }
+
+    return <label className={props.type.toLowerCase()}>{value}</label>
+}
 
 interface AdminProps extends StateProps, DispatchProps {
     match?: any,
@@ -59,21 +87,34 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
         },
         {
             title: 'Tiêu đề',
-            width: 170,
+            width: 200,
             dataIndex: 'jobTitle',
             key: 'jobTitle',
         },
         {
             title: 'Công việc',
-            width: 150,
+            width: 180,
             dataIndex: 'jobName',
             key: 'jobName',
         },
         {
-            title: 'Chi nhánh',
-            dataIndex: 'employerBranchName',
-            key: 'employerBranchName',
-            width: 200,
+            title: 'Tên nhà tuyển dụng',
+            dataIndex: 'employerName',
+            key: 'employerName',
+            width: 140,
+        },
+
+        {
+            title: 'Trạng thái',
+            dataIndex: 'state',
+            key: 'state',
+            width: 75,
+        },
+        {
+            title: 'Loại công việc',
+            dataIndex: 'jobType',
+            key: 'jobType',
+            width: 100,
         },
         {
             title: 'Ngày đăng',
@@ -85,25 +126,13 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
             title: 'Ngày phản hồi',
             dataIndex: 'repliedDate',
             key: 'repliedDate',
-            width: 100,
+            width: 120,
         },
         {
-            title: 'Tên nhà tuyển dụng',
-            dataIndex: 'employerName',
-            key: 'employerName',
-            width: 150,
-        },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'state',
-            key: 'state',
-            width: 100,
-        },
-        {
-            title: 'Loại công việc',
-            dataIndex: 'jobType',
-            key: 'jobType',
-            width: 100,
+            title: 'Chi nhánh',
+            dataIndex: 'employerBranchName',
+            key: 'employerBranchName',
+            width: 200,
         },
         {
             title: 'Địa chỉ',
@@ -115,7 +144,8 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
             title: 'Thao tác',
             key: 'operation',
             fixed: 'right',
-            width: 100,
+            className: 'action',
+            width: 75,
             render: () => <Button onClick={async () => await this.onToggleModal()} type="primary"><Icon type="file-search" /></Button>,
         },
     ];
@@ -149,15 +179,15 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
                     jobName: item.jobName.name,
-                    state: item.state,
-                    address: item.address ? item.address : "Chưa cập nhật địa chỉ",
-                    employerName: item.employer.employerName ? item.employer.employerName : "Không xác định",
+                    state: <Label type={item.state} value={item.state} />,
+                    address: item.address ? item.address : "",
+                    employerName: item.employer.employerName ? item.employer.employerName : "",
                     title: item.jobTitle,
                     createdDate: timeConverter(item.createdDate, 1000),
                     jobTitle: item.jobTitle,
-                    employerBranchName: item.employerBranchName ? item.employerBranchName : "Chi nhánh không tồn tại",
-                    jobType: item.jobType,
-                    repliedDate: item.repliedDate !== -1 ? timeConverter(item.repliedDate, 1000) : "Chưa có "
+                    employerBranchName: item.employerBranchName ? item.employerBranchName : "",
+                    jobType: <Label type={item.jobType} value={item.jobType} />,
+                    repliedDate: item.repliedDate !== -1 ? timeConverter(item.repliedDate, 1000) : ""
                 });
             })
 
@@ -228,8 +258,6 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
         let { data_table, show_job, loading, pendingJob } = this.state;
         let { list_jobs_group, totalItems } = this.props;
 
-        console.log(totalItems)
-
         return (
             <Fragment>
                 <Modal
@@ -255,7 +283,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                     <div>
                         <div className="table-operations">
                             <Row >
-                                <Col xs={24} sm={12} md={8} lg={8} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn tên nhà tuyển dụng</p>
                                     <Select
                                         showSearch
@@ -269,7 +297,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                         <Option value={null}>Tất cả</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={8} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn loại công việc</p>
                                     <Select
                                         showSearch
@@ -283,7 +311,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                         <Option value={null}>Tất cả</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={8} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn trạng thái công việc</p>
                                     <Select
                                         showSearch
@@ -297,7 +325,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
                                         <Option value={null}>Tất cả</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={12} lg={8} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
                                     <p>Chọn nhóm công việc </p>
                                     <Select
                                         showSearch
@@ -331,7 +359,7 @@ class PendingJobs extends PureComponent<AdminProps, AdminState> {
 
                         <Table
                             columns={this.columns}
-                            dataSource={data_table} scroll={{ x: 1500 }}
+                            dataSource={data_table} scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems }}
                             size="middle"

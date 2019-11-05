@@ -16,7 +16,7 @@ export default function Routes(props) {
     <Fragment>
       <Router>
         <Suspense fallback={<FallBack />}>
-          {is_authen ? <Redirect to={'/admin/pending-jobs'} /> : <Route path="/admin" component={Login} /> }
+          {is_authen ? <Redirect to={'/admin/pending-jobs'} /> : <Route path="/login" component={Login} /> }
         </Suspense>
         <Suspense fallback={<FallBack />}>
           {is_authen ? <Route is_authen={is_authen} path="/admin" component={Admin} /> : <Redirect to={'/login'} />}
