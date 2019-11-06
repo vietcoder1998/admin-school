@@ -1,14 +1,11 @@
 import React, { PureComponent, Fragment } from 'react'
-import { Layout, Icon, Avatar, Dropdown, Menu, Button } from 'antd';
+import { Layout } from 'antd';
 import './JobManagement.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';
 import MngList from './mng-list/MngList';
-import { Link } from 'react-router-dom';
 import MngCreate from './mng-create/MngCreate';
-
 const Switch = require("react-router-dom").Switch;
-const { Content, Header } = Layout;
 
 interface JobManagementState {
     show_menu: boolean;

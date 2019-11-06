@@ -115,6 +115,19 @@ textarea {
   }
 }
 
+.title-inside{
+  min-width: 200px;
+}
+
+.ant-divider-inner-text{
+  font-family: $font_base;
+  font-weight: 600;
+}
+
+.input-title{
+  width: auto;
+}
+
 .action{
   text-align: center!important;
   label {

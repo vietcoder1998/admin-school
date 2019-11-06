@@ -20,8 +20,13 @@ function* getListTypeManagementData(action) {
 }
 
 function callTypeManagement(action) {
-    let data = action.data;
-    let target = action.data.target
+    var data;
+    var target;
+    if (action.data) {
+        target = action.data.target;
+        data = action.data;
+    }
+
 
     return _requestToServer(
         GET,
@@ -29,7 +34,7 @@ function callTypeManagement(action) {
         TYPE_MANAGEMENT,
         ADMIN_HOST,
         authHeaders,
-        { pageIndex: 0, pageSize: 0 , target }
+        { pageIndex: 0, pageSize: 0, target }
     )
 }
 
