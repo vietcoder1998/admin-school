@@ -69,7 +69,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         },
         {
             title: 'Ảnh đại diện',
-            width: 60,
+            width: 80,
             dataIndex: 'imageUrl',
             key: 'imageUrl',
             className: "action"
@@ -127,8 +127,14 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 75,
-            render: () => <Button onClick={async () => await this.onToggleModal()} type="primary"><Icon type="file-search" /></Button>,
+            width: 100,
+            render: () => [
+                <Icon style={{ padding: "5px" }} key="fix" type="delete"  />
+                ,
+                <Icon style={{ padding: "5px" }} key="edit" type="edit" />
+                ,
+                <Icon style={{ padding: "5px" }} key="delete" type="eye" />
+            ]
         },
     ];
 
@@ -305,7 +311,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     <div>
                         <div className="table-operations">
                             <Row >
-                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
                                     <p>Chọn loại đối tượng</p>
                                     <Select
                                         showSearch
@@ -321,7 +327,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                         <Option value={TYPE.PUBLIC}>Public</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
                                     <p>Chọn loại bài đăng</p>
                                     <Select
                                         showSearch
@@ -338,7 +344,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                         }
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
+                                <Col xs={24} sm={12} md={12} lg={14} xl={12} xxl={8} >
                                     <p>Chọn loại bài đăng</p>
                                     <DatePicker
                                         placeholder="Chọn ngày tạo bài"

@@ -1,10 +1,27 @@
 import React, { PureComponent } from 'react'
-import { Upload, Modal, Icon, Divider } from 'antd';
+import { Upload, Modal, Icon, Divider, Switch, Row, Col, Button } from 'antd';
 import './MngCreate.scss';
 import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
+import { Link } from 'react-router-dom';
+
+interface MngCreateState {
+    title?: string;
+    announcementTypeID: string;
+    type_management?: Array<any>;
+    list_item?: Array<{ label?: string, value?: string }>,
+    loading?: boolean;
+    previewImage?: any;
+    previewVisible?: boolean;
+    fileList?: Array<any>;
+    hidden?: boolean
+}
+
+interface MngCreateProps extends StateProps, DispatchProps {
+    getTypeManagements: Function
+}
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -15,47 +32,19 @@ function getBase64(file) {
     });
 }
 
-// function beforeUpload(file) {
-//     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-//     if (!isJpgOrPng) {
-//         message.error('You can only upload JPG/PNG file!');
-//     }
-//     const isLt2M = file.size / 1024 / 1024 < 2;
-//     if (!isLt2M) {
-//         message.error('Image must smaller than 2MB!');
-//     }
-//     return isJpgOrPng && isLt2M;
-// }
-
-const Switch = require("react-router-dom").Switch;
-
-interface MngCreateState {
-    header_title?: string;
-    announcementTypeID: string;
-    type_management?: Array<any>;
-    list_item?: Array<{ label?: string, value?: string }>,
-    loading?: boolean;
-    previewImage?: any;
-    previewVisible?: boolean;
-    fileList?: Array<any>;
-}
-
-interface MngCreateProps extends StateProps, DispatchProps {
-    getTypeManagements: Function
-}
-
 class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
     constructor(props) {
         super(props);
         this.state = {
-            header_title: "",
+            title: "",
             announcementTypeID: "",
             type_management: [],
             list_item: [],
             loading: false,
             previewImage: null,
             previewVisible: false,
-            fileList: []
+            fileList: [],
+            hidden: false,
         }
     }
 
@@ -65,7 +54,6 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             for (let i = 0; i < nextProps.type_management.length; i++) {
                 const element = nextProps.type_management[i];
                 const list_target = element.targets;
-                console.log(list_target);
                 let target = "";
 
                 if (list_target.length === 0) {
@@ -87,7 +75,17 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 
     async componentDidMount() {
         await this.props.getTypeManagements()
-    }
+    };
+
+
+    getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    };
 
     handleCancel = () => this.setState({ previewVisible: false });
 
@@ -102,10 +100,16 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         });
     };
 
-    handleChange = ({ fileList }) => this.setState({ fileList });
+    handleChange = async ({ fileList }) => {
+        await this.setState({ fileList, previewImage: true });
+    };
+
+    createRequest = async () => {
+        // let { fileList, hidden, title, announcementTypeID } = this.state;
+    }
 
     render() {
-        let { header_title, list_item, fileList , previewImage, previewVisible} = this.state;
+        let { title, list_item, previewImage, previewVisible, fileList, hidden } = this.state;
 
         const uploadButton = (
             <div>
@@ -119,13 +123,14 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 <h5>
                     Tạo bài viết mới
                 </h5>
+                <Divider orientation="left" >Nội dung bài viết</Divider>
                 <div className="mng-create-content">
-                    <Divider orientation="left" >Nội dung bài viết</Divider>
                     <InputTitle
-                        value={header_title}
+                        value={title}
                         title="Nhập tiêu đề bài viết"
+                        placeholder="Tiêu đề"
                         widthLabel="200px"
-                        onChange={event => this.setState({ header_title: event })}
+                        onChange={event => this.setState({ title: event })}
                     />
                     <InputTitle
                         type="SELECT"
@@ -137,30 +142,82 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         onChange={event => this.setState({ announcementTypeID: event })}
                     />
 
-                    <CKEditor
-                        id={"yeah"}
-                        editorName="editor2"
-                        config={{
-                            extraPlugins: 'stylesheetparser'
-                        }}
-                        onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-                        onInit={event => {
-                            console.log(event);
-                        }} fa-address-book
-                        data="<p>Hello from CKEditor 4!</p>"
-                    />
-                </div>
-                <div className="mng-create-content">
-                    <Divider orientation="left" >Thêm ảnh</Divider>
-                    <Upload
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        listType="picture-card"
-                        fileList={fileList}
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
+                    <InputTitle
+                        title="Nội dung"
+                        widthLabel="200px"
+                        placeholder="Loại bài viết"
+                        widthComponent="400px"
+                        onChange={event => this.setState({ announcementTypeID: event })}
                     >
-                        {fileList.length >= 8 ? null : uploadButton}
-                    </Upload>
+                        <CKEditor
+                            id={"yeah"}
+                            editorName="editor2"
+                            config={{
+                                extraPlugins: 'stylesheetparser'
+                            }}
+                            onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+                            onInit={event => {
+                                console.log(event);
+                            }} fa-address-book
+                            data="<p>Hello from CKEditor 4!</p>"
+                        />
+                    </InputTitle>
+
+
+                </div>
+                <Row>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Divider orientation="left" >Thêm ảnh</Divider>
+                        <div className="mng-create-content">
+                            <Upload
+                                action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+                                listType="picture-card"
+                                onChange={this.handleChange}
+                                onPreview={this.handlePreview}
+                            >
+                                {uploadButton}
+                            </Upload>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Divider orientation="left" >Trạng thái</Divider>
+                        <div className="mng-create-content">
+                            <div className="avatar-load">
+                                <Switch defaultChecked={true} onChange={(event) => { console.log(hidden); this.setState({ hidden: !event }) }} />
+                                <label style={{ width: "40px", textAlign: "center", fontWeight: 500 }}>
+                                    {hidden ? "Ẩn" : "Hiện"}
+                                </label>
+                            </div>
+                        </div>
+                    </Col>
+
+                </Row>
+                <Divider orientation="left" >Hoàn tất</Divider>
+                <div className="mng-create-content">
+                    <Button
+                        type="primary"
+                        prefix={"check"}
+                        style={{
+                            margin: "10px 10px",
+                            float: "right"
+                        }}
+                    >
+                        Tạo mới
+                            <Icon type="right" />
+                    </Button>
+                    <Button
+                        type="danger"
+                        prefix={"check"}
+                        style={{
+                            margin: "10px 10px",
+                            float: "right"
+                        }}
+                    >
+                        <Link to='/admin/job-management/list'>
+                            <Icon type="close" />
+                            Hủy bài
+                        </Link>
+                    </Button>
                 </div>
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                     <img alt="example" style={{ width: '100%', height: "80vh" }} src={previewImage} />

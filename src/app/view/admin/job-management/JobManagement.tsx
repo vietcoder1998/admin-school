@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from 'react'
-import { Layout } from 'antd';
 import './JobManagement.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';

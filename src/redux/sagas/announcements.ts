@@ -17,7 +17,6 @@ function* getListAnnouncementsData(action) {
     }
 
     if (res.code === 200) {
-        console.log(res.data.items)
         data.items = res.data.items;
         data.pageIndex = res.data.pageIndex;
         data.pageSize = res.data.pageSize;

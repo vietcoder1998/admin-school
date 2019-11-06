@@ -63,7 +63,6 @@ class Login extends PureComponent<LoginProps, LoginState> {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.createRequest()
-                console.log('Received values of form: ', values);
             }
         });
     };

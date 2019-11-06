@@ -13,6 +13,7 @@ interface IInputitleProps {
     onChange?: Function;
     defaultValue?: string;
     placeholder?: string;
+    children?: any;
 }
 
 interface INewSelect {
@@ -33,8 +34,8 @@ interface INewInput {
 }
 
 export const NewInput = (props: INewInput) => {
-    let { defaultValue, onChange, value } = props;
-    return <Input defaultValue={defaultValue} value={value} onChange={event => onChange(event.target.value)} />
+    let { defaultValue, onChange, value, placeholder, children } = props;
+    return <Input placeholder={placeholder} defaultValue={defaultValue} value={value} onChange={event => onChange(event.target.value)} maxLength={220} />
 }
 
 export const NewSelect = (props: INewSelect) => {
@@ -56,7 +57,7 @@ export const NewSelect = (props: INewSelect) => {
 }
 
 export const InputTitle = (props: IInputitleProps) => {
-    let { defaultValue, value, list_value, placeholder, onChange, widthComponent } = props;
+    let { defaultValue, value, list_value, placeholder, onChange, widthComponent , children} = props;
     let ComponentReturn;
     switch (props.type) {
         case "INPUT":
@@ -113,6 +114,6 @@ export const InputTitle = (props: IInputitleProps) => {
             >
                 {props.title}
             </span>
-            {ComponentReturn}
+            {children ? children : ComponentReturn}
         </div>)
 }
