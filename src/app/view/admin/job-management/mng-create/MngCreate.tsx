@@ -16,11 +16,14 @@ interface MngCreateState {
     previewImage?: any;
     previewVisible?: boolean;
     fileList?: Array<any>;
-    hidden?: boolean
+    hidden?: boolean;
+    content?: string;
 }
 
 interface MngCreateProps extends StateProps, DispatchProps {
-    getTypeManagements: Function
+    getTypeManagements: Function;
+    getAnnouncementDetail: Function;
+    match?: any;
 }
 
 function getBase64(file) {
@@ -70,11 +73,35 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 list_item,
                 type_management: nextProps.type_management
             }
-        } return null
+        }
+
+        if (nextProps.announcement_detail || nextProps.match.params.id) {
+            let { announcement_detail } = nextProps;
+            let fileList = [];
+            fileList.push({
+                uid: '-1',
+                name: 'image.png',
+                status: 'done',
+                url: announcement_detail.imageUrl,
+            });
+
+            return {
+                title: announcement_detail.title,
+                content: announcement_detail.content,
+                fileList
+            }
+        }
+
+
+        return null
     }
 
     async componentDidMount() {
         await this.props.getTypeManagements()
+        if (this.props.match.params.id) {
+            let id = this.props.match.params.id;
+            await this.props.getAnnouncementDetail(id);
+        }
     };
 
 
@@ -109,7 +136,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
     }
 
     render() {
-        let { title, list_item, previewImage, previewVisible, fileList, hidden } = this.state;
+        let { title, list_item, previewImage, previewVisible, hidden, content, fileList } = this.state;
+        console.log(this.props);
 
         const uploadButton = (
             <div>
@@ -146,8 +174,6 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         title="Nội dung"
                         widthLabel="200px"
                         placeholder="Loại bài viết"
-                        widthComponent="400px"
-                        onChange={event => this.setState({ announcementTypeID: event })}
                     >
                         <CKEditor
                             id={"yeah"}
@@ -159,7 +185,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             onInit={event => {
                                 console.log(event);
                             }} fa-address-book
-                            data="<p>Hello from CKEditor 4!</p>"
+                            data={content}
                         />
                     </InputTitle>
 
@@ -174,6 +200,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                                 listType="picture-card"
                                 onChange={this.handleChange}
                                 onPreview={this.handlePreview}
+                                defaultFileList={fileList}
                             >
                                 {uploadButton}
                             </Upload>
@@ -228,11 +255,13 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getTypeManagements: () => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT })
+    getTypeManagements: () => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT }),
+    getAnnouncementDetail: (path) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, path }),
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    type_management: state.TypeManagement.items
+    type_management: state.TypeManagement.items,
+    announcement_detail: state.AnnouncementDetail.data
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;

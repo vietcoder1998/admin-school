@@ -37,22 +37,39 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                             <span>Quản lí bài viết</span>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="upload" />
-                        <span>nav 3</span>
-                    </Menu.Item>
                     <SubMenu
                         key="sub1"
                         title={
-                            <span>
+                            <Link to={'/admin/data'}>
                                 <Icon type="user" />
-                                <span>User</span>
-                            </span>
+                                <span>Kĩ năng</span>
+                            </Link>
                         }
                     >
-                        <Menu.Item key="7">Tom</Menu.Item>
-                        <Menu.Item key="8">Bill</Menu.Item>
-                        <Menu.Item key="9">Alex</Menu.Item>
+                        <Menu.Item key="7">
+                            <Link to={'/admin/data'}>
+                                <Icon type="user" />
+                                <span>Ngôn ngữ</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="8">
+                            <Link to={'/admin/data'}>
+                                <Icon type="user" />
+                                <span>Ngành nghề</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="9">
+                            <Link to={'/admin/data'}>
+                                <Icon type="user" />
+                                <span>Tỉnh thành</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="10">
+                            <Link to={'/admin/data'}>
+                                <Icon type="user" />
+                                <span>Loại công việc</span>
+                            </Link>
+                        </Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>

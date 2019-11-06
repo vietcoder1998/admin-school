@@ -14,6 +14,18 @@ let ImageRender = (props) => {
     return <img src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
 }
 
+let EditJob = () => {
+    return (
+        <div>
+            <Icon style={{ padding: "5px" }} type="delete" />
+            <Link to={`/admin/job-management/fix/${localStorage.getItem("id_mgm")}`}>
+                <Icon style={{ padding: "5px" }} type="edit" />
+            </Link>
+            <Icon key="delete" style={{ padding: "5px" }} type="eye" />
+        </div>
+    )
+}
+
 interface MngListProps extends StateProps, DispatchProps {
     match?: any,
     getTypeManagement: Function,
@@ -40,7 +52,9 @@ interface MngListState {
     adminID?: string;
     hidden?: boolean;
     list_announcements?: Array<any>;
+    id?: string;
 }
+
 
 
 class MngList extends PureComponent<MngListProps, MngListState> {
@@ -54,9 +68,12 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             adminID: null,
             hidden: null,
             pageIndex: 0,
-            list_announcements: []
+            list_announcements: [],
+            id: "",
         }
     }
+
+    
 
     columns = [
         {
@@ -128,13 +145,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             fixed: 'right',
             className: 'action',
             width: 100,
-            render: () => [
-                <Icon style={{ padding: "5px" }} key="fix" type="delete"  />
-                ,
-                <Icon style={{ padding: "5px" }} key="edit" type="edit" />
-                ,
-                <Icon style={{ padding: "5px" }} key="delete" type="eye" />
-            ]
+            render: () => <EditJob />
         },
     ];
 
@@ -155,6 +166,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             }
         }
 
+
         if (nextProps.list_announcements !== prevState.list_announcements) {
             let { pageIndex } = prevState;
             let data_table = [];
@@ -169,7 +181,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     lastModified: item.lastModified !== -1 ? timeConverter(item.lastModified, 1000) : "",
                     imageUrl: item.imageUrl ? <ImageRender src={item.imageUrl} alt="Ảnh đại diện" /> : "",
                     hidden: item.hidden ? "Hiện" : "Ẩn",
-                    announcementType: item.announcementType.name
+                    announcementType: item.announcementType.name,
                 });
             })
             return {
@@ -181,6 +193,12 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     async componentDidMount() {
         await this.searchAnnouncement();
+    }
+
+    handleId = (event) => {
+        if (event.key) {
+            this.setState({id: event.key})
+        }
     }
 
     searchAnnouncement = async () => {
@@ -378,7 +396,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             pagination={{ total: 20 }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            onRowClick={async event => { }}
+                            onRowClick={this.handleId}
+                            onRow={event => {localStorage.setItem("id_mgm", event.key)}}
                         />
                     </div>
                 </div>

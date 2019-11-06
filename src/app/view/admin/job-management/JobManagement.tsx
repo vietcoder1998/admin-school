@@ -33,6 +33,7 @@ class JobManagement extends PureComponent<JobManagementProps, JobManagementState
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={MngList} />
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={MngCreate} />
+                    <ErrorBoundaryRoute exact path={`${path}/fix/:id`} component={MngCreate} />
                 </Switch>
             </Fragment>
         )

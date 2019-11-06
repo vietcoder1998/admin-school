@@ -34,7 +34,7 @@ interface INewInput {
 }
 
 export const NewInput = (props: INewInput) => {
-    let { defaultValue, onChange, value, placeholder, children } = props;
+    let { defaultValue, onChange, value, placeholder } = props;
     return <Input placeholder={placeholder} defaultValue={defaultValue} value={value} onChange={event => onChange(event.target.value)} maxLength={220} />
 }
 

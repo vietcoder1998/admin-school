@@ -3,6 +3,7 @@ import { PendingJobsWatcher } from '../sagas/pending-jobs';
 import { JobNameWatcher } from '../sagas/job-name';
 import { TypeManagementWatcher } from '../sagas/type-management';
 import { AnnouncementsWatcher } from '../sagas/announcements';
+import { AnnouncementDetailWatcher } from '../sagas/announcement-detail';
 
 
 export default function* rootSaga() {
@@ -11,5 +12,6 @@ export default function* rootSaga() {
         JobNameWatcher(),
         TypeManagementWatcher(),
         AnnouncementsWatcher(),
+        AnnouncementDetailWatcher()
     ])
 } 
