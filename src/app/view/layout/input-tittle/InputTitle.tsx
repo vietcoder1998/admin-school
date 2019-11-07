@@ -39,13 +39,14 @@ export const NewInput = (props: INewInput) => {
 }
 
 export const NewSelect = (props: INewSelect) => {
-    let { placeholder, list_value, widthComponent } = props;
+    let { placeholder, list_value, widthComponent, value } = props;
     return (
         <Select
             showSearch
             placeholder={placeholder}
             optionFilterProp="children"
             style={{ width: widthComponent ? widthComponent : "200px" }}
+            value={value}
             onChange={event => props.onChange(event)}
         >
             {/* <Option value={null} >Tất cả</Option> */}

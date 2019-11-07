@@ -73,8 +73,6 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         }
     }
 
-    
-
     columns = [
         {
             title: '#',
@@ -180,7 +178,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     createdDate: timeConverter(item.createdDate, 1000),
                     lastModified: item.lastModified !== -1 ? timeConverter(item.lastModified, 1000) : "",
                     imageUrl: item.imageUrl ? <ImageRender src={item.imageUrl} alt="Ảnh đại diện" /> : "",
-                    hidden: item.hidden ? "Hiện" : "Ẩn",
+                    hidden: !item.hidden ? "Hiện" : "Ẩn",
                     announcementType: item.announcementType.name,
                 });
             })
@@ -397,7 +395,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             size="middle"
                             onChange={this.setPageIndex}
                             onRowClick={this.handleId}
-                            onRow={event => {localStorage.setItem("id_mgm", event.key)}}
+                            onRow={event => localStorage.setItem("id_mgm", event.key)}
                         />
                     </div>
                 </div>

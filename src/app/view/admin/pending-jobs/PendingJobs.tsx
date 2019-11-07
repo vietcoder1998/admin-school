@@ -271,7 +271,6 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     render() {
         let { data_table, show_job, loading, pendingJob, message } = this.state;
         let { list_jobs_group, totalItems } = this.props;
-
         let is_reject = message && message.trim() !== "" ? true : false
 
         return (
