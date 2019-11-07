@@ -40,33 +40,33 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                     <SubMenu
                         key="sub1"
                         title={
-                            <Link to={'/admin/data'}>
-                                <Icon type="user" />
-                                <span>Kĩ năng</span>
-                            </Link>
+                            <span>
+                                <Icon type="database" />
+                                <span>Danh mục dữ liệu</span>
+                            </span>
                         }
                     >
                         <Menu.Item key="7">
                             <Link to={'/admin/data'}>
-                                <Icon type="user" />
+                                <Icon type="message" />
                                 <span>Ngôn ngữ</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="8">
                             <Link to={'/admin/data'}>
-                                <Icon type="user" />
+                                <Icon type="contacts" />
                                 <span>Ngành nghề</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="9">
                             <Link to={'/admin/data'}>
-                                <Icon type="user" />
+                                <Icon type="environment" />
                                 <span>Tỉnh thành</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="10">
                             <Link to={'/admin/data'}>
-                                <Icon type="user" />
+                                <Icon type="idcard" />
                                 <span>Loại công việc</span>
                             </Link>
                         </Menu.Item>
