@@ -6,6 +6,8 @@ import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { Link } from 'react-router-dom';
+import { string } from 'prop-types';
+import { IAnnouncementDetail } from './../../../../../common/models/announcement_detail';
 
 interface MngCreateState {
     title?: string;
@@ -18,6 +20,9 @@ interface MngCreateState {
     fileList?: Array<any>;
     hidden?: boolean;
     content?: string;
+    value_annou?: string;
+    announcement_detail?: IAnnouncementDetail;
+    type_cpn?: string;
 }
 
 interface MngCreateProps extends StateProps, DispatchProps {
@@ -48,6 +53,18 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             previewVisible: false,
             fileList: [],
             hidden: false,
+            value_annou: "",
+            announcement_detail: {
+                id: "",
+                admin: {},
+                viewNumber: 0,
+                modifyAdmin: {},
+                announcementType: { id: 0, name: "", priority: 0 },
+                hidden: false,
+                imageUrl: "",
+                content: "",
+                loading: false,
+            }
         }
     }
 
@@ -75,7 +92,12 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             }
         }
 
-        if (nextProps.announcement_detail || nextProps.match.params.id) {
+        if (
+            nextProps.match.params.id &&
+            nextProps.announcement_detail &&
+            nextProps.announcement_detail.id !==
+            prevState.announcement_detail.id
+        ) {
             let { announcement_detail } = nextProps;
             let fileList = [];
             fileList.push({
@@ -88,7 +110,25 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             return {
                 title: announcement_detail.title,
                 content: announcement_detail.content,
-                fileList
+                fileList,
+                hidden: announcement_detail.hidden,
+                announcement_detail,
+                announcementTypeID: announcement_detail.announcementType.id,
+                value_annou: announcement_detail.announcementType.name
+            }
+        }
+
+        if (prevState.announcementTypeID) {
+            let { list_item, announcementTypeID } = prevState;
+            let value_annou = "";
+            list_item.forEach(item => {
+                if (item.value === announcementTypeID) {
+                    value_annou = item.label
+                }
+            })
+
+            return {
+                value_annou
             }
         }
 
@@ -126,6 +166,13 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         });
     };
 
+    // handleRemove = async() => {
+    //     let {fileList} = this.state;
+    //     let data = fileList[1]
+    //     fileList= [data];
+    //     await this.setState({fileList})
+    // }
+
     handleChange = async ({ fileList }) => {
         await this.setState({ fileList, previewImage: true });
     };
@@ -135,8 +182,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
     }
 
     render() {
-        let { title, list_item, previewImage, previewVisible, hidden, content, fileList } = this.state;
-        console.log(this.props);
+        let { title, list_item, previewImage, previewVisible, hidden, content, fileList, value_annou } = this.state;
+        console.log(this.props, this.state);
 
         const uploadButton = (
             <div>
@@ -165,9 +212,20 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         widthLabel="200px"
                         placeholder="Loại bài viết"
                         widthComponent="400px"
+                        value={value_annou}
                         list_value={list_item}
                         onChange={event => this.setState({ announcementTypeID: event })}
                     />
+
+                    <InputTitle
+                        title="Trạng thái"
+                        widthLabel="200px"
+                    >
+                        <Switch checked={!hidden} onClick={() => { this.setState({ hidden: !hidden }) }} />
+                        <label style={{ width: "40px", textAlign: "center", fontWeight: 500 }}>
+                            {hidden ? "Ẩn" : "Hiện"}
+                        </label>
+                    </InputTitle>
 
                     <InputTitle
                         title="Nội dung"
@@ -187,34 +245,25 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             data={content}
                         />
                     </InputTitle>
-
-
                 </div>
                 <Row>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Divider orientation="left" >Thêm ảnh</Divider>
+                        <Divider orientation="left" >Thay đổi ảnh đại diện</Divider>
                         <div className="mng-create-content">
                             <Upload
                                 action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
                                 listType="picture-card"
                                 onChange={this.handleChange}
                                 onPreview={this.handlePreview}
-                                defaultFileList={fileList}
+                                fileList={fileList}
                             >
-                                {uploadButton}
+                                {fileList.length >=2 ? null: uploadButton}
                             </Upload>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Divider orientation="left" >Trạng thái</Divider>
-                        <div className="mng-create-content">
-                            <div className="avatar-load">
-                                <Switch defaultChecked={true} onChange={(event) => { console.log(hidden); this.setState({ hidden: !event }) }} />
-                                <label style={{ width: "40px", textAlign: "center", fontWeight: 500 }}>
-                                    {hidden ? "Ẩn" : "Hiện"}
-                                </label>
-                            </div>
-                        </div>
+                        <Divider orientation="left" >Người sửa cuối cùng</Divider>
+
                     </Col>
 
                 </Row>
