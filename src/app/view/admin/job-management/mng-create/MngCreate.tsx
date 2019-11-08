@@ -6,8 +6,8 @@ import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { Link } from 'react-router-dom';
-import { string } from 'prop-types';
 import { IAnnouncementDetail } from './../../../../../common/models/announcement_detail';
+import { TYPE } from '../../../../../common/const/type';
 
 interface MngCreateState {
     title?: string;
@@ -64,7 +64,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 imageUrl: "",
                 content: "",
                 loading: false,
-            }
+            },
+            type_cpn: TYPE.CREATE,
         }
     }
 
@@ -93,7 +94,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         }
 
         if (
-            nextProps.match.params.id &&
+            nextProps.match.params.id !== "" &&
             nextProps.announcement_detail &&
             nextProps.announcement_detail.id !==
             prevState.announcement_detail.id
@@ -114,7 +115,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 hidden: announcement_detail.hidden,
                 announcement_detail,
                 announcementTypeID: announcement_detail.announcementType.id,
-                value_annou: announcement_detail.announcementType.name
+                value_annou: announcement_detail.announcementType.name,
+                type_cpn: TYPE.EDIT
             }
         }
 
@@ -128,11 +130,15 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             })
 
             return {
-                value_annou
+                value_annou,
             }
         }
 
-        return null
+        return {
+            type_cpn: TYPE.CREATE,
+            value_annou: "Chọn loại bài viết",
+
+        }
     }
 
     async componentDidMount() {
@@ -182,9 +188,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
     }
 
     render() {
-        let { title, list_item, previewImage, previewVisible, hidden, content, fileList, value_annou } = this.state;
-        console.log(this.props, this.state);
-
+        let { title, list_item, previewImage, previewVisible, hidden, content, fileList, value_annou, type_cpn } = this.state;
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -200,6 +204,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 <Divider orientation="left" >Nội dung bài viết</Divider>
                 <div className="mng-create-content">
                     <InputTitle
+                        type="INPUT"
                         value={title}
                         title="Nhập tiêu đề bài viết"
                         placeholder="Tiêu đề"
@@ -211,6 +216,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         title="Chọn loại bài viết"
                         widthLabel="200px"
                         placeholder="Loại bài viết"
+                        defaultValue="Loại bài viết"
                         widthComponent="400px"
                         value={value_annou}
                         list_value={list_item}
@@ -218,6 +224,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                     />
 
                     <InputTitle
+                        type="SWITCH"
                         title="Trạng thái"
                         widthLabel="200px"
                     >
@@ -232,19 +239,19 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         widthLabel="200px"
                         placeholder="Loại bài viết"
                     >
-                        <CKEditor
-                            id={"yeah"}
-                            editorName="editor2"
-                            config={{
-                                extraPlugins: 'stylesheetparser'
-                            }}
-                            onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-                            onInit={event => {
-                                console.log(event);
-                            }} fa-address-book
-                            data={content}
-                        />
                     </InputTitle>
+                    <CKEditor
+                        id={"yeah"}
+                        editorName="editor2"
+                        config={{
+                            extraPlugins: 'stylesheetparser'
+                        }}
+                        onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+                        onInit={event => {
+                            console.log(event);
+                        }} fa-address-book
+                        data={content}
+                    />
                 </div>
                 <Row>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
@@ -257,7 +264,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                                 onPreview={this.handlePreview}
                                 fileList={fileList}
                             >
-                                {fileList.length >=2 ? null: uploadButton}
+                                {fileList.length >= 2 ? null : uploadButton}
                             </Upload>
                         </div>
                     </Col>
@@ -277,8 +284,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             float: "right"
                         }}
                     >
-                        Tạo mới
-                            <Icon type="right" />
+                        {type_cpn === TYPE.CREATE ? "Tạo mới" : "Lưu lại"}
+                        <Icon type="right" />
                     </Button>
                     <Button
                         type="danger"
@@ -290,7 +297,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                     >
                         <Link to='/admin/job-management/list'>
                             <Icon type="close" />
-                            Hủy bài
+                            {type_cpn === TYPE.CREATE ? "Hủy bài" : "Hủy sửa"}
                         </Link>
                     </Button>
                 </div>
@@ -304,7 +311,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getTypeManagements: () => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT }),
-    getAnnouncementDetail: (path) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, path }),
+    getAnnouncementDetail: (id) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id }),
 })
 
 const mapStateToProps = (state, ownProps) => ({

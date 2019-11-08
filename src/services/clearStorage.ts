@@ -1,17 +1,16 @@
 import Cookies from 'universal-cookie';
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import { TYPE } from './../common/const/type';
 
 export default async function clearStorage() {
     localStorage.clear();
     let cookies = new Cookies();
     await cookies.remove("actk", { path: "/" });
+    Swal.fire(
+        "Workvns thông báo",
+        "Bạn đã đăng xuất khỏi Worksvn",
+        "success"
+    )
 
-    await swal({
-        title: "Workvns thông báo",
-        text: "Bạn đã đăng xuất khỏi Worksvn",
-        icon: TYPE.SUCCESS,
-        dangerMode: false,
-    })
     await setTimeout(() => window.location.href = "/login", 2000)
 }

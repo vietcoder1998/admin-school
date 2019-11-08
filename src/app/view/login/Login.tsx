@@ -49,12 +49,17 @@ class Login extends PureComponent<LoginProps, LoginState> {
             true
         )
 
-        if (res.code === 200) {
+        if (res && res.code === 200) {
             let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate) / 1000)
             let cookie = new Cookies()
             cookie.set("actk", res.data.accessToken, { expires: exp, path: "/" });
             localStorage.setItem("token", res.data.accessToken);
-            window.location.href = '/admin';
+            let last_url = localStorage.getItem("last_url");
+            if (last_url) {
+                window.location.href = last_url
+            } else {
+                window.location.href = '/admin/pending-jobs'
+            }
         }
     }
 
@@ -145,7 +150,6 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                         className="login-form-button"
                                         style={{ width: "100%" }}
                                         onClick={this.handleSubmit}
-                                        disabled={!exactly}
                                     >
                                         Xác nhận
                                     </Button>

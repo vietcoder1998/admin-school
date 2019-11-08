@@ -1,5 +1,5 @@
 export const TYPE = {
-    SUCCESS: "success",
+    SUCCESS: 'success',
     ERROR: "error",
     WARNING: "warning",
     PENDING: "PENDING",
@@ -13,5 +13,7 @@ export const TYPE = {
     SCHOOL: "SCHOOL",
     PUBLIC: "PUBLIC",
     STUDENT: "STUDENT",
-    ALL: "ALL"
+    ALL: "ALL",
+    CREATE: "CREATE",
+    EDIT: "EDIT",
 }

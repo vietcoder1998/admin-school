@@ -18,14 +18,14 @@ function* getListAnnouncementDetailData(action) {
 }
 
 function callAnnouncementDetail(action) {
-    let path = "";
-    if (action.path) {
-        path = action.path;
+    let id = "";
+    if (action.id) {
+        id = action.id;
     }
     return _requestToServer(
         GET,
         null,
-        ANNOUNCEMENT_DETAIL + `/${path}`,
+        ANNOUNCEMENT_DETAIL + `/${id}`,
         ADMIN_HOST,
         authHeaders,
     )

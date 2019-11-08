@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Icon } from 'antd';
+import { Icon, Avatar } from 'antd';
 import './JobProperties.scss'
 import { convertStringToArray } from './../../../../../common/utils/convertStringToArray';
 import { IptLetter } from '../../../layout/common/Common';
@@ -21,6 +21,7 @@ export default class JobProperties extends PureComponent<JobPropertiesProps, Job
             <div className='job-detail'>
                 <div className='detail-job b_b'>
                     <h6>CHI TIẾT</h6>
+                    <Avatar src={job_detail && job_detail.employer.logoUrl} icon="user" style={{ width: "60px", height: "60px", margin: "20px 0px" }} />
                     <ul>
                         <li className='d_j_t'>
                             <IptLetter value={"Tiêu đề:"} />

@@ -11,6 +11,7 @@ import { authHeaders } from '../../../../services/auth';
 import { ADMIN_HOST } from '../../../../environment/dev';
 import JobProperties from './job-properties/JobProperties';
 import { TYPE } from './../../../../common/const/type';
+import { IptLetter } from '../../layout/common/Common';
 
 let { Option } = Select;
 const { TextArea } = Input
@@ -59,6 +60,7 @@ interface PendingJobState {
     loading?: boolean;
     pendingJob?: any;
     message?: string;
+    loading_table?: boolean;
 }
 
 class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
@@ -269,7 +271,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     }
 
     render() {
-        let { data_table, show_job, loading, pendingJob, message } = this.state;
+        let { data_table, show_job, loading, pendingJob, message ,loading_table } = this.state;
         let { list_jobs_group, totalItems } = this.props;
         let is_reject = message && message.trim() !== "" ? true : false
 
@@ -328,7 +330,9 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                         <div className="table-operations">
                             <Row >
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
-                                    <p>Chọn tên nhà tuyển dụng</p>
+                                    <p>
+                                        <IptLetter value={" Chọn tên nhà tuyển dụng"} />
+                                    </p>
                                     <Select
                                         showSearch
                                         placeholder="Tất cả nhà tuyển dụng"
@@ -342,7 +346,9 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
-                                    <p>Chọn loại công việc</p>
+                                    <p>
+                                        <IptLetter value={"Chọn loại công việc"} />
+                                    </p>
                                     <Select
                                         showSearch
                                         defaultValue="Tất cả"
@@ -356,7 +362,9 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
-                                    <p>Chọn trạng thái công việc</p>
+                                    <p>
+                                        <IptLetter value={"Chọn trạng thái công việc"} />
+                                    </p>
                                     <Select
                                         showSearch
                                         style={{ width: "100%" }}
@@ -369,7 +377,9 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6} >
-                                    <p>Chọn công việc </p>
+                                    <p>
+                                        <IptLetter value={"Chọn công việc "} />
+                                    </p>
                                     <Select
                                         showSearch
                                         style={{ width: "100%" }}
@@ -388,6 +398,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                         </div>
                         <Table
                             columns={this.columns}
+                            loading={loading_table}
                             dataSource={data_table} scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems }}

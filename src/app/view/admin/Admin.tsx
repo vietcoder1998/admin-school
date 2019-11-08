@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Dropdown, Menu } from 'antd';
+import { Layout, Icon, Avatar, Dropdown, Menu, Breadcrumb } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -8,6 +8,7 @@ import { REDUX_SAGA } from '../../../common/const/actions';
 import { connect } from 'react-redux';
 import JobManagement from './job-management/JobManagement';
 import clearStorage from '../../../services/clearStorage';
+import { breakCumb } from '../../../common/const/break-cumb';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -15,6 +16,8 @@ const { Content, Header } = Layout;
 interface AdminState {
     show_menu: boolean;
     to_logout: boolean;
+    location?: string;
+    data_breakcumb?: Array<string>
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -23,18 +26,37 @@ interface AdminProps extends StateProps, DispatchProps {
     getTypeManagement: Function;
 }
 
+
 class Admin extends PureComponent<AdminProps, AdminState> {
     constructor(props) {
         super(props);
         this.state = {
             show_menu: true,
             to_logout: false,
+            location: "/",
+            data_breakcumb: []
         }
     }
 
     async componentDidMount() {
         await this.props.getJobNames();
-        await this.props.getTypeManagement({target: null});
+        await this.props.getTypeManagement({ target: null });
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.location.pathname !== prevState.pathname) {
+            localStorage.setItem("last_url", nextProps.location.pathname);
+            let list_breakcumb = nextProps.location.pathname.split("/");
+            let data_breakcumb = [];
+            list_breakcumb.forEach(item => item !== "" && data_breakcumb.push(item));
+
+            return {
+                pathname: nextProps.location.pathname,
+                data_breakcumb
+            }
+        }
+
+        return null
     }
 
     menu = (
@@ -48,7 +70,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     );
 
     render() {
-        let { show_menu, to_logout } = this.state;
+        let { show_menu, to_logout, data_breakcumb } = this.state;
         let { match } = this.props;
 
         return (
@@ -86,21 +108,43 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             </Dropdown>
                         </div>
                     </Header>
+
                     <Content
                         style={{
                             margin: '24px 16px',
                             padding: 24,
                             background: '#fff',
                             minHeight: 280,
+                            border: "solid #80808036 1px"
                         }}
                     >
+                        <Breadcrumb >
+                            <Breadcrumb.Item >
+                                <a href='/admin' >
+                                    <Icon type="home" />Trang chủ
+                                </a>
+                            </Breadcrumb.Item>
+                            {data_breakcumb.map(item => {
+                                let newBreakCump = null;
+                                breakCumb.forEach(item_brk => {
+                                    if (item_brk.label === item) {
+                                        newBreakCump = (
+                                            <Breadcrumb.Item >
+                                                <a href={item_brk.url} >{item_brk.name}</a>
+                                            </Breadcrumb.Item>
+                                        )
+                                    }
+                                })
+
+                                return newBreakCump
+                            })}
+                        </Breadcrumb>
                         <Switch>
                             <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
                             <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
                         </Switch>
                     </Content>
                 </Layout>
-
             </Layout >
         )
     }
@@ -112,7 +156,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         body
     }),
     getTypeManagement: (data) => dispatch({
-        type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,data
+        type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data
     })
 })
 

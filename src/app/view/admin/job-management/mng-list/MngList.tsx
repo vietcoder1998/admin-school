@@ -1,35 +1,24 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
-import { Button, Table, Icon, Select, Row, Col, Modal, Input, DatePicker } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Modal, Input, DatePicker, Rate } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../common/utils/convertTime';
 import './MngList.scss';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { TYPE } from '../../../../../common/const/type';
 import { Link } from 'react-router-dom';
-
+import { IptLetter } from '../../../layout/common/Common';
 let { Option } = Select;
-const { TextArea } = Input;
 
 let ImageRender = (props) => {
     return <img src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
 }
 
-let EditJob = () => {
-    return (
-        <div>
-            <Icon style={{ padding: "5px" }} type="delete" />
-            <Link to={`/admin/job-management/fix/${localStorage.getItem("id_mgm")}`}>
-                <Icon style={{ padding: "5px" }} type="edit" />
-            </Link>
-            <Icon key="delete" style={{ padding: "5px" }} type="eye" />
-        </div>
-    )
-}
-
 interface MngListProps extends StateProps, DispatchProps {
     match?: any,
     getTypeManagement: Function,
-    getAnnoucements: Function
+    getAnnoucements: Function,
+    getAnnoucementDetail: Function,
 }
 
 interface MngListState {
@@ -53,9 +42,9 @@ interface MngListState {
     hidden?: boolean;
     list_announcements?: Array<any>;
     id?: string;
+    loading_table?: boolean;
+
 }
-
-
 
 class MngList extends PureComponent<MngListProps, MngListState> {
     constructor(props) {
@@ -70,7 +59,45 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             pageIndex: 0,
             list_announcements: [],
             id: "",
+            loading_table: true
         }
+    }
+
+    EditJob = (
+        <div>
+            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => this.deleteAnnoun()} />
+            <Link to={`/admin/job-management/fix/${localStorage.getItem("id_mgm")}`}>
+                <Icon style={{ padding: "5px 10px" }} type="edit" />
+            </Link>
+            <Icon key="delete" style={{ padding: "5px 10px" }} type="eye" onClick={() => this.onToggleModal()} />
+        </div>
+    )
+
+    deleteAnnoun = async () => {
+        /* tslint:disable */
+        Swal.fire(
+            "Worksvn thông báo",
+            "Bạn chắc chắn muốn xóa bài viết này",
+            "warning",
+        ).then(value => {
+            console.log(value);
+            if (value) {
+                // _requestToServer(
+                //     DELETE,
+                //     [localStorage.getItem("id_mgm")],
+                //     ANNOUNCEMENT_DETAIL,
+                //     ADMIN_HOST,
+                //     authHeaders,
+                //     null,
+                //     true
+                // ).then(res => {
+                //     if (res.code === 200) {
+                //         this.searchAnnouncement()
+                //     }
+                // })
+            }
+        }).finally(() => {
+        })
     }
 
     columns = [
@@ -142,17 +169,19 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 100,
-            render: () => <EditJob />
+            width: 120,
+            render: () => this.EditJob
         },
     ];
 
     onToggleModal = () => {
-        let { show_modal, message } = this.state;
-        if (show_modal) {
-            message = ""
+        let { show_modal } = this.state;
+
+        if (!show_modal) {
+            let id = localStorage.getItem("id_mgm");
+            this.props.getAnnoucementDetail(id);
         }
-        this.setState({ show_modal: !show_modal, message });
+        this.setState({ show_modal: !show_modal });
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -163,7 +192,6 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                 announcementTypeID: null
             }
         }
-
 
         if (nextProps.list_announcements !== prevState.list_announcements) {
             let { pageIndex } = prevState;
@@ -195,7 +223,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     handleId = (event) => {
         if (event.key) {
-            this.setState({id: event.key})
+            this.setState({ id: event.key })
         }
     }
 
@@ -209,7 +237,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             target,
         } = this.state;
 
-        this.props.getAnnoucements({
+        await this.setState({ loading_table: true });
+        await this.props.getAnnoucements({
             pageIndex,
             createdDate,
             adminID,
@@ -217,6 +246,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             hidden,
             target
         });
+
+        await this.setState({ loading_table: false })
     }
 
     onChangeTarget = (event) => {
@@ -263,40 +294,41 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     }
 
     render() {
-        let { data_table, show_modal, type_management, value_type } = this.state;
+        let { data_table, show_modal, type_management, value_type, loading_table } = this.state;
+        let { annoucement_detail } = this.props;
         return (
             <Fragment>
-                <Modal
-                    visible={show_modal}
-                    title="CHI TIẾT CÔNG VIỆC"
-                    onCancel={this.onToggleModal}
-                    style={{ top: "5vh" }}
-                    footer={[
-                        <TextArea
-                            key="reason-msg"
-                            placeholder="Vui lòng điền lí do từ chối"
-                            onChange={event => this.setState({ message: event.target.value })}
-                            rows={3}
-                            style={{ margin: "10px 0px", }}
-                        />,
-                        <Button
-                            key="back"
-                            type="danger"
-                        // onClick={async () => await this.handleMngList("rejected")}
-                        >
-                            Từ chối
-                    </Button>,
-                        <Button
-                            key="submit"
-                            type="primary"
-                        // onClick={async () => await this.handleMngList("accepted")}
-                        >
-                            Chấp nhận
-                    </Button>
-                    ]}
-                >
-                </Modal>
                 <div className="common-content">
+                    <Modal
+                        visible={show_modal}
+                        title="XEM TRƯỚC BÀI VIẾT"
+                        onCancel={this.onToggleModal}
+                        style={{ top: "5vh" }}
+                        footer={[
+                            <Button
+                                key="back"
+                                type="danger"
+                                onClick={this.onToggleModal}
+                            >
+                                Thoát
+                        </Button>
+                        ]}
+                    >
+                        <h5>{annoucement_detail.title}</h5>
+                        <div className="annou-edit-modal">
+                            <p>
+                                <Icon type="user" />
+                                <IptLetter value={" " + annoucement_detail.admin.firstName + " " + annoucement_detail.admin.lastName} />
+                            </p>
+                            <p>
+                                <Icon type="calendar" />
+                                <IptLetter value={timeConverter(annoucement_detail.createdDate, 1000)} />
+                            </p>
+                            <Rate disabled defaultValue={4} />
+                            <div className="content-edit" dangerouslySetInnerHTML={{ __html: annoucement_detail.content }} />
+                        </div>
+                    </Modal>
+
                     <h5>
                         Quản lí bài viết
                         <Button
@@ -328,7 +360,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                         <div className="table-operations">
                             <Row >
                                 <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
-                                    <p>Chọn loại đối tượng</p>
+                                    <p>
+                                        <IptLetter value={"Chọn loại đối tượng"} />
+                                    </p>
                                     <Select
                                         showSearch
                                         defaultValue="Tất cả"
@@ -344,7 +378,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
-                                    <p>Chọn loại bài đăng</p>
+                                    <p>
+                                        <IptLetter value={"Chọn loại bài đăng"} />
+                                    </p>
                                     <Select
                                         showSearch
                                         placeholder="Tất cả"
@@ -361,7 +397,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={14} xl={12} xxl={8} >
-                                    <p>Chọn loại bài đăng</p>
+                                    <p>
+                                        <IptLetter value={"Chọn thời gian đăng bài"} />
+                                    </p>
                                     <DatePicker
                                         placeholder="Chọn ngày tạo bài"
                                         defaultValue={timeConverter('01/01/1970')}
@@ -375,9 +413,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     </DatePicker>
                                     <Select
                                         showSearch
-                                        placeholder="Tất cả"
-                                        style={{ margin: "5px 10px" }}
-                                        defaultValue={"Tất cả"}
+                                        style={{ margin: "0px 10px" }}
+                                        defaultValue={"Trạng thái"}
                                         onChange={this.onChangeHidden}
                                     >
                                         <Option value={null}>Tất cả</Option>
@@ -388,14 +425,14 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             </Row>
                         </div>
                         <Table
-                            columns={this.columns}
+                            loading={loading_table}
                             dataSource={data_table} scroll={{ x: 1000 }}
                             bordered
                             pagination={{ total: 20 }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            onRowClick={this.handleId}
-                            onRow={event => localStorage.setItem("id_mgm", event.key)}
+                            columns={this.columns}
+                            onRow={event => { localStorage.setItem("id_mgm", event.key) }}
                         />
                     </div>
                 </div>
@@ -406,12 +443,14 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getTypeManagement: (data) => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data }),
-    getAnnoucements: (body) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS, body })
+    getAnnoucements: (body) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS, body }),
+    getAnnoucementDetail: (id) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id })
 })
 
 const mapStateToProps = (state, ownProps) => ({
     type_management: state.TypeManagement.items,
     list_announcements: state.Announcements.items,
+    annoucement_detail: state.AnnouncementDetail.data,
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;

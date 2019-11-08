@@ -58,7 +58,7 @@ export const NewSelect = (props: INewSelect) => {
 }
 
 export const InputTitle = (props: IInputitleProps) => {
-    let { defaultValue, value, list_value, placeholder, onChange, widthComponent , children} = props;
+    let { defaultValue, value, list_value, placeholder, onChange, widthComponent, children } = props;
     let ComponentReturn;
     switch (props.type) {
         case "INPUT":
@@ -84,13 +84,7 @@ export const InputTitle = (props: IInputitleProps) => {
             );
             break;
         default:
-            ComponentReturn = (
-                <NewInput
-                    value={value}
-                    defaultValue={defaultValue}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                />);
+            ComponentReturn = null;
             break;
     }
 

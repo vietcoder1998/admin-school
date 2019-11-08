@@ -32,27 +32,3 @@ export function Timer(props) {
         </label>
     )
 }
-
-export interface IListOfIconProps {
-    list_icon: Array<any>;
-    _choseIcon: Function;
-}
-
-export interface IListOfIconState {
-}
-
-export class ListIcon extends React.PureComponent<IListOfIconProps, IListOfIconState> {
-    render() {
-        let { list_icon } = this.props;
-        let newListIcon = list_icon.map((item, index) =>
-            <span key={index} onClick={() => this.props._choseIcon(item)}>
-                <IconLabel  {...item} />
-            </span>
-        )
-        return (
-            <div >
-                {newListIcon}
-            </div>
-        )
-    }
-}

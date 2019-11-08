@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Layout, Menu, Icon } from 'antd';
 import './MenuNavigation.scss';
+import logo from '../../../../logo-01.png'
 import { Link } from 'react-router-dom';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -21,10 +22,16 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
 
     render() {
         let { show_menu } = this.props;
+        let state_bar = '1';
+        if (localStorage.getItem("state_bar")) {
+            state_bar = localStorage.getItem("state_bar")
+        }
         return (
             <Sider trigger={null} collapsible collapsed={show_menu}>
-                <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+                <div className="logo" style={{ padding: show_menu ? "20px 0px" : "0px 0px" }} >
+                    <img src={logo} style={{ height: "40px", display: !show_menu ? "block" : "none" }} />
+                </div>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={[state_bar]} onClick={event => localStorage.setItem("state_bar", event.key)}>
                     <Menu.Item key="1" >
                         <Link to='/admin/pending-jobs' >
                             <Icon type="hourglass" />
@@ -72,7 +79,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                         </Menu.Item>
                     </SubMenu>
                 </Menu>
-            </Sider>
+            </Sider >
         )
     }
 }

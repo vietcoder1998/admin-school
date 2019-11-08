@@ -2,7 +2,7 @@ import { notification } from 'antd';
 import { GET, POST, PUT, DELETE } from '../common/const/method';
 import { _delete, _get, _post, _put } from './base-api';
 import { exceptionShowNoti } from '../config/exception';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { TYPE } from '../common/const/type';
 
 export const _requestToServer = async (
@@ -40,12 +40,12 @@ export const _requestToServer = async (
                 notification.success({ description: res.msg, message: "Worksvn thông báo" })
             } else
                 if (show_alert) {
-                    swal({
-                        title: "Worksvn thông báo",
-                        text: res.msg,
-                        icon: TYPE.SUCCESS,
-                        dangerMode: false,
-                    });
+                    let msg = TYPE.SUCCESS;
+                    Swal.fire(
+                        "Worksvn thông báo",
+                        msg,
+                        'success',
+                    );
                 };
         }
 

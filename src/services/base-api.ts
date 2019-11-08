@@ -48,7 +48,7 @@ export const _delete = async (data?: any, api?: string, another_host?: string, h
     }
 
     let requestURL = host + api;
-    let response = await axios.delete(requestURL, { params: JSON.stringify(params), headers });
+    let response = await axios.delete(requestURL, { params: JSON.stringify(params), headers, data });
 
     return response.data;
 };

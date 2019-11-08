@@ -24,11 +24,18 @@ code {
 }
 .ant-layout-content {
   margin: 60px 10px 10px !important;
-  padding: 20px 10px !important;
+  padding: 10px 10px !important;
   background-color: none;
   min-height: 100vh !important;
 }
 
+.ant-layout-has-sider{
+  margin-bottom: -20px;
+}
+
+.ant-breadcrumb {
+  padding-bottom: 10px!important;
+}
 .all-content {
   background-color: whitesmoke;
   height: calc(100vh - 120px);
@@ -41,7 +48,7 @@ code {
 .ant-modal-body {
   height: 55vh;
   overflow: auto;
-  background-color: #f1f1f1;
+  background-color: #f1f1f1a7;
 }
 
 .ant-modal {
