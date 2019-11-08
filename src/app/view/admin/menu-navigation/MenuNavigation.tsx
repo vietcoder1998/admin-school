@@ -29,7 +29,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
         return (
             <Sider trigger={null} collapsible collapsed={show_menu}>
                 <div className="logo" style={{ padding: show_menu ? "20px 0px" : "0px 0px" }} >
-                    <img src={logo} style={{ height: "40px", display: !show_menu ? "block" : "none" }} />
+                    <img src={logo} style={{ height: "40px", display: !show_menu ? "block" : "none" }} alt="worksvnlogo"/>
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={[state_bar]} onClick={event => localStorage.setItem("state_bar", event.key)}>
                     <Menu.Item key="1" >

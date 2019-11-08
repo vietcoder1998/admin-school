@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
-import { Button, Table, Icon, Select, Row, Col, Modal, Input, DatePicker, Rate } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Modal, DatePicker, Rate } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../common/utils/convertTime';
 import './MngList.scss';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -213,6 +213,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             return {
                 list_announcements: nextProps.type_management,
                 data_table,
+                loading_table: false,
             }
         } return null;
     }
@@ -227,6 +228,11 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         }
     }
 
+    setPageIndex = async (event) => {
+        await this.setState({ pageIndex: event.current - 1, loading_table: true });
+        await this.searchAnnouncement();
+    }
+
     searchAnnouncement = async () => {
         let {
             pageIndex,
@@ -237,7 +243,6 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             target,
         } = this.state;
 
-        await this.setState({ loading_table: true });
         await this.props.getAnnoucements({
             pageIndex,
             createdDate,
@@ -246,8 +251,6 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             hidden,
             target
         });
-
-        await this.setState({ loading_table: false })
     }
 
     onChangeTarget = (event) => {
@@ -286,11 +289,6 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         }
 
         this.setState({ hidden })
-    }
-
-    setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1 });
-        await this.searchAnnouncement();
     }
 
     render() {

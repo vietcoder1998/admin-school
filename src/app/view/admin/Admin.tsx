@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Dropdown, Menu, Breadcrumb } from 'antd';
+import { Layout, Icon, Avatar, Dropdown, Menu, Breadcrumb, Progress } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -56,7 +56,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             }
         }
 
-        return null
+        return null;
     }
 
     menu = (
@@ -108,7 +108,6 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             </Dropdown>
                         </div>
                     </Header>
-
                     <Content
                         style={{
                             margin: '24px 16px',
@@ -118,6 +117,17 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
+                        {/* <Progress
+                            percent={30}
+                            size="small"
+                            status="active"
+                            style={{
+                                position: "fixed",
+                                top: "-7px",
+                                left: "80px",
+                                zIndex: 999,
+                                width: "calc(100vw - 100px)"
+                            }} /> */}
                         <Breadcrumb >
                             <Breadcrumb.Item >
                                 <a href='/admin' >

@@ -77,6 +77,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
             jobId: "",
             show_job: false,
             loading: false,
+            loading_table: true,
         }
     }
 
@@ -174,7 +175,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     }
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1 });
+        await this.setState({ pageIndex: event.current - 1 , loading_table: true});
         await this.searchJob();
     }
 
@@ -201,7 +202,8 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
 
             return {
                 list_jobs: nextProps.list_jobs,
-                data_table
+                data_table,
+                loading_table: false
             }
         }
         return null;

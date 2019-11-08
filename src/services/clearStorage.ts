@@ -1,6 +1,5 @@
 import Cookies from 'universal-cookie';
 import Swal from "sweetalert2";
-import { TYPE } from './../common/const/type';
 
 export default async function clearStorage() {
     localStorage.clear();
