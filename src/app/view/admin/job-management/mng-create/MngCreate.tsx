@@ -92,7 +92,6 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             }
         }
 
-
         return null
     }
 
