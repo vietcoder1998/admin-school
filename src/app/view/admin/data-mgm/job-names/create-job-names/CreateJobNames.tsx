@@ -25,7 +25,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
         return (
             <Fragment >
                 <div>
-                    <h5>Tạo mới ngôn ngữ</h5>
+                    <h5>Thêm công việc mới</h5>
                 </div>
             </Fragment>
         )

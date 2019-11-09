@@ -25,7 +25,7 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
         return (
             <Fragment >
                 <div>
-                    <h5>Tạo mới ngôn ngữ</h5>
+                    <h5>Thêm ngôn ngữ mới</h5>
                 </div>
             </Fragment>
         )

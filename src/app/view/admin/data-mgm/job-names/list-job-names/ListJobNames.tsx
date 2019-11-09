@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { IJobName } from '../../../../../../redux/models/job-type';
+import { Link } from 'react-router-dom';
 
 interface ListJobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -99,11 +100,18 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                     <h5>
                         Danh sách tên công việc
                         <Button
+                            onClick={() => { }}
                             type="primary"
-                            icon="plus"
-                            style={{ float: "right" }}
+                            size="default"
+                            style={{
+                                float: "right",
+                            }}
                         >
-                            Thêm công việc mới
+
+                            <Link to='/admin/data/job-names/create'>
+                                <Icon type="plus" />
+                                Thêm loại công việc mới
+                            </Link>
                         </Button>
                     </h5>
                     <div className="table">

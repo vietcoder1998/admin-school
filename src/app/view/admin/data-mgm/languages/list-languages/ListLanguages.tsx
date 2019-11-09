@@ -106,13 +106,11 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                             style={{
                                 float: "right",
                             }}
-                            icon="plus"
                         >
 
                             <Link to='/admin/data/languages/create'>
                                 <Icon type="plus" />
                                 Thêm ngôn ngữ mới
-
                             </Link>
                         </Button>
                     </h5>

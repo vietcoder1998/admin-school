@@ -26,7 +26,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
         return (
             <Fragment >
                 <div>
-                    <h5>Tạo mới ngôn ngữ</h5>
+                    <h5>Thêm ngành nghề mới</h5>
                 </div>
             </Fragment>
         )
