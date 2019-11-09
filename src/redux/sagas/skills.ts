@@ -13,7 +13,7 @@ function* getListSkillsData(action) {
     if (res.code === 200) {
         let data: ISkills = res.data;
         yield put({
-            type: REDUX.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
+            type: REDUX.SKILLS.GET_SKILLS,
             data
         });
     }
@@ -45,7 +45,7 @@ function callSkills(action) {
 
 export function* SkillsWatcher() {
     yield takeEvery(
-        REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
+        REDUX_SAGA.SKILLS.GET_SKILLS,
         getListSkillsData
     )
 }

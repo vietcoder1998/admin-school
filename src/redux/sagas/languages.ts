@@ -12,7 +12,7 @@ function* getListLanguagesData(action) {
     if (res.code === 200) {
         let data: ILanguages = res.data;
         yield put({
-            type: REDUX.REGIONS.GET_REGIONS,
+            type: REDUX.LANGUAGES.GET_LANGUAGES,
             data
         });
     }
@@ -44,7 +44,7 @@ function callLanguages(action) {
 
 export function* LanguagesWatcher() {
     yield takeEvery(
-        REDUX_SAGA.REGIONS.GET_REGIONS,
+        REDUX_SAGA.LANGUAGES.GET_LANGUAGES,
         getListLanguagesData
     )
 }

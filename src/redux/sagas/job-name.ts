@@ -1,3 +1,4 @@
+import { IJobNames } from './../models/job-type';
 import { noInfoHeader } from '../../services/auth';
 import { GET } from '../../common/const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
@@ -9,9 +10,15 @@ import { JOB_NAME } from '../../services/api/public.api';
 
 function* getListJobNameData(action) {
     let res = yield call(callJobName, action);
+    let data: IJobNames = {
+        items: [],
+        pageIndex: 0,
+        pageSize: 0,
+        totalItems: 0,
+    }
 
     if (res.code === 200) {
-       let data = res.data;
+       data = res.data;
         yield put({
             type: REDUX.JOB_NAME.GET_JOB_NAME,
             data

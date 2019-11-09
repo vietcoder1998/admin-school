@@ -1,3 +1,7 @@
+import { Skills } from './../reducers/skills';
+import { TypeSchools } from './../reducers/type-school';
+import { Regions } from './../reducers/regions';
+import { Languages } from './../reducers/languages';
 import { combineReducers } from 'redux';
 import {PendingJobs} from '../reducers/pending-jobs';
 import {JobName} from '../reducers/job-name';
@@ -11,7 +15,11 @@ const myReducer = combineReducers({
     JobName,
     TypeManagement,
     Announcements,
-    AnnouncementDetail
+    AnnouncementDetail,
+    Languages,
+    Regions,
+    TypeSchools,
+    Skills,
 })
 
 export default myReducer

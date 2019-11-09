@@ -7,6 +7,7 @@ import PendingJobs from './pending-jobs/PendingJobs';
 import { REDUX_SAGA } from '../../../common/const/actions';
 import { connect } from 'react-redux';
 import JobManagement from './job-management/JobManagement';
+import DataMgm from './data-mgm/DataMgm';
 import clearStorage from '../../../services/clearStorage';
 import { breakCumb } from '../../../common/const/break-cumb';
 
@@ -141,7 +142,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         <Switch>
                             <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
                             <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
-                            <ErrorBoundaryRoute path={`${match.url}/data`} component={JobManagement} />
+                            <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
                         </Switch>
                     </Content>
                 </Layout>

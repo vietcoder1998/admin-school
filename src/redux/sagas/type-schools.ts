@@ -1,5 +1,4 @@
 import { TYPE_SCHOOLS } from './../../services/api/private.api';
-// TODO: Saga type school
 import { ITypeSchools } from './../models/type-schools';
 import { authHeaders } from './../../services/auth';
 import { GET } from '../../common/const/method';
@@ -14,7 +13,7 @@ function* getListTypeSchoolsData(action) {
     if (res.code === 200) {
         let data: ITypeSchools = res.data;
         yield put({
-            type: REDUX.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
+            type: REDUX.TYPE_SCHOOLS.GET_TYPE_SCHOOLS,
             data
         });
     }
@@ -46,7 +45,7 @@ function callTypeSchools(action) {
 
 export function* TypeSchoolsWatcher() {
     yield takeEvery(
-        REDUX_SAGA.TYPE_SCHOOLS.GET_TYPE_SCHOOL,
+        REDUX_SAGA.TYPE_SCHOOLS.GET_TYPE_SCHOOLS,
         getListTypeSchoolsData
     )
 }

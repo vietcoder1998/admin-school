@@ -31,14 +31,15 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
 
     render() {
         let { path } = this.props.match;
+        console.log(path);
         return (
             <Fragment >
                 <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/languages`} component={Languages} />
-                    <ErrorBoundaryRoute exact path={`${path}/regions`} component={Regions} />
-                    <ErrorBoundaryRoute exact path={`${path}/majors`} component={Majors} />
-                    <ErrorBoundaryRoute exact path={`${path}/job-names`} component={JobNames} />
-                    <ErrorBoundaryRoute exact path={`${path}/skills`} component={Skills} />
+                    <ErrorBoundaryRoute  path={`${path}/languages`} component={Languages} />
+                    <ErrorBoundaryRoute  path={`${path}/regions`} component={Regions} />
+                    <ErrorBoundaryRoute  path={`${path}/majors`} component={Majors} />
+                    <ErrorBoundaryRoute  path={`${path}/job-names`} component={JobNames} />
+                    <ErrorBoundaryRoute  path={`${path}/skills`} component={Skills} />
                 </Switch>
             </Fragment>
         )

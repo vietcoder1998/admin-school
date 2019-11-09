@@ -63,7 +63,7 @@ export const REDUX_SAGA = {
     },
 
     TYPE_SCHOOLS: {
-        GET_TYPE_SCHOOL: "GET_TYPE_SCHOOL",
+        GET_TYPE_SCHOOLS: "GET_TYPE_SCHOOLS_DATA",
 
     },
 

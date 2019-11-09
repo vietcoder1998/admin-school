@@ -7,6 +7,7 @@ import { AnnouncementDetailWatcher } from '../sagas/announcement-detail';
 import { TypeSchoolsWatcher } from '../sagas/type-schools';
 import { RegionsWatcher } from '../sagas/regions';
 import { SkillsWatcher } from '../sagas/skills';
+import { LanguagesWatcher } from '../sagas/languages';
 
 export default function* rootSaga() {
     yield all([
@@ -18,5 +19,6 @@ export default function* rootSaga() {
         TypeSchoolsWatcher(),
         RegionsWatcher(),
         SkillsWatcher(),
+        LanguagesWatcher()
     ])
 } 

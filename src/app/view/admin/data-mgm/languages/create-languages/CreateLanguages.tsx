@@ -1,23 +1,19 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
-import CreateLanguages from './create-languages/CreateLanguages';
-import ListLanguages from './list-languages/ListLanguages';
-
 const Switch = require("react-router-dom").Switch;
 
-interface LanguagesState {
+interface CreateLanguagesState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface LanguagesProps extends StateProps, DispatchProps {
+interface CreateLanguagesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getJobNames: Function;
     getTypeManagement: Function;
 }
 
-class Languages extends PureComponent<LanguagesProps, LanguagesState> {
+class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguagesState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,13 +24,11 @@ class Languages extends PureComponent<LanguagesProps, LanguagesState> {
 
     render() {
         let { path } = this.props.match;
-        console.log(path);
         return (
             <Fragment >
-                <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateLanguages} />
-                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListLanguages} />
-                </Switch>
+                <div>
+                    <h5>Tạo mới ngôn ngữ</h5>
+                </div>
             </Fragment>
         )
     }
@@ -50,4 +44,4 @@ const mapStateToProps = (state, ownProps) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Languages)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateLanguages)

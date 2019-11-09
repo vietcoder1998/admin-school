@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import './Regions.scss';
 import { connect } from 'react-redux';
-const Switch = require("react-router-dom").Switch;
+const Switch = require("react-router-dom").Switch;  
 
 interface RegionsState {
     show_menu: boolean;
