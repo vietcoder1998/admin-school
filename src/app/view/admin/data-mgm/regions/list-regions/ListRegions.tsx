@@ -4,23 +4,23 @@ import { Icon, Table } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { ILanguage } from '../../../../../../redux/models/languages';
 
-interface ListLanguagesProps extends StateProps, DispatchProps {
+interface ListRegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListLanguages: Function;
+    getListRegions: Function;
 }
 
-interface ListLanguagesState {
-    list_languages: Array<ILanguage>,
+interface ListRegionsState {
+    list_regions: Array<ILanguage>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
 }
 
-class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState> {
+class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_languages: [],
+            list_regions: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -28,14 +28,14 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     }
 
     async componentDidMount() {
-        await this.props.getListLanguages(0, 10);
+        await this.props.getListRegions(0, 10);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_languages !== prevState.list_languages) {
+        if (nextProps.list_regions !== prevState.list_regions) {
             let data_table = [];
             let { pageIndex } = prevState;
-            nextProps.list_languages.forEach((item, index) => {
+            nextProps.list_regions.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
@@ -44,13 +44,14 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             })
 
             return {
-                list_languages: nextProps.list_languages,
+                list_regions: nextProps.list_regions,
                 data_table,
                 loading_table: false
             }
         }
         return null;
     }
+
     
     EditContent = (
         <div>
@@ -68,7 +69,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             className: 'action',
         },
         {
-            title: 'Tên ngôn ngữ',
+            title: 'Tên tỉnh thành',
             dataIndex: 'name',
             key: 'name',
             width: 700,
@@ -87,7 +88,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
 
     setPageIndex =async (event) => {
         await this.setState({pageIndex: event.current -1,loading_table: true});
-        this.props.getListLanguages(event.current - 1)
+        this.props.getListRegions(event.current - 1)
     }
 
     render() {
@@ -96,7 +97,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         return (
             <Fragment >
                 <div>
-                    <h5>Danh sách ngôn ngữ</h5>
+                    <h5>Danh sách tỉnh thành</h5>
                     <Table
                         columns={this.columns}
                         loading={loading_table}
@@ -114,15 +115,15 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListLanguages: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES, pageIndex, pageSize })
+    getListRegions: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_languages: state.Languages.items,
-    totalItems: state.Languages.totalItems
+    list_regions: state.Regions.items,
+    totalItems: state.Regions.totalItems
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListLanguages)
+export default connect(mapStateToProps, mapDispatchToProps)(ListRegions)

@@ -1,18 +1,18 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 
-interface CreateLanguagesState {
+interface CreateMajorsState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface CreateLanguagesProps extends StateProps, DispatchProps {
+interface CreateMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getJobNames: Function;
     getTypeManagement: Function;
 }
 
-class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguagesState> {
+class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,6 +22,7 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
     }
 
     render() {
+        
         return (
             <Fragment >
                 <div>
@@ -42,4 +43,4 @@ const mapStateToProps = (state, ownProps) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateLanguages)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMajors)

@@ -1,26 +1,26 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table } from 'antd';
+import { Button, Icon, Table } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { ILanguage } from '../../../../../../redux/models/languages';
 
-interface ListLanguagesProps extends StateProps, DispatchProps {
+interface ListSkillsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListLanguages: Function;
+    getListSkills: Function;
 }
 
-interface ListLanguagesState {
-    list_languages: Array<ILanguage>,
+interface ListSkillsState {
+    list_skills: Array<ILanguage>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
 }
 
-class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState> {
+class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_languages: [],
+            list_skills: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -28,14 +28,14 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     }
 
     async componentDidMount() {
-        await this.props.getListLanguages(0, 10);
+        await this.props.getListSkills(0, 10);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_languages !== prevState.list_languages) {
+        if (nextProps.list_skills !== prevState.list_skills) {
             let data_table = [];
             let { pageIndex } = prevState;
-            nextProps.list_languages.forEach((item, index) => {
+            nextProps.list_skills.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
@@ -44,20 +44,13 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             })
 
             return {
-                list_languages: nextProps.list_languages,
+                list_skills: nextProps.list_skills,
                 data_table,
                 loading_table: false
             }
         }
         return null;
     }
-    
-    EditContent = (
-        <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() =>{}} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => {}} />
-        </div>
-    )
 
     columns = [
         {
@@ -68,7 +61,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             className: 'action',
         },
         {
-            title: 'Tên ngôn ngữ',
+            title: 'Tên Kĩ năng',
             dataIndex: 'name',
             key: 'name',
             width: 700,
@@ -81,13 +74,13 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             className: 'action',
             width: 300,
             fixed: "right",
-            render: () => this.EditContent,
+            render: () => <Button onClick={async () => { }} type="primary"><Icon type="file-search" /></Button>,
         },
     ];
 
     setPageIndex =async (event) => {
         await this.setState({pageIndex: event.current -1,loading_table: true});
-        this.props.getListLanguages(event.current - 1)
+        this.props.getListSkills(event.current - 1)
     }
 
     render() {
@@ -96,7 +89,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         return (
             <Fragment >
                 <div>
-                    <h5>Danh sách ngôn ngữ</h5>
+                    <h5>Danh sách kĩ năng</h5>
                     <Table
                         columns={this.columns}
                         loading={loading_table}
@@ -114,15 +107,15 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListLanguages: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES, pageIndex, pageSize })
+    getListSkills: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.SKILLS.GET_SKILLS, pageIndex, pageSize })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_languages: state.Languages.items,
-    totalItems: state.Languages.totalItems
+    list_skills: state.Skills.items,
+    totalItems: state.Skills.totalItems
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListLanguages)
+export default connect(mapStateToProps, mapDispatchToProps)(ListSkills)

@@ -1,7 +1,7 @@
-import { ITypeSchools } from './../models/type-schools';
+import { ILanguages } from './../models/languages';
 import { REDUX } from '../../common/const/actions';
 
-export const getTypeManagement = (data: ITypeSchools) => ({
+export const getListLanguages = (data: ILanguages) => ({
     type: REDUX.LANGUAGES.GET_LANGUAGES, 
     data
 });

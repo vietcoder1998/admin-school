@@ -7,7 +7,7 @@ export const REDUX = {
         GET_PENDING_JOBS: "GET_PENDING_JOBS",
     },
 
-    JOB_NAME: {
+    JOB_NAMES: {
         GET_JOB_NAME: "GET_JOB_NAME",
     },
 
@@ -37,6 +37,10 @@ export const REDUX = {
 
     SKILLS: {
         GET_SKILLS: "GET_SKILLS"
+    },
+
+    MAJORS: {
+        GET_MAJORS: "GET_MAJORS"
     }
 };
 
@@ -46,7 +50,7 @@ export const REDUX_SAGA = {
         GET_PENDING_JOBS: "GET_PENDING_JOBS_DATA",
     },
 
-    JOB_NAME: {
+    JOB_NAMES: {
         GET_JOB_NAME: "GET_JOB_NAME_DATA",
     },
 
@@ -78,4 +82,8 @@ export const REDUX_SAGA = {
     SKILLS: {
         GET_SKILLS: "GET_SKILLS_DATA"
     },
+
+    MAJORS: {
+        GET_MAJORS: "GET_MAJORS_DATA"
+    }
 }

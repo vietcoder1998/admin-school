@@ -79,7 +79,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                         </Menu.Item>
                         <Menu.Item key="11">
                             <Link to={'/admin/data/type-schools/list'}>
-                                <Icon type="idcard" />
+                                <Icon type="reconciliation" />
                                 <span>Loại trường</span>
                             </Link>
                         </Menu.Item>

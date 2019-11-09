@@ -1,10 +1,11 @@
+import { Majors } from './../reducers/majors';
 import { Skills } from './../reducers/skills';
 import { TypeSchools } from './../reducers/type-school';
 import { Regions } from './../reducers/regions';
 import { Languages } from './../reducers/languages';
 import { combineReducers } from 'redux';
 import {PendingJobs} from '../reducers/pending-jobs';
-import {JobName} from '../reducers/job-name';
+import {JobNames} from '../reducers/job-names';
 import {TypeManagement} from '../reducers/type-management';
 import {Announcements} from '../reducers/announcements';
 import {AnnouncementDetail} from '../reducers/announcement-detail';
@@ -12,7 +13,7 @@ import {AnnouncementDetail} from '../reducers/announcement-detail';
 
 const myReducer = combineReducers({
     PendingJobs,
-    JobName,
+    JobNames,
     TypeManagement,
     Announcements,
     AnnouncementDetail,
@@ -20,6 +21,7 @@ const myReducer = combineReducers({
     Regions,
     TypeSchools,
     Skills,
+    Majors
 })
 
 export default myReducer

@@ -27,8 +27,7 @@ class Languages extends PureComponent<LanguagesProps, LanguagesState> {
     }
 
     render() {
-        let { path } = this.props.match;
-        console.log(path);
+        let {path} = this.props.match
         return (
             <Fragment >
                 <Switch>

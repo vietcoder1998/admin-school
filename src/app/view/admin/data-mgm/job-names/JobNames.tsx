@@ -1,6 +1,9 @@
 import React, { PureComponent, Fragment } from 'react'
-import './JobNames.scss';
 import { connect } from 'react-redux';
+import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
+import CreateJobNames from './create-job-names/CreateJobNames';
+import ListJobNames from './list-job-names/ListJobNames';
+
 const Switch = require("react-router-dom").Switch;
 
 interface JobNamesState {
@@ -24,10 +27,13 @@ class JobNames extends PureComponent<JobNamesProps, JobNamesState> {
     }
 
     render() {
-        let { path } = this.props.match;
+        let {path} = this.props.match;
         return (
             <Fragment >
-                job Name
+                <Switch>
+                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateJobNames} />
+                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListJobNames} />
+                </Switch>
             </Fragment>
         )
     }

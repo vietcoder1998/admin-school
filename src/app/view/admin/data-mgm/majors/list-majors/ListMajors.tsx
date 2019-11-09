@@ -2,25 +2,25 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { ILanguage } from '../../../../../../redux/models/languages';
+import { IMajor } from '../../../../../../redux/models/majors';
 
-interface ListLanguagesProps extends StateProps, DispatchProps {
+interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListLanguages: Function;
+    getListMajors: Function;
 }
 
-interface ListLanguagesState {
-    list_languages: Array<ILanguage>,
+interface ListMajorsState {
+    list_majors: Array<IMajor>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
 }
 
-class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState> {
+class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_languages: [],
+            list_majors: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -28,29 +28,31 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     }
 
     async componentDidMount() {
-        await this.props.getListLanguages(0, 10);
+        await this.props.getListMajors(0, 10);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_languages !== prevState.list_languages) {
+        if (nextProps.list_majors !== prevState.list_majors) {
             let data_table = [];
             let { pageIndex } = prevState;
-            nextProps.list_languages.forEach((item, index) => {
+            nextProps.list_majors.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
                     name: item.name,
+                    branchName: item.branch ?  item.branch.name : "Khác"
                 });
             })
 
             return {
-                list_languages: nextProps.list_languages,
+                list_majors: nextProps.list_majors,
                 data_table,
                 loading_table: false
             }
         }
         return null;
     }
+
     
     EditContent = (
         <div>
@@ -68,10 +70,17 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             className: 'action',
         },
         {
-            title: 'Tên ngôn ngữ',
+            title: 'Tên chuyên ngành',
             dataIndex: 'name',
             key: 'name',
-            width: 700,
+            width: 500,
+            className: 'action',
+
+        },{
+            title: 'Hình thức',
+            dataIndex: 'branchName',
+            key: 'branchName',
+            width: 400,
             className: 'action',
 
         },
@@ -87,7 +96,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
 
     setPageIndex =async (event) => {
         await this.setState({pageIndex: event.current -1,loading_table: true});
-        this.props.getListLanguages(event.current - 1)
+        this.props.getListMajors(event.current - 1)
     }
 
     render() {
@@ -96,7 +105,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         return (
             <Fragment >
                 <div>
-                    <h5>Danh sách ngôn ngữ</h5>
+                    <h5>Danh sách ngành nghề</h5>
                     <Table
                         columns={this.columns}
                         loading={loading_table}
@@ -114,15 +123,15 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListLanguages: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES, pageIndex, pageSize })
+    getListMajors: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.MAJORS.GET_MAJORS, pageIndex, pageSize })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_languages: state.Languages.items,
-    totalItems: state.Languages.totalItems
+    list_majors: state.Majors.items,
+    totalItems: state.Majors.totalItems
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListLanguages)
+export default connect(mapStateToProps, mapDispatchToProps)(ListMajors)

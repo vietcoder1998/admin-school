@@ -32,7 +32,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     constructor(props) {
         super(props);
         this.state = {
-            show_menu: true,
+            show_menu: false,
             to_logout: false,
             location: "/",
             data_breakcumb: []
@@ -153,7 +153,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getJobNames: (body) => dispatch({
-        type: REDUX_SAGA.JOB_NAME.GET_JOB_NAME,
+        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAME,
         body
     }),
     getTypeManagement: (data) => dispatch({

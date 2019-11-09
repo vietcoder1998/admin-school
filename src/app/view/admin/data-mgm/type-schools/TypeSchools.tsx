@@ -1,23 +1,23 @@
 import React, { PureComponent, Fragment } from 'react'
-import './JobManagement.scss';
-import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
+import './TypeSchools.scss';
+import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';
-import MngList from './mng-list/MngList';
-import MngCreate from './mng-create/MngCreate';
+import CreateTypeSchools from './create-type-schools/CreateTypeSchools';
+import ListTypeSchools from './list-type-schools/ListTypeSchools';
 const Switch = require("react-router-dom").Switch;
 
-interface JobManagementState {
+interface ITypeSchoolsState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface JobManagementProps extends StateProps, DispatchProps {
+interface ITypeSchoolsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
+    getTypeSchools: Function;
     getTypeManagement: Function;
 }
 
-class JobManagement extends PureComponent<JobManagementProps, JobManagementState> {
+class TypeSchools extends PureComponent<ITypeSchoolsProps, ITypeSchoolsState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,10 +30,9 @@ class JobManagement extends PureComponent<JobManagementProps, JobManagementState
         let {path} = this.props.match
         return (
             <Fragment >
-                <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/list`} component={MngList} />
-                    <ErrorBoundaryRoute exact path={`${path}/create`} component={MngCreate} />
-                    <ErrorBoundaryRoute exact path={`${path}/fix/:id`} component={MngCreate} />
+                  <Switch>
+                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateTypeSchools} />
+                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListTypeSchools} />
                 </Switch>
             </Fragment>
         )
@@ -50,4 +49,4 @@ const mapStateToProps = (state, ownProps) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobManagement)
+export default connect(mapStateToProps, mapDispatchToProps)(TypeSchools)

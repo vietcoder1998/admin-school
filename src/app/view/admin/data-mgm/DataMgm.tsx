@@ -7,6 +7,7 @@ import Regions from './regions/Regions';
 import Majors from './majors/Majors';
 import JobNames from './job-names/JobNames';
 import Skills from './skills/Skills';
+import TypeSchools from './type-schools/TypeSchools';
 const Switch = require("react-router-dom").Switch;
 
 interface DataMgmState {
@@ -30,8 +31,7 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
     }
 
     render() {
-        let { path } = this.props.match;
-        console.log(path);
+       let {path} = this.props.match
         return (
             <Fragment >
                 <Switch>
@@ -40,6 +40,7 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
                     <ErrorBoundaryRoute  path={`${path}/majors`} component={Majors} />
                     <ErrorBoundaryRoute  path={`${path}/job-names`} component={JobNames} />
                     <ErrorBoundaryRoute  path={`${path}/skills`} component={Skills} />
+                    <ErrorBoundaryRoute  path={`${path}/type-schools`} component={TypeSchools} />
                 </Switch>
             </Fragment>
         )

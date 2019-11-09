@@ -1,5 +1,5 @@
-import { LANGUAGES } from './../../services/api/private.api';
-import { ILanguages } from './../models/languages';
+import { MAJORS } from './../../services/api/private.api';
+import { IMajors } from './../models/majors';
 import { authHeaders } from './../../services/auth';
 import { GET } from '../../common/const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
@@ -7,18 +7,18 @@ import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 import { ADMIN_HOST } from '../../environment/dev';
 
-function* getListLanguagesData(action) {
-    let res = yield call(callLanguages, action);
+function* getListMajorsData(action) {
+    let res = yield call(callMajors, action);
     if (res.code === 200) {
-        let data: ILanguages = res.data;
+        let data: IMajors = res.data;
         yield put({
-            type: REDUX.LANGUAGES.GET_LANGUAGES,
+            type: REDUX.MAJORS.GET_MAJORS,
             data
         });
     }
 }
 
-function callLanguages(action) {
+function callMajors(action) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -32,7 +32,7 @@ function callLanguages(action) {
     return _requestToServer(
         GET,
         null,
-        LANGUAGES,
+        MAJORS,
         ADMIN_HOST,
         authHeaders,
         {
@@ -42,9 +42,9 @@ function callLanguages(action) {
     )
 }
 
-export function* LanguagesWatcher() {
+export function* MajorsWatcher() {
     yield takeEvery(
-        REDUX_SAGA.LANGUAGES.GET_LANGUAGES,
-        getListLanguagesData
+        REDUX_SAGA.MAJORS.GET_MAJORS,
+        getListMajorsData
     )
 }
