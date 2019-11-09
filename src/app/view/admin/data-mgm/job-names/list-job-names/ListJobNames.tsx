@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import {  Icon, Table } from 'antd';
+import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { IJobName } from '../../../../../../redux/models/job-type';
 
@@ -54,8 +54,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
 
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() =>{}} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => {}} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => { }} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => { }} />
         </div>
     )
 
@@ -85,8 +85,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
         },
     ];
 
-    setPageIndex =async (event) => {
-        await this.setState({pageIndex: event.current -1, loading_table: true});
+    setPageIndex = async (event) => {
+        await this.setState({ pageIndex: event.current - 1, loading_table: true });
         await this.props.getListJobNames(event.current - 1)
     }
 
@@ -96,7 +96,19 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
         return (
             <Fragment >
                 <div>
-                    <h5>Danh sách tên công việc</h5>
+                    <h5>
+                        Danh sách tên công việc
+                        <Button
+                            type="primary"
+                            icon="plus"
+                            style={{ float: "right" }}
+                        >
+                            Thêm công việc mới
+                        </Button>
+                    </h5>
+                    <div className="table">
+
+                    </div>
                     <Table
                         columns={this.columns}
                         loading={loading_table}

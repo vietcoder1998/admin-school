@@ -425,7 +425,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const mapStateToProps = (state, ownProps) => ({
     list_jobs: state.PendingJobs.list_jobs,
     totalItems: state.PendingJobs.totalItems,
-    list_jobs_group: state.JobName.items,
+    list_jobs_group: state.JobNames.items,
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;

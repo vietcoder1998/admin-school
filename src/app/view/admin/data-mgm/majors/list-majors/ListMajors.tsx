@@ -1,8 +1,9 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table } from 'antd';
+import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { IMajor } from '../../../../../../redux/models/majors';
+import { Link } from 'react-router-dom';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -40,7 +41,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
                     name: item.name,
-                    branchName: item.branch ?  item.branch.name : "Khác"
+                    branchName: item.branch ? item.branch.name : "Khác"
                 });
             })
 
@@ -53,11 +54,11 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         return null;
     }
 
-    
+
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() =>{}} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => {}} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => { }} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => { }} />
         </div>
     )
 
@@ -76,7 +77,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             width: 500,
             className: 'action',
 
-        },{
+        }, {
             title: 'Hình thức',
             dataIndex: 'branchName',
             key: 'branchName',
@@ -94,8 +95,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         },
     ];
 
-    setPageIndex =async (event) => {
-        await this.setState({pageIndex: event.current -1,loading_table: true});
+    setPageIndex = async (event) => {
+        await this.setState({ pageIndex: event.current - 1, loading_table: true });
         this.props.getListMajors(event.current - 1)
     }
 
@@ -105,17 +106,32 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         return (
             <Fragment >
                 <div>
-                    <h5>Danh sách ngành nghề</h5>
-                    <Table
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table} scroll={{ x: 1000 }}
-                        bordered
-                        pagination={{ total: totalItems }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRowClick={async event => { }}
-                    />
+                    <h5>
+                        Danh sách ngành nghề
+                        <Button
+                            type="primary"
+                            style={{
+                                float: "right",
+                            }}
+                        >
+                            <Link to='/admin/data/majors/create'>
+                                <Icon type="plus" />
+                                Thêm ngành nghề mới
+                            </Link>
+                        </Button>
+                    </h5>
+                    <div className="table">
+                        <Table
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table} scroll={{ x: 1000 }}
+                            bordered
+                            pagination={{ total: totalItems }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRowClick={async event => { }}
+                        />
+                    </div>
                 </div>
             </Fragment>
         )

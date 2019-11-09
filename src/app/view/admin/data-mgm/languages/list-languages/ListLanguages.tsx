@@ -1,8 +1,9 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table } from 'antd';
+import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { ILanguage } from '../../../../../../redux/models/languages';
+import { Link } from 'react-router-dom';
 
 interface ListLanguagesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -51,11 +52,11 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         }
         return null;
     }
-    
+
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() =>{}} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => {}} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => { }} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => { }} />
         </div>
     )
 
@@ -85,8 +86,8 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         },
     ];
 
-    setPageIndex =async (event) => {
-        await this.setState({pageIndex: event.current -1,loading_table: true});
+    setPageIndex = async (event) => {
+        await this.setState({ pageIndex: event.current - 1, loading_table: true });
         this.props.getListLanguages(event.current - 1)
     }
 
@@ -96,7 +97,25 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         return (
             <Fragment >
                 <div>
-                    <h5>Danh sách ngôn ngữ</h5>
+                    <h5>
+                        Danh sách ngôn ngữ
+                        <Button
+                            onClick={() => { }}
+                            type="primary"
+                            size="default"
+                            style={{
+                                float: "right",
+                            }}
+                            icon="plus"
+                        >
+
+                            <Link to='/admin/data/languages/create'>
+                                <Icon type="plus" />
+                                Thêm ngôn ngữ mới
+
+                            </Link>
+                        </Button>
+                    </h5>
                     <Table
                         columns={this.columns}
                         loading={loading_table}
