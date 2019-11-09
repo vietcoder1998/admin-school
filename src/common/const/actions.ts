@@ -21,8 +21,24 @@ export const REDUX = {
 
     ANNOUNCEMENT_DETAIL: {
         GET_ANNOUNCEMENT_DETAIL: "GET_ANNOUNCEMENT_DETAIL"
+    },
+
+    TYPE_SCHOOLS: {
+        GET_TYPE_SCHOOLS: "GET_TYPE_SCHOOLS",
+    },
+
+    LANGUAGES: {
+        GET_LANGUAGES: "GET_LANGUAGES"
+    },
+
+    REGIONS: {
+        GET_REGIONS: "GET_REGIONS"
+    },
+
+    SKILLS: {
+        GET_SKILLS: "GET_SKILLS"
     }
-}
+};
 
 export const REDUX_SAGA = {
 
@@ -44,5 +60,22 @@ export const REDUX_SAGA = {
 
     ANNOUNCEMENT_DETAIL: {
         GET_ANNOUNCEMENT_DETAIL: "GET_ANNOUNCEMENT_DETAIL_DATA"
-    }
+    },
+
+    TYPE_SCHOOLS: {
+        GET_TYPE_SCHOOL: "GET_TYPE_SCHOOL",
+
+    },
+
+    LANGUAGES: {
+        GET_LANGUAGES: "GET_LANGUAGES_DATA"
+    },
+
+    REGIONS: {
+        GET_REGIONS: "GET_REGIONS_DATA"
+    },
+
+    SKILLS: {
+        GET_SKILLS: "GET_SKILLS_DATA"
+    },
 }

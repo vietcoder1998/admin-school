@@ -1,20 +1,20 @@
 import React, { PureComponent, Fragment } from 'react'
-import './Languages.scss';
+import './Regions.scss';
 import { connect } from 'react-redux';
 const Switch = require("react-router-dom").Switch;
 
-interface LanguagesState {
+interface RegionsState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface LanguagesProps extends StateProps, DispatchProps {
+interface RegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
+    getRegions: Function;
     getTypeManagement: Function;
 }
 
-class Languages extends PureComponent<LanguagesProps, LanguagesState> {
+class Regions extends PureComponent<RegionsProps, RegionsState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +27,7 @@ class Languages extends PureComponent<LanguagesProps, LanguagesState> {
         let { path } = this.props.match;
         return (
             <Fragment >
-                Languges
+                Regions
             </Fragment>
         )
     }
@@ -43,4 +43,4 @@ const mapStateToProps = (state, ownProps) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Languages)
+export default connect(mapStateToProps, mapDispatchToProps)(Regions)

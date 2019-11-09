@@ -6,7 +6,6 @@ export interface IRoomSelect {
     lastMessage?: any;
 }
 
-
 export interface IMessage {
     ownerID: string;
     createDate: any;

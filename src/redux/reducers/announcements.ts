@@ -1,6 +1,7 @@
+import { IAnnouncements } from './../models/announcements';
 import { REDUX } from './../../common/const/actions';
 
-let initState = {
+let initState: IAnnouncements = {
     items: [],
     pageIndex: 0,
     pageSize: 0,

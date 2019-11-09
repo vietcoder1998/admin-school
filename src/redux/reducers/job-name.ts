@@ -1,6 +1,7 @@
+import { IJobNames } from './../models/job-type';
 import { REDUX } from '../../common/const/actions';
 
-let initState = {
+let initState: IJobNames = {
     items: [],
     pageIndex: 0,
     pageSize: 0,

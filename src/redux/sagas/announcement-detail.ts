@@ -1,4 +1,5 @@
-import {  GET } from './../../common/const/method';
+import { IAnnouncementDetail } from './../models/announcement_detail';
+import { GET } from './../../common/const/method';
 import { ANNOUNCEMENT_DETAIL } from './../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
@@ -8,11 +9,21 @@ import { ADMIN_HOST } from '../../environment/dev';
 
 function* getListAnnouncementDetailData(action) {
     let res = yield call(callAnnouncementDetail, action);
+    let data: IAnnouncementDetail = {
+        admin: {},
+        content: "",
+        announcementType: {},
+        hidden: false,
+        id: null,
+        imageUrl: null,
+        lastModified: null,
+        createdDate: 0
+    }
     if (res.code === 200) {
-        console.log(res.data.data)
+        data = res.data;
         yield put({
             type: REDUX.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL,
-            data: res.data
+            data
         });
     }
 }

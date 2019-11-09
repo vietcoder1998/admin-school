@@ -1,26 +1,25 @@
-import { TYPE_SCHOOLS } from './../../services/api/private.api';
-// TODO: Saga type school
-import { ITypeSchools } from './../models/type-schools';
-import { authHeaders } from './../../services/auth';
+import { REGIONS } from '../../services/api/private.api';
+import { IRegions } from '../models/regions';
+import { authHeaders } from '../../services/auth';
 import { GET } from '../../common/const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 import { ADMIN_HOST } from '../../environment/dev';
 
-function* getListTypeSchoolsData(action) {
-    let res = yield call(callTypeSchools, action);
+function* getListRegionsData(action) {
+    let res = yield call(callRegions, action);
 
     if (res.code === 200) {
-        let data: ITypeSchools = res.data;
+        let data: IRegions = res.data;
         yield put({
-            type: REDUX.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
+            type: REDUX.REGIONS.GET_REGIONS,
             data
         });
     }
 }
 
-function callTypeSchools(action) {
+function callRegions(action) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -34,7 +33,7 @@ function callTypeSchools(action) {
     return _requestToServer(
         GET,
         null,
-        TYPE_SCHOOLS,
+        REGIONS,
         ADMIN_HOST,
         authHeaders,
         {
@@ -44,9 +43,9 @@ function callTypeSchools(action) {
     )
 }
 
-export function* TypeSchoolsWatcher() {
+export function* RegionsWatcher() {
     yield takeEvery(
-        REDUX_SAGA.TYPE_SCHOOLS.GET_TYPE_SCHOOL,
-        getListTypeSchoolsData
+        REDUX_SAGA.REGIONS.GET_REGIONS,
+        getListRegionsData
     )
 }

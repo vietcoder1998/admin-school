@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Dropdown, Menu, Breadcrumb, Progress } from 'antd';
+import { Layout, Icon, Avatar, Dropdown, Menu, Breadcrumb } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -117,29 +117,18 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        {/* <Progress
-                            percent={30}
-                            size="small"
-                            status="active"
-                            style={{
-                                position: "fixed",
-                                top: "-7px",
-                                left: "80px",
-                                zIndex: 999,
-                                width: "calc(100vw - 100px)"
-                            }} /> */}
                         <Breadcrumb >
                             <Breadcrumb.Item >
                                 <a href='/admin' >
-                                    <Icon type="home" />Trang chủ
+                                    <Icon type="home" />
                                 </a>
                             </Breadcrumb.Item>
                             {data_breakcumb.map(item => {
                                 let newBreakCump = null;
-                                breakCumb.forEach(item_brk => {
+                                breakCumb.forEach((item_brk, index) => {
                                     if (item_brk.label === item) {
                                         newBreakCump = (
-                                            <Breadcrumb.Item >
+                                            <Breadcrumb.Item key={index}>
                                                 <a href={item_brk.url} >{item_brk.name}</a>
                                             </Breadcrumb.Item>
                                         )
@@ -152,6 +141,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         <Switch>
                             <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
                             <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
+                            <ErrorBoundaryRoute path={`${match.url}/data`} component={JobManagement} />
                         </Switch>
                     </Content>
                 </Layout>

@@ -6,7 +6,7 @@ import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { Link } from 'react-router-dom';
-import { IAnnouncementDetail } from './../../../../../common/models/announcement_detail';
+import { IAnnouncementDetail } from '../../../../../redux/models/announcement_detail';
 import { TYPE } from '../../../../../common/const/type';
 
 interface MngCreateState {

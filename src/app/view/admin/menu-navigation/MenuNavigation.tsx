@@ -29,7 +29,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
         return (
             <Sider trigger={null} collapsible collapsed={show_menu}>
                 <div className="logo" style={{ padding: show_menu ? "20px 0px" : "0px 0px" }} >
-                    <img src={logo} style={{ height: "40px", display: !show_menu ? "block" : "none" }} alt="worksvnlogo"/>
+                    <img src={logo} style={{ height: "40px", display: !show_menu ? "block" : "none" }} alt="worksvnlogo" />
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={[state_bar]} onClick={event => localStorage.setItem("state_bar", event.key)}>
                     <Menu.Item key="1" >
@@ -54,27 +54,33 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                         }
                     >
                         <Menu.Item key="7">
-                            <Link to={'/admin/data'}>
+                            <Link to={'/admin/data/languages/list'}>
                                 <Icon type="message" />
                                 <span>Ngôn ngữ</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="8">
-                            <Link to={'/admin/data'}>
+                            <Link to={'/admin/data/major/list'}>
                                 <Icon type="contacts" />
                                 <span>Ngành nghề</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="9">
-                            <Link to={'/admin/data'}>
+                            <Link to={'/admin/data/languages/list'}>
                                 <Icon type="environment" />
                                 <span>Tỉnh thành</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="10">
-                            <Link to={'/admin/data'}>
+                            <Link to={'/admin/data/languages/list'}>
                                 <Icon type="idcard" />
                                 <span>Loại công việc</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="11">
+                            <Link to={'/admin/data/languages/list'}>
+                                <Icon type="idcard" />
+                                <span>Loại trường</span>
                             </Link>
                         </Menu.Item>
                     </SubMenu>

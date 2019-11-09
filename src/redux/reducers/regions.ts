@@ -1,16 +1,16 @@
-import { ILanguages } from './../models/languages';
+import { IRegions } from './../models/regions';
 import { REDUX } from '../../common/const/actions';
 
-let initState: ILanguages = {
+let initState: IRegions = {
     items: [],
     pageIndex: 0,
     pageSize: 0,
     totalItems: 0,
 }
 
-export const Languages = (state = initState, action) => {
+export const Regions = (state = initState, action) => {
     switch (action.type) {
-        case REDUX.LANGUAGES.GET_LANGUAGES:
+        case REDUX.REGIONS.GET_REGIONS:
             return {
                 ...state, 
                 items: action.data.items,

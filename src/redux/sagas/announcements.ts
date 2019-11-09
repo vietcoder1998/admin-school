@@ -1,3 +1,4 @@
+import { IAnnouncements } from './../models/announcements';
 import { POST } from './../../common/const/method';
 import { ANNOUNCEMENTS } from './../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
@@ -9,7 +10,7 @@ import { ADMIN_HOST } from '../../environment/dev';
 function* getListAnnouncementsData(action) {
     let res = yield call(callAnnouncements, action);
 
-    let data = {
+    let data: IAnnouncements = {
         items: [],
         pageIndex: 0,
         pageSize: 0,
@@ -21,7 +22,6 @@ function* getListAnnouncementsData(action) {
         data.pageIndex = res.data.pageIndex;
         data.pageSize = res.data.pageSize;
         data.totalItems = res.data.totalItems;
-
         yield put({
             type: REDUX.ANNOUNCEMENTS.GET_ANNOUNCEMENTS,
             data

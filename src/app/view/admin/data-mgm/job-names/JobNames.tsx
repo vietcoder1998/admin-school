@@ -1,20 +1,20 @@
 import React, { PureComponent, Fragment } from 'react'
-import './Languages.scss';
+import './JobNames.scss';
 import { connect } from 'react-redux';
 const Switch = require("react-router-dom").Switch;
 
-interface LanguagesState {
+interface JobNamesState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface LanguagesProps extends StateProps, DispatchProps {
+interface JobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getJobNames: Function;
     getTypeManagement: Function;
 }
 
-class Languages extends PureComponent<LanguagesProps, LanguagesState> {
+class JobNames extends PureComponent<JobNamesProps, JobNamesState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +27,7 @@ class Languages extends PureComponent<LanguagesProps, LanguagesState> {
         let { path } = this.props.match;
         return (
             <Fragment >
-                Languges
+                job Name
             </Fragment>
         )
     }
@@ -43,4 +43,4 @@ const mapStateToProps = (state, ownProps) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Languages)
+export default connect(mapStateToProps, mapDispatchToProps)(JobNames)

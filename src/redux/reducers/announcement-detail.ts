@@ -1,5 +1,5 @@
 import { REDUX } from '../../common/const/actions';
-import { IAnnouncementDetail } from './../../common/models/announcement_detail';
+import { IAnnouncementDetail } from './../models/announcement_detail';
 
 interface IInitState {
     data: IAnnouncementDetail;
