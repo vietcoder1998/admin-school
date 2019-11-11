@@ -204,7 +204,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 <Divider orientation="left" >Nội dung bài viết</Divider>
                 <div className="mng-create-content">
                     <InputTitle
-                        type="INPUT"
+                        type={TYPE.INPUT}
                         value={title}
                         title="Nhập tiêu đề bài viết"
                         placeholder="Tiêu đề"
@@ -212,7 +212,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         onChange={event => this.setState({ title: event })}
                     />
                     <InputTitle
-                        type="SELECT"
+                        type={TYPE.SELECT}
                         title="Chọn loại bài viết"
                         widthLabel="200px"
                         placeholder="Loại bài viết"

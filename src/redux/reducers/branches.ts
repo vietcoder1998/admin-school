@@ -1,18 +1,16 @@
-import { IJobNames } from '../models/job-type';
+import { IBranches } from '../models/branches';
 import { REDUX } from '../../common/const/actions';
 
-let initState: IJobNames = {
+let initState: IBranches = {
     items: [],
     pageIndex: 0,
     pageSize: 0,
     totalItems: 0,
 }
 
-export const JobNames = (state = initState, action) => {
-    console.log(action)
- 
+export const Branches = (state = initState, action) => {
     switch (action.type) {
-        case REDUX.JOB_NAMES.GET_JOB_NAMES:
+        case REDUX.BRANCHES.GET_BRANCHES:
             return {
                 ...state, 
                 items: action.data.items,

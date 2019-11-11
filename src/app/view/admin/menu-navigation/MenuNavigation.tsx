@@ -62,7 +62,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                         <Menu.Item key="8">
                             <Link to={'/admin/data/majors/list'}>
                                 <Icon type="contacts" />
-                                <span>Ngành nghề</span>
+                                <span>Chuyên ngành</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="9">
@@ -81,6 +81,24 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                             <Link to={'/admin/data/type-schools/list'}>
                                 <Icon type="reconciliation" />
                                 <span>Loại trường</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="12">
+                            <Link to={'/admin/data/skills/list'}>
+                                <Icon type="profile" />
+                                <span>Kĩ năng</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="13">
+                            <Link to={'/admin/data/job-groups/list'}>
+                            <Icon type="team" />
+                                <span>Nhóm công việc</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="14">
+                            <Link to={'/admin/data/branches/list'}>
+                            <Icon type="apartment" />
+                                <span>Chuyên ngành</span>
                             </Link>
                         </Menu.Item>
                     </SubMenu>

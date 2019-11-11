@@ -1,9 +1,9 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Divider, Button, Icon } from 'antd';
-import { InputTitle } from './../../../../layout/input-tittle/InputTitle';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
-import { LANGUAGES } from '../../../../../../services/api/private.api';
+import { JOB_GROUPS } from '../../../../../../services/api/private.api';
 import { POST } from '../../../../../../common/const/method';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { authHeaders } from '../../../../../../services/auth';
@@ -11,17 +11,17 @@ import { ADMIN_HOST } from '../../../../../../environment/dev';
 import { Link } from 'react-router-dom';
 import { TYPE } from '../../../../../../common/const/type';
 
-interface CreateLanguagesState {
+interface CreateRegionsState {
     name?: string;
 }
 
-interface CreateLanguagesProps extends StateProps, DispatchProps {
+interface CreateRegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     history: Readonly<any>;
-    getListLanguages: Function;
+    getListRegions: Function;
 }
 
-class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguagesState> {
+class CreateRegions extends PureComponent<CreateRegionsProps, CreateRegionsState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,15 +34,15 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
         await _requestToServer(
             POST,
             { name: name.trim() },
-            LANGUAGES,
+            JOB_GROUPS,
             ADMIN_HOST,
             authHeaders,
             null,
             true,
         ).then(res => {
             if (res.code === 200) {
-                this.props.getListLanguages();
-                this.props.history.push('/admin/data/languages/list');
+                this.props.getListRegions();
+                this.props.history.push('/admin/data/job-groups/list');
             }
         })
     }
@@ -57,16 +57,16 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
         return (
             <Fragment >
                 <div>
-                    <h5>Thêm ngôn ngữ mới</h5>
-                    <Divider orientation="left" >Chi tiết ngôn ngữ</Divider>
+                    <h5>Thêm nhóm công việc mới</h5>
+                    <Divider orientation="left" >Chi tiết nhóm công việc</Divider>
                 </div>
                 <InputTitle
                     type={TYPE.INPUT}
-                    title="Tên ngôn ngữ mới"
-                    placeholder="Nhập tên ngôn ngữ"
+                    title="Tên nhóm công việc mới"
+                    placeholder="Nhập tên nhóm công việc"
+                    widthInput="400px"
                     value={name}
                     style={{ padding: "0px 30px" }}
-                    widthInput="350px"
                     onChange={event => this.setState({ name: event })}
                 />
                 <Button
@@ -76,13 +76,13 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
                     onClick={this.createNewData}
                     disabled={!is_name}
                 >
-                    Tạo ngôn ngữ mới
+                    Tạo nhóm công việc mới
                 </Button>
                 <Button
                     type="danger"
                     style={{ float: "right", margin: "10px 5px" }}
                 >
-                    <Link to='/admin/data/languages/list'>
+                    <Link to='/admin/data/job-groups/list'>
                         <Icon type="close" />
                         Hủy
                     </Link>
@@ -94,7 +94,7 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListLanguages: () => dispatch({ type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES })
+    getListRegions: () => dispatch({ type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS })
 })
 
 const mapStateToProps = (state, ownProps) => ({
@@ -103,4 +103,4 @@ const mapStateToProps = (state, ownProps) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateLanguages)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRegions)

@@ -2,23 +2,23 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { ILanguage } from '../../../../../../redux/models/languages';
+import { IJobGroup } from '../../../../../../redux/models/job-groups';
 import { Link } from 'react-router-dom';
 import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
-import { REGIONS } from '../../../../../../services/api/private.api';
+import { JOB_GROUPS } from '../../../../../../services/api/private.api';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
 import { TYPE } from '../../../../../../common/const/type';
 
-interface ListRegionsProps extends StateProps, DispatchProps {
+interface ListJobGroupsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListRegions: Function;
+    getListJobGroups: Function;
 }
 
-interface ListRegionsState {
-    list_regions: Array<ILanguage>,
+interface ListJobGroupsState {
+    list_job_groups: Array<IJobGroup>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
@@ -28,11 +28,11 @@ interface ListRegionsState {
     type?: string;
 }
 
-class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
+class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_regions: [],
+            list_job_groups: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -44,14 +44,14 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     }
 
     async componentDidMount() {
-        await this.props.getListRegions(0, 10);
+        await this.props.getListJobGroups(0, 10);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_regions !== prevState.list_regions) {
+        if (nextProps.list_job_groups !== prevState.list_job_groups) {
             let data_table = [];
             let { pageIndex } = prevState;
-            nextProps.list_regions.forEach((item, index) => {
+            nextProps.list_job_groups.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
@@ -60,7 +60,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             })
 
             return {
-                list_regions: nextProps.list_regions,
+                list_job_groups: nextProps.list_job_groups,
                 data_table,
                 loading_table: false
             }
@@ -93,7 +93,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             className: 'action',
         },
         {
-            title: 'Tên tỉnh thành',
+            title: 'Tên nhóm công việc',
             dataIndex: 'name',
             key: 'name',
             width: 700,
@@ -104,7 +104,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 200,
+            width: 300,
             fixed: "right",
             render: () => this.EditContent,
         },
@@ -112,41 +112,41 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 
     setPageIndex = async (event) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true });
-        this.props.getListRegions(event.current - 1)
+        this.props.getListJobGroups(event.current - 1)
     }
 
-    editRegions = async () => {
+    editJobGroups = async () => {
         let { name, id } = this.state;
         name = name.trim();
         await _requestToServer(
             PUT,
             { name },
-            REGIONS + `/${id}`,
+            JOB_GROUPS + `/${id}`,
             ADMIN_HOST,
             null,
             null,
             true
         ).then(res => {
             if (res && res.code === 200) {
-                this.props.getListRegions();
+                this.props.getListJobGroups();
                 this.toggleModal();
             }
         })
     }
 
-    removeRegions = async () => {
+    removeJobGroups = async () => {
         let { id } = this.state;
         await _requestToServer(
             DELETE,
             [id],
-            REGIONS ,
+            JOB_GROUPS,
             ADMIN_HOST,
             null,
             null,
             true
         ).then(res => {
             if (res && res.code === 200) {
-                this.props.getListRegions();
+                this.props.getListJobGroups();
                 this.toggleModal();
             }
         })
@@ -159,28 +159,28 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
         return (
             <Fragment >
                 <ConfigModal
-                    title={type === TYPE.EDIT ? "Sửa tỉnh thành" : "Xóa tỉnh thành"}
+                    title={type === TYPE.EDIT ? "Sửa nhóm công việc" : "Xóa nhóm công việc"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => { this.setState({ openModal: !openModal }) }}
-                    handleOk={async () => type === TYPE.EDIT ? this.editRegions() : this.removeRegions()}
+                    handleOk={async () => type === TYPE.EDIT ? this.editJobGroups() : this.removeJobGroups()}
                     handleClose={async () => this.toggleModal()}
                 >
                     {type === TYPE.EDIT ?
                         (<InputTitle
-                            title="Sửa tên tỉnh"
+                            title="Sửa tên nhóm công việc"
                             type={TYPE.INPUT}
                             value={name}
-                            placeholder="Tên tỉnh"
+                            placeholder="Tên nhóm công việc"
                             onChange={event => this.setState({ name: event })}
                             widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa tỉnh : {name}</div>
+                        />) : <div>Bạn chắc chắn sẽ xóa nhóm công việc : {name}</div>
                     }
                 </ConfigModal>
                 <div>
                     <h5>
-                        Danh sách tỉnh thành
+                        Danh sách nhóm công việc
                         <Button
                             onClick={() => { }}
                             type="primary"
@@ -190,9 +190,9 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             }}
                         >
 
-                            <Link to='/admin/data/regions/create'>
+                            <Link to='/admin/data/job-groups/create'>
                                 <Icon type="plus" />
-                                Thêm tỉnh thành mới
+                                Thêm nhóm công việc mới
                             </Link>
                         </Button>
                     </h5>
@@ -213,15 +213,15 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListRegions: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize })
+    getListJobGroups: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS, pageIndex, pageSize })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_regions: state.Regions.items,
-    totalItems: state.Regions.totalItems
+    list_job_groups: state.JobGroups.items,
+    totalItems: state.JobGroups.totalItems
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListRegions)
+export default connect(mapStateToProps, mapDispatchToProps)(ListJobGroups)

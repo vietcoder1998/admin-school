@@ -29,12 +29,12 @@ code {
   min-height: 100vh !important;
 }
 
-.ant-layout-has-sider{
+.ant-layout-has-sider {
   margin-bottom: -20px;
 }
 
 .ant-breadcrumb {
-  padding-bottom: 10px!important;
+  padding-bottom: 10px !important;
 }
 .all-content {
   background-color: whitesmoke;
@@ -83,8 +83,8 @@ code {
 }
 
 textarea {
-  &:placeholder-shown{
-    font-style: italic!important;
+  &:placeholder-shown {
+    font-style: italic !important;
   }
 }
 
@@ -122,20 +122,20 @@ textarea {
   }
 }
 
-.title-inside{
-  min-width: 200px;
-  input {
-    widows: 200px;
-  }
-}
-
-.ant-divider-inner-text{
+.ant-divider-inner-text {
   font-family: $font_base;
   font-weight: 600;
 }
 
-.input-title{
-  input { 
+.input-title {
+  display: flex;
+  .title-inside {
+    width: 150px!important;
+    margin-right: 20px;
+    position: relative;
+  }
+
+  input {
     max-width: 590px;
   }
 }
@@ -145,17 +145,16 @@ textarea {
   margin-bottom: 5px;
 }
 
-
-.action{
-  text-align: center!important;
+.action {
+  text-align: center !important;
   label {
     min-width: 80px;
     text-align: center;
   }
 }
 
-#cke_dialog_tab{
-  display: block!important;
+#cke_dialog_tab {
+  display: block !important;
 }
 
 .fulltime {
@@ -197,7 +196,7 @@ h5 {
   font-family: $font_base !important;
   color: black !important;
   font-weight: 600 !important;
-  margin: 0.7em 0em!important;
+  margin: 0.7em 0em !important;
 }
 
 .ant-layout-header {
@@ -247,7 +246,6 @@ ul {
 .text-icon {
   margin: 0px 5px;
 }
-
 
 .ant-tabs-ink-bar {
   z-index: 0 !important;
@@ -306,6 +304,62 @@ ul {
     margin: 5px;
     font-size: 15px;
   }
+}
+//Modalconfig
+.modal-config-bg {
+  background-color: rgba(0, 0, 0, 0.35);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  align-content: center;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.none {
+  display: none;
+}
+
+.modal-config {
+  position: fixed;
+  width: 500px;
+  max-width: 100vw;
+  min-height: 30vh;
+  left: calc(50vw - 250px);
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  transition: 0.5s;
+  z-index: 3;
+
+  .modal-config-body{
+    padding: 20px 15px;
+  }
+
+  .footer {
+    text-align: right;
+    height: 55px;
+    position: absolute;
+    bottom: 0px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    button {
+      margin: 0px 5px;
+    }
+  }
+}
+
+.active {
+  top: 20vh;
+}
+
+.none-active {
+  background-color: none;
+  pointer-events: unset;
+  top: -100vh;
+  color: rgba(255, 255, 255, 0);
 }
 
 // Button

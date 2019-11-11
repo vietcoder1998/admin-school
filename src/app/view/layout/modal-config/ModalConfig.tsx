@@ -1,0 +1,88 @@
+import React from 'react';
+import { Button, Icon } from 'antd';
+
+export interface IConfigModalProps {
+    toggleModal: Function;
+    handleClose?: Function;
+    handleOk?: Function;
+    children?: any;
+    style?: any;
+    param?: any;
+    namebtn1?: string;
+    namebtn2?: string;
+    title?: string;
+    isOpen?: boolean;
+}
+export interface IConfigModalState {
+    toggleTo?: boolean;
+}
+export class ConfigModal extends React.Component<IConfigModalProps, IConfigModalState> {
+    state: IConfigModalState = { toggleTo: true }
+    closeModal = () => { this.props.toggleModal() };
+    componentDidMount() {
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                this.closeModal()
+            }
+        });
+
+        document.addEventListener("mousedown", (event) => {
+            if (event && event.target === document.querySelector("div.modal-config-bg")) {
+                this.closeModal()
+            }
+        })
+    }
+    componentWillUnmount() {
+        document.removeEventListener("keypress", () => { });
+        document.removeEventListener("mousedown", () => { });
+    }
+    render(){
+        let {
+            children,
+            namebtn1,
+            namebtn2,
+            style,
+            title,
+            isOpen,
+        } = this.props;
+        return (
+            <React.Fragment>
+                <div
+                    className={`modal-config-bg${isOpen ? " " : " none"}`}
+                    style={{ ...style }}
+                    onKeyPress={event => { console.log(event.keyCode); if (event.keyCode === 27) { this.closeModal() } }}
+                ></div>
+                <div
+                    className={`modal-config${isOpen ? " active" : " none-active"}`}
+
+                >
+                    <div className="header b_b">
+                        <h6>
+                            {title}
+                            <Icon type="close" style={{ float: "right" }} onClick={() => this.props.toggleModal()} />
+                        </h6>
+                    </div>
+                    <div className="modal-config-body">
+                        {children ? children : null}
+                    </div>
+                    <div className="footer b_t" >
+                        <Button
+                            type="danger"
+                            onClick={() => this.props.handleClose()}
+                        >
+                            <Icon type="close" />
+                            {namebtn1}
+                        </Button>
+                        <Button
+                            type="primary"
+                            onClick={() => {this.props.handleOk()}}
+                        >
+                            <Icon type="check" />
+                            {namebtn2}
+                        </Button>
+                    </div>
+                </div>
+            </React.Fragment>
+        )
+    };
+}

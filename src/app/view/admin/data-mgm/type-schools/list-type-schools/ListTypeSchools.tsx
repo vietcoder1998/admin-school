@@ -1,7 +1,16 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import {  Icon, Table } from 'antd';
+import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { ITypeSchool } from '../../../../../../redux/models/type-schools';
+import { Link } from 'react-router-dom';
+import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { _requestToServer } from '../../../../../../services/exec';
+import { PUT, DELETE } from '../../../../../../common/const/method';
+import { TYPE_SCHOOLS } from '../../../../../../services/api/private.api';
+import { ADMIN_HOST } from '../../../../../../environment/dev';
+import { TYPE } from '../../../../../../common/const/type';
 
 interface ListTypeSchoolsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -9,20 +18,28 @@ interface ListTypeSchoolsProps extends StateProps, DispatchProps {
 }
 
 interface ListTypeSchoolsState {
-    list_typeSchools: Array<any>,
+    list_type_schools: Array<ITypeSchool>;
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
+    openModal: boolean;
+    name?: string;
+    id?: string;
+    type?: string;
 }
 
 class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchoolsState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_typeSchools: [],
+            list_type_schools: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
+            openModal: false,
+            name: "",
+            id: "",
+            type: TYPE.EDIT,
         }
     }
 
@@ -31,10 +48,10 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_typeSchools !== prevState.list_typeSchools) {
+        if (nextProps.list_type_schools !== prevState.list_type_schools) {
             let data_table = [];
             let { pageIndex } = prevState;
-            nextProps.list_typeSchools.forEach((item, index) => {
+            nextProps.list_type_schools.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
@@ -43,7 +60,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             })
 
             return {
-                list_typeSchools: nextProps.list_typeSchools,
+                list_type_schools: nextProps.list_type_schools,
                 data_table,
                 loading_table: false
             }
@@ -51,13 +68,21 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
         return null;
     }
 
-    
+
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() =>{}} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => {}} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     )
+
+    toggleModal = (type?: string) => {
+        let { openModal } = this.state;
+        this.setState({ openModal: !openModal });
+        if (type) {
+            this.setState({ type })
+        }
+    }
 
     columns = [
         {
@@ -68,7 +93,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             className: 'action',
         },
         {
-            title: 'Phân loại trường',
+            title: 'Tên loại trường',
             dataIndex: 'name',
             key: 'name',
             width: 700,
@@ -79,24 +104,98 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 300,
+            width: 200,
             fixed: "right",
             render: () => this.EditContent,
         },
     ];
 
-    setPageIndex =async (event) => {
-        await this.setState({pageIndex: event.current -1,loading_table: true});
+    setPageIndex = async (event) => {
+        await this.setState({ pageIndex: event.current - 1, loading_table: true });
         this.props.getListTypeSchools(event.current - 1)
     }
 
+    editTypeSchools = async () => {
+        let { name, id } = this.state;
+        name = name.trim();
+        await _requestToServer(
+            PUT,
+            { name },
+            TYPE_SCHOOLS + `/${id}`,
+            ADMIN_HOST,
+            null,
+            null,
+            true
+        ).then(res => {
+            if (res && res.code === 200) {
+                this.props.getListTypeSchools();
+                this.toggleModal();
+            }
+        })
+    }
+
+    removeTypeSchools = async () => {
+        let { id } = this.state;
+        await _requestToServer(
+            DELETE,
+            [id],
+            TYPE_SCHOOLS ,
+            ADMIN_HOST,
+            null,
+            null,
+            true
+        ).then(res => {
+            if (res && res.code === 200) {
+                this.props.getListTypeSchools();
+                this.toggleModal();
+            }
+        })
+    }
+
+
     render() {
-        let { data_table, loading_table } = this.state;
+        let { data_table, loading_table, openModal, name, type } = this.state;
         let { totalItems } = this.props;
         return (
             <Fragment >
+                <ConfigModal
+                    title={type === TYPE.EDIT ? "Sửa loại trường" : "Xóa loại trường"}
+                    namebtn1="Hủy"
+                    namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
+                    isOpen={openModal}
+                    toggleModal={() => { this.setState({ openModal: !openModal }) }}
+                    handleOk={async () => type === TYPE.EDIT ? this.editTypeSchools() : this.removeTypeSchools()}
+                    handleClose={async () => this.toggleModal()}
+                >
+                    {type === TYPE.EDIT ?
+                        (<InputTitle
+                            title="Sửa tên loại trường"
+                            type={TYPE.INPUT}
+                            value={name}
+                            placeholder="Tên loại trường"
+                            onChange={event => this.setState({ name: event })}
+                            widthInput="250px"
+                        />) : <div>Bạn chắc chắn sẽ xóa loại trường: {name}</div>
+                    }
+                </ConfigModal>
                 <div>
-                    <h5>Danh sách phân loại trường</h5>
+                    <h5>
+                        Danh sách loại trường
+                        <Button
+                            onClick={() => { }}
+                            type="primary"
+                            size="default"
+                            style={{
+                                float: "right",
+                            }}
+                        >
+
+                            <Link to='/admin/data/type-schools/create'>
+                                <Icon type="plus" />
+                                Thêm loại trường mới
+                            </Link>
+                        </Button>
+                    </h5>
                     <Table
                         columns={this.columns}
                         loading={loading_table}
@@ -105,7 +204,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                         pagination={{ total: totalItems }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRowClick={async event => { }}
+                        onRowClick={event => { console.log(event); this.setState({ id: event.key, name: event.name }) }}
                     />
                 </div>
             </Fragment>
@@ -118,7 +217,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_typeSchools: state.TypeSchools.items,
+    list_type_schools: state.TypeSchools.items,
     totalItems: state.TypeSchools.totalItems
 })
 

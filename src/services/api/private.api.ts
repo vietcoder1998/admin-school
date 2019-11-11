@@ -4,6 +4,11 @@ export const ANNOUNCEMENT_DETAIL = '/api/admins/announcements';
 export const SKILLS = "/api/admins/data/skills";
 export const TYPE_SCHOOLS = "/api/admins/data/schoolTypes";
 export const REGIONS = "/api/admins/data/regions";
+export const JOB_GROUPS = "/api/admins/data/jobGroups";
 export const MAJORS = "/api/admins/data/majors";
 export const LANGUAGES = "/api/admins/data/languages";
+export const JOB_NAMES = "/api/admins/data/jobNames";
+export const TYPE_MANAGEMENT = "/api/admins/data/announcementTypes";
+export const BRANCHES = "/api/admins/data/branches";
+
 

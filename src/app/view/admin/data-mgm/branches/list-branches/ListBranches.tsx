@@ -8,17 +8,17 @@ import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
-import { REGIONS } from '../../../../../../services/api/private.api';
+import { BRANCHES } from '../../../../../../services/api/private.api';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
 import { TYPE } from '../../../../../../common/const/type';
 
-interface ListRegionsProps extends StateProps, DispatchProps {
+interface ListBranchesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListRegions: Function;
+    getListBranches: Function;
 }
 
-interface ListRegionsState {
-    list_regions: Array<ILanguage>,
+interface ListBranchesState {
+    list_branches: Array<ILanguage>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
@@ -28,11 +28,11 @@ interface ListRegionsState {
     type?: string;
 }
 
-class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
+class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_regions: [],
+            list_branches: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -44,14 +44,14 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     }
 
     async componentDidMount() {
-        await this.props.getListRegions(0, 10);
+        await this.props.getListBranches(0, 10);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_regions !== prevState.list_regions) {
+        if (nextProps.list_branches !== prevState.list_branches) {
             let data_table = [];
             let { pageIndex } = prevState;
-            nextProps.list_regions.forEach((item, index) => {
+            nextProps.list_branches.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + pageIndex * 10 + 1),
@@ -60,7 +60,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             })
 
             return {
-                list_regions: nextProps.list_regions,
+                list_branches: nextProps.list_branches,
                 data_table,
                 loading_table: false
             }
@@ -93,7 +93,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             className: 'action',
         },
         {
-            title: 'Tên tỉnh thành',
+            title: 'Nhóm ngành',
             dataIndex: 'name',
             key: 'name',
             width: 700,
@@ -104,7 +104,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 200,
+            width: 300,
             fixed: "right",
             render: () => this.EditContent,
         },
@@ -112,41 +112,41 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 
     setPageIndex = async (event) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true });
-        this.props.getListRegions(event.current - 1)
+        this.props.getListBranches(event.current - 1)
     }
 
-    editRegions = async () => {
+    editBranches = async () => {
         let { name, id } = this.state;
         name = name.trim();
         await _requestToServer(
             PUT,
             { name },
-            REGIONS + `/${id}`,
+            BRANCHES + `/${id}`,
             ADMIN_HOST,
             null,
             null,
             true
         ).then(res => {
             if (res && res.code === 200) {
-                this.props.getListRegions();
+                this.props.getListBranches();
                 this.toggleModal();
             }
         })
     }
 
-    removeRegions = async () => {
+    removeBranches = async () => {
         let { id } = this.state;
         await _requestToServer(
             DELETE,
             [id],
-            REGIONS ,
+            BRANCHES,
             ADMIN_HOST,
             null,
             null,
             true
         ).then(res => {
             if (res && res.code === 200) {
-                this.props.getListRegions();
+                this.props.getListBranches();
                 this.toggleModal();
             }
         })
@@ -159,28 +159,28 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
         return (
             <Fragment >
                 <ConfigModal
-                    title={type === TYPE.EDIT ? "Sửa tỉnh thành" : "Xóa tỉnh thành"}
+                    title={type === TYPE.EDIT ? "Sửa chuyên nghành" : "Xóa chuyên nghành"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => { this.setState({ openModal: !openModal }) }}
-                    handleOk={async () => type === TYPE.EDIT ? this.editRegions() : this.removeRegions()}
+                    handleOk={async () => type === TYPE.EDIT ? this.editBranches() : this.removeBranches()}
                     handleClose={async () => this.toggleModal()}
                 >
                     {type === TYPE.EDIT ?
                         (<InputTitle
-                            title="Sửa tên tỉnh"
+                            title="Sửa tên chuyên nghành"
                             type={TYPE.INPUT}
                             value={name}
-                            placeholder="Tên tỉnh"
+                            placeholder="Tên chuyên nghành"
                             onChange={event => this.setState({ name: event })}
                             widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa tỉnh : {name}</div>
+                        />) : <div>Bạn chắc chắn sẽ xóa chuyên nghành : {name}</div>
                     }
                 </ConfigModal>
                 <div>
                     <h5>
-                        Danh sách tỉnh thành
+                        Danh sách chuyên nghành
                         <Button
                             onClick={() => { }}
                             type="primary"
@@ -190,9 +190,9 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             }}
                         >
 
-                            <Link to='/admin/data/regions/create'>
+                            <Link to='/admin/data/branches/create'>
                                 <Icon type="plus" />
-                                Thêm tỉnh thành mới
+                                Thêm chuyên nghành mới
                             </Link>
                         </Button>
                     </h5>
@@ -213,15 +213,15 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListRegions: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize })
+    getListBranches: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.BRANCHES.GET_BRANCHES, pageIndex, pageSize })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_regions: state.Regions.items,
-    totalItems: state.Regions.totalItems
+    list_branches: state.Branches.items,
+    totalItems: state.Branches.totalItems
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListRegions)
+export default connect(mapStateToProps, mapDispatchToProps)(ListBranches)

@@ -1,11 +1,11 @@
+import { authHeaders } from './../../services/auth';
+import { JOB_NAMES } from './../../services/api/private.api';
 import { IJobNames } from '../models/job-type';
-import { noInfoHeader } from '../../services/auth';
 import { GET } from '../../common/const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { PUBLIC_HOST } from '../../environment/dev';
-import { JOB_NAMES } from '../../services/api/public.api';
+import { ADMIN_HOST } from '../../environment/dev';
 
 
 function* getListJobNameData(action) {
@@ -20,7 +20,7 @@ function* getListJobNameData(action) {
     if (res.code === 200) {
        data = res.data;
         yield put({
-            type: REDUX.JOB_NAMES.GET_JOB_NAME,
+            type: REDUX.JOB_NAMES.GET_JOB_NAMES,
             data
         });
     }
@@ -31,15 +31,15 @@ function callJobName(action) {
         GET,
         null,
         JOB_NAMES,
-        PUBLIC_HOST,
-        noInfoHeader,
+        ADMIN_HOST,
+        authHeaders,
         { pageIndex: 0, pageSize: 0 },
     )
 }
 
 export function* JobNameWatcher() {
     yield takeEvery(
-        REDUX_SAGA.JOB_NAMES.GET_JOB_NAME,
+        REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES,
         getListJobNameData
     )
 }

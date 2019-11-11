@@ -25,6 +25,9 @@ interface AdminProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getJobNames: Function;
     getTypeManagement: Function;
+    getJobGroups: Function;
+    getBranches: Function;
+
 }
 
 
@@ -42,6 +45,9 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     async componentDidMount() {
         await this.props.getJobNames();
         await this.props.getTypeManagement({ target: null });
+        await this.props.getJobGroups();
+        await this.props.getBranches();
+
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -153,12 +159,18 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getJobNames: (body) => dispatch({
-        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAME,
+        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES,
         body
     }),
     getTypeManagement: (data) => dispatch({
         type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data
-    })
+    }),
+    getJobGroups: () => dispatch({
+        type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS
+    }),
+    getBranches: () => dispatch({
+        type: REDUX_SAGA.BRANCHES.GET_BRANCHES
+    }),
 })
 
 const mapStateToProps = (state, ownProps) => ({

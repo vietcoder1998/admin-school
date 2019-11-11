@@ -8,7 +8,8 @@ export const REDUX = {
     },
 
     JOB_NAMES: {
-        GET_JOB_NAME: "GET_JOB_NAME",
+        GET_JOB_NAMES: "GET_JOB_NAMES",
+        GET_SINGLE_JOB_NAME: "GET_SINGLE_JOB_NAME"
     },
 
     TYPE_MANAGEMENT: {
@@ -41,7 +42,15 @@ export const REDUX = {
 
     MAJORS: {
         GET_MAJORS: "GET_MAJORS"
-    }
+    },
+
+    JOB_GROUPS: {
+        GET_JOB_GROUPS: "GET_JOB_GROUPS"
+    },
+    
+    BRANCHES: {
+        GET_BRANCHES: "GET_BRANCHES"
+    }   
 };
 
 export const REDUX_SAGA = {
@@ -51,7 +60,7 @@ export const REDUX_SAGA = {
     },
 
     JOB_NAMES: {
-        GET_JOB_NAME: "GET_JOB_NAME_DATA",
+        GET_JOB_NAMES: "GET_JOB_NAMES_DATA",
     },
 
     TYPE_MANAGEMENT: {
@@ -85,5 +94,13 @@ export const REDUX_SAGA = {
 
     MAJORS: {
         GET_MAJORS: "GET_MAJORS_DATA"
-    }
+    },
+
+    JOB_GROUPS: {
+        GET_JOB_GROUPS: "GET_JOB_GROUPS_DATA"
+    },
+    
+    BRANCHES: {
+        GET_BRANCHES: "GET_BRANCHES_DATA"
+    }   
 }

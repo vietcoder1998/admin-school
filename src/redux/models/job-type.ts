@@ -1,7 +1,11 @@
 export interface IJobName {
     id?: number;
     name?: string;
-    priority?: string;
+    jobGroup?: {
+        id?: number;
+        name?: string;
+        priority?: string;
+    }
 };
 
 export interface IJobNames {

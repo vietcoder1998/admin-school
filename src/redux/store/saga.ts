@@ -9,6 +9,8 @@ import { RegionsWatcher } from '../sagas/regions';
 import { SkillsWatcher } from '../sagas/skills';
 import { LanguagesWatcher } from '../sagas/languages';
 import { MajorsWatcher } from '../sagas/majors';
+import { JobGroupsWatcher } from '../sagas/job-groups';
+import { BranchesWatcher } from '../sagas/branches';
 
 export default function* rootSaga() {
     yield all([
@@ -21,6 +23,8 @@ export default function* rootSaga() {
         RegionsWatcher(),
         SkillsWatcher(),
         LanguagesWatcher(),
-        MajorsWatcher()
+        MajorsWatcher(),
+        JobGroupsWatcher(),
+        BranchesWatcher(),
     ])
 } 

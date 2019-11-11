@@ -10,4 +10,5 @@ export interface ITypeManagements {
     pageIndex: number;
     pageSize: number;
     totalItems: number;
+    single_data: ITypeManagement
 }

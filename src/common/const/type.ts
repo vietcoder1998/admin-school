@@ -16,4 +16,7 @@ export const TYPE = {
     ALL: "ALL",
     CREATE: "CREATE",
     EDIT: "EDIT",
+    INPUT: "INPUT",
+    SELECT: "SELECT",
+    DELETE: "DELETE"
 }

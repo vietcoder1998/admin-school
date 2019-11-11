@@ -1,5 +1,6 @@
 import { Input, Select, } from "antd";
 import React from 'react';
+import { TYPE } from "../../../../common/const/type";
 
 let { Option } = Select;
 
@@ -8,78 +9,108 @@ interface IInputitleProps {
     widthLabel?: string;
     widthComponent?: string;
     value?: string;
-    list_value?: Array<{ label?: string, value?: string }>;
+    list_value?: Array<{ label?: string, value?: any }>;
     type?: string;
-    onChange?: Function;
+    widthInput?: string;
     defaultValue?: string;
     placeholder?: string;
     children?: any;
+    style?: any;
+    widthSelect?: string;
+    onChange?: Function;
+
 }
 
 interface INewSelect {
     list_value?: Array<{ label?: string, value?: string }>;
-    onChange?: Function;
     value?: string;
     placeholder?: string;
     defaultValue?: string;
-    widthComponent?: string;
+    widthSelect?: string;
+    onChange?: Function;
 }
 
 interface INewInput {
     value?: string;
-    onChange?: Function;
     placeholder?: string;
     defaultValue?: string;
-    widthComponent?: string;
+    widthInput?: string;
+    onChange?: Function;
 }
 
 export const NewInput = (props: INewInput) => {
-    let { defaultValue, onChange, value, placeholder } = props;
-    return <Input placeholder={placeholder} defaultValue={defaultValue} value={value} onChange={event => onChange(event.target.value)} maxLength={220} />
+    let { defaultValue, value, placeholder, onChange, widthInput } = props;
+
+    return (
+        <Input
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            style={{ width: widthInput ? widthInput : "auto" }}
+            value={value}
+            onChange={event => onChange(event.target.value)}
+            maxLength={220}
+        />)
 }
 
 export const NewSelect = (props: INewSelect) => {
-    let { placeholder, list_value, widthComponent, value } = props;
+    let { placeholder, list_value, value, onChange, widthSelect } = props;
     return (
         <Select
             showSearch
             placeholder={placeholder}
             optionFilterProp="children"
-            style={{ width: widthComponent ? widthComponent : "200px" }}
-            value={value}
-            onChange={event => props.onChange(event)}
+            style={{ width: widthSelect ? widthSelect : "200px" }}
+            {...value ? value: null}
+            onChange={event => onChange(event)}
         >
-            {/* <Option value={null} >Tất cả</Option> */}
             {
-                list_value && list_value.length > 0 ? list_value.map((item, index) => <Option key={index} value={item.value}>{item.label}</Option>) : null
+                list_value &&
+                    list_value.length > 0 ?
+                    list_value.map(
+                        (item, index) => <Option key={index} value={item.value}>{item.label}</Option>
+                    ) : null
             }
         </Select>
     )
 }
 
 export const InputTitle = (props: IInputitleProps) => {
-    let { defaultValue, value, list_value, placeholder, onChange, widthComponent, children } = props;
+    let {
+        defaultValue,
+        value,
+        list_value,
+        placeholder,
+        children,
+        onChange,
+        style,
+        widthInput,
+        widthSelect,
+    } = props;
     let ComponentReturn;
+    const defaultStyle = {
+        margin: "20px 0px",
+    }
     switch (props.type) {
-        case "INPUT":
+        case TYPE.INPUT:
             ComponentReturn = (
                 <NewInput
+                    widthInput={widthInput}
                     value={value}
                     defaultValue={defaultValue}
                     placeholder={placeholder}
-                    widthComponent={widthComponent}
+                    onChange={onChange?onChange: () => {}}
                 />);
             break;
 
-        case "SELECT":
+        case TYPE.SELECT:
             ComponentReturn = (
                 <NewSelect
                     value={value}
                     defaultValue={defaultValue}
                     list_value={list_value}
                     placeholder={placeholder}
-                    onChange={onChange}
-                    widthComponent={widthComponent}
+                    onChange={event => props.onChange(event)}
+                    widthSelect={widthSelect}
                 />
             );
             break;
@@ -88,27 +119,27 @@ export const InputTitle = (props: IInputitleProps) => {
             break;
     }
 
-    return (
-        <div
-            className="input-title"
-            style={{
-                display: "flex",
-                margin: "20px 0px",
-                width: "auto"
-            }}
-        >
-            <span
-                className="title-inside"
-                style={{
-                    width: props.widthLabel,
-                    fontWeight: 550,
-                    fontFamily: "IBMPlexSanLights",
-                    margin: "0px",
-                    lineHeight: "30px"
-                }}
+    try {
+        return (
+            <div
+                className="input-title"
+                style={{ ...defaultStyle, ...style }}
             >
-                {props.title}
-            </span>
-            {children ? children : ComponentReturn}
-        </div>)
+                <div
+                    className="title-inside"
+                    style={{
+                        fontWeight: 550,
+                        fontFamily: "IBMPlexSanLights",
+                        lineHeight: "30px",
+                        width: !props.widthLabel ? "150px" : props.widthLabel
+                    }}
+                >
+                    {props.title}
+                </div>
+                {children ? children : ComponentReturn}
+            </div>)
+    } catch (err) {
+        console.log(err);
+        return (<span>bug</span>)
+    }
 }
