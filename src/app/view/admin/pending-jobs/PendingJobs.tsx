@@ -175,18 +175,18 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     }
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true });
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         await this.searchJob();
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.list_jobs && nextProps.list_jobs !== prevState.list_jobs) {
             let data_table = [];
-            let { pageIndex } = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_jobs.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + pageIndex * 10 + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
                     jobName: item.jobName.name,
                     state: <Label type={item.state} value={item.state} />,
                     address: item.address ? item.address : "",
@@ -405,7 +405,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                             scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
-                            size="middle"
+                            size="default"
                             onChange={this.setPageIndex}
                             onRow={(event) => ({ onClick: async () => await this.getPendingJobs(event.key) })}
                         />

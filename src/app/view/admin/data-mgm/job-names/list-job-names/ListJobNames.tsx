@@ -24,6 +24,7 @@ interface ListJobNamesState {
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
+pageSize: number;
     openModal?: boolean;
     name?: string;
     jobGroupID?: number;
@@ -41,6 +42,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
             loading_table: true,
             data_table: [],
             pageIndex: 0,
+                          pageSize: 10,
             openModal: false,
             name: "",
             jobGroupID: null,
@@ -59,11 +61,11 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.list_job_names !== prevState.list_job_names) {
             let data_table = [];
-            let { pageIndex } = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_job_names.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + pageIndex * 10 + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
                     name: item.name,
                     jobGroupName: item.jobGroup.name
                 });
@@ -138,8 +140,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
     ];
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true });
-        await this.props.getListJobNames(event.current - 1);
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.props.getListJobNames(event.current - 1, event.pageSize);
     };
 
     choseJob = event => {
@@ -274,7 +276,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
+                        size="default"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.choseJob(event) })}
                     />

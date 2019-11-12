@@ -22,6 +22,7 @@ interface ListSkillsState {
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
+pageSize: number;
     openModal: boolean;
     name?: string;
     id?: string;
@@ -50,11 +51,11 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.list_skills !== prevState.list_skills) {
             let data_table = [];
-            let { pageIndex } = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_skills.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + pageIndex * 10 + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
                     name: item.name,
                 });
             })
@@ -111,8 +112,8 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     ];
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true });
-        this.props.getListSkills(event.current - 1)
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        this.props.getListSkills(event.current - 1, event.pageSize)
     }
 
     editSkills = async () => {
@@ -203,7 +204,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
+                        size="default"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />

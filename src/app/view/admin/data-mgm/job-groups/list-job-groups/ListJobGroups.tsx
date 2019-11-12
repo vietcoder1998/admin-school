@@ -22,6 +22,7 @@ interface ListJobGroupsState {
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
+    pageSize: number;
     openModal: boolean;
     name?: string;
     id?: string;
@@ -36,6 +37,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
             loading_table: true,
             data_table: [],
             pageIndex: 0,
+                          pageSize: 10,
             openModal: false,
             name: "",
             id: "",
@@ -50,11 +52,11 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.list_job_groups !== prevState.list_job_groups) {
             let data_table = [];
-            let { pageIndex } = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_job_groups.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + pageIndex * 10 + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
                     name: item.name,
                 });
             })
@@ -111,8 +113,8 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     ];
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true });
-        this.props.getListJobGroups(event.current - 1)
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        this.props.getListJobGroups(event.current - 1, event.pageSize)
     }
 
     editJobGroups = async () => {
@@ -203,7 +205,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
+                        size="default"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />

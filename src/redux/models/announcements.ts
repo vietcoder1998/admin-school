@@ -30,6 +30,7 @@ export interface IAnnouncement {
 export interface IAnnouncements {
     items: Array<IAnnouncement>;
     pageIndex: number;
+pageSize: number;
     pageSize: number;
     totalItems: number;
 }

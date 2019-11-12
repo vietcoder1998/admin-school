@@ -7,6 +7,7 @@ export interface ITypeSchool  {
 export interface ITypeSchools {
     items: Array<ITypeSchool>;
     pageIndex: number;
+pageSize: number;
     pageSize: number;
     totalItems: number;
 }

@@ -6,6 +6,7 @@ export interface ISkill {
 export interface ISkills {
     items: Array<ISkill>;
     pageIndex: number;
+pageSize: number;
     pageSize: number;
     totalItems: number;
 }

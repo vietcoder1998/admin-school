@@ -6,6 +6,7 @@ export interface IBranch {
 export interface IBranches {
     items: Array<IBranch>;
     pageIndex: number;
+pageSize: number;
     pageSize: number;
     totalItems: number;
 }

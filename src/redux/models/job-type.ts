@@ -11,6 +11,7 @@ export interface IJobName {
 export interface IJobNames {
     items: Array<IJobName>;
     pageIndex: number;
+pageSize: number;
     pageSize: number;
     totalItems: number;
 }

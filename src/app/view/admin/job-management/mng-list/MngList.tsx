@@ -210,12 +210,12 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         }
 
         if (nextProps.list_announcements !== prevState.list_announcements) {
-            let { pageIndex } = prevState;
+            let { pageIndex, pageSize } = prevState;
             let data_table = [];
             nextProps.list_announcements.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + pageIndex * 10 + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
                     title: item.title,
                     admin: item.admin ? (item.admin.firstName + " " + item.admin.lastName) : "",
                     modifyAdmin: item.modifyAdmin ? (item.modifyAdmin.firstName + " " + item.modifyAdmin.lastName) : "",
@@ -245,7 +245,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     }
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true });
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         await this.searchAnnouncement();
     }
 
@@ -443,7 +443,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             scroll={{ x: 1000 }}
                             bordered
                             pagination={{ total: 20 }}
-                            size="middle"
+                            size="default"
                             onChange={this.setPageIndex}
                             onRow={(event) => ({ onClick: () => localStorage.setItem("id_mgm", event.key) })}
                         />

@@ -6,6 +6,7 @@ export interface ILanguage {
 export interface ILanguages {
     items: Array<ILanguage>;
     pageIndex: number;
+pageSize: number;
     pageSize: number;
     totalItems: number;
 }
