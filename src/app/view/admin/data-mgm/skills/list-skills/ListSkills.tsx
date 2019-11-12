@@ -97,7 +97,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             title: 'Tên kỹ năng',
             dataIndex: 'name',
             key: 'name',
-            width: 700,
+            width: 755,
             className: 'action',
 
         },
@@ -185,7 +185,6 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         <Button
                             onClick={() => { }}
                             type="primary"
-                            size="default"
                             style={{
                                 float: "right",
                             }}
@@ -204,7 +203,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />

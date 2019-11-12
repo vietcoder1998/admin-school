@@ -270,7 +270,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.choseMajor(event) })}
                     />

@@ -22,7 +22,7 @@ interface ListTypeSchoolsState {
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
-pageSize: number;
+    pageSize: number;
     openModal: boolean;
     name?: string;
     id?: string;
@@ -37,6 +37,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             loading_table: true,
             data_table: [],
             pageIndex: 0,
+            pageSize: 10,
             openModal: false,
             name: "",
             id: "",
@@ -97,7 +98,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             title: 'Tên loại trường',
             dataIndex: 'name',
             key: 'name',
-            width: 700,
+            width: 755,
             className: 'action',
 
         },
@@ -185,7 +186,6 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                         <Button
                             onClick={() => { }}
                             type="primary"
-                            size="default"
                             style={{
                                 float: "right",
                             }}
@@ -204,7 +204,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />

@@ -316,7 +316,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                 </Modal>
                 <div className="common-content">
                     <h5>
-                        Danh sách công việc đang chờ
+                        Danh sách bài đăng đang chờ
                         <Button
                             onClick={() => this.searchJob()}
                             type="primary"
@@ -405,7 +405,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                             scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
-                            size="default"
+                            size="middle"
                             onChange={this.setPageIndex}
                             onRow={(event) => ({ onClick: async () => await this.getPendingJobs(event.key) })}
                         />

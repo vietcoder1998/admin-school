@@ -222,7 +222,6 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         <Button
                             onClick={() => { }}
                             type="primary"
-                            size="default"
                             style={{
                                 float: "right",
                             }}
@@ -276,7 +275,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.choseJob(event) })}
                     />

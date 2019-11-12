@@ -209,6 +209,7 @@ h5 {
   display: inline-flex;
   height: 50px !important;
   border-bottom: solid $color_border 1px;
+  box-shadow: 0 0 40px 0 rgba(47, 53, 63, 0.218);
 }
 
 //
@@ -340,7 +341,6 @@ ul {
   .footer {
     text-align: right;
     height: 55px;
-    width: calc(100% - 20px);
     padding: 10px;
     button {
       margin: 0px 5px;

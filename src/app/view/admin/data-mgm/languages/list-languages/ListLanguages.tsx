@@ -98,7 +98,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             title: 'Tên ngôn ngữ',
             dataIndex: 'name',
             key: 'name',
-            width: 700,
+            width: 755,
             className: 'action',
 
         },
@@ -187,7 +187,6 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                         <Button
                             onClick={() => { }}
                             type="primary"
-                            size="default"
                             style={{
                                 float: "right",
                             }}
@@ -207,7 +206,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true}}
                         onSizeChange= {(event) => console.log(event)}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />

@@ -98,7 +98,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
             title: 'Nhóm ngành',
             dataIndex: 'name',
             key: 'name',
-            width: 700,
+            width: 755,
             className: 'action',
 
         },
@@ -186,7 +186,6 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         <Button
                             onClick={() => { }}
                             type="primary"
-                            size="default"
                             style={{
                                 float: "right",
                             }}
@@ -205,7 +204,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />

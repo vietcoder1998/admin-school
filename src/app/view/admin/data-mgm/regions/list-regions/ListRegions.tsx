@@ -22,7 +22,7 @@ interface ListRegionsState {
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
-pageSize: number;
+    pageSize: number;
     openModal: boolean;
     name?: string;
     id?: string;
@@ -41,6 +41,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             name: "",
             id: "",
             type: TYPE.EDIT,
+            pageSize: 10,
         }
     }
 
@@ -55,7 +56,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             nextProps.list_regions.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
                 });
             })
@@ -97,7 +98,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             title: 'Tên tỉnh thành',
             dataIndex: 'name',
             key: 'name',
-            width: 700,
+            width: 755,
             className: 'action',
 
         },
@@ -185,7 +186,6 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                         <Button
                             onClick={() => { }}
                             type="primary"
-                            size="default"
                             style={{
                                 float: "right",
                             }}
@@ -204,7 +204,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="default"
+                        size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
 

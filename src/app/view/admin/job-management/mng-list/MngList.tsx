@@ -157,7 +157,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             dataIndex: 'hidden',
             className: 'action',
             key: 'hidden',
-            width: 80,
+            width: 100,
         },
         {
             title: 'Loại bài viết',
@@ -185,7 +185,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 150,
+            width: 160,
             render: () => this.EditJob
         },
     ];
@@ -443,7 +443,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             scroll={{ x: 1000 }}
                             bordered
                             pagination={{ total: 20 }}
-                            size="default"
+                            size="middle"
                             onChange={this.setPageIndex}
                             onRow={(event) => ({ onClick: () => localStorage.setItem("id_mgm", event.key) })}
                         />
