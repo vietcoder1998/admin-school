@@ -199,9 +199,10 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                     <Table
                         columns={this.columns}
                         loading={loading_table}
-                        dataSource={data_table} scroll={{ x: 1000 }}
+                        dataSource={data_table}
+                        scroll={{ x: 1000 }}
                         bordered
-                        pagination={{ total: totalItems }}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}

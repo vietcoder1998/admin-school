@@ -81,9 +81,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     EditJob = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"  onClick={() => this.deleteAnnoun()} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.deleteAnnoun()} />
             <Link to={`/admin/job-management/fix/${localStorage.getItem("id_mgm")}`}>
-                <Icon style={{ padding: "5px 10px" }}  type="edit" theme="twoTone"  />
+                <Icon style={{ padding: "5px 10px" }} type="edit" theme="twoTone" />
             </Link>
             <Icon key="delete" style={{ padding: "5px 10px" }} type="eye" onClick={() => this.onToggleModal()} />
         </div>
@@ -439,7 +439,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                         <Table<JobMmgtable>
                             columns={this.columns}
                             loading={loading_table}
-                            dataSource={data_table} scroll={{ x: 1000 }}
+                            dataSource={data_table}
+                            scroll={{ x: 1000 }}
                             bordered
                             pagination={{ total: 20 }}
                             size="middle"

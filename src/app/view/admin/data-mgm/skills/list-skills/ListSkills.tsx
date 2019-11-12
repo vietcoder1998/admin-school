@@ -71,8 +71,8 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"  onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }}  type="edit" theme="twoTone"  onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     )
 
@@ -139,7 +139,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
         await _requestToServer(
             DELETE,
             [id],
-            SKILLS ,
+            SKILLS,
             ADMIN_HOST,
             null,
             null,
@@ -199,9 +199,10 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                     <Table
                         columns={this.columns}
                         loading={loading_table}
-                        dataSource={data_table} scroll={{ x: 1000 }}
+                        dataSource={data_table}
+                        scroll={{ x: 1000 }}
                         bordered
-                        pagination={{ total: totalItems }}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}

@@ -175,7 +175,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     }
 
     setPageIndex = async (event) => {
-        await this.setState({ pageIndex: event.current - 1 , loading_table: true});
+        await this.setState({ pageIndex: event.current - 1, loading_table: true });
         await this.searchJob();
     }
 
@@ -273,7 +273,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     }
 
     render() {
-        let { data_table, show_job, loading, pendingJob, message ,loading_table } = this.state;
+        let { data_table, show_job, loading, pendingJob, message, loading_table } = this.state;
         let { list_jobs_group, totalItems } = this.props;
         let is_reject = message && message.trim() !== "" ? true : false
 
@@ -401,12 +401,13 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                         <Table
                             columns={this.columns}
                             loading={loading_table}
-                            dataSource={data_table} scroll={{ x: 2000 }}
+                            dataSource={data_table}
+                            scroll={{ x: 2000 }}
                             bordered
-                            pagination={{ total: totalItems }}
+                            pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            onRow={(event) => ({ onClick: async () => await this.getPendingJobs(event.key)})}
+                            onRow={(event) => ({ onClick: async () => await this.getPendingJobs(event.key) })}
                         />
                     </div>
                 </div>

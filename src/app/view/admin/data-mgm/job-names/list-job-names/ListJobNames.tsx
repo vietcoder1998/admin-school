@@ -97,8 +97,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
 
     EditContent: JSX.Element = (
         <div>
-            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"  onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }}  type="edit" theme="twoTone"  onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     )
 
@@ -109,6 +109,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
             dataIndex: 'index',
             key: 'index',
             className: 'action',
+            fixed: false,
         },
         {
             title: 'Loại công việc',
@@ -116,7 +117,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
             key: 'name',
             width: 500,
             className: 'action',
-
+            fixed: false,
         },
         {
             title: 'Thuộc nhóm công việc',
@@ -124,7 +125,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
             key: 'jobGroupName',
             width: 500,
             className: 'action',
-
+            fixed: false,
         },
         {
             title: 'Thao tác',
@@ -156,7 +157,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
             null,
         ).then(res => {
             if (res && res.code === 200) {
-                this.setState({jobGroupID: res.data.jobGroup.id})
+                this.setState({ jobGroupID: res.data.jobGroup.id })
             }
         })
     }
@@ -269,9 +270,10 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                     <Table
                         columns={this.columns}
                         loading={loading_table}
-                        dataSource={data_table} scroll={{ x: 1000 }}
+                        dataSource={data_table}
+                        scroll={{ x: 1000 }}
                         bordered
-                        pagination={{ total: totalItems }}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.choseJob(event) })}

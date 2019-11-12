@@ -90,8 +90,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     EditContent = (
         <div>
-            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"  onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }}  type="edit" theme="twoTone"  onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     );
 
@@ -265,9 +265,10 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     <Table
                         columns={this.columns}
                         loading={loading_table}
-                        dataSource={data_table} scroll={{ x: 1000 }}
+                        dataSource={data_table}
+                        scroll={{ x: 1000 }}
                         bordered
-                        pagination={{ total: totalItems }}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.choseMajor(event) })}
