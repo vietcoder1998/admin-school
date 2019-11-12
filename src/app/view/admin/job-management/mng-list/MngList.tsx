@@ -185,7 +185,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 120,
+            width: 150,
             render: () => this.EditJob
         },
     ];
