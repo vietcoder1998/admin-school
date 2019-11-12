@@ -21,6 +21,23 @@ interface MngListProps extends StateProps, DispatchProps {
     getAnnoucementDetail: Function,
 }
 
+interface JobMmgtable {
+    table_columns: {
+        key: any;
+        index: number;
+        title: string;
+        admin: string;
+        modifyAdmin: string;
+        createdDate: string;
+        lastModified: string;
+        imageUrl: any;
+        hidden: string;
+        announcementType: string;
+        render: JSX.Element;
+    }
+
+}
+
 interface MngListState {
     data_table?: Array<any>;
     pageIndex?: number;
@@ -43,8 +60,7 @@ interface MngListState {
     list_announcements?: Array<any>;
     id?: string;
     loading_table?: boolean;
-
-}
+};
 
 class MngList extends PureComponent<MngListProps, MngListState> {
     constructor(props) {
@@ -65,9 +81,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     EditJob = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => this.deleteAnnoun()} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"  onClick={() => this.deleteAnnoun()} />
             <Link to={`/admin/job-management/fix/${localStorage.getItem("id_mgm")}`}>
-                <Icon style={{ padding: "5px 10px" }} type="edit" />
+                <Icon style={{ padding: "5px 10px" }}  type="edit" theme="twoTone"  />
             </Link>
             <Icon key="delete" style={{ padding: "5px 10px" }} type="eye" onClick={() => this.onToggleModal()} />
         </div>
@@ -96,9 +112,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                 //     }
                 // })
             }
-        }).finally(() => {
         })
-    }
+    };
 
     columns = [
         {
@@ -181,9 +196,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         if (!show_modal) {
             let id = localStorage.getItem("id_mgm");
             this.props.getAnnoucementDetail(id);
-        }
+        };
         this.setState({ show_modal: !show_modal });
-    }
+    };
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.type_management !== prevState.type_management) {
@@ -355,83 +370,81 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             </Link>
                         </Button>
                     </h5>
-                    <div>
-                        <div className="table-operations">
-                            <Row >
-                                <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
-                                    <p>
-                                        <IptLetter value={"Chọn loại đối tượng"} />
-                                    </p>
-                                    <Select
-                                        showSearch
-                                        defaultValue="Tất cả"
-                                        style={{ width: "100%" }}
-                                        onChange={this.onChangeTarget}
-                                    >
-                                        <Option value={null}>Tất cả</Option>
-                                        <Option value={TYPE.SCHOOL}>Nhà trường</Option>
-                                        <Option value={TYPE.EMPLOYER}>Nhà tuyển dụng</Option>
-                                        <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
-                                        <Option value={TYPE.STUDENT}>Học sinh </Option>
-                                        <Option value={TYPE.PUBLIC}>Public</Option>
-                                    </Select>
-                                </Col>
-                                <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
-                                    <p>
-                                        <IptLetter value={"Chọn loại bài đăng"} />
-                                    </p>
-                                    <Select
-                                        showSearch
-                                        placeholder="Tất cả"
-                                        optionFilterProp="children"
-                                        style={{ width: "100%" }}
-                                        value={value_type}
-                                        onChange={this.onChangeType}
-                                    >
-                                        <Option value={null}>Tất cả</Option>
-                                        {
-                                            type_management &&
-                                            type_management.map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
-                                        }
-                                    </Select>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={14} xl={12} xxl={8} >
-                                    <p>
-                                        <IptLetter value={"Chọn thời gian đăng bài"} />
-                                    </p>
-                                    <DatePicker
-                                        placeholder="Chọn ngày tạo bài"
-                                        defaultValue={null}
-                                        onChange={this.onChangeCreatedDate}
-                                    >
-                                        <Option value={null}>Tất cả</Option>
-                                        {
-                                            type_management &&
-                                            type_management.map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
-                                        }
-                                    </DatePicker>
-                                    <Select
-                                        showSearch
-                                        style={{ margin: "0px 10px" }}
-                                        defaultValue={"Trạng thái"}
-                                        onChange={this.onChangeHidden}
-                                    >
-                                        <Option value={null}>Tất cả</Option>
-                                        <Option value={-1}>Đã ẩn</Option>
-                                        <Option value={0}>Hiện</Option>
-                                    </Select>
-                                </Col>
-                            </Row>
-                        </div>
-                        <Table
+                    <div className="table-operations">
+                        <Row >
+                            <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
+                                <p>
+                                    <IptLetter value={"Chọn loại đối tượng"} />
+                                </p>
+                                <Select
+                                    showSearch
+                                    defaultValue="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={this.onChangeTarget}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={TYPE.SCHOOL}>Nhà trường</Option>
+                                    <Option value={TYPE.EMPLOYER}>Nhà tuyển dụng</Option>
+                                    <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
+                                    <Option value={TYPE.STUDENT}>Học sinh </Option>
+                                    <Option value={TYPE.PUBLIC}>Public</Option>
+                                </Select>
+                            </Col>
+                            <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
+                                <p>
+                                    <IptLetter value={"Chọn loại bài đăng"} />
+                                </p>
+                                <Select
+                                    showSearch
+                                    placeholder="Tất cả"
+                                    optionFilterProp="children"
+                                    style={{ width: "100%" }}
+                                    value={value_type}
+                                    onChange={this.onChangeType}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    {
+                                        type_management &&
+                                        type_management.map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
+                                    }
+                                </Select>
+                            </Col>
+                            <Col xs={24} sm={12} md={12} lg={14} xl={12} xxl={8} >
+                                <p>
+                                    <IptLetter value={"Chọn thời gian đăng bài"} />
+                                </p>
+                                <DatePicker
+                                    placeholder="Chọn ngày tạo bài"
+                                    defaultValue={null}
+                                    onChange={this.onChangeCreatedDate}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    {
+                                        type_management &&
+                                        type_management.map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
+                                    }
+                                </DatePicker>
+                                <Select
+                                    showSearch
+                                    style={{ margin: "0px 10px" }}
+                                    defaultValue={"Trạng thái"}
+                                    onChange={this.onChangeHidden}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={-1}>Đã ẩn</Option>
+                                    <Option value={0}>Hiện</Option>
+                                </Select>
+                            </Col>
+                        </Row>
+                        <Table<JobMmgtable>
+                            columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table} scroll={{ x: 1000 }}
                             bordered
                             pagination={{ total: 20 }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            columns={this.columns}
-                            onRow={event => { localStorage.setItem("id_mgm", event.key) }}
+                            onRow={(event) => ({ onClick: () => localStorage.setItem("id_mgm", event.key) })}
                         />
                     </div>
                 </div>

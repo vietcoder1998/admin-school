@@ -18,7 +18,7 @@ export interface IConfigModalState {
 }
 export class ConfigModal extends React.Component<IConfigModalProps, IConfigModalState> {
     state: IConfigModalState = { toggleTo: true }
-    closeModal = () => { this.props.toggleModal() };
+    closeModal = () => { let{isOpen} = this.props; if(isOpen){this.props.toggleModal()}  };
     componentDidMount() {
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
@@ -33,7 +33,7 @@ export class ConfigModal extends React.Component<IConfigModalProps, IConfigModal
         })
     }
     componentWillUnmount() {
-        document.removeEventListener("keypress", () => { });
+        document.removeEventListener("keydown", () => { });
         document.removeEventListener("mousedown", () => { });
     }
     render(){

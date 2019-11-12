@@ -359,6 +359,12 @@ ul {
   color: rgba(255, 255, 255, 0);
 }
 
+.ant-btn {
+  svg{
+    margin: 0px 3px 5px!important;
+  }
+}
+
 // Button
 .holder-button {
   height: 60px;

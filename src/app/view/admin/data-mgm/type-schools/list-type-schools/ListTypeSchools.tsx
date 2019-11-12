@@ -71,8 +71,8 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
 
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     )
 
@@ -139,7 +139,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
         await _requestToServer(
             DELETE,
             [id],
-            TYPE_SCHOOLS ,
+            TYPE_SCHOOLS,
             ADMIN_HOST,
             null,
             null,
@@ -204,7 +204,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                         pagination={{ total: totalItems }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRowClick={event => { console.log(event); this.setState({ id: event.key, name: event.name }) }}
+                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />
                 </div>
             </Fragment>

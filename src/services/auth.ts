@@ -32,8 +32,6 @@ export const deleteLoginState = () => {
 }
 
 // Set accesstoken and refreshtoken
-
-
 export const sendStringHeader = {
     "Access-Control-Allow-Headers": "*",
     "Content-Type": "text/plain",

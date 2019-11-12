@@ -209,6 +209,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         title="Nhập tiêu đề bài viết"
                         placeholder="Tiêu đề"
                         widthLabel="200px"
+                        widthInput="350px"
                         onChange={event => this.setState({ title: event })}
                     />
                     <InputTitle

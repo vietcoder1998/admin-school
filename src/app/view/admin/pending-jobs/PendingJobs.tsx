@@ -406,7 +406,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                             pagination={{ total: totalItems }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            onRowClick={async event => { await this.getPendingJobs(event.key) }}
+                            onRow={(event) => ({ onClick: async () => await this.getPendingJobs(event.key)})}
                         />
                     </div>
                 </div>

@@ -97,8 +97,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
 
     EditContent: JSX.Element = (
         <div>
-            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"  onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }}  type="edit" theme="twoTone"  onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     )
 
@@ -274,7 +274,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         pagination={{ total: totalItems }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRowClick={this.choseJob}
+                        onRow={(event) => ({ onClick: () => this.choseJob(event) })}
                     />
                 </div>
             </Fragment>
