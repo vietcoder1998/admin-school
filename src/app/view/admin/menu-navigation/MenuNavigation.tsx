@@ -98,7 +98,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                         <Menu.Item key="14">
                             <Link to={'/admin/data/branches/list'}>
                             <Icon type="apartment" />
-                                <span>Chuyên ngành</span>
+                                <span>Nhóm ngành</span>
                             </Link>
                         </Menu.Item>
                     </SubMenu>

@@ -159,7 +159,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
         return (
             <Fragment >
                 <ConfigModal
-                    title={type === TYPE.EDIT ? "Sửa chuyên nghành" : "Xóa chuyên nghành"}
+                    title={type === TYPE.EDIT ? "Sửa nhóm ngành" : "Xóa nhóm ngành"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
@@ -169,18 +169,18 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                 >
                     {type === TYPE.EDIT ?
                         (<InputTitle
-                            title="Sửa tên chuyên nghành"
+                            title="Sửa tên nhóm ngành"
                             type={TYPE.INPUT}
                             value={name}
-                            placeholder="Tên chuyên nghành"
+                            placeholder="Tên nhóm ngành"
                             onChange={event => this.setState({ name: event })}
                             widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa chuyên nghành : {name}</div>
+                        />) : <div>Bạn chắc chắn sẽ xóa nhóm ngành : {name}</div>
                     }
                 </ConfigModal>
                 <div>
                     <h5>
-                        Danh sách chuyên nghành
+                        Danh sách nhóm ngành
                         <Button
                             onClick={() => { }}
                             type="primary"
@@ -192,7 +192,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
 
                             <Link to='/admin/data/branches/create'>
                                 <Icon type="plus" />
-                                Thêm chuyên nghành mới
+                                Thêm nhóm ngành mới
                             </Link>
                         </Button>
                     </h5>
@@ -204,7 +204,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         pagination={{ total: totalItems }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRowClick={event => { console.log(event); this.setState({ id: event.key, name: event.name }) }}
+                        onRowClick={event => { this.setState({ id: event.key, name: event.name }) }}
                     />
                 </div>
             </Fragment>

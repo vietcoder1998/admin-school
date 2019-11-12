@@ -8,7 +8,7 @@ import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from './../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { JOB_NAMES } from '../../../../../../services/api/private.api';
-import { DELETE, PUT } from '../../../../../../common/const/method';
+import { DELETE, PUT, GET } from '../../../../../../common/const/method';
 import { TYPE } from '../../../../../../common/const/type';
 import { IJobGroup } from '../../../../../../redux/models/job-groups';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
@@ -30,7 +30,7 @@ interface ListJobNamesState {
     id?: string;
     type?: string;
     jobGroupName?: string;
-    list_data: Array<{label: string, value: number}>
+    list_data: Array<{ label: string, value: number }>
 }
 
 class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
@@ -138,7 +138,37 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
 
     setPageIndex = async (event) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true });
-        await this.props.getListJobNames(event.current - 1)
+        await this.props.getListJobNames(event.current - 1);
+    };
+
+    choseJob = event => {
+        this.setState({ id: event.key, name: event.name, jobGroupName: event.jobGroupName });
+        this.getJobDetail(event.key);
+    }
+
+    getJobDetail = async  id => {
+        await _requestToServer(
+            GET,
+            null,
+            JOB_NAMES + `/${id}`,
+            ADMIN_HOST,
+            null,
+            null,
+        ).then(res => {
+            if (res && res.code === 200) {
+                this.setState({jobGroupID: res.data.jobGroup.id})
+            }
+        })
+    }
+
+    handleChoseJobGroup = (id) => {
+        let { list_data } = this.state;
+        list_data.forEach(item => {
+            if (item.value === id) {
+                this.setState({ jobGroupName: item.label })
+            }
+        });
+        this.setState({ jobGroupID: id })
     }
 
     editjobNames = async () => {
@@ -206,7 +236,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         namebtn2={"Hoàn thành"}
                         title="Thay đổi công việc"
                         isOpen={openModal}
-                        handleOk={() => { }}
+                        handleOk={() => type === TYPE.EDIT ? this.editjobNames() : this.removejobNames()}
+                        handleClose={this.toggleModal}
                         toggleModal={this.toggleModal}
                     >
                         {type === TYPE.EDIT ? (
@@ -216,23 +247,23 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                                     title="Sửa tên công việc"
                                     widthLabel="120px"
                                     placeholder="Thay đổi tên"
-                                    widthInput={"350px"}
+                                    value={name}
+                                    widthInput={"250px"}
                                     style={{ padding: "0px 20px" }}
                                     onChange={event => this.setState({ name: event })}
                                 />
-
                                 <InputTitle
                                     type={TYPE.SELECT}
                                     title="Chọn nhóm công việc"
                                     placeholder="Chọn nhóm công việc"
                                     list_value={list_data}
                                     value={jobGroupName}
-                                    style={{ padding: "0px 30px" }}
-                                    onChange={event => this.setState({ jobGroupID: event })}
+                                    style={{ padding: "0px 20px" }}
+                                    onChange={this.handleChoseJobGroup}
                                 />
                             </Fragment>
 
-                        ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
+                        ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
 
                     </ConfigModal>
                     <Table
@@ -243,7 +274,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         pagination={{ total: totalItems }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRowClick={async event => this.setState({ id: event.key, name: event.name })}
+                        onRowClick={this.choseJob}
                     />
                 </div>
             </Fragment>
@@ -252,7 +283,9 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListJobNames: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize })
+    getListJobNames: (pageIndex, pageSize) => dispatch({
+        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize
+    })
 })
 
 const mapStateToProps = (state, ownProps) => ({

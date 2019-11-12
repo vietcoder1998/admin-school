@@ -72,22 +72,33 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
         this.setState({ name: event })
     }
 
+    handleChoseMajor = (id) => {
+        let { list_data } = this.state;
+        list_data.forEach(item => {
+            if (item.value === id) {
+                this.setState({ branchName: item.label });
+            }
+        });
+        this.setState({ branchID: id });
+    }
+
+
     render() {
         let { name, list_data, branchID, branchName } = this.state;
-        let is_exactly = name.trim()!=="" && branchID ? true : false
+        let is_exactly = name.trim() !== "" && branchID ? true : false
         return (
             <Fragment >
                 <div>
-                    <h5>Thêm chuyên ngành mới</h5>
-                    <Divider orientation="left" >Chi tiết chuyên ngành</Divider>
+                    <h5>Thêm nhóm ngành mới</h5>
+                    <Divider orientation="left" >Chi tiết nhóm ngành</Divider>
                 </div>
                 <InputTitle
                     type={TYPE.INPUT}
-                    title="Tên chuyên ngành mới"
-                    placeholder="Nhập tên chuyên ngành"
+                    title="Tên nhóm ngành mới"
+                    placeholder="Nhập tên nhóm ngành"
                     value={name}
-                    widthInput="400px"
-                    style={{ padding: "0px 30px" }}
+                    widthInput="300px"
+                    style={{ padding: "0px 20px" }}
                     onChange={event => this.setState({ name: event })}
                 />
                 <InputTitle
@@ -96,8 +107,8 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     placeholder="Chọn nhóm ngành"
                     value={branchName}
                     list_value={list_data}
-                    style={{ padding: "0px 30px" }}
-                    onChange={event => this.setState({ branchID: event })}
+                    style={{ padding: "0px 20px" }}
+                    onChange={this.handleChoseMajor}
                 />
                 <Button
                     type="primary"
@@ -106,7 +117,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     onClick={this.createNewData}
                     disabled={!is_exactly}
                 >
-                    Tạo chuyên ngành mới
+                    Tạo nhóm ngành mới
                 </Button>
                 <Button
                     type="danger"

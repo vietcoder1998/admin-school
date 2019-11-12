@@ -57,13 +57,13 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
         return (
             <Fragment >
                 <div>
-                    <h5>Thêm chuyên ngành mới</h5>
-                    <Divider orientation="left" >Chi tiết chuyên ngành</Divider>
+                    <h5>Thêm nhóm ngành mới</h5>
+                    <Divider orientation="left" >Chi tiết nhóm ngành</Divider>
                 </div>
                 <InputTitle
                     type={TYPE.INPUT}
-                    title="Tên chuyên ngành mới"
-                    placeholder="Nhập tên chuyên ngành"
+                    title="Tên nhóm ngành mới"
+                    placeholder="Nhập tên nhóm ngành"
                     widthInput="400px"
                     value={name}
                     style={{ padding: "0px 30px" }}
@@ -76,7 +76,7 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
                     onClick={this.createNewData}
                     disabled={!is_name}
                 >
-                    Tạo chuyên ngành mới
+                    Tạo nhóm ngành mới
                 </Button>
                 <Button
                     type="danger"

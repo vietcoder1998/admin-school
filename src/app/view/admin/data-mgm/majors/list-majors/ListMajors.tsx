@@ -6,7 +6,7 @@ import { IMajor } from '../../../../../../redux/models/majors';
 import { Link } from 'react-router-dom';
 import { IBranches } from '../../../../../../redux/models/branches';
 import { MAJORS } from '../../../../../../services/api/private.api';
-import { DELETE, PUT } from '../../../../../../common/const/method';
+import { DELETE, PUT, GET } from '../../../../../../common/const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
 import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
@@ -30,7 +30,7 @@ interface ListMajorsState {
     branchID?: number;
     type: string;
     openModal: boolean;
-    list_data: Array<{label: string, value: number}>;
+    list_data: Array<{ label: string, value: number }>;
 };
 
 class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
@@ -42,11 +42,12 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             data_table: [],
             pageIndex: 0,
             list_branch: [],
-            id: "",
+            id: null,
             branchName: null,
             branchID: null,
             type: TYPE.EDIT,
             openModal: false,
+            list_data: []
         };
     };
 
@@ -70,7 +71,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             return {
                 list_majors: nextProps.list_majors,
                 data_table,
-                loading_table: false
+                loading_table: false,
             }
         };
 
@@ -89,8 +90,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" onClick={() => { }} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => { }} />
+            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     );
 
@@ -100,6 +101,36 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             this.setState({ type })
         }
         this.setState({ openModal: !openModal })
+    };
+
+    choseMajor = async event => {
+        await this.setState({ id: event.key, name: event.name, branchName: event.branchName });
+        await this.getJobDetail(event.key)
+    }
+
+    getJobDetail = async  id => {
+        await _requestToServer(
+            GET,
+            null,
+            MAJORS + `/${id}`,
+            ADMIN_HOST,
+            null,
+            null,
+        ).then(res => {
+            if (res && res.code === 200) {
+                this.setState({ branchID: res.data.branch.id })
+            }
+        })
+    }
+
+    handleChoseMajor = id => {
+        let { list_data } = this.state;
+        list_data.forEach(item => {
+            if (item.value === id) {
+                this.setState({ branchName: item.label })
+            }
+        });
+        this.setState({ branchID: id })
     }
 
     columns = [
@@ -111,7 +142,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             className: 'action',
         },
         {
-            title: 'Tên chuyên ngành',
+            title: 'Tên nhóm ngành',
             dataIndex: 'name',
             key: 'name',
             width: 500,
@@ -129,7 +160,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 300,
+            width: 200,
             fixed: "right",
             render: () => this.EditContent,
         },
@@ -140,7 +171,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         this.props.getListMajors(event.current - 1)
     };
 
-    editjobNames = async () => {
+    editMajor = async () => {
         let { name, id, branchID } = this.state;
         name = name.trim();
         await _requestToServer(
@@ -157,9 +188,9 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                 this.toggleModal();
             }
         })
-    }
+    };
 
-    removejobNames = async () => {
+    removeMajor = async () => {
         let { id } = this.state;
         await _requestToServer(
             DELETE,
@@ -178,7 +209,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     }
 
     render() {
-        let { data_table, loading_table, type, openModal, list_data, name } = this.state;
+        let { data_table, loading_table, type, openModal, list_data, name, branchName } = this.state;
         let { totalItems } = this.props;
         return (
             <Fragment >
@@ -202,32 +233,33 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         namebtn2={"Hoàn thành"}
                         title="Thay đổi ngành nghề"
                         isOpen={openModal}
-                        handleOk={() => { }}
+                        handleOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
                         toggleModal={this.toggleModal}
                     >
                         {type === TYPE.EDIT ? (
                             <Fragment>
                                 <InputTitle
                                     type={TYPE.INPUT}
-                                    title="Sửa tên ngành nghề"
+                                    title="Sửa tên ngành "
                                     widthLabel="120px"
                                     placeholder="Thay đổi tên"
-                                    widthInput={"350px"}
+                                    value={name}
+                                    widthInput={"250px"}
                                     style={{ padding: "0px 20px" }}
                                     onChange={event => this.setState({ name: event })}
                                 />
-
                                 <InputTitle
                                     type={TYPE.SELECT}
-                                    title="Chọn nhóm ngành nghề"
-                                    placeholder="Chọn nhóm ngành nghề"
+                                    title="Chọn nhóm ngành "
+                                    placeholder="Chọn nhóm ngành "
+                                    value={branchName}
                                     list_value={list_data}
-                                    style={{ padding: "0px 30px" }}
-                                    onChange={event => this.setState({ branchID: event })}
+                                    style={{ padding: "0px 20px" }}
+                                    onChange={this.handleChoseMajor}
                                 />
                             </Fragment>
 
-                        ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
+                        ) : <div>Bạn chắc chắn muốn xóa nhóm ngành này: {name}</div>}
 
                     </ConfigModal>
                     <Table
@@ -238,7 +270,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         pagination={{ total: totalItems }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRowClick={async event => { }}
+                        onRowClick={this.choseMajor}
                     />
                 </div>
             </Fragment>

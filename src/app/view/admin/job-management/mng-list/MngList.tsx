@@ -126,6 +126,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         {
             title: 'Người viết',
             dataIndex: 'admin',
+            className: 'action',
             key: 'admin',
             width: 110,
         },
@@ -400,7 +401,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     </p>
                                     <DatePicker
                                         placeholder="Chọn ngày tạo bài"
-                                        defaultValue={timeConverter('01/01/1970')}
+                                        defaultValue={null}
                                         onChange={this.onChangeCreatedDate}
                                     >
                                         <Option value={null}>Tất cả</Option>

@@ -31,7 +31,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
         super(props);
         this.state = {
             name: "",
-            jobGroupID: 0,
+            jobGroupID: null,
             list_job_groups: [],
             jobGroupName: null,
         }
@@ -72,8 +72,18 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
         this.setState({ name: event })
     }
 
+    handleChoseJobGroup = (id) => {
+        let {list_data} = this.state;
+        list_data.forEach(item=>{
+            if (item.value===id) {
+                this.setState({jobGroupName:item.label})
+            }
+        });
+        this.setState({jobGroupID:id})
+    }
+
     render() {
-        let { name, list_data, jobGroupID } = this.state;
+        let { name, list_data, jobGroupID, jobGroupName } = this.state;
         let is_exactly = name.trim()!=="" && jobGroupID ? true : false
         return (
             <Fragment >
@@ -94,10 +104,10 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     type={TYPE.SELECT}
                     title="Chọn nhóm công việc"
                     placeholder="Chọn nhóm công việc"
-                    value={jobGroupID}
+                    value={jobGroupName}
                     list_value={list_data}
                     style={{ padding: "0px 30px" }}
-                    onChange={event => this.setState({ jobGroupID: event })}
+                    onChange={this.handleChoseJobGroup}
                 />
                 <Button
                     type="primary"

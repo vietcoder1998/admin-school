@@ -53,14 +53,15 @@ export const NewInput = (props: INewInput) => {
 }
 
 export const NewSelect = (props: INewSelect) => {
-    let { placeholder, list_value, value, onChange, widthSelect } = props;
+    let { placeholder, list_value, value, onChange, widthSelect, defaultValue } = props;
     return (
         <Select
             showSearch
             placeholder={placeholder}
             optionFilterProp="children"
             style={{ width: widthSelect ? widthSelect : "200px" }}
-            {...value ? value: null}
+            value={value}
+            defaultValue={defaultValue}
             onChange={event => onChange(event)}
         >
             {
@@ -98,7 +99,7 @@ export const InputTitle = (props: IInputitleProps) => {
                     value={value}
                     defaultValue={defaultValue}
                     placeholder={placeholder}
-                    onChange={onChange?onChange: () => {}}
+                    onChange={onChange ? onChange : () => { }}
                 />);
             break;
 
