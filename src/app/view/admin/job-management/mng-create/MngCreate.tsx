@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Upload, Modal, Icon, Divider, Switch, Row, Col, Button } from 'antd';
+import { Upload, Modal, Icon, Divider, Switch, Row, Col, Button, Input } from 'antd';
 import './MngCreate.scss';
 import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
@@ -8,6 +8,15 @@ import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { Link } from 'react-router-dom';
 import { IAnnouncementDetail } from '../../../../../redux/models/announcement_detail';
 import { TYPE } from '../../../../../common/const/type';
+import { ICreateNewAnnoucement } from '../../../../../redux/models/announcements';
+import { _requestToServer } from '../../../../../services/exec';
+import { POST, PUT } from '../../../../../common/const/method';
+import { UPLOAD_IMAGE, ANNOUNCEMENTS } from '../../../../../services/api/private.api';
+import { ADMIN_HOST } from '../../../../../environment/dev';
+import { sendImageHeader, authHeaders } from '../../../../../services/auth';
+import Cropper from 'react-cropper';
+
+const cropper = React.createRef(null);
 
 interface MngCreateState {
     title?: string;
@@ -23,21 +32,16 @@ interface MngCreateState {
     value_annou?: string;
     announcement_detail?: IAnnouncementDetail;
     type_cpn?: string;
+    data?: ICreateNewAnnoucement;
+    is_loading_image?: boolean;
+    imageUrl?: any;
+    dataUrl?: any;
 }
 
 interface MngCreateProps extends StateProps, DispatchProps {
     getTypeManagements: Function;
     getAnnouncementDetail: Function;
     match?: any;
-}
-
-function getBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
 }
 
 class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
@@ -52,8 +56,9 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             previewImage: null,
             previewVisible: false,
             fileList: [],
+            imageUrl: "",
             hidden: false,
-            value_annou: "",
+            value_annou: "chọn loại bài viết",
             announcement_detail: {
                 id: "",
                 admin: {},
@@ -66,6 +71,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 loading: false,
             },
             type_cpn: TYPE.CREATE,
+            is_loading_image: false,
+            dataUrl: null,
         }
     }
 
@@ -149,53 +156,93 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         }
     };
 
-
-    getBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-    };
-
-    handleCancel = () => this.setState({ previewVisible: false });
-
-    handlePreview = async file => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
+    uploadFileToServer = async (file) => {
+        await this.setState({ is_loading_image: true })
+        const reader = new FileReader();
+        var url = reader.readAsDataURL(file);
+        reader.onloadend = (event) => {
+            this.setState({ imageUrl: [reader.result] })
         }
+        // await this.setState({imageUrl: url});
+        // let formData = new FormData();
+        // formData.append("image", file);
 
-        this.setState({
-            previewImage: file.url || file.preview,
-            previewVisible: true,
-        });
-    };
-
-    // handleRemove = async() => {
-    //     let {fileList} = this.state;
-    //     let data = fileList[1]
-    //     fileList= [data];
-    //     await this.setState({fileList})
-    // }
-
-    handleChange = async ({ fileList }) => {
-        await this.setState({ fileList, previewImage: true });
-    };
-
-    createRequest = async () => {
-        // let { fileList, hidden, title, announcementTypeID } = this.state;
+        // await _requestToServer(
+        //     POST,
+        //     formData,
+        //     UPLOAD_IMAGE,
+        //     ADMIN_HOST,
+        //     sendImageHeader,
+        //     null,
+        //     true,
+        //     false
+        // ).then(res => {
+        //     if (res.code === 200) {
+        //         let { data } = this.state;
+        //         let imageUrl = res.data.url;
+        //         this.setState({ imageUrl });
+        //     }
+        // }).finally(() => {
+        //     
+        // });
+        await this.setState({ is_loading_image: false })
     }
 
-    render() {
-        let { title, list_item, previewImage, previewVisible, hidden, content, fileList, value_annou, type_cpn } = this.state;
-        const uploadButton = (
-            <div>
-                <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
+    changeData = (value: any, type: string) => {
+        let { data } = this.state;
+        this.setState({
+            data
+        })
+    }
 
+    createAnnoucement = async () => {
+        let {
+            title,
+            imageUrl,
+            announcementTypeID,
+            hidden,
+            content,
+            type_cpn
+        } = this.state;
+        let data = {
+            title,
+            imageUrl,
+            announcementTypeID,
+            hidden,
+            content
+        }
+
+        await _requestToServer(
+            type_cpn === TYPE.CREATE ? POST : PUT,
+            data,
+            ANNOUNCEMENTS,
+            ADMIN_HOST,
+            authHeaders,
+            null,
+            true
+        )
+    }
+
+    _crop = () => {
+        // image in dataUrl
+        console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
+    }
+
+
+    render() {
+        let {
+            title,
+            list_item,
+            previewImage,
+            previewVisible,
+            hidden,
+            content,
+            value_annou,
+            type_cpn,
+            is_loading_image,
+            imageUrl,
+            dataUrl
+        } = this.state;
         return (
             <div className='common-content'>
                 <h5>
@@ -223,10 +270,9 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         list_value={list_item}
                         onChange={event => this.setState({ announcementTypeID: event })}
                     />
-
                     <InputTitle
                         type="SWITCH"
-                        title="Trạng thái"
+                        title="Ẩn - Hiện"
                         widthLabel="200px"
                     >
                         <Switch checked={!hidden} onClick={() => { this.setState({ hidden: !hidden }) }} />
@@ -234,47 +280,51 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             {hidden ? "Ẩn" : "Hiện"}
                         </label>
                     </InputTitle>
-
+                    <InputTitle
+                        type=""
+                        title="Ảnh đại diện"
+                        widthLabel="200px"
+                    >
+                        <React.Fragment>
+                            <Cropper
+                                ref={cropper}
+                                src={imageUrl}
+                                style={{ height: 400, width: 400, borderColor: "gray" }}
+                                // Cropper.js options
+                                aspectRatio={16 / 9}
+                                guides={false}
+                                crop={this._crop}
+                            />
+                            <div className="image-crop-url">
+                                <img id="avatar-announcements" src={imageUrl} alt='ảnh đại diện' />
+                            </div>
+                            <input id="logoImage" type="file" onChange={(event) => this.uploadFileToServer(event.target.files[0])} />
+                            <label className='upload-img' htmlFor="logoImage">
+                                {!is_loading_image ? <Icon type="plus" /> : <Icon type="loading" style={{ color: "blue" }} />}
+                                <div className="ant-upload-text">Upload</div>
+                            </label>
+                        </React.Fragment>
+                    </InputTitle>
                     <InputTitle
                         title="Nội dung"
                         widthLabel="200px"
                         placeholder="Loại bài viết"
                     >
+                        <CKEditor
+                            id={"yeah"}
+                            editorName="editor2"
+                            config={{
+                                extraPlugins: 'stylesheetparser'
+                            }}
+                            onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+                            onInit={event => {
+                                console.log(event);
+                            }}
+                            onChange={event => this.setState({ content: event.editor.getData() })}
+                            data={content}
+                        />
                     </InputTitle>
-                    <CKEditor
-                        id={"yeah"}
-                        editorName="editor2"
-                        config={{
-                            extraPlugins: 'stylesheetparser'
-                        }}
-                        onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-                        onInit={event => {
-                            console.log(event);
-                        }} fa-address-book
-                        data={content}
-                    />
                 </div>
-                <Row>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Divider orientation="left" >Thay đổi ảnh đại diện</Divider>
-                        <div className="mng-create-content">
-                            <Upload
-                                action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
-                                listType="picture-card"
-                                onChange={this.handleChange}
-                                onPreview={this.handlePreview}
-                                fileList={fileList}
-                            >
-                                {fileList.length >= 2 ? null : uploadButton}
-                            </Upload>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Divider orientation="left" >Người sửa cuối cùng</Divider>
-
-                    </Col>
-
-                </Row>
                 <Divider orientation="left" >Hoàn tất</Divider>
                 <div className="mng-create-content">
                     <Button
@@ -284,6 +334,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             margin: "10px 10px",
                             float: "right"
                         }}
+                        onClick={this.createAnnoucement}
                     >
                         {type_cpn === TYPE.CREATE ? "Tạo mới" : "Lưu lại"}
                         <Icon type="right" />
@@ -302,7 +353,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                         </Link>
                     </Button>
                 </div>
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                <Modal visible={previewVisible} footer={null} >
                     <img alt="example" style={{ width: '100%', height: "80vh" }} src={previewImage} />
                 </Modal>
             </div >

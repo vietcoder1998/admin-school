@@ -12,6 +12,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
 import 'sweetalert2/src/sweetalert2.scss';
+import 'cropperjs/dist/cropper.css';
 
 require('dotenv').config();
 

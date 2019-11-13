@@ -51,4 +51,11 @@ export const setAuthSate = async (response) => {
     }
 }
 
+// Send Image file
+export const sendImageHeader = {
+    "Access-Control-Allow-Headers": "*",
+    "Content-Type": "multipart/form-data",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+}
+
 //Set Authorization

@@ -10,5 +10,4 @@ export const LANGUAGES = "/api/admins/data/languages";
 export const JOB_NAMES = "/api/admins/data/jobNames";
 export const TYPE_MANAGEMENT = "/api/admins/data/announcementTypes";
 export const BRANCHES = "/api/admins/data/branches";
-
-
+export const UPLOAD_IMAGE = "/api/admins/announcements/images/upload";

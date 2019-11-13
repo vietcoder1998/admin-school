@@ -1,5 +1,3 @@
-import { identifier } from "@babel/types"
-
 export interface IAnnouncement {
     id: string;
     imageUrl: string;
@@ -30,7 +28,14 @@ export interface IAnnouncement {
 export interface IAnnouncements {
     items: Array<IAnnouncement>;
     pageIndex: number;
-pageSize: number;
     pageSize: number;
     totalItems: number;
+}
+
+export interface ICreateNewAnnoucement {
+    announcementTypeID?: number,
+    imageUrl?: string,
+    title?: string,
+    content?: string,
+    hidden?: boolean,
 }
