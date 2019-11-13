@@ -129,6 +129,9 @@ textarea {
 
 .input-title {
   display: flex;
+  padding: 15px 0px;
+  margin: 0px;
+  position: relative;
   .title-inside {
     width: 150px!important;
     margin-right: 20px;
@@ -137,8 +140,12 @@ textarea {
   }
 
   input {
-    max-width: 590px;
+    max-width: 600px;
   }
+}
+
+#cke_editor1 {
+  width: calc(100% - 160px);
 }
 
 .title-label {

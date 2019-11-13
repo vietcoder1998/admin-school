@@ -10,6 +10,7 @@ import JobManagement from './job-management/JobManagement';
 import DataMgm from './data-mgm/DataMgm';
 import clearStorage from '../../../services/clearStorage';
 import { breakCumb } from '../../../common/const/break-cumb';
+import RoleAdmins from './role-admins/RoleAdmins';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -149,6 +150,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
                             <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
                             <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
+                            <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
                         </Switch>
                     </Content>
                 </Layout>

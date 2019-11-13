@@ -4,7 +4,7 @@ import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { ITypeSchool } from '../../../../../../redux/models/type-schools';
 import { Link } from 'react-router-dom';
-import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
@@ -160,7 +160,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
         let { totalItems } = this.props;
         return (
             <Fragment >
-                <ConfigModal
+                <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa loại trường" : "Xóa loại trường"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
@@ -179,7 +179,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa loại trường: {name}</div>
                     }
-                </ConfigModal>
+                </ModalConfig>
                 <div>
                     <h5>
                         Danh sách loại trường

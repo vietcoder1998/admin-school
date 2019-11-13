@@ -89,7 +89,6 @@ export const InputTitle = (props: IInputitleProps) => {
     } = props;
     let ComponentReturn;
     const defaultStyle = {
-        margin: "20px 0px",
     }
     switch (props.type) {
         case TYPE.INPUT:

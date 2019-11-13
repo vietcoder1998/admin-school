@@ -16,7 +16,7 @@ export interface IConfigModalProps {
 export interface IConfigModalState {
     toggleTo?: boolean;
 }
-export class ConfigModal extends React.Component<IConfigModalProps, IConfigModalState> {
+export class ModalConfig extends React.Component<IConfigModalProps, IConfigModalState> {
     state: IConfigModalState = { toggleTo: true }
     closeModal = () => { let{isOpen} = this.props; if(isOpen){this.props.toggleModal()}  };
     componentDidMount() {

@@ -4,7 +4,7 @@ import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { IJobGroup } from '../../../../../../redux/models/job-groups';
 import { Link } from 'react-router-dom';
-import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
@@ -160,7 +160,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
         let { totalItems } = this.props;
         return (
             <Fragment >
-                <ConfigModal
+                <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa nhóm công việc" : "Xóa nhóm công việc"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
@@ -179,7 +179,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa nhóm công việc : {name}</div>
                     }
-                </ConfigModal>
+                </ModalConfig>
                 <div>
                     <h5>
                         Danh sách nhóm công việc

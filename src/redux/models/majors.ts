@@ -10,7 +10,6 @@ export interface IMajor {
 export interface IMajors {
     items: Array<IMajors>;
     pageIndex: number;
-pageSize: number;
     pageSize: number;
     totalItems: number;
 }

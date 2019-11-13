@@ -1,24 +1,24 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { ILanguage } from '../../../../../../redux/models/languages';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
-import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
-import { _requestToServer } from '../../../../../../services/exec';
-import { PUT, DELETE } from '../../../../../../common/const/method';
-import { BRANCHES } from '../../../../../../services/api/private.api';
-import { ADMIN_HOST } from '../../../../../../environment/dev';
 import { TYPE } from '../../../../../../common/const/type';
+import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { DELETE, PUT } from '../../../../../../common/const/method';
+import { _requestToServer } from '../../../../../../services/exec';
+import { IAdmin } from '../../../../../../redux/models/roles';
+import { ROLES } from '../../../../../../services/api/private.api';
+import { ADMIN_HOST } from '../../../../../../environment/dev';
 
-interface ListBranchesProps extends StateProps, DispatchProps {
+interface ListRolesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListBranches: Function;
+    getListRoles: Function;
 }
 
-interface ListBranchesState {
-    list_branches: Array<ILanguage>,
+interface ListRolesState {
+    list_admins: Array<IAdmin>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
@@ -29,11 +29,11 @@ interface ListBranchesState {
     type?: string;
 }
 
-class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
+class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_branches: [],
+            list_admins: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -46,23 +46,24 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     }
 
     async componentDidMount() {
-        await this.props.getListBranches(0, 10);
+        await this.props.getListRoles(0, 10);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_branches !== prevState.list_branches) {
+        if (nextProps.list_admins !== prevState.list_admins) {
             let data_table = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_branches.forEach((item, index) => {
+            nextProps.list_admins.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
                     name: item.name,
+                    type: item.type
                 });
             })
 
             return {
-                list_branches: nextProps.list_branches,
+                list_admins: nextProps.list_admins,
                 data_table,
                 loading_table: false
             }
@@ -95,9 +96,17 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
             className: 'action',
         },
         {
-            title: 'Nhóm ngành',
+            title: 'Tên Roles',
             dataIndex: 'name',
             key: 'name',
+            width: 755,
+            className: 'action',
+
+        },
+        {
+            title: 'Loại quyền',
+            dataIndex: 'type',
+            key: 'type',
             width: 755,
             className: 'action',
 
@@ -114,41 +123,41 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
 
     setPageIndex = async (event) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        this.props.getListBranches(event.current - 1, event.pageSize)
+        this.props.getListRoles(event.current - 1, event.pageSize)
     }
 
-    editBranches = async () => {
+    editRoles = async () => {
         let { name, id } = this.state;
         name = name.trim();
         await _requestToServer(
             PUT,
             { name },
-            BRANCHES + `/${id}`,
+            ROLES + `/${id}`,
             ADMIN_HOST,
             null,
             null,
             true
         ).then(res => {
             if (res && res.code === 200) {
-                this.props.getListBranches();
+                this.props.getListRoles();
                 this.toggleModal();
             }
         })
     }
 
-    removeBranches = async () => {
+    removeRoles = async () => {
         let { id } = this.state;
         await _requestToServer(
             DELETE,
             [id],
-            BRANCHES,
+            ROLES,
             ADMIN_HOST,
             null,
             null,
             true
         ).then(res => {
             if (res && res.code === 200) {
-                this.props.getListBranches();
+                this.props.getListRoles();
                 this.toggleModal();
             }
         })
@@ -161,28 +170,28 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
         return (
             <Fragment >
                 <ModalConfig
-                    title={type === TYPE.EDIT ? "Sửa nhóm ngành" : "Xóa nhóm ngành"}
+                    title={type === TYPE.EDIT ? "Sửa admin" : "Xóa admin"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => { this.setState({ openModal: !openModal }) }}
-                    handleOk={async () => type === TYPE.EDIT ? this.editBranches() : this.removeBranches()}
+                    handleOk={async () => type === TYPE.EDIT ? this.editRoles() : this.removeRoles()}
                     handleClose={async () => this.toggleModal()}
                 >
                     {type === TYPE.EDIT ?
                         (<InputTitle
-                            title="Sửa tên nhóm ngành"
+                            title="Sửa tên admin"
                             type={TYPE.INPUT}
                             value={name}
-                            placeholder="Tên nhóm ngành"
+                            placeholder="Tên admin"
                             onChange={event => this.setState({ name: event })}
                             widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa nhóm ngành : {name}</div>
+                        />) : <div>Bạn chắc chắn sẽ xóa admin : {name}</div>
                     }
                 </ModalConfig>
                 <div>
                     <h5>
-                        Danh sách nhóm ngành
+                        Danh sách admin
                         <Button
                             onClick={() => { }}
                             type="primary"
@@ -191,9 +200,9 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                             }}
                         >
 
-                            <Link to='/admin/data/branches/create'>
+                            <Link to='/admin/role-admins/roles/create'>
                                 <Icon type="plus" />
-                                Thêm nhóm ngành mới
+                                Thêm admin mới
                             </Link>
                         </Button>
                     </h5>
@@ -215,15 +224,15 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListBranches: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.BRANCHES.GET_BRANCHES, pageIndex, pageSize })
+    getListRoles: (pageIndex, pageSize) => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES, pageIndex, pageSize })
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_branches: state.Branches.items,
-    totalItems: state.Branches.totalItems
+    list_admins: state.Roles.items,
+    totalItems: state.Roles.totalItems
 })
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListBranches)
+export default connect(mapStateToProps, mapDispatchToProps)(ListRoles)

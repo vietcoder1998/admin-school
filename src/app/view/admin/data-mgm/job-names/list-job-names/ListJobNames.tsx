@@ -4,7 +4,7 @@ import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { IJobName } from '../../../../../../redux/models/job-type';
 import { Link } from 'react-router-dom';
-import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from './../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { JOB_NAMES } from '../../../../../../services/api/private.api';
@@ -233,7 +233,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                             </Link>
                         </Button>
                     </h5>
-                    <ConfigModal
+                    <ModalConfig
                         namebtn1={"Hủy"}
                         namebtn2={"Hoàn thành"}
                         title="Thay đổi công việc"
@@ -267,7 +267,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
 
                         ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
 
-                    </ConfigModal>
+                    </ModalConfig>
                     <Table
                         columns={this.columns}
                         loading={loading_table}

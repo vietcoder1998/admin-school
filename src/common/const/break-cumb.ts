@@ -13,4 +13,6 @@ export const breakCumb =  [
     {label: "skills", name: "Kỹ năng", icon: null, url: "/skills"},
     {label: "job-groups", name: "Nhóm công việc", icon: null, url: "/job-groups"},
     {label: "branches", name: "Nhóm ngành", icon: null, url: "/branches"},
+    {label: "role-admins", name: "Quản trị viên", icon: null, url: "/role-admins"},
+    {label: "roles", name: "Quyền", icon: null, url: "/roles"},
 ]

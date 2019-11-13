@@ -45,7 +45,6 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
                     <ErrorBoundaryRoute  path={`${path}/type-schools`} component={TypeSchools} />
                     <ErrorBoundaryRoute  path={`${path}/job-groups`} component={JobGroups} />
                     <ErrorBoundaryRoute  path={`${path}/branches`} component={Branches} />
-
                 </Switch>
             </Fragment>
         )

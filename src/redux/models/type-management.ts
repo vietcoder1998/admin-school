@@ -8,7 +8,6 @@ export interface ITypeManagement {
 export interface ITypeManagements {
     items: Array<ITypeManagement>;
     pageIndex: number;
-pageSize: number;
     pageSize: number;
     totalItems: number;
     single_data: ITypeManagement

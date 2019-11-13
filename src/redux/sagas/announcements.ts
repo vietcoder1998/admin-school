@@ -42,7 +42,10 @@ function callAnnouncements(action) {
         ANNOUNCEMENTS,
         ADMIN_HOST,
         authHeaders,
-        { pageIndex: action.body.pageIndex, pageSize: 10 },
+        {
+            pageIndex: action.pageIndex ? action.pageIndex : 0,
+            pageSize: action.pageSize ? action.pageSize : 10
+        }
     )
 }
 

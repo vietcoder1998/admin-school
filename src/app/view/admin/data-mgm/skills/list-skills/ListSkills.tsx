@@ -4,7 +4,7 @@ import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { ISkills } from '../../../../../../redux/models/skills';
 import { Link } from 'react-router-dom';
-import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
@@ -159,7 +159,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
         let { totalItems } = this.props;
         return (
             <Fragment >
-                <ConfigModal
+                <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa kỹ năng" : "Xóa kỹ năng"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
@@ -178,7 +178,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa kỹ năng: {name}</div>
                     }
-                </ConfigModal>
+                </ModalConfig>
                 <div>
                     <h5>
                         Danh sách kỹ năng

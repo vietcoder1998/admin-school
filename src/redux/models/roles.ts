@@ -1,10 +1,11 @@
-export interface IRegion {
+export interface IRole {
     id: number;
     name: string;
+    type?: string;
 }
 
-export interface IRegions {
-    items: Array<IRegion>;
+export interface IRoles {
+    items: Array<IRoles>;
     pageIndex: number;
     pageSize: number;
     totalItems: number;

@@ -4,7 +4,7 @@ import { Icon, Table, Button } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { ILanguages } from '../../../../../../redux/models/languages';
 import { Link } from 'react-router-dom';
-import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
@@ -161,7 +161,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         let { totalItems } = this.props;
         return (
             <Fragment >
-                <ConfigModal
+                <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa ngôn ngữ" : "Xóa ngôn ngữ"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
@@ -180,7 +180,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa ngôn ngữ: {name}</div>
                     }
-                </ConfigModal>
+                </ModalConfig>
                 <div>
                     <h5>
                         Danh sách ngôn ngữ

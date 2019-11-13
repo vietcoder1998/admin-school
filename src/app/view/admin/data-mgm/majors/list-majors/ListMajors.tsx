@@ -9,7 +9,7 @@ import { MAJORS } from '../../../../../../services/api/private.api';
 import { DELETE, PUT, GET } from '../../../../../../common/const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
-import { ConfigModal } from '../../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { TYPE } from '../../../../../../common/const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 
@@ -229,7 +229,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             </Link>
                         </Button>
                     </h5>
-                    <ConfigModal
+                    <ModalConfig
                         namebtn1={"Hủy"}
                         namebtn2={"Hoàn thành"}
                         title="Thay đổi ngành nghề"
@@ -262,7 +262,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
                         ) : <div>Bạn chắc chắn muốn xóa nhóm ngành này: {name}</div>}
 
-                    </ConfigModal>
+                    </ModalConfig>
                     <Table
                         columns={this.columns}
                         loading={loading_table}

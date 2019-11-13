@@ -10,4 +10,6 @@ export const LANGUAGES = "/api/admins/data/languages";
 export const JOB_NAMES = "/api/admins/data/jobNames";
 export const TYPE_MANAGEMENT = "/api/admins/data/announcementTypes";
 export const BRANCHES = "/api/admins/data/branches";
+export const ROLES = "/api/authentication/roles";
 export const UPLOAD_IMAGE = "/api/admins/announcements/images/upload";
+export const API_CONTROLLER = "/api/authentication/rbac/apis"

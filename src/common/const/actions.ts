@@ -47,10 +47,18 @@ export const REDUX = {
     JOB_GROUPS: {
         GET_JOB_GROUPS: "GET_JOB_GROUPS"
     },
-    
+
     BRANCHES: {
         GET_BRANCHES: "GET_BRANCHES"
-    }   
+    },
+
+    ROLES: {
+        GET_ROLES: "GET_ROLES"
+    },
+
+    API_CONTROLLER: {
+        GET_API_CONTROLLER: "GET_API_CONTROLLER"
+    }
 };
 
 export const REDUX_SAGA = {
@@ -99,8 +107,16 @@ export const REDUX_SAGA = {
     JOB_GROUPS: {
         GET_JOB_GROUPS: "GET_JOB_GROUPS_DATA"
     },
-    
+
     BRANCHES: {
         GET_BRANCHES: "GET_BRANCHES_DATA"
-    }   
+    },
+
+    ROLES: {
+        GET_ROLES: "GET_ADMINS_DATA"
+    },
+
+    API_CONTROLLER: {
+        GET_API_CONTROLLER: "GET_API_CONTROLLER_DATA"
+    }
 }
