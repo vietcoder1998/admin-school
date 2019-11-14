@@ -19,14 +19,13 @@ function* getListApiControllerData(action) {
 }
 
 function callApiController(action) {
-    let { rid } = action.rid
     return _requestToServer(
         GET,
         null,
         API_CONTROLLER,
         ADMIN_HOST,
         authHeaders,
-        rid ? rid : null
+        null
     )
 }
 

@@ -14,7 +14,7 @@ interface ISkillsState {
 interface ISkillsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getSkills: Function;
-    getTypeManagement: Function;
+    getListTypeManagement: Function;
 }
 
 class Skills extends PureComponent<ISkillsProps, ISkillsState> {

@@ -28,7 +28,8 @@ let ImageRender = (props) => {
 
 interface MngListProps extends StateProps, DispatchProps {
     match?: any,
-    getTypeManagement: Function,
+    history?: any,
+    getListTypeManagement: Function,
     getAnnoucements: Function,
     getAnnoucementDetail: Function,
 }
@@ -92,14 +93,17 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     }
 
     EditJob = (
-        <div>
+        <React.Fragment>
             <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModalConfig()} />
-            <Link to={`/admin/job-management/fix/${localStorage.getItem("id_mgm")}`}>
-                <Icon style={{ padding: "5px 10px" }} type="edit" theme="twoTone" />
-            </Link>
+            <Icon style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={()=>this.toFixJob()}/>
             <Icon key="delete" style={{ padding: "5px 10px" }} type="eye" onClick={() => this.onToggleModal()} />
-        </div>
+        </React.Fragment>
     )
+
+    toFixJob = () => {
+        let id = localStorage.getItem('id_mgm');
+        this.props.history.push(`/admin/job-management/fix/${id}`);
+    }
 
     deleteAnnoun = async () => {
         _requestToServer(
@@ -277,7 +281,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     onChangeTarget = (event) => {
         this.setState({ target: event });
-        this.props.getTypeManagement({ target: event });
+        this.props.getListTypeManagement({ target: event });
     }
 
     onChangeJobName = (event) => {
@@ -467,7 +471,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                 </Select>
                             </Col>
                         </Row>
-                        <Table<JobMmgtable>
+                        <Table
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
@@ -476,7 +480,12 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            onRow={(event) => ({ onClick: () => localStorage.setItem("id_mgm", event.key) })}
+                            onRow={(record, rowIndex) => {
+                                return {
+                                    onClick: event => { }, // click row
+                                    onMouseEnter: (event) => { localStorage.setItem('id_mgm', record.key) }, // mouse enter row
+                                };
+                            }}
                         />
                     </div>
                 </div>
@@ -486,7 +495,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getTypeManagement: (data) => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data }),
+    getListTypeManagement: (data) => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data }),
     getAnnoucements: (pageIndex, pageSize, body) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS, pageIndex, pageSize, body }),
     getAnnoucementDetail: (id) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id })
 })

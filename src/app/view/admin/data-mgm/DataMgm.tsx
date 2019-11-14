@@ -19,8 +19,8 @@ interface DataMgmState {
 
 interface DataMgmProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
+    getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
 class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {

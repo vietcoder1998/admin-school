@@ -139,7 +139,6 @@ export const InputTitle = (props: IInputitleProps) => {
                 {children ? children : ComponentReturn}
             </div>)
     } catch (err) {
-        console.log(err);
         return (<span>bug</span>)
     }
 }

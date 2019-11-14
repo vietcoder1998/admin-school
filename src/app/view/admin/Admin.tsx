@@ -24,11 +24,11 @@ interface AdminState {
 
 interface AdminProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
-    getJobGroups: Function;
-    getBranches: Function;
-
+    getListJobNames: Function;
+    getListTypeManagement: Function;
+    getListJobGroups: Function;
+    getListBranches: Function;
+    getListApiController: Function;
 }
 
 
@@ -44,11 +44,11 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 
     async componentDidMount() {
-        await this.props.getJobNames();
-        await this.props.getTypeManagement({ target: null });
-        await this.props.getJobGroups();
-        await this.props.getBranches();
-
+        await this.props.getListJobNames();
+        await this.props.getListTypeManagement({ target: null });
+        await this.props.getListJobGroups();
+        await this.props.getListBranches();
+        await this.props.getListApiController();
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -160,18 +160,21 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getJobNames: (body) => dispatch({
+    getListJobNames: (body) => dispatch({
         type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES,
         body
     }),
-    getTypeManagement: (data) => dispatch({
+    getListTypeManagement: (data) => dispatch({
         type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data
     }),
-    getJobGroups: () => dispatch({
+    getListJobGroups: () => dispatch({
         type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS
     }),
-    getBranches: () => dispatch({
+    getListBranches: () => dispatch({
         type: REDUX_SAGA.BRANCHES.GET_BRANCHES
+    }),
+    getListApiController: () => dispatch({
+        type: REDUX_SAGA.API_CONTROLLER.GET_API_CONTROLLER
     }),
 })
 

@@ -113,7 +113,6 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     ];
 
     setPageIndex = async (event) => {
-        console.log(event)
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListLanguages(event.current - 1, event.pageSize)
     }
@@ -205,7 +204,6 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                         scroll={{ x: 1000 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true}}
-                        onSizeChange= {(event) => console.log(event)}
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}

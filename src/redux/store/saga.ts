@@ -1,4 +1,3 @@
-import { ApiController } from './../reducers/api-controller';
 import { all } from 'redux-saga/effects';
 import { PendingJobsWatcher } from '../sagas/pending-jobs';
 import { JobNameWatcher } from '../sagas/job-names';
@@ -13,6 +12,8 @@ import { MajorsWatcher } from '../sagas/majors';
 import { JobGroupsWatcher } from '../sagas/job-groups';
 import { BranchesWatcher } from '../sagas/branches';
 import { RolesWatcher } from '../sagas/roles';
+import { ApiControllerWatcher } from '../sagas/api-controller';
+import { RoleDetailWatcher } from '../sagas/role-detail';
 
 export default function* rootSaga() {
     yield all([
@@ -29,6 +30,7 @@ export default function* rootSaga() {
         JobGroupsWatcher(),
         BranchesWatcher(),
         RolesWatcher(),
-        ApiController(),
+        ApiControllerWatcher(),
+        RoleDetailWatcher()
     ])
 } 

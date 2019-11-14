@@ -66,7 +66,7 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
                     placeholder="Nhập tên nhóm ngành"
                     widthInput="400px"
                     value={name}
-                    style={{ padding: "0px 30px" }}
+                    style={{ padding: "10px 30px" }}
                     onChange={event => this.setState({ name: event })}
                 />
                 <Button

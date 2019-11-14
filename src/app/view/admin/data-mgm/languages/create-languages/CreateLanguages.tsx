@@ -65,7 +65,7 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
                     title="Tên ngôn ngữ mới"
                     placeholder="Nhập tên ngôn ngữ"
                     value={name}
-                    style={{ padding: "0px 30px" }}
+                    style={{ padding: "10px 30px" }}
                     widthInput="350px"
                     onChange={event => this.setState({ name: event })}
                 />

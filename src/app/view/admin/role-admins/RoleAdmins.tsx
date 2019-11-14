@@ -11,7 +11,7 @@ interface RoleAdminsState {
 
 interface RoleAdminsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
+    getListJobNames: Function;
 }
 
 class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {

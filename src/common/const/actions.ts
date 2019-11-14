@@ -53,7 +53,8 @@ export const REDUX = {
     },
 
     ROLES: {
-        GET_ROLES: "GET_ROLES"
+        GET_ROLES: "GET_ROLES",
+        GET_ROLE_DETAIL: "GET_ROLE_DETAIL"
     },
 
     API_CONTROLLER: {
@@ -113,7 +114,8 @@ export const REDUX_SAGA = {
     },
 
     ROLES: {
-        GET_ROLES: "GET_ADMINS_DATA"
+        GET_ROLES: "GET_ADMINS_DATA",
+        GET_ROLE_DETAIL: "GET_ROLE_DETAIL_DATA"
     },
 
     API_CONTROLLER: {

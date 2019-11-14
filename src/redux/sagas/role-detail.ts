@@ -7,43 +7,36 @@ import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 import { ADMIN_HOST } from '../../environment/dev';
 
-function* getListRolesData(action) {
-    let res = yield call(callRoles, action);
+function* getRoleDetailData(action) {
+    let res = yield call(callRolesDetail, action);
     if (res.code === 200) {
         let data: IRoles = res.data;
+        console.log("ok")
         yield put({
-            type: REDUX.ROLES.GET_ROLES,
+            type: REDUX.ROLES.GET_ROLE_DETAIL,
             data
         });
     };
 }
 
-function callRoles(action) {
-    var pageIndex;
-    var pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
-    }
-
-    if (action.pageSize) {
-        pageSize = action.pageSize;
+function callRolesDetail(action) {
+    let rid;
+    if (action.rid) {
+        rid = action.rid;
     }
 
     return _requestToServer(
         GET,
         null,
-        ROLES,
+        ROLES + (rid ? `/${rid}` : ''),
         ADMIN_HOST,
         authHeaders,
-        {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 10
-        }
     )
 }
 
-export function* RolesWatcher() {
+export function* RoleDetailWatcher() {
     yield takeEvery(
-        REDUX_SAGA.ROLES.GET_ROLES,
-        getListRolesData)
+        REDUX_SAGA.ROLES.GET_ROLE_DETAIL,
+        getRoleDetailData
+    )
 }

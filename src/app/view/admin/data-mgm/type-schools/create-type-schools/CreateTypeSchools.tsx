@@ -65,7 +65,7 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
                     title="Tên loại trường mới"
                     placeholder="Nhập tên loại trường"
                     value={name}
-                    style={{ padding: "0px 30px" }}
+                    style={{ padding: "10px 30px" }}
                     widthInput="350px"
                     onChange={event => this.setState({ name: event })}
                 />

@@ -12,7 +12,7 @@ interface RolesState {
 
 interface RolesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
+    getListJobNames: Function;
 }
 
 class Roles extends PureComponent<RolesProps, RolesState> {
@@ -30,7 +30,8 @@ class Roles extends PureComponent<RolesProps, RolesState> {
             <Fragment >
                 <Switch>
                     <ErrorBoundaryRoute  path={`${path}/list`} component={ListRoles} />
-                    <ErrorBoundaryRoute  path={`${path}/create`} component={CreateRoles} />
+                    <ErrorBoundaryRoute  path={`${path}/${'fix'}/:id`} component={CreateRoles} />
+                    <ErrorBoundaryRoute  path={`${path}/${'create'}`} component={CreateRoles} />
                 </Switch>
             </Fragment>
         )

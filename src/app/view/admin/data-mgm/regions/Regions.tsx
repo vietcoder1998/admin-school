@@ -13,8 +13,8 @@ interface RegionsState {
 
 interface RegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
+    getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
 class Regions extends PureComponent<RegionsProps, RegionsState> {

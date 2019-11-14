@@ -12,8 +12,8 @@ interface MajorsState {
 
 interface MajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
+    getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
 class Majors extends PureComponent<MajorsProps, MajorsState> {

@@ -14,7 +14,7 @@ interface ITypeSchoolsState {
 interface ITypeSchoolsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getTypeSchools: Function;
-    getTypeManagement: Function;
+    getListTypeManagement: Function;
 }
 
 class TypeSchools extends PureComponent<ITypeSchoolsProps, ITypeSchoolsState> {

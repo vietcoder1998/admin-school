@@ -13,8 +13,8 @@ interface BranchesState {
 
 interface BranchesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getBranches: Function;
-    getTypeManagement: Function;
+    getListBranches: Function;
+    getListTypeManagement: Function;
 }
 
 class Branches extends PureComponent<BranchesProps, BranchesState> {

@@ -13,8 +13,8 @@ interface JobNamesState {
 
 interface JobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
+    getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
 class JobNames extends PureComponent<JobNamesProps, JobNamesState> {

@@ -8,17 +8,18 @@ import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { DELETE, PUT } from '../../../../../../common/const/method';
 import { _requestToServer } from '../../../../../../services/exec';
-import { IAdmin } from '../../../../../../redux/models/roles';
+import { IRole } from '../../../../../../redux/models/roles';
 import { ROLES } from '../../../../../../services/api/private.api';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
 
 interface ListRolesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
+    history: any;
     getListRoles: Function;
 }
 
 interface ListRolesState {
-    list_admins: Array<IAdmin>,
+    list_roles: Array<IRole>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
@@ -33,7 +34,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     constructor(props) {
         super(props);
         this.state = {
-            list_admins: [],
+            list_roles: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -50,20 +51,20 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.list_admins !== prevState.list_admins) {
+        if (nextProps.list_roles !== prevState.list_roles) {
             let data_table = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_admins.forEach((item, index) => {
+            nextProps.list_roles.forEach((item, index) => {
                 data_table.push({
                     key: item.id,
-                    index: (index + (pageIndex ? pageIndex : 0) *  (pageSize ? pageSize : 10) + 1),
+                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
                     type: item.type
                 });
             })
 
             return {
-                list_admins: nextProps.list_admins,
+                list_roles: nextProps.list_roles,
                 data_table,
                 loading_table: false
             }
@@ -75,7 +76,10 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     EditContent = (
         <div>
             <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Link to={`/admin/role-admins/roles/fix/${localStorage.getItem("id_role")}`}>
+                <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" />
+            </Link>
+
         </div>
     )
 
@@ -127,22 +131,8 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     }
 
     editRoles = async () => {
-        let { name, id } = this.state;
-        name = name.trim();
-        await _requestToServer(
-            PUT,
-            { name },
-            ROLES + `/${id}`,
-            ADMIN_HOST,
-            null,
-            null,
-            true
-        ).then(res => {
-            if (res && res.code === 200) {
-                this.props.getListRoles();
-                this.toggleModal();
-            }
-        })
+        let id = localStorage.getItem('id_role')
+        this.props.history.push(`/admin/role-admins/roles/fix/${id}`)
     }
 
     removeRoles = async () => {
@@ -170,7 +160,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
         return (
             <Fragment >
                 <ModalConfig
-                    title={type === TYPE.EDIT ? "Sửa admin" : "Xóa admin"}
+                    title={type === TYPE.EDIT ? "Sửa quyền" : "Xóa quyền"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
@@ -180,18 +170,18 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                 >
                     {type === TYPE.EDIT ?
                         (<InputTitle
-                            title="Sửa tên admin"
+                            title="Sửa tên quyền"
                             type={TYPE.INPUT}
                             value={name}
-                            placeholder="Tên admin"
+                            placeholder="Tênquyền"
                             onChange={event => this.setState({ name: event })}
                             widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa admin : {name}</div>
+                        />) : <div>Bạn chắc chắn sẽ xóaquyền : {name}</div>
                     }
                 </ModalConfig>
                 <div>
                     <h5>
-                        Danh sách admin
+                        Danh sáchquyền
                         <Button
                             onClick={() => { }}
                             type="primary"
@@ -202,7 +192,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
 
                             <Link to='/admin/role-admins/roles/create'>
                                 <Icon type="plus" />
-                                Thêm admin mới
+                                Thêm quyền mới
                             </Link>
                         </Button>
                     </h5>
@@ -215,7 +205,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                         pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                        onRow={ (record, index) => ({ onMouseEnter: (event) =>localStorage.setItem('id_role', record.key)})}
                     />
                 </div>
             </Fragment>
@@ -228,7 +218,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    list_admins: state.Roles.items,
+    list_roles: state.Roles.items,
     totalItems: state.Roles.totalItems
 })
 

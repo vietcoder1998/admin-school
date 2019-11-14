@@ -13,8 +13,8 @@ interface LanguagesState {
 
 interface LanguagesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
+    getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
 class Languages extends PureComponent<LanguagesProps, LanguagesState> {

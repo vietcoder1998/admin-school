@@ -13,8 +13,8 @@ interface JobGroupsState {
 
 interface JobGroupsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getJobNames: Function;
-    getTypeManagement: Function;
+    getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
 class JobGroups extends PureComponent<JobGroupsProps, JobGroupsState> {

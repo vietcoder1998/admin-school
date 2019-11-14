@@ -332,7 +332,6 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                                 }}
                                 onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
                                 onInit={event => {
-                                    console.log(event);
                                 }}
                                 onChange={event => this.setState({ content: event.editor.getData() })}
                                 data={content}

@@ -97,7 +97,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     placeholder="Nhập tên công việc"
                     value={name}
                     widthInput="400px"
-                    style={{ padding: "0px 30px" }}
+                    style={{ padding: "10px 30px" }}
                     onChange={event => this.setState({ name: event })}
                 />
                 <InputTitle
@@ -106,7 +106,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     placeholder="Chọn nhóm công việc"
                     value={jobGroupName}
                     list_value={list_data}
-                    style={{ padding: "0px 30px" }}
+                    style={{ padding: "10px 30px" }}
                     onChange={this.handleChoseJobGroup}
                 />
                 <Button
