@@ -1,3 +1,4 @@
+import { ApiControllerRoles } from './../reducers/api-controller-roles';
 import { RoleDetail } from './../reducers/role-detail';
 import { ApiController } from './../reducers/api-controller';
 import { Roles } from '../reducers/roles';
@@ -31,7 +32,8 @@ const myReducer = combineReducers({
     Branches,
     Roles,
     ApiController,
-    RoleDetail
+    RoleDetail,
+    ApiControllerRoles
 })
 
 export default myReducer

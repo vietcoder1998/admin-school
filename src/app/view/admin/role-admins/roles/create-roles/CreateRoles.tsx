@@ -4,12 +4,17 @@ import { Divider, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
-import { POST, GET, PUT } from '../../../../../../common/const/method';
-import { ROLES } from '../../../../../../services/api/private.api';
+import { POST, PUT } from '../../../../../../common/const/method';
+import { ROLES, API_CONTROLLER_ROLES } from '../../../../../../services/api/private.api';
 import { ADMIN_HOST } from '../../../../../../environment/dev';
 import { authHeaders } from '../../../../../../services/auth';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { TYPE } from '../../../../../../common/const/type';
+import { TreeSelect } from 'antd';
+import { ITreeParent, renderTreeApi } from '../../../../../../common/utils/renderTreeApi';
+import { IApiFunctions } from '../../../../../../redux/models/api-controller';
+import './CreateRoles.scss';
+const { SHOW_PARENT } = TreeSelect;
 
 interface CreateRolesState {
     name?: string;
@@ -17,6 +22,9 @@ interface CreateRolesState {
     id?: string;
     type_cpn?: string;
     role_detail?: any;
+    value?: any;
+    treeData?: Array<ITreeParent>;
+    api_controller?: Array<IApiFunctions>;
 }
 
 interface CreateRolesProps extends StateProps, DispatchProps {
@@ -24,28 +32,36 @@ interface CreateRolesProps extends StateProps, DispatchProps {
     history: Readonly<any>;
     getListRoles: Function;
     getRoleDetail: Function;
+    getApiController: Function;
 }
 
 class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            type: '',
+            name: "",
+            type: "",
             id: "",
             type_cpn: TYPE.CREATE,
-            role_detail: {}
+            role_detail: {},
+            value: null,
+            treeData: []
         }
+    }
+
+    componentDidMount() {
+        this.props.getApiController();
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.match.params.id && nextProps.match.params.id !== prevState.id) {
             nextProps.getRoleDetail(nextProps.match.params.id);
+            nextProps.getApiControllerRoles(nextProps.match.params.id);
             return {
                 id: nextProps.match.params.id,
                 type_cpn: TYPE.EDIT
             }
-        }
+        };
 
         if (nextProps.role_detail !== prevState.role_detail) {
             return {
@@ -53,11 +69,17 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                 type: nextProps.role_detail.type,
                 role_detail: nextProps.role_detail
             }
+        };
+
+        if (nextProps.api_controller_roles !== prevState.api_controller_roles) {
+            let value = renderTreeApi(nextProps.api_controller_roles).value;
+            return {
+                value,
+                api_controller_roles: nextProps.api_controller_roles
+            }
         }
 
-        return {
-            type_cpn: TYPE.CREATE
-        }
+        return null;
     }
 
     createNewData = async () => {
@@ -74,22 +96,59 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
             if (res.code === 200) {
                 this.props.getListRoles();
                 this.props.history.push('/admin/role-admins/roles/list');
-            }
-        })
+            };
+        });
+    }
+
+    updateApiControllerRoles = async () => {
+        let { id, value } = this.state;
+        await _requestToServer(
+            PUT,
+            value,
+            API_CONTROLLER_ROLES + `/${id}/apis`,
+            ADMIN_HOST,
+            authHeaders,
+            null,
+            true
+        );
     }
 
     onChange = (event) => {
         this.setState({ name: event })
     }
 
-    createData = () => {
-
+    onChangeApiController = (value) => {
+        let new_value = value;
+        let map_arr = [];
+        new_value.forEach(item => {
+            if (Array.isArray(item)) {
+                item.forEach(value_item => {
+                    map_arr.push(value_item);
+                });
+            } else {
+                map_arr.push(item)
+            }
+        });
+        this.setState({ value: map_arr });
     }
 
+
     render() {
-        let { name, type, type_cpn } = this.state;
-        let is_name = name && name.trim() !== "" && type && type.trim() !== "" ? true : false;
+        let { name, type, type_cpn, value } = this.state;
+        let { treeData } = this.props;
+        let is_name = name !== "" && type !== "" ? true : false;
         let new_type = type ? type = type.toUpperCase() : "";
+        const tProps = {
+            treeData,
+            value,
+            onChange: this.onChangeApiController,
+            treeCheckable: true,
+            showCheckedStrategy: SHOW_PARENT,
+            searchPlaceholder: 'Chọn phân quyền',
+            style: {
+                width: '400px',
+            }
+        };
         return (
             <Fragment >
                 <div>
@@ -97,45 +156,80 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                         {type_cpn === TYPE.CREATE ? 'Thêm quyền mới' : 'Sửa quyền'}
                     </h5>
                     <Divider orientation="left" >Chi tiết quyền</Divider>
+                    <InputTitle
+                        type={TYPE.INPUT}
+                        title="Tên quyền mới"
+                        placeholder="ex: nhà tuyển dụng, quản trị viên, .v.v."
+                        widthInput="400px"
+                        value={name}
+                        style={{ padding: "10px 30px" }}
+                        onChange={event => this.setState({ name: event })}
+                    />
+
+                    <InputTitle
+                        type={TYPE.SELECT}
+                        title="Loại quyền"
+                        placeholder="ex: ADMINS, CANDIDATES, SUPER_ADMINS, .v.v."
+                        widthInput="400px"
+                        value={new_type}
+                        list_value={[{ label: "ROOT", value: "ROOT" }, { label: "VIEWER", value: "VIEWER" }]}
+                        style={{ padding: "10px 30px" }}
+                        onChange={event => this.setState({ type: event })}
+                    />
+                    <Button
+                        type="primary"
+                        icon="plus"
+                        style={{ float: "right", margin: "10px 5px" }}
+                        onClick={this.createNewData}
+                        disabled={!is_name}
+                    >
+                        {type_cpn === TYPE.CREATE ? " Tạo quyền mới" : "Sửa thông tin quyền"}
+
+                    </Button>
+                    <Button
+                        type="danger"
+                        style={{ float: "right", margin: "10px 5px" }}
+                    >
+                        <Link to='/admin/role-admins/roles/list'>
+                            <Icon type="close" />
+                            Hủy
+                        </Link>
+                    </Button>
                 </div>
-                <InputTitle
-                    type={TYPE.INPUT}
-                    title="Tên quyền mới"
-                    placeholder="Nhập tên quyền"
-                    widthInput="400px"
-                    value={name}
-                    style={{ padding: "10px 30px" }}
-                    onChange={event => this.setState({ name: event })}
-                />
-
-                <InputTitle
-                    type={TYPE.INPUT}
-                    title="Loại quyền"
-                    placeholder="ex: ADMINS, CANDIDATES, SUPER_ADMINS, ..."
-                    widthInput="400px"
-                    value={new_type}
-                    style={{ padding: "10px 30px" }}
-                    onChange={event => this.setState({ type: event })}
-                />
-                <Button
-                    type="primary"
-                    icon="plus"
-                    style={{ float: "right", margin: "10px 5px" }}
-                    onClick={this.createNewData}
-                    disabled={!is_name}
-                >
-                    {type_cpn === TYPE.CREATE ? " Tạo quyền mới" : "Sửa thông tin quyền"}
-
-                </Button>
+                <div className="api-role-controller" style={{ height: "50vh", display: type_cpn === TYPE.EDIT ? "block" : "none" }}>
+                    <Divider orientation="left" >Cập nhật phân quyền</Divider>
+                    <InputTitle
+                        type={TYPE.INPUT}
+                        title="Loại quyền"
+                        placeholder="ex: ADMINS, CANDIDATES, SUPER_ADMINS, ..."
+                        widthInput="400px"
+                        value={new_type}
+                        style={{ padding: "10px 30px" }}
+                        onChange={event => this.setState({ type: event })}
+                    >
+                        <div>
+                            <TreeSelect {...tProps} />;
+                        </div>
+                    </InputTitle>
+                    <Button
+                        type="primary"
+                        icon="plus"
+                        style={{ float: "right", margin: "10px 5px" }}
+                        onClick={this.updateApiControllerRoles}
+                        disabled={!is_name}
+                    >
+                        Cập nhật phân quyền
+                    </Button>
+                </div>
                 <Button
                     type="danger"
-                    style={{ float: "right", margin: "10px 5px" }}
+                    style={{ float: "left", margin: "10px 5px" }}
+                    size='large'
                 >
                     <Link to='/admin/role-admins/roles/list'>
-                        <Icon type="close" />
-                        Hủy
-                    </Link>
-
+                        <Icon type="left" />
+                        Về trang trước
+                        </Link>
                 </Button>
             </Fragment>
         )
@@ -144,12 +238,16 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getRoleDetail: (rid) => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLE_DETAIL, rid }),
-    getListRoles: () => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES })
-})
+    getApiControllerRoles: (id) => dispatch({ type: REDUX_SAGA.API_CONTROLLER_ROLES.GET_API_CONTROLLER_ROLES, id }),
+    getListRoles: () => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES }),
+    getApiController: () => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES }),
+});
 
 const mapStateToProps = (state, ownProps) => ({
-    role_detail: state.RoleDetail.data
-})
+    role_detail: state.RoleDetail.data,
+    treeData: state.ApiController.treeData,
+    api_controller_roles: state.ApiControllerRoles.data,
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

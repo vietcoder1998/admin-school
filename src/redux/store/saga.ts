@@ -14,6 +14,7 @@ import { BranchesWatcher } from '../sagas/branches';
 import { RolesWatcher } from '../sagas/roles';
 import { ApiControllerWatcher } from '../sagas/api-controller';
 import { RoleDetailWatcher } from '../sagas/role-detail';
+import { ApiControllerRolesWatcher } from '../sagas/api-controller-roles';
 
 export default function* rootSaga() {
     yield all([
@@ -31,6 +32,7 @@ export default function* rootSaga() {
         BranchesWatcher(),
         RolesWatcher(),
         ApiControllerWatcher(),
-        RoleDetailWatcher()
+        RoleDetailWatcher(),
+        ApiControllerRolesWatcher(),
     ])
 } 

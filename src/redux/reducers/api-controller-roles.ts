@@ -6,13 +6,13 @@ let initState: IApiController = {
     data: [],
 }
 
-export const ApiController = (state = initState, action) => {
+export const ApiControllerRoles = (state = initState, action) => {
     switch (action.type) {
-        case REDUX.API_CONTROLLER.GET_API_CONTROLLER:
+        case REDUX.API_CONTROLLER_ROLES.GET_API_CONTROLLER_ROLES:
             return {
                 ...state, 
                 data: action.data,
-                treeData: renderTreeApi(action.data).treeData,
+                value: renderTreeApi(action.data).value,
             }
 
         default:

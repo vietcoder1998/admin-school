@@ -6,7 +6,7 @@ import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { TYPE } from '../../../../../../common/const/type';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
-import { DELETE, PUT } from '../../../../../../common/const/method';
+import { DELETE } from '../../../../../../common/const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { IRole } from '../../../../../../redux/models/roles';
 import { ROLES } from '../../../../../../services/api/private.api';
@@ -76,12 +76,14 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     EditContent = (
         <div>
             <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Link to={`/admin/role-admins/roles/fix/${localStorage.getItem("id_role")}`}>
-                <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" />
-            </Link>
-
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toFixRoles()} />
         </div>
     )
+
+    toFixRoles = () => {
+        let id = localStorage.getItem('id_role');
+        this.props.history.push(`/admin/role-admins/roles/fix/${id}`);
+    }
 
     toggleModal = (type?: string) => {
         let { openModal } = this.state;
@@ -205,7 +207,12 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                         pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={ (record, index) => ({ onMouseEnter: (event) =>localStorage.setItem('id_role', record.key)})}
+                        onRow={(record, rowIndex) => {
+                            return {
+                                onClick: event => { }, // click row
+                                onMouseEnter: (event) => { localStorage.setItem('id_role', record.key) }, // mouse enter row
+                            };
+                        }}
                     />
                 </div>
             </Fragment>

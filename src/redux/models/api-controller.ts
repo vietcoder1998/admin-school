@@ -11,17 +11,11 @@ export interface IApis {
     apis?: Array<IApi>
 };
 
-export interface IApiFunction {
-    name?: string;
-    description?: string;
-    apis?: IApis
-};
-
 export interface IApiFunctions {
     name?: string;
     description?: string;
     priority?: number;
-    apiFunctions?: Array<IApiFunction>
+    apiFunctions?: Array<IApis>
 }
 
 export interface IApiController {
