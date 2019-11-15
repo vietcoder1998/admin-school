@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
-import { _requestToServer } from '../../../services/exec';
 import './Login.scss';
 import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
