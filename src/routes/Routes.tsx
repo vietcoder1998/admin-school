@@ -22,7 +22,7 @@ export default function Routes(props) {
         <Suspense fallback={<FallBack />}>
           <Route exact path='/login' component={Login} /> :
         </Suspense>
-        <Redirect from='*' to={is_authen ? (last_url ? last_url : "/admin") : "/login"} />
+        <Redirect from='*' to={is_authen ? (last_url ? last_url : "/admin/pending-jobs") : "/login"} />
       </Router>
     </Fragment >
   );

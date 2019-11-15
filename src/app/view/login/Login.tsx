@@ -2,12 +2,10 @@ import React, { PureComponent } from 'react'
 import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
 import { _requestToServer } from '../../../services/exec';
 import './Login.scss';
-import { POST } from '../../../common/const/method';
-import { OAUTH2_HOST } from '../../../environment/dev';
-import { ADMIN_LOGIN } from '../../../services/api/public.api';
-import { loginHeaders } from '../../../services/auth';
 import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
+import { loginUser } from '../../../services/login';
+let cookies = new Cookies();
 
 interface LoginState {
     email?: string;
@@ -16,6 +14,7 @@ interface LoginState {
     err_msg?: string;
     password?: string;
     username?: string;
+    show_password?: boolean;
 }
 
 interface LoginProps {
@@ -32,34 +31,13 @@ class Login extends PureComponent<LoginProps, LoginState> {
             err_msg: "",
             password: null,
             username: null,
+            show_password: false,
         }
     }
 
     createRequest = async () => {
         let { password, username } = this.state;
-        let res = await _requestToServer(
-            POST,
-            { username, password },
-            ADMIN_LOGIN,
-            OAUTH2_HOST,
-            loginHeaders("worksvn-admin-web", "worksvn-admin-web@works.vn"),
-            null,
-            false,
-            true
-        )
-
-        if (res && res.code === 200) {
-            let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate) / 1000)
-            let cookie = new Cookies()
-            cookie.set("actk", res.data.accessToken, { expires: exp, path: "/" });
-            localStorage.setItem("token", res.data.accessToken);
-            let last_url = localStorage.getItem("last_url");
-            if (last_url) {
-                window.location.href = last_url
-            } else {
-                window.location.href = '/admin/pending-jobs'
-            }
-        }
+        loginUser({username, password});
     }
 
     handleSubmit = e => {
@@ -72,7 +50,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
     };
 
     render() {
-        let { err_msg, password, username } = this.state;
+        let { err_msg, password, username, show_password } = this.state;
         const { getFieldDecorator } = this.props.form;
         let icon = {
             color: "red",
@@ -109,7 +87,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
                         <Col xs={24} sm={16} md={12} lg={10} xl={8} >
                             <div className="r-p-content test">
                                 <div className='msg-noti '>
-                                    <h5 style={{textAlign: "center"}}>Đăng nhập</h5>
+                                    <h5 style={{ textAlign: "center" }}>Đăng nhập</h5>
                                     <Form onSubmit={this.handleSubmit} className="login-form">
                                         <p>Tên đăng nhập</p>
                                         <Form.Item>
@@ -141,14 +119,21 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                                     size="large"
                                                     placeholder="Mật khẩu"
-                                                    type="password"
+                                                    type={show_password ? "text" : "password"}
                                                     maxLength={160}
                                                     onChange={event => this.setState({ password: event.target.value })}
+                                                    suffix={
+                                                        <Icon
+                                                            type={show_password ? "eye-invisible" : "eye"}
+                                                            style={{ color: 'rgba(0,0,0,.25)' }}
+                                                            onClick={() => this.setState({ show_password: !show_password })}
+                                                        />
+                                                    }
                                                 />,
                                             )}
                                         </Form.Item>
                                         <p>
-                                            <Checkbox onChange={() => { }} >Tự động đăng nhập</Checkbox>
+                                            <Checkbox onChange={(event) => { cookies.set("atlg", event.target.checked)}} >Tự động đăng nhập</Checkbox>
                                         </p>
                                     </Form>
                                     {exactly ? "" : <p>{err_msg}</p>}
