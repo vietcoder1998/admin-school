@@ -9,8 +9,6 @@ let initState: IJobNames = {
 }
 
 export const JobNames = (state = initState, action) => {
-    console.log(action)
- 
     switch (action.type) {
         case REDUX.JOB_NAMES.GET_JOB_NAMES:
             return {

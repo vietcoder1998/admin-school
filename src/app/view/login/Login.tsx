@@ -6,8 +6,7 @@ import { POST } from '../../../common/const/method';
 import { OAUTH2_HOST } from '../../../environment/dev';
 import { ADMIN_LOGIN } from '../../../services/api/public.api';
 import { loginHeaders } from '../../../services/auth';
-import Header from '../layout/header/Header';
-import Footer from '../layout/footer/Footer';
+import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
 
 interface LoginState {
@@ -90,15 +89,27 @@ class Login extends PureComponent<LoginProps, LoginState> {
         return (
 
             <div className='all-content'>
-                <Header />
                 <div
                     className="login"
                 >
+                    <img src={LoginImage}
+                        style={{
+                            position: "fixed",
+                            minHeight: "100vh",
+                            minWidth: "100vw",
+                            width: "100vw",
+                            top: "0px",
+                            left: "0px"
+                        }}
+
+                        alt="login"
+                    />
                     <Row>
-                        <Col xs={0} sm={4} md={6} lg={8} xl={9} xxl={8}  ></Col>
-                        <Col xs={24} sm={16} md={12} lg={8} xl={6} >
+                        <Col xs={0} sm={4} md={6} lg={7} xl={8} xxl={8}  ></Col>
+                        <Col xs={24} sm={16} md={12} lg={10} xl={8} >
                             <div className="r-p-content test">
                                 <div className='msg-noti '>
+                                    <h5 style={{textAlign: "center"}}>Đăng nhập</h5>
                                     <Form onSubmit={this.handleSubmit} className="login-form">
                                         <p>Tên đăng nhập</p>
                                         <Form.Item>
@@ -163,10 +174,9 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                 </p>
                             </div>
                         </Col>
-                        <Col xs={0} sm={4} md={6} lg={8} xl={9}></Col>
+                        <Col xs={0} sm={4} md={6} lg={7} xl={8}></Col>
                     </Row>
                 </div>
-                <Footer />
             </div>
 
         )

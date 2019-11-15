@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Dropdown, Menu, Breadcrumb } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -11,13 +11,13 @@ import DataMgm from './data-mgm/DataMgm';
 import clearStorage from '../../../services/clearStorage';
 import { breakCumb } from '../../../common/const/break-cumb';
 import RoleAdmins from './role-admins/RoleAdmins';
+import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
 
 interface AdminState {
     show_menu: boolean;
-    to_logout: boolean;
     location?: string;
     data_breakcumb?: Array<string>
 }
@@ -37,7 +37,6 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         super(props);
         this.state = {
             show_menu: false,
-            to_logout: false,
             location: "/",
             data_breakcumb: []
         }
@@ -67,20 +66,13 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         return null;
     }
 
-    menu = (
-        <Menu>
-            <Menu.Item onClick={() => clearStorage()}>
-                <span>
-                    Đăng xuất
-                </span>
-            </Menu.Item>
-        </Menu>
-    );
+    logOut = () => {
+        clearStorage()
+    }
 
     render() {
-        let { show_menu, to_logout, data_breakcumb } = this.state;
+        let { show_menu, data_breakcumb } = this.state;
         let { match } = this.props;
-
         return (
             <Layout>
                 <MenuNavigation show_menu={show_menu} />
@@ -93,6 +85,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 marginTop: "20px"
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
+
                         />
                         <div className="avatar-header" >
                             <Avatar
@@ -102,18 +95,10 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     height: "30px",
                                 }}
                             />
-                            <Dropdown
-                                overlay={this.menu}
-                                placement="topRight"
-                            >
-                                <Icon
-                                    type={"down"}
-                                    style={{
-                                        padding: "20px 10px"
-                                    }}
-                                    onClick={() => this.setState({ to_logout: !to_logout })}
-                                />
-                            </Dropdown>
+                            <DropdownConfig>
+                                <OptionConfig icon="logout" value="" label="Đăng xuất" onClick={this.logOut} />
+                                <OptionConfig icon="user" value="" label="Tài khoản" onClick={() => { }} />
+                            </DropdownConfig>
                         </div>
                     </Header>
                     <Content

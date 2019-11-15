@@ -11,7 +11,6 @@ function* getRoleDetailData(action) {
     let res = yield call(callRolesDetail, action);
     if (res.code === 200) {
         let data: IRoles = res.data;
-        console.log("ok")
         yield put({
             type: REDUX.ROLES.GET_ROLE_DETAIL,
             data

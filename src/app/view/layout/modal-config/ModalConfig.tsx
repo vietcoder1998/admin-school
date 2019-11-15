@@ -57,7 +57,7 @@ export class ModalConfig extends React.Component<IConfigModalProps, IConfigModal
 
                 >
                     <div className="header b_b">
-                        <h6>
+                        <h6>    
                             {title}
                             <Icon type="close" style={{ float: "right" }} onClick={() => this.props.toggleModal()} />
                         </h6>

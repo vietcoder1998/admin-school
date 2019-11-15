@@ -1,13 +1,16 @@
+@import '../scss/common';
 .login {
-    padding: 40px 10px;
-    height: calc(100vh - 120px);
+    padding: calc(50vh - 250px) 10px;
+    height: 100vh;
+    background-image: url('../../../assets/image/login-image.jpg');
+    font-family: $font_base;
     .r-p-content {
         background-color: white;
-        padding: 20px 10px;
-
+        padding: 30px 20px;
+        height: 500px;
         p{
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
     }
 }
