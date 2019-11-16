@@ -1,13 +1,11 @@
-import { LANGUAGES } from './../../services/api/private.api';
-import { ILanguages } from './../models/languages';
-import { authHeaders } from './../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {LANGUAGES} from '../../services/api/private.api';
+import {ILanguages} from '../models/languages';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListLanguagesData(action) {
+function* getListLanguagesData(action: any) {
     let res = yield call(callLanguages, action);
     if (res.code === 200) {
         let data: ILanguages = res.data;
@@ -18,7 +16,7 @@ function* getListLanguagesData(action) {
     }
 }
 
-function callLanguages(action) {
+function callLanguages(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -30,11 +28,8 @@ function callLanguages(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, LANGUAGES,
         null,
-        LANGUAGES,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 10

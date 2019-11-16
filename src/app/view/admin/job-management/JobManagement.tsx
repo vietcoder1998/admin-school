@@ -18,7 +18,7 @@ interface JobManagementProps extends StateProps, DispatchProps {
 }
 
 class JobManagement extends PureComponent<JobManagementProps, JobManagementState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             show_menu: true,
@@ -27,7 +27,7 @@ class JobManagement extends PureComponent<JobManagementProps, JobManagementState
     }
 
     render() {
-        let {path} = this.props.match
+        let {path} = this.props.match;
         return (
             <Fragment >
                 <Switch>
@@ -40,12 +40,12 @@ class JobManagement extends PureComponent<JobManagementProps, JobManagementState
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 
-})
+});
 
-const mapStateToProps = (state, ownProps) => ({
-})
+const mapStateToProps = (state: any, ownProps: any) => ({
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

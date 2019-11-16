@@ -1,8 +1,9 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, {PureComponent, Fragment} from 'react'
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import ListRoles from './list-roles/ListRoles';
 import CreateRoles from './create-roles/CreateRoles';
+
 const Switch = require("react-router-dom").Switch;
 
 interface RolesState {
@@ -16,7 +17,7 @@ interface RolesProps extends StateProps, DispatchProps {
 }
 
 class Roles extends PureComponent<RolesProps, RolesState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             show_menu: true,
@@ -25,24 +26,22 @@ class Roles extends PureComponent<RolesProps, RolesState> {
     }
 
     render() {
-       let {path} = this.props.match
+        let {path} = this.props.match;
         return (
-            <Fragment >
+            <Fragment>
                 <Switch>
-                    <ErrorBoundaryRoute  path={`${path}/list`} component={ListRoles} />
-                    <ErrorBoundaryRoute  path={`${path}/${'fix'}/:id`} component={CreateRoles} />
-                    <ErrorBoundaryRoute  path={`${path}/${'create'}`} component={CreateRoles} />
+                    <ErrorBoundaryRoute path={`${path}/list`} component={ListRoles}/>
+                    <ErrorBoundaryRoute path={`${path}/${'fix'}/:id`} component={CreateRoles}/>
+                    <ErrorBoundaryRoute path={`${path}/${'create'}`} component={CreateRoles}/>
                 </Switch>
             </Fragment>
         )
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-})
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({});
 
-const mapStateToProps = (state, ownProps) => ({
-})
+const mapStateToProps = (state: any, ownProps: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

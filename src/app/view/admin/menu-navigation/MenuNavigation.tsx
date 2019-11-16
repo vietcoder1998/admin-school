@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
 import { Layout, Menu, Icon } from 'antd';
-import './MenuNavigation.scss';
+// @ts-ignore
 import logo from '../../../../logo-01.png'
 import { Link } from 'react-router-dom';
+import './MenuNavigation.scss';
+
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -14,7 +16,7 @@ interface MenuNavigationProps {
 }
 
 export default class MenuNavigation extends PureComponent<MenuNavigationProps, MenuNavigationState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
         }
@@ -22,7 +24,7 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
 
     render() {
         let { show_menu } = this.props;
-        let state_bar = '1';
+        let state_bar: any = '1';
         if (localStorage.getItem("state_bar")) {
             state_bar = localStorage.getItem("state_bar")
         }

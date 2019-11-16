@@ -1,13 +1,11 @@
-import { BRANCHES } from '../../services/api/private.api';
-import { IBranches } from '../models/branches';
-import { authHeaders } from '../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {BRANCHES} from '../../services/api/private.api';
+import {IBranches} from '../models/branches';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListBranchesData(action) {
+function* getListBranchesData(action: any) {
     let res = yield call(callBranches, action);
 
     if (res.code === 200) {
@@ -19,7 +17,7 @@ function* getListBranchesData(action) {
     }
 }
 
-function callBranches(action) {
+function callBranches(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -31,11 +29,8 @@ function callBranches(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, BRANCHES,
         null,
-        BRANCHES,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 0

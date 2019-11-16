@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
-import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
+import { Col, Row, Icon, Form, Input, Button } from 'antd';
 import './Login.scss';
+// @ts-ignore
 import LoginImage from '../../../assets/image/login-image.jpg';
-import { loginUser } from '../../../services/login';
+import { login } from '../../../services/login';
 
 interface LoginState {
     email?: string;
@@ -34,7 +35,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
 
     createRequest = async () => {
         let { password, username } = this.state;
-        loginUser({username, password});
+        login({username, password});
     };
 
     handleSubmit = (e: any) => {

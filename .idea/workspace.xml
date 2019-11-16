@@ -2,21 +2,118 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08b70a2-4352-463e-9b93-c7053cd75bf0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/LENOVO.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/LENOVO.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/LENOVO.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.env" beforeDir="false" afterPath="$PROJECT_DIR$/src/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/login/Login.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/login/Login.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/Admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/Admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/Branches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/Branches.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/JobGroups.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/JobGroups.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/create-job-groups/CreateJobGroups.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/create-job-groups/CreateJobGroups.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/JobNames.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/JobNames.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/create-job-names/CreateJobNames.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/create-job-names/CreateJobNames.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/Languages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/Languages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/create-languages/CreateLanguages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/create-languages/CreateLanguages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/Majors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/Majors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/create-majors/CreateMajors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/create-majors/CreateMajors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/Regions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/Regions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/create-regions/CreateRegions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/create-regions/CreateRegions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/list-regions/ListRegions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/list-regions/ListRegions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/Skills.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/Skills.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/create-skills/CreateSkills.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/create-skills/CreateSkills.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/TypeSchools.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/TypeSchools.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/create-type-schools/CreateTypeSchools.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/create-type-schools/CreateTypeSchools.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/list-type-schools/ListTypeSchools.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/list-type-schools/ListTypeSchools.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/job-management/JobManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/job-management/JobManagement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-create/MngCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-create/MngCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-list/MngList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-list/MngList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/pending-jobs/job-properties/JobProperties.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/pending-jobs/job-properties/JobProperties.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/role-admins/RoleAdmins.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/RoleAdmins.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/Roles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/Roles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/create-roles/CreateRoles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/create-roles/CreateRoles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/list-roles/ListRoles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/list-roles/ListRoles.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/view/login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/exception.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/not-found/NotFound.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/not-found/NotFound.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/register/Register.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/register/Register.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/const/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/const/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/const/type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/const/type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/environment/dev.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/announcement-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/announcement-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/announcements.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/announcements.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/api-controller-roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/api-controller-roles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/api-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/api-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/branches.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/branches.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/job-groups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/job-groups.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/job-names.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/job-names.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/languages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/languages.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/majors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/majors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/pending-jobs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/pending-jobs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/regions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/regions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/role-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/role-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/roles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/skills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/skills.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/type-management.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/type-schools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/type-schools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/models/announcements.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/models/announcements.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/models/api-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/models/api-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/models/branches.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/models/branches.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/models/chat-page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/models/job-type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/models/job-type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/announcement-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/announcement-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/announcements.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/announcements.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/api-controller-roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/api-controller-roles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/api-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/api-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/branches.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/branches.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/job-groups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/job-groups.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/job-names.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/job-names.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/languages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/languages.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/majors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/majors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/pending-jobs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/pending-jobs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/regions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/regions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/role-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/role-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/roles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/skills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/skills.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/type-management.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/type-school.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/type-school.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/announcement-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/announcement-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/announcements.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/announcements.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/api-controller-roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/api-controller-roles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/api-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/api-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/branches.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/branches.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/job-groups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/job-groups.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/job-names.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/job-names.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/languages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/languages.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/majors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/majors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/pending-jobs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/pending-jobs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/regions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/regions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/role-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/role-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/roles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/skills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/skills.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/type-management.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/type-schools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/type-schools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store/reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store/reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ErrorBoundary.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ErrorBoundary.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/FallBack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/FallBack.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/api/private.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api/private.api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/api/public.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api/public.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auto-login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auto-login.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/base-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/base-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/clearStorage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/clearStorage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/exec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/exec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/login.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -38,45 +135,51 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="env" value="11" />
+          <entry key="html" value="1" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="1" />
-          <entry key="json" value="3" />
+          <entry key="js" value="3" />
+          <entry key="json" value="4" />
           <entry key="png" value="1" />
-          <entry key="scss" value="1" />
+          <entry key="scss" value="6" />
           <entry key="svg" value="1" />
-          <entry key="ts" value="28" />
-          <entry key="tsx" value="1" />
+          <entry key="ts" value="165" />
+          <entry key="tsx" value="95" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key=".env file" value="11" />
+          <entry key="HTML" value="1" />
           <entry key="Image" value="3" />
-          <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="1" />
+          <entry key="JSON" value="3" />
+          <entry key="JavaScript" value="3" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="SCSS" value="1" />
+          <entry key="SCSS" value="6" />
           <entry key="SVG" value="1" />
-          <entry key="TypeScript" value="28" />
-          <entry key="TypeScript JSX" value="1" />
+          <entry key="TypeScript" value="165" />
+          <entry key="TypeScript JSX" value="95" />
           <entry key="tsconfig" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="152" />
-          <entry key="scss" value="127" />
-          <entry key="ts" value="2623" />
-          <entry key="tsx" value="191" />
+          <entry key="html" value="13" />
+          <entry key="js" value="4" />
+          <entry key="scss" value="159" />
+          <entry key="ts" value="3579" />
+          <entry key="tsx" value="2864" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="152" />
-          <entry key="SCSS" value="127" />
-          <entry key="TypeScript" value="2623" />
-          <entry key="TypeScript JSX" value="191" />
+          <entry key="HTML" value="13" />
+          <entry key="JavaScript" value="4" />
+          <entry key="SCSS" value="159" />
+          <entry key="TypeScript" value="3579" />
+          <entry key="TypeScript JSX" value="2864" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -89,69 +192,25 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/app/view/login/Login.tsx">
+        <entry file="file://$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="82" column="39" selection-start-line="82" selection-start-column="39" selection-end-line="82" selection-end-column="39" />
+            <state relative-caret-position="397">
+              <caret line="162" column="5" lean-forward="true" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
               <folding>
-                <element signature="e#0#44#0" expanded="true" />
+                <element signature="e#0#52#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/login.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/api/public.api.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/exec.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="60" column="25" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/base-api.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="61" selection-start-line="6" selection-start-column="61" selection-end-line="6" selection-end-column="61" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -161,7 +220,27 @@
       <find>base-api</find>
       <find>createAuthozization</find>
       <find>axios</find>
+      <find>INTERSHIP</find>
+      <find>_requestToServer</find>
+      <find>data_breakcumb</find>
+      <find>fix</find>
+      <find>ADMIN_HO</find>
+      <find>ADMIN</find>
+      <find>dev.js</find>
+      <find>RFTK_LOGIN</find>
+      <find>actk</find>
+      <find>environment/dev</find>
+      <find>redu</find>
+      <find>ADMIN_HOST</find>
+      <find>authHeaders</find>
+      <find>localStorage</find>
+      <find>WMan</find>
+      <find>rbac</find>
+      <find>err.toJSON</find>
     </findStrings>
+    <dirStrings>
+      <dir>C:\Users\LENOVO\Desktop\worksvn-web-admin\src\app\view\layout\config</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -169,18 +248,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/.env" />
-        <option value="$PROJECT_DIR$/src/config/exception.ts" />
-        <option value="$PROJECT_DIR$/src/services/clearStorage.ts" />
-        <option value="$PROJECT_DIR$/src/app/view/login/Login.scss" />
-        <option value="$PROJECT_DIR$/src/services/auth.ts" />
-        <option value="$PROJECT_DIR$/src/services/login.ts" />
-        <option value="$PROJECT_DIR$/src/services/exec.ts" />
-        <option value="$PROJECT_DIR$/src/services/base-api.ts" />
-        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/pending-jobs.ts" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/regions.ts" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/role-detail.ts" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/roles.ts" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/skills.ts" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/type-schools.ts" />
+        <option value="$PROJECT_DIR$/src/redux/store/reducer.ts" />
+        <option value="$PROJECT_DIR$/src/routes/ErrorBoundary.tsx" />
+        <option value="$PROJECT_DIR$/src/routes/FallBack.tsx" />
+        <option value="$PROJECT_DIR$/src/routes/Routes.tsx" />
+        <option value="$PROJECT_DIR$/src/redux/models/announcements.ts" />
+        <option value="$PROJECT_DIR$/src/redux/models/api-controller.ts" />
+        <option value="$PROJECT_DIR$/src/redux/models/branches.ts" />
+        <option value="$PROJECT_DIR$/src/redux/models/job-type.ts" />
         <option value="$PROJECT_DIR$/src/services/api/public.api.ts" />
-        <option value="$PROJECT_DIR$/src/app/view/login/Login.tsx" />
+        <option value="$PROJECT_DIR$/src/services/auto-login.ts" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/TypeSchools.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/list-type-schools/ListTypeSchools.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/create-type-schools/CreateTypeSchools.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/Skills.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/create-skills/CreateSkills.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/Regions.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/list-regions/ListRegions.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/create-regions/CreateRegions.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/Majors.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/create-majors/CreateMajors.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/Languages.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/create-languages/CreateLanguages.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/JobNames.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/JobGroups.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/create-job-groups/CreateJobGroups.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/Branches.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx" />
+        <option value="$PROJECT_DIR$/src/redux/sagas/type-management.ts" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/create-job-names/CreateJobNames.tsx" />
+        <option value="$PROJECT_DIR$/src/services/base-api.ts" />
+        <option value="$PROJECT_DIR$/src/services/login.ts" />
+        <option value="$PROJECT_DIR$/src/services/api/private.api.ts" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/common/const/actions.ts" />
+        <option value="$PROJECT_DIR$/src/services/exec.ts" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/Roles.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx" />
       </list>
     </option>
   </component>
@@ -245,26 +363,434 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="branches" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="branches" type="462c0819:PsiDirectoryNode" />
+              <item name="create-branches" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="branches" type="462c0819:PsiDirectoryNode" />
+              <item name="list-branches" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="job-groups" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="job-groups" type="462c0819:PsiDirectoryNode" />
+              <item name="create-job-groups" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="job-groups" type="462c0819:PsiDirectoryNode" />
+              <item name="list-job-groups" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="job-names" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="job-names" type="462c0819:PsiDirectoryNode" />
+              <item name="create-job-names" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="job-names" type="462c0819:PsiDirectoryNode" />
+              <item name="list-job-names" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="languages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="languages" type="462c0819:PsiDirectoryNode" />
+              <item name="create-languages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="languages" type="462c0819:PsiDirectoryNode" />
+              <item name="list-languages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="majors" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="majors" type="462c0819:PsiDirectoryNode" />
+              <item name="create-majors" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="majors" type="462c0819:PsiDirectoryNode" />
+              <item name="list-majors" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="regions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="regions" type="462c0819:PsiDirectoryNode" />
+              <item name="create-regions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="regions" type="462c0819:PsiDirectoryNode" />
+              <item name="list-regions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="skills" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="skills" type="462c0819:PsiDirectoryNode" />
+              <item name="create-skills" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="skills" type="462c0819:PsiDirectoryNode" />
+              <item name="list-skills" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="type-schools" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="type-schools" type="462c0819:PsiDirectoryNode" />
+              <item name="create-type-schools" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="job-management" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="job-management" type="462c0819:PsiDirectoryNode" />
+              <item name="mng-create" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="job-management" type="462c0819:PsiDirectoryNode" />
+              <item name="mng-list" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="menu-navigation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="pending-jobs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="pending-jobs" type="462c0819:PsiDirectoryNode" />
+              <item name="job-properties" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="role-admins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="role-admins" type="462c0819:PsiDirectoryNode" />
+              <item name="roles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="role-admins" type="462c0819:PsiDirectoryNode" />
+              <item name="roles" type="462c0819:PsiDirectoryNode" />
+              <item name="create-roles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="role-admins" type="462c0819:PsiDirectoryNode" />
+              <item name="roles" type="462c0819:PsiDirectoryNode" />
+              <item name="list-roles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
               <item name="login" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
               <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
               <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="image" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="sagas" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="store" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
               <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -282,6 +808,10 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\services" />
+      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\services\api" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin" />
     </key>
@@ -317,12 +847,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573892716082</updated>
-      <workItem from="1573892718566" duration="9006000" />
+      <workItem from="1573892718566" duration="29719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9006000" />
+    <option name="totallyTimeSpent" value="29719000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -330,17 +860,17 @@
     <layout>
       <window_info id="npm" side_tool="true" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20555188" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25776604" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="RNConsole" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3569405" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.26770538" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -349,6 +879,28 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info id="npm" order="0" side_tool="true" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.25842696" />
+      <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" order="1" />
+      <window_info anchor="bottom" id="RNConsole" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.3569405" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -357,142 +909,391 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/logo-01.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/src/redux/models/roles.ts">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/logo.svg">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/src/redux/models/skills.ts">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/serviceWorker.js">
+    <entry file="file://$PROJECT_DIR$/src/redux/models/type-management.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/models/type-schools.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/api/public.api.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/Admin.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robots.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="57" column="50" selection-start-line="57" selection-start-column="50" selection-end-line="57" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/list-type-schools/ListTypeSchools.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="211" column="60" selection-start-line="211" selection-start-column="60" selection-end-line="211" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+        <state relative-caret-position="244">
+          <caret line="33" column="29" lean-forward="true" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/const/method.ts">
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/job-management/mng-create/MngCreate.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="13" selection-start-column="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/clearStorage.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+        <state relative-caret-position="-153">
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/exception.ts">
+    <entry file="file://$PROJECT_DIR$/src/redux/sagas/type-management.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" lean-forward="true" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        <state relative-caret-position="-168">
+          <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/auto-login.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="485">
+          <caret line="35" column="17" lean-forward="true" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="14593" column="4" selection-start-line="14593" selection-start-column="4" selection-end-line="14593" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/.env">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/image/login-image.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/login/Login.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/axios/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="132" column="2" selection-start-line="132" selection-start-column="2" selection-end-line="132" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/auth.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="86" selection-start-line="7" selection-start-column="86" selection-end-line="7" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/base-api.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="61" selection-start-line="6" selection-start-column="61" selection-end-line="6" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/api/public.api.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/login.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        <state relative-caret-position="332">
+          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/auth.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/api/private.api.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/base-api.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="68" lean-forward="true" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/const/actions.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="131" column="2" selection-start-line="131" selection-start-column="2" selection-end-line="131" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="556" column="8" selection-start-line="556" selection-start-column="8" selection-end-line="556" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/role-admins/roles/create-roles/CreateRoles.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="42" selection-start-line="1" selection-start-column="42" selection-end-line="1" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#103#145#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/role-admins/RoleAdmins.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/role-admins/roles/Roles.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Routes.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="215" column="35" selection-start-line="215" selection-start-column="35" selection-end-line="215" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/Skills.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/TypeSchools.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/exec.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="60" column="25" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
+        <state relative-caret-position="850">
+          <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/login/Login.tsx">
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/create-type-schools/CreateTypeSchools.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="74" column="23" lean-forward="true" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/create-skills/CreateSkills.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="95" column="50" selection-start-line="95" selection-start-column="50" selection-end-line="95" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/Regions.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/list-regions/ListRegions.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="213" column="39" lean-forward="true" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/create-regions/CreateRegions.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="66" selection-start-line="7" selection-start-column="66" selection-end-line="7" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/Majors.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="41" column="66" selection-start-line="41" selection-start-column="66" selection-end-line="41" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="106" column="6" lean-forward="true" selection-start-line="106" selection-start-column="6" selection-end-line="106" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/create-majors/CreateMajors.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="66" selection-start-line="7" selection-start-column="66" selection-end-line="7" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/Languages.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="43" column="57" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/create-languages/CreateLanguages.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="93" column="50" selection-start-line="93" selection-start-column="50" selection-end-line="93" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/JobNames.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="43" column="60" selection-start-line="43" selection-start-column="60" selection-end-line="43" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="283" column="3" selection-start-line="283" selection-start-column="3" selection-end-line="283" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/create-job-names/CreateJobNames.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/JobGroups.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="115" column="36" selection-start-line="115" selection-start-column="36" selection-end-line="115" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/create-job-groups/CreateJobGroups.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="93" column="60" selection-start-line="93" selection-start-column="60" selection-end-line="93" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/Branches.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="43" column="50" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="93" column="60" selection-start-line="93" selection-start-column="60" selection-end-line="93" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/table/Table.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="82" column="39" selection-start-line="82" selection-start-column="39" selection-end-line="82" selection-end-column="39" />
+          <caret line="186" column="31" lean-forward="true" selection-start-line="186" selection-start-column="31" selection-end-line="186" selection-end-column="31" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="191" column="28" selection-start-line="191" selection-start-column="28" selection-end-line="191" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="162" column="5" lean-forward="true" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
           </folding>
         </state>
       </provider>

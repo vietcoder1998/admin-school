@@ -1,13 +1,11 @@
-import { SKILLS } from './../../services/api/private.api';
-import { ISkills } from './../models/skills';
-import { authHeaders } from './../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {SKILLS} from '../../services/api/private.api';
+import {ISkills} from '../models/skills';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListSkillsData(action) {
+function* getListSkillsData(action: any) {
     let res = yield call(callSkills, action);
 
     if (res.code === 200) {
@@ -19,7 +17,7 @@ function* getListSkillsData(action) {
     }
 }
 
-function callSkills(action) {
+function callSkills(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -31,11 +29,8 @@ function callSkills(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, SKILLS,
         null,
-        SKILLS,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 10

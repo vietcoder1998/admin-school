@@ -1,13 +1,11 @@
-import { JOB_GROUPS } from '../../services/api/private.api';
-import { IJobGroups } from '../models/job-groups';
-import { authHeaders } from '../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {JOB_GROUPS} from '../../services/api/private.api';
+import {IJobGroups} from '../models/job-groups';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListJobGroupsData(action) {
+function* getListJobGroupsData(action: any) {
     let res = yield call(callJobGroups, action);
 
     if (res.code === 200) {
@@ -19,7 +17,7 @@ function* getListJobGroupsData(action) {
     }
 }
 
-function callJobGroups(action) {
+function callJobGroups(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -31,11 +29,8 @@ function callJobGroups(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, JOB_GROUPS,
         null,
-        JOB_GROUPS,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 0

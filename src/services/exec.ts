@@ -2,6 +2,7 @@ import {notification} from 'antd';
 import {GET, POST, PUT, DELETE} from '../common/const/method';
 import {_delete, _get, _post, _put} from './base-api';
 import Swal from 'sweetalert2';
+import {authHeaders} from "./auth";
 
 export const _requestToServer = async (
     method: string,
@@ -18,6 +19,9 @@ export const _requestToServer = async (
     }
     let response;
     try {
+        if (!headers) {
+            headers = authHeaders;
+        }
         logRequest(method, host, api, data, params, headers);
         switch (method) {
             case GET:
@@ -37,17 +41,16 @@ export const _requestToServer = async (
         }
         logResponse(method, host, api, response, params, headers);
         if (response) {
-            let data = response.data;
             if (show_noti) {
                 notification.success({
-                    message: "Thành công (" + data.code + ")",
-                    description: data.msg,
+                    message: "Thành công (" + response.code + ")",
+                    description: response.msg,
                 })
             }
             if (show_alert) {
                 Swal.fire(
                     "Thành công",
-                    data.msg,
+                    response.msg,
                     'success',
                 );
             }
@@ -56,7 +59,6 @@ export const _requestToServer = async (
     } catch (err) {
         let code;
         let msg;
-        console.log(err.toJSON());
         if (err.response) {
             let data = err.response.data;
             if (data) {
@@ -69,7 +71,6 @@ export const _requestToServer = async (
         } else {
             code = "UNKNOWN";
             msg = err.message;
-            console.log("[UNEXPECTED ERROR] " + err.toJSON());
         }
         if (show_noti) {
             notification.error({
@@ -90,22 +91,22 @@ export const _requestToServer = async (
 
 function logRequest(method: string, host: string | undefined, api: string, body?: any, params?: any, headers?: any) {
     if (process.env.REACT_APP_ENABLE_LOGGING) {
-    console.log(">> REQUEST\n" +
-        ">> api: " + method + " " + host + api + "\n" +
-        ">> body: " + JSON.stringify(body) + "\n" +
-        ">> params: " + JSON.stringify(params) + "\n" +
-        ">> headers: " + JSON.stringify(headers) + "\n" +
-        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log('REQUEST', {
+            api: method + " " + host + api,
+            body: body,
+            params: params,
+            headers: headers
+        });
     }
 }
 
 function logResponse(method: string, host: string | undefined, api: string, responseBody?: any, params?: any, headers?: any) {
     if (process.env.REACT_APP_ENABLE_LOGGING) {
-    console.log(">> REPONSE\n" +
-        "<< api: " + method + " " + host + api + "\n" +
-        "<< body: " + JSON.stringify(responseBody) + "\n" +
-        "<< params: " + JSON.stringify(params) + "\n" +
-        "<< headers: " + JSON.stringify(headers) + "\n" +
-        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log('RESPONSE', {
+            api: method + " " + host + api,
+            body: responseBody,
+            params: params,
+            headers: headers
+        });
     }
 }

@@ -1,4 +1,4 @@
-import { REDUX } from './../../common/const/actions';
+import { REDUX } from '../../common/const/actions';
 import { IAnnouncements } from '../models/announcements';
 
 export const getAnnouncements = (data: IAnnouncements) => ({

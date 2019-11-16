@@ -1,9 +1,8 @@
-import { loginHeaders } from './auth';
-import { ADMIN_LOGIN, RFTK_LOGIN } from './api/public.api';
-import { POST } from './../common/const/method';
+import {loginHeaders} from './auth';
+import {REFRESH_TOKEN_LOGIN} from './api/public.api';
+import {POST} from '../common/const/method';
 import Cookies from 'universal-cookie';
-import { _requestToServer } from './exec';
-import { OAUTH2_HOST } from '../environment/dev';
+import {_requestToServer} from './exec';
 
 let cookies = new Cookies();
 
@@ -15,21 +14,17 @@ export function Atlg() {
 
     if (atlg === "true" && actk === true) {
         _requestToServer(
-            POST,
+            POST, REFRESH_TOKEN_LOGIN,
             refreshTokenDto,
-            RFTK_LOGIN,
-            OAUTH2_HOST,
-            loginHeaders("worksvn-admin-web", "worksvn-admin-web@works.vn"),
             null,
-            false,
-            true
-        ).then(res => {
-            if (res && res.code === 200) {
-                let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate) / 1000)
-                let cookie = new Cookies()
+            loginHeaders(process.env.REACT_APP_CLIENT_ID, process.env.REACT_APP_CLIENT_SECRET)
+        ).then((res: any) => {
+            if (res) {
+                let exp = new Date((new Date().getTime() + res.data.accessTokenExpSecstoDate) / 1000);
+                let cookie = new Cookies();
 
-                cookie.set("actk", res.data.accessToken, { expires: exp, path: "/" });
-                cookie.set("rftk", res.data.refreshToken, { expires: exp, path: "/" });
+                cookie.set("actk", res.data.accessToken, {expires: exp, path: "/"});
+                cookie.set("rftk", res.data.refreshToken, {expires: exp, path: "/"});
 
                 localStorage.setItem("userID", res.data.userID);
                 localStorage.setItem("token", res.data.accessToken);
@@ -42,5 +37,4 @@ export function Atlg() {
             }
         })
     }
-
 }

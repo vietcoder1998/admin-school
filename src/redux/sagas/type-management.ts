@@ -1,13 +1,11 @@
-import { ITypeManagements } from './../models/type-management';
-import { authHeaders } from './../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
-import { TYPE_MANAGEMENT } from '../../services/api/private.api';
+import {ITypeManagements} from '../models/type-management';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
+import {TYPE_MANAGEMENT} from '../../services/api/private.api';
 
-function* getListTypeManagementData(action) {
+function* getListTypeManagementData(action: any) {
     let res = yield call(callTypeManagement, action);
 
     if (res.code === 200) {
@@ -19,21 +17,20 @@ function* getListTypeManagementData(action) {
     }
 }
 
-function callTypeManagement(action) {
-    var data;
-    var target;
+function callTypeManagement(action: any) {
+    let target;
     if (action.data) {
         target = action.data.target;
-        data = action.data;
     }
 
     return _requestToServer(
-        GET,
-        data,
-        TYPE_MANAGEMENT,
-        ADMIN_HOST,
-        authHeaders,
-        { pageIndex: 0, pageSize: 0, target }
+        GET, TYPE_MANAGEMENT,
+        null,
+        {
+            pageIndex: 0,
+            pageSize: 0,
+            target
+        }
     )
 }
 

@@ -1,13 +1,11 @@
-import { REGIONS } from '../../services/api/private.api';
-import { IRegions } from '../models/regions';
-import { authHeaders } from '../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {REGIONS} from '../../services/api/private.api';
+import {IRegions} from '../models/regions';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListRegionsData(action) {
+function* getListRegionsData(action: any) {
     let res = yield call(callRegions, action);
 
     if (res.code === 200) {
@@ -19,7 +17,7 @@ function* getListRegionsData(action) {
     }
 }
 
-function callRegions(action) {
+function callRegions(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -31,11 +29,8 @@ function callRegions(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, REGIONS,
         null,
-        REGIONS,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 10

@@ -9,7 +9,7 @@ interface IUserPasswordDto {
     password: string | undefined;
 }
 
-export function loginUser(data: IUserPasswordDto) {
+export function login(data: IUserPasswordDto) {
     _requestToServer(
         POST, ADMIN_LOGIN,
         data,

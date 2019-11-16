@@ -1,4 +1,4 @@
-import { IMajors } from './../models/majors';
+import { IMajors } from '../models/majors';
 import { REDUX } from '../../common/const/actions';
 
 let initState: IMajors = {
@@ -6,9 +6,9 @@ let initState: IMajors = {
     pageIndex: 0,
     pageSize: 0,
     totalItems: 0,
-}
+};
 
-export const Majors = (state = initState, action) => {
+export const Majors = (state = initState, action: any) => {
     switch (action.type) {
         case REDUX.MAJORS.GET_MAJORS:
             return {
@@ -17,9 +17,9 @@ export const Majors = (state = initState, action) => {
                 pageIndex: action.data.pageIndex,
                 pageSize: action.data.pageSize,
                 totalItems: action.data.totalItems
-            }
+            };
 
         default:
             return state;
     }
-}
+};

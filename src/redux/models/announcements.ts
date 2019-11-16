@@ -4,7 +4,7 @@ export interface IAnnouncement {
     announcementType: {
         id: number;
         name: string;
-        priority;
+        priority: number
     };
     title: string;
     viewNumber: number;

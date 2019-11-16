@@ -1,16 +1,14 @@
-import React, { PureComponent, Fragment } from 'react'
-import { connect } from 'react-redux';
-import { Divider, Button, Icon } from 'antd';
-import { InputTitle } from './../../../../layout/input-tittle/InputTitle';
-import { _requestToServer } from '../../../../../../services/exec';
-import { MAJORS } from '../../../../../../services/api/private.api';
-import { POST } from '../../../../../../common/const/method';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { authHeaders } from '../../../../../../services/auth';
-import { ADMIN_HOST } from '../../../../../../environment/dev';
-import { Link } from 'react-router-dom';
-import { TYPE } from '../../../../../../common/const/type';
-import { IMajor } from '../../../../../../redux/models/majors';
+import React, {PureComponent, Fragment} from 'react'
+import {connect} from 'react-redux';
+import {Divider, Button, Icon} from 'antd';
+import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
+import {_requestToServer} from '../../../../../../services/exec';
+import {MAJORS} from '../../../../../../services/api/private.api';
+import {POST} from '../../../../../../common/const/method';
+import {REDUX_SAGA} from '../../../../../../common/const/actions';
+import {Link} from 'react-router-dom';
+import {TYPE} from '../../../../../../common/const/type';
+import {IMajor} from '../../../../../../redux/models/majors';
 
 interface CreateMajorsState {
     name?: string;
@@ -27,20 +25,20 @@ interface CreateMajorsProps extends StateProps, DispatchProps {
 }
 
 class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             name: "",
             branchID: 0,
             list_branches: [],
-            branchName: null,
+            branchName: undefined,
         }
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.list_branches !== prevState.list_branches) {
-            let list_data = []
-            nextProps.list_branches.forEach(item => list_data.push({ value: item.id, label: item.name }))
+            let list_data: any = [];
+            nextProps.list_branches.forEach((item: any) => list_data.push({value: item.id, label: item.name}));
             return {
                 list_branches: nextProps.list_branches,
                 list_data,
@@ -51,46 +49,45 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
     }
 
     createNewData = async () => {
-        let { name, branchID } = this.state;
-        await _requestToServer(
-            POST,
-            { name: name.trim(), branchID },
-            MAJORS,
-            ADMIN_HOST,
-            authHeaders,
-            null,
-            true,
-        ).then(res => {
-            if (res.code === 200) {
+        let {name, branchID} = this.state;
+        if (name) {
+            await _requestToServer(
+                POST, MAJORS,
+                {
+                    name: name.trim(),
+                    branchID
+                }
+            ).then(res => {
                 this.props.getListMajors();
                 this.props.history.push('/admin/data/majors/list');
-            }
-        })
-    }
+            })
+        }
+    };
 
-    onChange = (event) => {
-        this.setState({ name: event })
-    }
+    onChange = (event: any) => {
+        this.setState({name: event})
+    };
 
-    handleChoseMajor = (id) => {
-        let { list_data } = this.state;
-        list_data.forEach(item => {
-            if (item.value === id) {
-                this.setState({ branchName: item.label });
-            }
-        });
-        this.setState({ branchID: id });
-    }
+    handleChoseMajor = (id: number) => {
+        let {list_data} = this.state;
+        if (list_data) {
+            list_data.forEach(item => {
+                if (item.value === id) {
+                    this.setState({branchName: item.label});
+                }
+            });
+            this.setState({branchID: id});
+        }
+    };
 
 
     render() {
-        let { name, list_data, branchID, branchName } = this.state;
-        let is_exactly = name.trim() !== "" && branchID ? true : false
+        let {name, list_data, branchID, branchName} = this.state;
         return (
-            <Fragment >
+            <Fragment>
                 <div>
                     <h5>Thêm nhóm ngành mới</h5>
-                    <Divider orientation="left" >Chi tiết nhóm ngành</Divider>
+                    <Divider orientation="left">Chi tiết nhóm ngành</Divider>
                 </div>
                 <InputTitle
                     type={TYPE.INPUT}
@@ -98,8 +95,8 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     placeholder="Nhập tên nhóm ngành"
                     value={name}
                     widthInput="300px"
-                    style={{ padding: "0px 20px" }}
-                    onChange={event => this.setState({ name: event })}
+                    style={{padding: "0px 20px"}}
+                    onChange={(event: any) => this.setState({name: event})}
                 />
                 <InputTitle
                     type={TYPE.SELECT}
@@ -107,24 +104,24 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     placeholder="Chọn nhóm ngành"
                     value={branchName}
                     list_value={list_data}
-                    style={{ padding: "0px 20px" }}
+                    style={{padding: "0px 20px"}}
                     onChange={this.handleChoseMajor}
                 />
                 <Button
                     type="primary"
                     icon="plus"
-                    style={{ float: "right", margin: "10px 5px" }}
+                    style={{float: "right", margin: "10px 5px"}}
                     onClick={this.createNewData}
-                    disabled={!is_exactly}
+                    disabled={!name ||  !branchID}
                 >
                     Tạo nhóm ngành mới
                 </Button>
                 <Button
                     type="danger"
-                    style={{ float: "right", margin: "10px 5px" }}
+                    style={{float: "right", margin: "10px 5px"}}
                 >
                     <Link to='/admin/data/majors/list'>
-                        <Icon type="close" />
+                        <Icon type="close"/>
                         Hủy
                     </Link>
 
@@ -134,13 +131,13 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListMajors: () => dispatch({ type: REDUX_SAGA.MAJORS.GET_MAJORS })
-})
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+    getListMajors: () => dispatch({type: REDUX_SAGA.MAJORS.GET_MAJORS})
+});
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: any, ownProps: any) => ({
     list_branches: state.Branches.items,
-})
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
