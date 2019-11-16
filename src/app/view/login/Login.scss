@@ -6,11 +6,20 @@
     font-family: $font_base;
     .r-p-content {
         background-color: white;
-        padding: 30px 20px;
+        padding: 30px 10%;
         height: 500px;
         p{
             font-weight: 500;
             font-size: 0.9rem;
         }
     }
+}
+
+.login-form-title {
+    text-align: center;
+    font-weight: bold;
+}
+
+.login-button {
+    margin-top: 55px;
 }

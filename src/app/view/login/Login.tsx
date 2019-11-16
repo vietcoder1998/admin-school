@@ -2,9 +2,7 @@ import React, { PureComponent } from 'react'
 import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
 import './Login.scss';
 import LoginImage from '../../../assets/image/login-image.jpg';
-import Cookies from 'universal-cookie';
 import { loginUser } from '../../../services/login';
-let cookies = new Cookies();
 
 interface LoginState {
     email?: string;
@@ -21,15 +19,15 @@ interface LoginProps {
 }
 
 class Login extends PureComponent<LoginProps, LoginState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             email: "",
             exactly: false,
             is_loading: true,
             err_msg: "",
-            password: null,
-            username: null,
+            password: '',
+            username: '',
             show_password: false,
         }
     }
@@ -37,11 +35,11 @@ class Login extends PureComponent<LoginProps, LoginState> {
     createRequest = async () => {
         let { password, username } = this.state;
         loginUser({username, password});
-    }
+    };
 
-    handleSubmit = e => {
+    handleSubmit = (e: any) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields((err: any) => {
             if (!err) {
                 this.createRequest()
             }
@@ -54,7 +52,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
         let icon = {
             color: "red",
             type: "close"
-        }
+        };
         let exactly = false;
 
         if (username && password && username.length > 1 && password.length >= 6) {
@@ -64,11 +62,8 @@ class Login extends PureComponent<LoginProps, LoginState> {
         }
 
         return (
-
             <div className='all-content'>
-                <div
-                    className="login"
-                >
+                <div className="login">
                     <img src={LoginImage}
                         style={{
                             position: "fixed",
@@ -78,24 +73,24 @@ class Login extends PureComponent<LoginProps, LoginState> {
                             top: "0px",
                             left: "0px"
                         }}
-
                         alt="login"
                     />
                     <Row>
-                        <Col xs={0} sm={4} md={6} lg={7} xl={8} xxl={8}  ></Col>
+                        <Col xs={0} sm={4} md={6} lg={7} xl={8} xxl={8}/>
                         <Col xs={24} sm={16} md={12} lg={10} xl={8} >
                             <div className="r-p-content test">
-                                <div className='msg-noti '>
-                                    <h5 style={{ textAlign: "center" }}>Đăng nhập</h5>
-                                    <Form onSubmit={this.handleSubmit} className="login-form">
+                                <div className='msg-noti'>
+                                    <h3 className="login-form-title">ĐĂNG NHẬP</h3>
+                                    <Form onSubmit={this.handleSubmit} className="login-form" style={{marginTop: 35}}>
                                         <p>Tên đăng nhập</p>
                                         <Form.Item>
                                             {getFieldDecorator('username', {
-                                                rules: [{ required: true, message: 'Vui lòng điền tên đăng nhập' }],
+                                                rules: [{ required: true, message: 'Nhập tên đăng nhập' }],
                                             })(
                                                 <Input
-                                                    prefix={<Icon type="lock"
-                                                        style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                                    prefix={
+                                                        <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                                    }
                                                     maxLength={160}
                                                     size="large"
                                                     type="text"
@@ -109,13 +104,15 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                                 />,
                                             )}
                                         </Form.Item>
-                                        <p>Mật khẩu mới</p>
+                                        <p>Mật khẩu</p>
                                         <Form.Item>
                                             {getFieldDecorator('password', {
-                                                rules: [{ required: true, message: 'Vui lòng điền mật khẩu ' }],
+                                                rules: [{ required: true, message: 'Nhập mật khẩu' }],
                                             })(
                                                 <Input
-                                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                                    prefix={
+                                                        <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                                    }
                                                     size="large"
                                                     placeholder="Mật khẩu"
                                                     type={show_password ? "text" : "password"}
@@ -131,13 +128,10 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                                 />,
                                             )}
                                         </Form.Item>
-                                        <p>
-                                            <Checkbox onChange={(event) => { cookies.set("atlg", event.target.checked)}} >Tự động đăng nhập</Checkbox>
-                                        </p>
                                     </Form>
                                     {exactly ? "" : <p>{err_msg}</p>}
                                 </div>
-                                <p className='a_c'>
+                                <p className='a_c login-button'>
                                     <Button
                                         type="primary"
                                         htmlType="submit"
@@ -146,23 +140,15 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                         style={{ width: "100%" }}
                                         onClick={this.handleSubmit}
                                     >
-                                        Xác nhận
+                                        Đăng nhập
                                     </Button>
-                                </p>
-                                <p className='a_c'>
-                                    <a href='/'
-                                        style={{ textDecoration: "underline" }}
-                                    >
-                                        Trợ giúp ?
-                                    </a>
                                 </p>
                             </div>
                         </Col>
-                        <Col xs={0} sm={4} md={6} lg={7} xl={8}></Col>
+                        <Col xs={0} sm={4} md={6} lg={7} xl={8}/>
                     </Row>
                 </div>
             </div>
-
         )
     }
 }

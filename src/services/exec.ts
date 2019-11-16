@@ -1,57 +1,111 @@
-import { notification } from 'antd';
-import { GET, POST, PUT, DELETE } from '../common/const/method';
-import { _delete, _get, _post, _put } from './base-api';
-import { exceptionShowNoti } from '../config/exception';
+import {notification} from 'antd';
+import {GET, POST, PUT, DELETE} from '../common/const/method';
+import {_delete, _get, _post, _put} from './base-api';
 import Swal from 'sweetalert2';
-import { TYPE } from '../common/const/type';
 
 export const _requestToServer = async (
     method: string,
+    api: string,
     data?: any,
-    api?: string,
-    host?: string,
-    headers?: any,
     params?: any,
-    show_noti?: boolean,
-    show_alert?: boolean,
+    headers?: any,
+    host?: string,
+    show_noti = true,
+    show_alert = false
 ) => {
-    let res;
-
+    if (!host) {
+        host = process.env.REACT_APP_API_HOST;
+    }
+    let response;
     try {
+        logRequest(method, host, api, data, params, headers);
         switch (method) {
             case GET:
-                res = await _get(params, api, host, headers);
+                response = await _get(host, api, params, headers);
                 break;
             case POST:
-                res = await _post(data, api, host, headers, params);
+                response = await _post(host, api, data, params, headers);
                 break;
             case PUT:
-                res = await _put(data, api, host, headers);
+                response = await _put(host, api, data, params, headers);
                 break;
             case DELETE:
-                res = await _delete(data, api, host, headers);
+                response = await _delete(host, api, data, params, headers);
                 break;
             default:
                 break;
-        };
-
-        if (res) {
-            if (show_noti) {
-                notification.success({ description: res.msg, message: "Worksvn thông báo" })
-            } else
-                if (show_alert) {
-                    let msg = TYPE.SUCCESS;
-                    Swal.fire(
-                        "Worksvn thông báo",
-                        msg,
-                        'success',
-                    );
-                };
         }
-
+        logResponse(method, host, api, response, params, headers);
+        if (response) {
+            let data = response.data;
+            if (show_noti) {
+                notification.success({
+                    message: "Thành công (" + data.code + ")",
+                    description: data.msg,
+                })
+            }
+            if (show_alert) {
+                Swal.fire(
+                    "Thành công",
+                    data.msg,
+                    'success',
+                );
+            }
+        }
+        return response;
     } catch (err) {
-        return res = exceptionShowNoti(err);
-    }
+        let code;
+        let msg;
+        console.log(err.toJSON());
+        if (err.response) {
+            let data = err.response.data;
+            if (data) {
+                code = data.code;
+                msg = data.msg;
+            } else {
+                code = err.response.code;
 
-    return res;
+            }
+        } else {
+            code = "UNKNOWN";
+            msg = err.message;
+            console.log("[UNEXPECTED ERROR] " + err.toJSON());
+        }
+        if (show_noti) {
+            notification.error({
+                message: "Có lỗi xảy ra (" + code + ")",
+                description: msg,
+            })
+        }
+        if (show_alert) {
+            Swal.fire(
+                "Có lỗi xảy ra",
+                msg,
+                'error',
+            );
+        }
+        throw err;
+    }
+};
+
+function logRequest(method: string, host: string | undefined, api: string, body?: any, params?: any, headers?: any) {
+    if (process.env.REACT_APP_ENABLE_LOGGING) {
+    console.log(">> REQUEST\n" +
+        ">> api: " + method + " " + host + api + "\n" +
+        ">> body: " + JSON.stringify(body) + "\n" +
+        ">> params: " + JSON.stringify(params) + "\n" +
+        ">> headers: " + JSON.stringify(headers) + "\n" +
+        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
+}
+
+function logResponse(method: string, host: string | undefined, api: string, responseBody?: any, params?: any, headers?: any) {
+    if (process.env.REACT_APP_ENABLE_LOGGING) {
+    console.log(">> REPONSE\n" +
+        "<< api: " + method + " " + host + api + "\n" +
+        "<< body: " + JSON.stringify(responseBody) + "\n" +
+        "<< params: " + JSON.stringify(params) + "\n" +
+        "<< headers: " + JSON.stringify(headers) + "\n" +
+        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
 }
