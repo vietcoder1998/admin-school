@@ -23,7 +23,9 @@ function callRolesDetail(action: any) {
     }
 
     return _requestToServer(
-        GET, ROLES + (rid ? `/${rid}` : '')
+        GET, ROLES + (rid ? `/${rid}` : ''),
+        undefined,
+        undefined, undefined, undefined, false, false
     )
 }
 

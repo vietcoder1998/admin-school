@@ -8,4 +8,4 @@ export const getJobName = (data: IPendingJobs) => ({
 
 export const getSingleJobName = (data: any) => ({
     type: REDUX.JOB_NAMES.GET_SINGLE_JOB_NAME,
-})
+});

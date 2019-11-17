@@ -7,8 +7,7 @@ import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
 function* getListBranchesData(action: any) {
     let res = yield call(callBranches, action);
-
-    if (res.code === 200) {
+    if (res) {
         let data: IBranches = res.data;
         yield put({
             type: REDUX.BRANCHES.GET_BRANCHES,
@@ -18,23 +17,14 @@ function* getListBranchesData(action: any) {
 }
 
 function callBranches(action: any) {
-    var pageIndex;
-    var pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
-    }
-
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
-
     return _requestToServer(
         GET, BRANCHES,
         null,
         {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 0
-        }
+            pageIndex: action.pageIndex ? action.pageIndex : 0,
+            pageSize: action.pageSize ? action.pageSize : 0
+        },
+        undefined, undefined, false, false
     )
 }
 

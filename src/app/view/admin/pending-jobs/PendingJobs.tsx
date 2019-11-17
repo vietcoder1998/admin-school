@@ -5,7 +5,7 @@ import {Button, Table, Icon, Select, Row, Col, Modal, Input} from 'antd';
 import {timeConverter} from '../../../../common/utils/convertTime';
 import {_requestToServer} from '../../../../services/exec';
 import {GET, POST} from '../../../../common/const/method';
-import {PENDING_JOBS_API} from '../../../../services/api/private.api';
+import {PENDING_JOBS} from '../../../../services/api/private.api';
 import JobProperties from './job-properties/JobProperties';
 import {TYPE} from '../../../../common/const/type';
 import {IptLetter} from '../../layout/common/Common';
@@ -24,7 +24,7 @@ const Label = (props: any) => {
             value = "Đã chấp nhận";
             break;
         case TYPE.REJECTED:
-            value = "Từ chối";
+            value = "Đã từ chối";
             break;
         case TYPE.PARTTIME:
             value = "Bán thời gian";
@@ -88,8 +88,15 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
             fixed: 'left',
         },
         {
-            title: 'Tiêu đề',
+            title: 'Nhà tuyển dụng',
+            dataIndex: 'employerName',
+            key: 'employerName',
             width: 200,
+            fixed: 'left'
+        },
+        {
+            title: 'Tiêu đề',
+            width: 350,
             dataIndex: 'jobTitle',
             key: 'jobTitle',
         },
@@ -97,41 +104,36 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
             title: 'Công việc',
             width: 180,
             dataIndex: 'jobName',
+            className: 'action',
             key: 'jobName',
-        },
-        {
-            title: 'Nhà tuyển dụng',
-            dataIndex: 'employerName',
-            key: 'employerName',
-            width: 140,
         },
         {
             title: 'Trạng thái',
             dataIndex: 'state',
             className: 'action',
             key: 'state',
-            width: 75,
+            width: 140,
         },
         {
             title: 'Loại công việc',
             dataIndex: 'jobType',
             className: 'action',
             key: 'jobType',
-            width: 100,
+            width: 140,
         },
         {
-            title: 'Thời điểm tạo',
+            title: 'Ngày tạo',
             dataIndex: 'createdDate',
             className: 'action',
             key: 'createdDate',
-            width: 100,
+            width: 120,
         },
         {
-            title: 'Phản hồi lần cuối',
+            title: 'Ngày phản hồi',
             dataIndex: 'repliedDate',
             className: 'action',
             key: 'repliedDate',
-            width: 100,
+            width: 130,
         },
         {
             title: 'Tên chi nhánh',
@@ -142,8 +144,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
         {
             title: 'Địa chỉ',
             dataIndex: 'address',
-            key: '6',
-            width: 300,
+            key: '6'
         },
         {
             title: 'Hành động',
@@ -159,23 +160,24 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
     ];
 
     componentDidMount() {
-        this.searchJob()
+        this.queryPendingJob()
     }
 
-    searchJob = () => {
-        let {employerID, state, jobType, jobNameID, pageIndex} = this.state;
+    queryPendingJob = () => {
+        let {employerID, state, jobType, jobNameID, pageIndex, pageSize} = this.state;
         this.props.getPendingJobs({
             employerID,
             state,
             jobType,
             jobNameID,
-            pageIndex
+            pageIndex,
+            pageSize
         })
     };
 
     setPageIndex = async (event: any) => {
         await this.setState({pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize});
-        await this.searchJob();
+        await this.queryPendingJob();
     };
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
@@ -234,7 +236,9 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
 
     getPendingJob = async (jobId: string) => {
         let res = await _requestToServer(
-            GET, PENDING_JOBS_API + `/${jobId}`,
+            GET, PENDING_JOBS + `/${jobId}`,
+            undefined,
+            undefined, undefined, undefined, false, false
         );
         if (res) {
             await this.setState({pendingJob: res.data});
@@ -249,13 +253,13 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
         let {jobId, message} = this.state;
         await this.setState({loading: true});
         await _requestToServer(
-            POST, PENDING_JOBS_API + `/${jobId}/${state}`,
+            POST, PENDING_JOBS + `/${jobId}/${state}`,
             {message},
             null, null, undefined, false
         );
         await this.setState({loading: false});
         await this.onToggleModal();
-        await this.searchJob();
+        await this.queryPendingJob();
     };
 
     render() {
@@ -273,7 +277,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                         <TextArea
                             key="reason-msg"
                             value={message}
-                            placeholder="Vui lòng điền lí do từ chối"
+                            placeholder="Lý do từ chối"
                             onChange={event => this.setState({message: event.target.value})}
                             rows={3}
                             style={{margin: "10px 0px",}}
@@ -301,9 +305,9 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                 </Modal>
                 <div className="common-content">
                     <h5>
-                        Danh sách bài đăng đang chờ
+                        Danh sách yêu cầu xét duyệt
                         <Button
-                            onClick={() => this.searchJob()}
+                            onClick={() => this.queryPendingJob()}
                             type="primary"
                             style={{
                                 float: "right",
@@ -325,10 +329,10 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                         optionFilterProp="children"
                                         style={{width: "100%"}}
                                     >
-                                        <Option value={undefined}>Tất cả</Option>
-                                        <Option value="jack">Jack</Option>
-                                        <Option value="lucy">Lucy</Option>
-                                        <Option value="tom">Tom</Option>
+                                        <Option key="1" value={undefined}>Tất cả</Option>
+                                        <Option key="2" value="jack">Jack</Option>
+                                        <Option key="3" value="lucy">Lucy</Option>
+                                        <Option key="4" value="tom">Tom</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
@@ -341,10 +345,10 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                         style={{width: "100%"}}
                                         onChange={this.onChangeJobType}
                                     >
-                                        <Option value={undefined}>Tất cả</Option>
-                                        <Option value={TYPE.PARTTIME}>Bán thời gian</Option>
-                                        <Option value={TYPE.FULLTIME}>Toàn thời gian</Option>
-                                        <Option value={TYPE.INTERNSHIP}>Thực tập</Option>
+                                        <Option key="1" value={undefined}>Tất cả</Option>
+                                        <Option key="2" value={TYPE.PARTTIME}>Part-time</Option>
+                                        <Option key="3" value={TYPE.FULLTIME}>Full-time</Option>
+                                        <Option key="4" value={TYPE.INTERNSHIP}>Thực tập</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
@@ -357,14 +361,14 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                         defaultValue="Đang chờ"
                                         onChange={this.onChangeState}
                                     >
-                                        <Option value={undefined}>Tất cả</Option>
-                                        <Option value={TYPE.PENDING}>Đang chờ</Option>
-                                        <Option value={TYPE.REJECTED}>Đã từ chối</Option>
+                                        <Option key="1" value={undefined}>Tất cả</Option>
+                                        <Option key="2" value={TYPE.PENDING}>Đang chờ</Option>
+                                        <Option key="3" value={TYPE.REJECTED}>Đã từ chối</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
                                     <p>
-                                        <IptLetter value={"Công việc"}/>
+                                        <IptLetter value={"Tên công việc"}/>
                                     </p>
                                     <Select
                                         showSearch
@@ -373,11 +377,11 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
                                         optionFilterProp="children"
                                         onChange={this.onChangeJobName}
                                     >
-                                        <Option value={undefined}>Tất cả</Option>
+                                        <Option key={1} value={undefined}>Tất cả</Option>
                                         {
                                             list_jobs_group &&
                                             list_jobs_group.map((item: any, index: number) =>
-                                                <Option key={index} value={item.id}>{item.name}</Option>)
+                                                <Option key={index + 1} value={item.id}>{item.name}</Option>)
                                         }
                                     </Select>
                                 </Col>

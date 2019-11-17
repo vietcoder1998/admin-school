@@ -33,6 +33,8 @@ function callAnnouncementDetail(action: any) {
     }
     return _requestToServer(
         GET, ANNOUNCEMENT_DETAIL + `/${id}`,
+        undefined,
+        undefined, undefined, undefined, false, false
     )
 }
 

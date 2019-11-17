@@ -1,7 +1,7 @@
 export const breakCumb =  [
-    {label: "pending-jobs", name: "Bài đăng đang chờ", icon: "loading", url: "/pending-jobs" },
+    {label: "pending-jobs", name: "Xét duyệt bài đăng", icon: "clock-circle", url: "/pending-jobs" },
     {label: "data", name: "Danh mục dữ liêu", icon: null, url: "/data"},
-    {label: "job-management", name: "Quản lí bài viết", icon: null, url: "/"},
+    {label: "job-management", name: "Quản lý bài đăng", icon: "file", url: "/"},
     {label: "create", name: "Tạo mới", icon: null, url: "/create"},
     {label: "fix", name: "Chỉnh sửa", icon: null, url: "/fix"},
     {label: "languages", name: "Ngôn ngữ", icon: null, url: "/languages"},
@@ -15,4 +15,4 @@ export const breakCumb =  [
     {label: "branches", name: "Nhóm ngành", icon: null, url: "/branches"},
     {label: "role-admins", name: "Quản trị viên", icon: null, url: "/role-admins"},
     {label: "roles", name: "Quyền", icon: null, url: "/roles"},
-]
+];

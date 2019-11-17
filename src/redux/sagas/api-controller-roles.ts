@@ -22,7 +22,9 @@ function callApiControllerRoles(action: any) {
         id = action.id
     }
     return _requestToServer(
-        GET, API_CONTROLLER_ROLES + (id? `/${id}/apis` : '')
+        GET, API_CONTROLLER_ROLES + (id? `/${id}/apis` : ''),
+        null,
+        undefined, undefined, undefined, false, false
     )
 }
 

@@ -114,7 +114,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     getMajorDetail = async (id: number) => {
         await _requestToServer(
             GET, MAJORS + `/${id}`,
-            null
+            undefined,
+            undefined, undefined, undefined, false, false
         ).then((res: any) => {
             if (res) {
                 this.setState({branchID: res.data.branch.id})
@@ -250,6 +251,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         ) : <div>Bạn chắc chắn muốn xóa nhóm ngành này: {name}</div>}
                     </ModalConfig>
                     <Table
+                        // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}

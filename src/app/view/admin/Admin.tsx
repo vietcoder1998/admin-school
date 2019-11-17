@@ -96,8 +96,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 }}
                             />
                             <DropdownConfig>
-                                <OptionConfig icon="logout" value="" label="Đăng xuất" onClick={this.logOut} />
-                                <OptionConfig icon="user" value="" label="Tài khoản" onClick={() => { }} />
+                                <OptionConfig icon="logout" key="1" value="" label="Đăng xuất" onClick={this.logOut} />
+                                <OptionConfig icon="user" key="2" value="" label="Tài khoản" onClick={() => { }} />
                             </DropdownConfig>
                         </div>
                     </Header>

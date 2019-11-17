@@ -34,7 +34,8 @@ function callSkills(action: any) {
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 10
-        }
+        },
+        undefined, undefined, false, false
     )
 }
 

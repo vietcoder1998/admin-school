@@ -18,7 +18,7 @@ import 'cropperjs/dist/cropper.css';
 require('dotenv').config();
 // Atlg();
 const rootEl = document.getElementById('root');
-const appRenderer = Component => ReactDOM.render(
+const appRenderer = (Component: any) => ReactDOM.render(
     <ErrorBoundary >
         <Provider store={store}>
             <Component />

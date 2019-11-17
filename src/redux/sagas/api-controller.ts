@@ -18,7 +18,9 @@ function* getListApiControllerData(action: any) {
 
 function callApiController(action: any) {
     return _requestToServer(
-        GET, API_CONTROLLER
+        GET, API_CONTROLLER,
+        undefined,
+        undefined, undefined, undefined, false, false
     )
 }
 

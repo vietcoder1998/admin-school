@@ -7,8 +7,7 @@ import {TYPE_MANAGEMENT} from '../../services/api/private.api';
 
 function* getListTypeManagementData(action: any) {
     let res = yield call(callTypeManagement, action);
-
-    if (res.code === 200) {
+    if (res) {
         let data: ITypeManagements = res.data;
         yield put({
             type: REDUX.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
@@ -27,10 +26,11 @@ function callTypeManagement(action: any) {
         GET, TYPE_MANAGEMENT,
         null,
         {
-            pageIndex: 0,
-            pageSize: 0,
+            pageIndex: action.pageIndex? action.pageIndex : 0,
+            pageSize: action.pageSize? action.pageSize : 0,
             target
-        }
+        },
+        undefined, undefined, false, false
     )
 }
 

@@ -29,11 +29,13 @@ function callMajors(action: any) {
 
     return _requestToServer(
         GET, MAJORS,
-        null, null,
+        undefined,
+        undefined,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 10
-        }
+        },
+        undefined, false, false
     )
 }
 

@@ -14,7 +14,7 @@ function* getListJobNameData(action: any) {
         totalItems: 0,
     };
 
-    if (res.code === 200) {
+    if (res) {
         data = res.data;
         yield put({
             type: REDUX.JOB_NAMES.GET_JOB_NAMES,
@@ -28,9 +28,9 @@ function callJobName(action: any) {
         GET, JOB_NAMES,
         null,
         {
-            pageIndex: 0,
-            pageSize: 10
-        },
+            pageIndex: action.pageIndex? action.pageIndex : 0,
+            pageSize: action.pageSize? action.pageSize : 0
+        }, undefined, undefined, false, false
     )
 }
 

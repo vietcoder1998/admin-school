@@ -43,8 +43,9 @@ export const _requestToServer = async (
         if (response) {
             if (show_noti) {
                 notification.success({
-                    message: "Thành công (" + response.code + ")",
+                    message: "Thành công",
                     description: response.msg,
+                    duration: 2
                 })
             }
             if (show_alert) {
@@ -66,7 +67,6 @@ export const _requestToServer = async (
                 msg = data.msg;
             } else {
                 code = err.response.code;
-
             }
         } else {
             code = "UNKNOWN";
@@ -91,7 +91,7 @@ export const _requestToServer = async (
 
 function logRequest(method: string, host: string | undefined, api: string, body?: any, params?: any, headers?: any) {
     if (process.env.REACT_APP_ENABLE_LOGGING) {
-        console.log('REQUEST', {
+        console.log('REQUEST ' + method + ' ' + host + api, {
             api: method + " " + host + api,
             body: body,
             params: params,
@@ -102,7 +102,7 @@ function logRequest(method: string, host: string | undefined, api: string, body?
 
 function logResponse(method: string, host: string | undefined, api: string, responseBody?: any, params?: any, headers?: any) {
     if (process.env.REACT_APP_ENABLE_LOGGING) {
-        console.log('RESPONSE', {
+        console.log('RESPONSE ' + method + ' ' + host + api, {
             api: method + " " + host + api,
             body: responseBody,
             params: params,

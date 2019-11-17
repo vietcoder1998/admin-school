@@ -153,7 +153,8 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
     getJobNameDetail = async (id: number) => {
         await _requestToServer(
             GET, JOB_NAMES + `/${id}`,
-            null
+            undefined,
+            undefined, undefined, undefined, false, false
         ).then((res: any) => {
             if (res) {
                 this.setState({jobGroupID: res.data.jobGroup.id})
@@ -255,6 +256,7 @@ class ListJobNames extends PureComponent<ListJobNamesProps, ListJobNamesState> {
                         ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
                     </ModalConfig>
                     <Table
+                        // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}

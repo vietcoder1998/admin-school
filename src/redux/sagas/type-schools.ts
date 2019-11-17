@@ -35,7 +35,8 @@ function callTypeSchools(action: any) {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize:
                 pageSize ? pageSize : 10
-        }
+        },
+        undefined, undefined, undefined, false
     )
 }
 

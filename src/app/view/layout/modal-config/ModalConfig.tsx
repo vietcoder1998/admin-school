@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
+import {Button, Icon} from 'antd';
 
 export interface IConfigModalProps {
     toggleModal: Function;
@@ -13,12 +13,20 @@ export interface IConfigModalProps {
     title?: string;
     isOpen?: boolean;
 }
+
 export interface IConfigModalState {
     toggleTo?: boolean;
 }
+
 export class ModalConfig extends React.Component<IConfigModalProps, IConfigModalState> {
-    state: IConfigModalState = { toggleTo: true }
-    closeModal = () => { let{isOpen} = this.props; if(isOpen){this.props.toggleModal()}  };
+    state: IConfigModalState = {toggleTo: true};
+    closeModal = () => {
+        let {isOpen} = this.props;
+        if (isOpen) {
+            this.props.toggleModal()
+        }
+    };
+
     componentDidMount() {
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
@@ -32,11 +40,15 @@ export class ModalConfig extends React.Component<IConfigModalProps, IConfigModal
             }
         })
     }
+
     componentWillUnmount() {
-        document.removeEventListener("keydown", () => { });
-        document.removeEventListener("mousedown", () => { });
+        document.removeEventListener("keydown", () => {
+        });
+        document.removeEventListener("mousedown", () => {
+        });
     }
-    render(){
+
+    render() {
         let {
             children,
             namebtn1,
@@ -49,35 +61,39 @@ export class ModalConfig extends React.Component<IConfigModalProps, IConfigModal
             <React.Fragment>
                 <div
                     className={`modal-config-bg${isOpen ? " " : " none"}`}
-                    style={{ ...style }}
-                    onKeyPress={event => { if (event.keyCode === 27) { this.closeModal() } }}
-                ></div>
+                    style={{...style}}
+                    onKeyPress={event => {
+                        if (event.keyCode === 27) {
+                            this.closeModal()
+                        }
+                    }}
+                />
                 <div
                     className={`modal-config${isOpen ? " active" : " none-active"}`}
 
                 >
                     <div className="header b_b">
-                        <h6>    
+                        <h6>
                             {title}
-                            <Icon type="close" style={{ float: "right" }} onClick={() => this.props.toggleModal()} />
+                            <Icon type="close" style={{float: "right"}} onClick={() => this.props.toggleModal()}/>
                         </h6>
                     </div>
                     <div className="modal-config-body">
                         {children ? children : null}
                     </div>
-                    <div className="footer b_t" >
+                    <div className="footer b_t">
                         <Button
                             type="danger"
-                            onClick={() => this.props.handleClose()}
+                            onClick={() => this.props.handleClose ? this.props.handleClose() : undefined}
                         >
-                            <Icon type="close" />
+                            <Icon type="close"/>
                             {namebtn1}
                         </Button>
                         <Button
                             type="primary"
-                            onClick={() => {this.props.handleOk()}}
+                            onClick={() => this.props.handleOk ? this.props.handleOk() : undefined}
                         >
-                            <Icon type="check" />
+                            <Icon type="check"/>
                             {namebtn2}
                         </Button>
                     </div>

@@ -17,23 +17,14 @@ function* getListLanguagesData(action: any) {
 }
 
 function callLanguages(action: any) {
-    var pageIndex;
-    var pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
-    }
-
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
-
     return _requestToServer(
         GET, LANGUAGES,
         null,
         {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 10
-        }
+            pageIndex: action.pageIndex ? action.pageIndex : 0,
+            pageSize: action.pageSize ? action.pageSize : 0
+        },
+        undefined, undefined, false, false
     )
 }
 

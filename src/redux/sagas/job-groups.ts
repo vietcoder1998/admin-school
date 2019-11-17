@@ -7,8 +7,7 @@ import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
 function* getListJobGroupsData(action: any) {
     let res = yield call(callJobGroups, action);
-
-    if (res.code === 200) {
+    if (res) {
         let data: IJobGroups = res.data;
         yield put({
             type: REDUX.JOB_GROUPS.GET_JOB_GROUPS,
@@ -18,23 +17,14 @@ function* getListJobGroupsData(action: any) {
 }
 
 function callJobGroups(action: any) {
-    var pageIndex;
-    var pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
-    }
-
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
-
     return _requestToServer(
         GET, JOB_GROUPS,
         null,
         {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 0
-        }
+            pageIndex: action.pageIndex ? action.pageIndex : 0,
+            pageSize: action.pageSize ? action.pageSize : 0
+        },
+        undefined, undefined, false, false
     )
 }
 

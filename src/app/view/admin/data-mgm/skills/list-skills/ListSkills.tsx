@@ -193,6 +193,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         </Button>
                     </h5>
                     <Table
+                        // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}

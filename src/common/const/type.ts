@@ -19,4 +19,4 @@ export const TYPE = {
     INPUT: "INPUT",
     SELECT: "SELECT",
     DELETE: "DELETE"
-}
+};
