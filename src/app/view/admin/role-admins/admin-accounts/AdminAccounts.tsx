@@ -1,22 +1,22 @@
 import React, {PureComponent, Fragment} from 'react'
-import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
+import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import {connect} from 'react-redux';
-import Roles from './roles/Roles';
-import AdminAccounts from './admin-accounts/AdminAccounts';
+import ListAdminAccounts from './list-admin-accounts/ListAdminAccounts';
+import CreateAdminAccounts from './create-admin-accounts/CreateAdminAccounts';
 
 const Switch = require("react-router-dom").Switch;
 
-interface RoleAdminsState {
+interface AdminAccountsState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface RoleAdminsProps extends StateProps, DispatchProps {
+interface AdminAccountsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getListJobNames: Function;
 }
 
-class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {
+class AdminAccounts extends PureComponent<AdminAccountsProps, AdminAccountsState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -30,8 +30,9 @@ class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {
         return (
             <Fragment>
                 <Switch>
-                    <ErrorBoundaryRoute path={`${path}/roles`} component={Roles}/>
-                    <ErrorBoundaryRoute path={`${path}/admin-accounts`} component={AdminAccounts}/>
+                    <ErrorBoundaryRoute path={`${path}/list`} component={ListAdminAccounts}/>
+                    <ErrorBoundaryRoute path={`${path}/${'fix'}/:id`} component={CreateAdminAccounts}/>
+                    <ErrorBoundaryRoute path={`${path}/${'create'}`} component={CreateAdminAccounts}/>
                 </Switch>
             </Fragment>
         )
@@ -45,4 +46,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({});
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoleAdmins)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminAccounts)

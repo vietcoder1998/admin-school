@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 import { PendingJobsWatcher } from '../sagas/pending-jobs';
 import { JobNameWatcher } from '../sagas/job-names';
-import { TypeManagementWatcher } from '../sagas/type-management';
+import { AnnouTypesWatcher } from '../sagas/annou-types';
 import { AnnouncementsWatcher } from '../sagas/announcements';
 import { AnnouncementDetailWatcher } from '../sagas/announcement-detail';
 import { TypeSchoolsWatcher } from '../sagas/type-schools';
@@ -15,12 +15,13 @@ import { RolesWatcher } from '../sagas/roles';
 import { ApiControllerWatcher } from '../sagas/api-controller';
 import { RoleDetailWatcher } from '../sagas/role-detail';
 import { ApiControllerRolesWatcher } from '../sagas/api-controller-roles';
+import { AdminAccountsWatcher } from '../sagas/admin-accounts';
 
 export default function* rootSaga() {
     yield all([
         PendingJobsWatcher(),
         JobNameWatcher(),
-        TypeManagementWatcher(),
+        AnnouTypesWatcher(),
         AnnouncementsWatcher(),
         AnnouncementDetailWatcher(),
         TypeSchoolsWatcher(),
@@ -34,5 +35,6 @@ export default function* rootSaga() {
         ApiControllerWatcher(),
         RoleDetailWatcher(),
         ApiControllerRolesWatcher(),
+        AdminAccountsWatcher(),
     ])
 } 

@@ -62,7 +62,7 @@ export const NewSelect = (props: INewSelect) => {
             style={{ width: widthSelect ? widthSelect : "200px" }}
             value={value}
             defaultValue={defaultValue}
-            onChange={event => onChange(event)}
+            onChange={event =>{console.log(event); onChange(event)}}
         >
             {
                 list_value &&

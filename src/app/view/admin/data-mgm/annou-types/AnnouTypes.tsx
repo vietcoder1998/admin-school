@@ -1,22 +1,23 @@
 import React, {PureComponent, Fragment} from 'react'
-import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import {connect} from 'react-redux';
-import Roles from './roles/Roles';
-import AdminAccounts from './admin-accounts/AdminAccounts';
+import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
+import CreateAnnouTypes from './create-annou-types/CreateAnnouTypes';
+import ListAnnouTypes from './list-annou-types/ListAnnouTypes';
 
 const Switch = require("react-router-dom").Switch;
 
-interface RoleAdminsState {
+interface RegionsState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface RoleAdminsProps extends StateProps, DispatchProps {
+interface RegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getListJobNames: Function;
+    getListTypeManagement: Function;
 }
 
-class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {
+class Regions extends PureComponent<RegionsProps, RegionsState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -30,8 +31,8 @@ class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {
         return (
             <Fragment>
                 <Switch>
-                    <ErrorBoundaryRoute path={`${path}/roles`} component={Roles}/>
-                    <ErrorBoundaryRoute path={`${path}/admin-accounts`} component={AdminAccounts}/>
+                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateAnnouTypes}/>
+                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListAnnouTypes}/>
                 </Switch>
             </Fragment>
         )
@@ -45,4 +46,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({});
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoleAdmins)
+export default connect(mapStateToProps, mapDispatchToProps)(Regions)

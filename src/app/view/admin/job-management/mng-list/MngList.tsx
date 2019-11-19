@@ -61,7 +61,7 @@ interface MngListState {
     loading?: boolean;
     pendingJob?: any;
     message?: string;
-    type_management?: Array<any>;
+    list_annou_types?: Array<any>;
     value_type?: string;
     announcementTypeID?: number;
     createdDate?: number;
@@ -78,7 +78,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         super(props);
         this.state = {
             target: undefined,
-            type_management: [],
+            list_annou_types: [],
             announcementTypeID: undefined,
             createdDate: undefined,
             adminID: undefined,
@@ -200,9 +200,9 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     };
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
-        if (nextProps.type_management !== prevState.type_management) {
+        if (nextProps.list_annou_types !== prevState.list_annou_types) {
             return {
-                type_management: nextProps.type_management,
+                list_annou_types: nextProps.list_annou_types,
                 value_type: "Tất cả",
                 announcementTypeID: null
             }
@@ -226,7 +226,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                 });
             });
             return {
-                list_announcements: nextProps.type_management,
+                list_announcements: nextProps.list_annou_types,
                 data_table,
                 loading_table: false,
             }
@@ -282,11 +282,11 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     };
 
     onChangeType = (event: any) => {
-        let { type_management } = this.state;
+        let { list_annou_types } = this.state;
         if (event === null) {
             this.setState({ announcementTypeID: undefined, value_type: undefined })
-        } else if (type_management) {
-            type_management.forEach(item => {
+        } else if (list_annou_types) {
+            list_annou_types.forEach(item => {
                 if (item.id === event) {
                     this.setState({ value_type: item.name, announcementTypeID: item.id })
                 }
@@ -324,7 +324,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     };
 
     render() {
-        let { data_table, show_modal, type_management, value_type, loading_table, open_config_modal } = this.state;
+        let { data_table, show_modal, list_annou_types, value_type, loading_table, open_config_modal } = this.state;
         let { annoucement_detail, totalItems } = this.props;
         return (
             <Fragment>
@@ -437,8 +437,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                 >
                                     <Option value={undefined}>Tất cả</Option>
                                     {
-                                        type_management &&
-                                        type_management.map((item, index) => <Option key={index}
+                                        list_annou_types &&
+                                        list_annou_types.map((item, index) => <Option key={index}
                                             value={item.id}>{item.name}</Option>)
                                     }
                                 </Select>
@@ -494,7 +494,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListTypeManagement: (data: any) => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data }),
+    getListTypeManagement: (data: any) => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, data }),
     getAnnouncements: (pageIndex: number, pageSize: number, body: any) => dispatch({
         type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS,
         pageIndex,
@@ -505,7 +505,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-    type_management: state.TypeManagement.items,
+    list_annou_types: state.AnnouTypes.items,
     list_announcements: state.Announcements.items,
     annoucement_detail: state.AnnouncementDetail.data,
     totalItems: state.Announcements.totalItems

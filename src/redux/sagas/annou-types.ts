@@ -1,29 +1,29 @@
-import {ITypeManagements} from '../models/type-management';
+import {IAnnouTypess} from '../models/annou-types';
 import {GET} from '../../common/const/method';
 import {takeEvery, put, call,} from 'redux-saga/effects';
 import {_requestToServer} from '../../services/exec';
 import {REDUX_SAGA, REDUX} from '../../common/const/actions'
-import {TYPE_MANAGEMENT} from '../../services/api/private.api';
+import {ANNOU_TYPES} from '../../services/api/private.api';
 
-function* getListTypeManagementData(action: any) {
-    let res = yield call(callTypeManagement, action);
+function* getListAnnouTypesData(action: any) {
+    let res = yield call(callAnnouTypes, action);
     if (res) {
-        let data: ITypeManagements = res.data;
+        let data: IAnnouTypess = res.data;
         yield put({
-            type: REDUX.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
+            type: REDUX.ANNOU_TYPES.GET_ANNOU_TYPES,
             data
         });
     }
 }
 
-function callTypeManagement(action: any) {
+function callAnnouTypes(action: any) {
     let target;
     if (action.data) {
         target = action.data.target;
     }
 
     return _requestToServer(
-        GET, TYPE_MANAGEMENT,
+        GET, ANNOU_TYPES,
         null,
         {
             pageIndex: action.pageIndex? action.pageIndex : 0,
@@ -34,9 +34,9 @@ function callTypeManagement(action: any) {
     )
 }
 
-export function* TypeManagementWatcher() {
+export function* AnnouTypesWatcher() {
     yield takeEvery(
-        REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT,
-        getListTypeManagementData
+        REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES,
+        getListAnnouTypesData
     )
 }

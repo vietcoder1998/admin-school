@@ -15,4 +15,6 @@ export const breakCumb =  [
     {label: "branches", name: "Nhóm ngành", icon: null, url: "/branches"},
     {label: "role-admins", name: "Quản trị viên", icon: null, url: "/role-admins"},
     {label: "roles", name: "Quyền", icon: null, url: "/roles"},
+    {label: "admin-accounts", name: "Tài khoản admin", icon: null, url: "/admin-accounts"},
+    {label: "annou-types", name: "Tài khoản admin", icon: null, url: "/annou-types"},
 ];

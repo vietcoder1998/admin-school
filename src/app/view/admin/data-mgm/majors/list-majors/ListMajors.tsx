@@ -142,7 +142,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             className: 'action',
         },
         {
-            title: 'Tên nhóm ngành',
+            title: 'Tên chuyên ngành',
             dataIndex: 'name',
             key: 'name',
             width: 500,
@@ -205,7 +205,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             <Fragment>
                 <div>
                     <h5>
-                        Danh sách ngành nghề
+                        Danh sách chuyên ngành
                         <Button
                             type="primary"
                             style={{
@@ -214,14 +214,14 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         >
                             <Link to='/admin/data/majors/create'>
                                 <Icon type="plus"/>
-                                Thêm ngành nghề mới
+                                Thêm chuyên ngành mới
                             </Link>
                         </Button>
                     </h5>
                     <ModalConfig
                         namebtn1={"Hủy"}
                         namebtn2={"Hoàn thành"}
-                        title="Thay đổi ngành nghề"
+                        title="Thay đổi chuyên ngành"
                         isOpen={openModal}
                         handleOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
                         toggleModal={this.toggleModal}
@@ -240,15 +240,15 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 />
                                 <InputTitle
                                     type={TYPE.SELECT}
-                                    title="Chọn nhóm ngành "
-                                    placeholder="Chọn nhóm ngành "
+                                    title="Chọn chuyên ngành "
+                                    placeholder="Chọn chuyên ngành "
                                     value={branchName}
                                     list_value={list_data}
                                     style={{padding: "0px 20px"}}
                                     onChange={this.handleChoseMajor}
                                 />
                             </Fragment>
-                        ) : <div>Bạn chắc chắn muốn xóa nhóm ngành này: {name}</div>}
+                        ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
                     </ModalConfig>
                     <Table
                         // @ts-ignore
