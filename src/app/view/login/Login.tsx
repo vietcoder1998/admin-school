@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Col, Row, Icon, Form, Input, Button, Checkbox } from 'antd';
 import './Login.scss';
+// @ts-ignore
 import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
 import { loginUser } from '../../../services/login';
@@ -110,7 +111,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                                 />,
                                             )}
                                         </Form.Item>
-                                        <p>Mật khẩu mới</p>
+                                        <p>Mật khẩu</p>
                                         <Form.Item>
                                             {getFieldDecorator('password', {
                                                 rules: [{ required: true, message: 'Vui lòng điền mật khẩu ' }],
@@ -150,13 +151,13 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                         Xác nhận
                                     </Button>
                                 </p>
-                                <p className='a_c'>
+                                {/* <p className='a_c'>
                                     <a href='/'
                                         style={{ textDecoration: "underline" }}
                                     >
                                         Trợ giúp ?
                                     </a>
-                                </p>
+                                </p> */}
                             </div>
                         </Col>
                         <Col xs={0} sm={4} md={6} lg={7} xl={8}></Col>

@@ -45,6 +45,14 @@ code {
   position: fixed;
 }
 
+.ant-menu-submenu-title {
+  padding-right: 30px!important;
+}
+
+// .ant-layout-sider-dark {
+//   min-width: 220px!important;
+// }
+
 .ant-modal-body {
   height: 55vh;
   overflow: auto;

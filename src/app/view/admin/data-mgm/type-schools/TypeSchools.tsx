@@ -1,9 +1,10 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, {PureComponent, Fragment} from 'react'
 import './TypeSchools.scss';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import CreateTypeSchools from './create-type-schools/CreateTypeSchools';
 import ListTypeSchools from './list-type-schools/ListTypeSchools';
+
 const Switch = require("react-router-dom").Switch;
 
 interface ITypeSchoolsState {
@@ -18,7 +19,7 @@ interface ITypeSchoolsProps extends StateProps, DispatchProps {
 }
 
 class TypeSchools extends PureComponent<ITypeSchoolsProps, ITypeSchoolsState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             show_menu: true,
@@ -27,24 +28,21 @@ class TypeSchools extends PureComponent<ITypeSchoolsProps, ITypeSchoolsState> {
     }
 
     render() {
-        let {path} = this.props.match
+        let {path} = this.props.match;
         return (
-            <Fragment >
-                  <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateTypeSchools} />
-                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListTypeSchools} />
+            <Fragment>
+                <Switch>
+                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateTypeSchools}/>
+                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListTypeSchools}/>
                 </Switch>
             </Fragment>
         )
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({});
 
-})
-
-const mapStateToProps = (state, ownProps) => ({
-})
+const mapStateToProps = (state: any, ownProps: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

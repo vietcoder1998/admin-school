@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from 'react'
-import { connect } from 'react-redux';
+import React, {PureComponent, Fragment} from 'react'
+import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import ListBranches from './list-branches/ListBranches';
 import CreateBranches from './create-branches/CreateBranches';
@@ -18,7 +18,7 @@ interface BranchesProps extends StateProps, DispatchProps {
 }
 
 class Branches extends PureComponent<BranchesProps, BranchesState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             show_menu: true,
@@ -27,24 +27,21 @@ class Branches extends PureComponent<BranchesProps, BranchesState> {
     }
 
     render() {
-        let {path} = this.props.match
+        let {path} = this.props.match;
         return (
-            <Fragment >
+            <Fragment>
                 <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateBranches} />
-                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListBranches} />
+                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateBranches}/>
+                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListBranches}/>
                 </Switch>
             </Fragment>
         )
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({});
 
-})
-
-const mapStateToProps = (state, ownProps) => ({
-})
+const mapStateToProps = (state: any, ownProps: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

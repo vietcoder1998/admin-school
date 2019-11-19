@@ -1,13 +1,11 @@
-import { TYPE_SCHOOLS } from './../../services/api/private.api';
-import { ITypeSchools } from './../models/type-schools';
-import { authHeaders } from './../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {TYPE_SCHOOLS} from '../../services/api/private.api';
+import {ITypeSchools} from '../models/type-schools';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListTypeSchoolsData(action) {
+function* getListTypeSchoolsData(action: any) {
     let res = yield call(callTypeSchools, action);
 
     if (res.code === 200) {
@@ -19,7 +17,7 @@ function* getListTypeSchoolsData(action) {
     }
 }
 
-function callTypeSchools(action) {
+function callTypeSchools(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -31,15 +29,14 @@ function callTypeSchools(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, TYPE_SCHOOLS,
         null,
-        TYPE_SCHOOLS,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 10
-        }
+            pageSize:
+                pageSize ? pageSize : 10
+        },
+        undefined, undefined, undefined, false
     )
 }
 

@@ -1,16 +1,14 @@
-import React, { PureComponent, Fragment } from 'react'
-import { connect } from 'react-redux';
-import { Divider, Button, Icon } from 'antd';
-import { InputTitle } from './../../../../layout/input-tittle/InputTitle';
-import { _requestToServer } from '../../../../../../services/exec';
-import { JOB_NAMES } from '../../../../../../services/api/private.api';
-import { POST } from '../../../../../../common/const/method';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { authHeaders } from '../../../../../../services/auth';
-import { ADMIN_HOST } from '../../../../../../environment/dev';
-import { Link } from 'react-router-dom';
-import { TYPE } from '../../../../../../common/const/type';
-import { IJobGroup } from '../../../../../../redux/models/job-groups';
+import React, {PureComponent, Fragment} from 'react'
+import {connect} from 'react-redux';
+import {Divider, Button, Icon} from 'antd';
+import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
+import {_requestToServer} from '../../../../../../services/exec';
+import {JOB_NAMES} from '../../../../../../services/api/private.api';
+import {POST} from '../../../../../../common/const/method';
+import {REDUX_SAGA} from '../../../../../../common/const/actions';
+import {Link} from 'react-router-dom';
+import {TYPE} from '../../../../../../common/const/type';
+import {IJobGroup} from '../../../../../../redux/models/job-groups';
 
 interface CreateJobNamesState {
     name?: string;
@@ -27,69 +25,67 @@ interface CreateJobNamesProps extends StateProps, DispatchProps {
 }
 
 class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
-            name: "",
-            jobGroupID: null,
-            list_job_groups: [],
-            jobGroupName: null,
+            name: undefined,
+            jobGroupID: 0,
+            jobGroupName: undefined,
+            list_job_groups: []
         }
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.list_job_groups !== prevState.list_job_groups) {
-            let list_data = []
-            nextProps.list_job_groups.forEach(item => list_data.push({ value: item.id, label: item.name }))
+            let list_data: any = [];
+            nextProps.list_job_groups.forEach((item: any) => list_data.push({value: item.id, label: item.name}));
             return {
                 list_job_groups: nextProps.list_job_groups,
                 list_data,
             }
         }
-
         return null;
     }
 
     createNewData = async () => {
-        let { name, jobGroupID } = this.state;
-        await _requestToServer(
-            POST,
-            { name: name.trim(), jobGroupID },
-            JOB_NAMES,
-            ADMIN_HOST,
-            authHeaders,
-            null,
-            true,
-        ).then(res => {
-            if (res.code === 200) {
+        let {name, jobGroupID} = this.state;
+        if (name) {
+            await _requestToServer(
+                POST, JOB_NAMES,
+                {
+                    name: name.trim(),
+                    jobGroupID
+                }
+            ).then(res => {
                 this.props.getListJobNames();
                 this.props.history.push('/admin/data/job-names/list');
-            }
-        })
-    }
+            })
+        }
+    };
 
-    onChange = (event) => {
-        this.setState({ name: event })
-    }
+    onChange = (event: any) => {
+        this.setState({name: event})
+    };
 
-    handleChoseJobGroup = (id) => {
+    handleChoseJobGroup = (id: number) => {
         let {list_data} = this.state;
-        list_data.forEach(item=>{
-            if (item.value===id) {
-                this.setState({jobGroupName:item.label})
-            }
-        });
-        this.setState({jobGroupID:id})
-    }
+        if (list_data) {
+            list_data.forEach(item => {
+                if (item.value === id) {
+                    this.setState({jobGroupName: item.label})
+                }
+            });
+            this.setState({jobGroupID: id});
+        }
+    };
 
     render() {
-        let { name, list_data, jobGroupID, jobGroupName } = this.state;
-        let is_exactly = name.trim()!=="" && jobGroupID ? true : false
+        let {name, list_data, jobGroupName} = this.state;
         return (
-            <Fragment >
+            <Fragment>
                 <div>
                     <h5>Thêm công việc mới</h5>
-                    <Divider orientation="left" >Chi tiết công việc</Divider>
+                    <Divider orientation="left">Chi tiết công việc</Divider>
                 </div>
                 <InputTitle
                     type={TYPE.INPUT}
@@ -97,8 +93,8 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     placeholder="Nhập tên công việc"
                     value={name}
                     widthInput="400px"
-                    style={{ padding: "10px 30px" }}
-                    onChange={event => this.setState({ name: event })}
+                    style={{padding: "10px 30px"}}
+                    onChange={(event: any) => this.setState({name: event})}
                 />
                 <InputTitle
                     type={TYPE.SELECT}
@@ -106,24 +102,24 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     placeholder="Chọn nhóm công việc"
                     value={jobGroupName}
                     list_value={list_data}
-                    style={{ padding: "10px 30px" }}
+                    style={{padding: "10px 30px"}}
                     onChange={this.handleChoseJobGroup}
                 />
                 <Button
                     type="primary"
                     icon="plus"
-                    style={{ float: "right", margin: "10px 5px" }}
+                    style={{float: "right", margin: "10px 5px"}}
                     onClick={this.createNewData}
-                    disabled={!is_exactly}
+                    disabled={!name || !jobGroupName}
                 >
                     Tạo công việc mới
                 </Button>
                 <Button
                     type="danger"
-                    style={{ float: "right", margin: "10px 5px" }}
+                    style={{float: "right", margin: "10px 5px"}}
                 >
                     <Link to='/admin/data/job-names/list'>
-                        <Icon type="close" />
+                        <Icon type="close"/>
                         Hủy
                     </Link>
 
@@ -133,13 +129,13 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListJobNames: () => dispatch({ type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES })
-})
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+    getListJobNames: () => dispatch({type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES})
+});
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: any, ownProps: any) => ({
     list_job_groups: state.JobGroups.items,
-})
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

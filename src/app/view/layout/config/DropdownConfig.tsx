@@ -20,10 +20,12 @@ export interface IOp {
 }
 
 export class OptionConfig extends React.PureComponent<IOp, IDropdownConfigState> {
-    state: IDropdownConfigState = { toggleTo: true, isOpen: false }
+    state: IDropdownConfigState = { toggleTo: true, isOpen: false };
     toggle = () => {
-        this.props.onClick();
-    }
+        if (this.props.onClick) {
+            this.props.onClick();
+        }
+    };
     render() {
         let {
             label,
@@ -42,12 +44,12 @@ export class OptionConfig extends React.PureComponent<IOp, IDropdownConfigState>
 }
 
 export class DropdownConfig extends React.PureComponent<IDropdownConfigProps, IDropdownConfigState> {
-    state: IDropdownConfigState = { toggleTo: true, isOpen: false }
+    state: IDropdownConfigState = { toggleTo: true, isOpen: false };
     closeDropdown = () => { let { isOpen } = this.state; if (isOpen) { this.setState({ isOpen: false }) } };
     toggleDropdown = () => {
         let { isOpen } = this.state;
         this.setState({ isOpen: !isOpen })
-    }
+    };
     render() {
         let {
             children,

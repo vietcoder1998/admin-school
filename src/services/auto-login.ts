@@ -16,5 +16,4 @@ export function Atlg() {
     } else {
         cookie.set("atlg", false, {path: "/"});
     }
-
 }

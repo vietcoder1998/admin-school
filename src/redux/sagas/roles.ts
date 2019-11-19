@@ -1,13 +1,11 @@
-import { ROLES } from '../../services/api/private.api';
-import { IRoles } from '../models/roles';
-import { authHeaders } from '../../services/auth';
-import { GET } from '../../common/const/method';
-import { takeEvery, put, call } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {ROLES} from '../../services/api/private.api';
+import {IRoles} from '../models/roles';
+import {GET} from '../../common/const/method';
+import {takeEvery, put, call} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
 
-function* getListRolesData(action) {
+function* getListRolesData(action: any) {
     let res = yield call(callRoles, action);
     if (res.code === 200) {
         let data: IRoles = res.data;
@@ -15,10 +13,10 @@ function* getListRolesData(action) {
             type: REDUX.ROLES.GET_ROLES,
             data
         });
-    };
+    }
 }
 
-function callRoles(action) {
+function callRoles(action: any) {
     var pageIndex;
     var pageSize;
     if (action.pageIndex) {
@@ -30,15 +28,13 @@ function callRoles(action) {
     }
 
     return _requestToServer(
-        GET,
+        GET, ROLES,
         null,
-        ROLES,
-        ADMIN_HOST,
-        authHeaders,
         {
             pageIndex: pageIndex ? pageIndex : 0,
             pageSize: pageSize ? pageSize : 10
-        }
+        },
+        undefined, undefined, false, false
     )
 }
 

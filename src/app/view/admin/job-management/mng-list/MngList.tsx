@@ -7,31 +7,29 @@ import './MngList.scss';
 import { TYPE } from '../../../../../common/const/type';
 import { Link } from 'react-router-dom';
 import { IptLetter } from '../../../layout/common/Common';
-import { ModalConfig } from './../../../layout/modal-config/ModalConfig';
+import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
 import { _requestToServer } from '../../../../../services/exec';
 import { DELETE } from '../../../../../common/const/method';
 import { ANNOUNCEMENT_DETAIL } from '../../../../../services/api/private.api';
-import { ADMIN_HOST } from '../../../../../environment/dev';
-import { authHeaders } from '../../../../../services/auth';
+
 let { Option } = Select;
 
-let ImageRender = (props) => {
+let ImageRender = (props: any) => {
     if (props.src && props.src !== "") {
         return <img src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
     } else {
-        return <div style={{ width: "60px", height: "60px", padding: "20px 0px" }} >
+        return <div style={{ width: "60px", height: "60px", padding: "20px 0px" }}>
             <Icon type="area-chart" />
         </div>
     }
-}
-
+};
 
 interface MngListProps extends StateProps, DispatchProps {
     match?: any,
     history?: any,
     getListTypeManagement: Function,
-    getAnnoucements: Function,
-    getAnnoucementDetail: Function,
+    getAnnouncements: Function,
+    getAnnouncementDetail: Function,
 }
 
 interface JobMmgtable {
@@ -73,18 +71,18 @@ interface MngListState {
     id?: string;
     loading_table?: boolean;
     open_config_modal?: boolean;
-};
+}
 
 class MngList extends PureComponent<MngListProps, MngListState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
-            target: null,
+            target: undefined,
             type_management: [],
-            announcementTypeID: null,
-            createdDate: null,
-            adminID: null,
-            hidden: null,
+            announcementTypeID: undefined,
+            createdDate: undefined,
+            adminID: undefined,
+            hidden: undefined,
             pageIndex: 0,
             list_announcements: [],
             id: "",
@@ -94,31 +92,25 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     EditJob = (
         <React.Fragment>
-            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" onClick={() => this.toggleModalConfig()} />
-            <Icon style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={()=>this.toFixJob()}/>
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+                onClick={() => this.toggleModalConfig()} />
+            <Icon style={{ padding: "5px 10px" }} type="edit" theme="twoTone" onClick={() => this.toFixJob()} />
             <Icon key="delete" style={{ padding: "5px 10px" }} type="eye" onClick={() => this.onToggleModal()} />
         </React.Fragment>
-    )
+    );
 
     toFixJob = () => {
         let id = localStorage.getItem('id_mgm');
         this.props.history.push(`/admin/job-management/fix/${id}`);
-    }
+    };
 
-    deleteAnnoun = async () => {
+    deleteAnnouncements = async () => {
         _requestToServer(
-            DELETE,
+            DELETE, ANNOUNCEMENT_DETAIL,
             [localStorage.getItem("id_mgm")],
-            ANNOUNCEMENT_DETAIL,
-            ADMIN_HOST,
-            authHeaders,
-            null,
-            true
-        ).then(res => {
-            if (res.code === 200) {
-                this.searchAnnouncement();
-            }
-        })
+        ).then((res: any) => {
+            this.searchAnnouncement();
+        });
 
         this.toggleModalConfig();
     };
@@ -202,12 +194,12 @@ class MngList extends PureComponent<MngListProps, MngListState> {
         let { show_modal } = this.state;
         if (!show_modal) {
             let id = localStorage.getItem("id_mgm");
-            this.props.getAnnoucementDetail(id);
-        };
+            this.props.getAnnouncementDetail(id);
+        }
         this.setState({ show_modal: !show_modal });
     };
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.type_management !== prevState.type_management) {
             return {
                 type_management: nextProps.type_management,
@@ -218,8 +210,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
         if (nextProps.list_announcements !== prevState.list_announcements) {
             let { pageIndex, pageSize } = prevState;
-            let data_table = [];
-            nextProps.list_announcements.forEach((item, index) => {
+            let data_table: any = [];
+            nextProps.list_announcements.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -232,29 +224,30 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     hidden: !item.hidden ? "Hiện" : "Ẩn",
                     announcementType: item.announcementType.name,
                 });
-            })
+            });
             return {
                 list_announcements: nextProps.type_management,
                 data_table,
                 loading_table: false,
             }
-        } return null;
+        }
+        return null;
     }
 
     async componentDidMount() {
         await this.searchAnnouncement();
     }
 
-    handleId = (event) => {
+    handleId = (event: any) => {
         if (event.key) {
             this.setState({ id: event.key })
         }
-    }
+    };
 
-    setPageIndex = async (event) => {
+    setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         await this.searchAnnouncement();
-    }
+    };
 
     searchAnnouncement = async () => {
         let {
@@ -266,7 +259,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             hidden,
             target,
         } = this.state;
-        await this.props.getAnnoucements(
+        await this.props.getAnnouncements(
             pageIndex,
             pageSize,
             {
@@ -277,60 +270,58 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                 target
             }
         );
-    }
+    };
 
-    onChangeTarget = (event) => {
+    onChangeTarget = (event: any) => {
         this.setState({ target: event });
         this.props.getListTypeManagement({ target: event });
-    }
+    };
 
-    onChangeJobName = (event) => {
+    onChangeJobName = (event: any) => {
         this.setState({ jobNameID: event })
-    }
+    };
 
-    onChangeType = (event) => {
+    onChangeType = (event: any) => {
         let { type_management } = this.state;
         if (event === null) {
-            this.setState({ announcementTypeID: null, value_type: null })
-        } else {
+            this.setState({ announcementTypeID: undefined, value_type: undefined })
+        } else if (type_management) {
             type_management.forEach(item => {
                 if (item.id === event) {
                     this.setState({ value_type: item.name, announcementTypeID: item.id })
                 }
             })
         }
+    };
 
-    }
-
-    onChangeCreatedDate = (event) => {
+    onChangeCreatedDate = (event: any) => {
         this.setState({ createdDate: momentToUnix(event) })
-    }
+    };
 
-    onChangeHidden = (event) => {
+    onChangeHidden = (event: any) => {
         let { hidden } = this.state;
         switch (event) {
             case 0:
-                hidden = true
+                hidden = true;
                 break;
             case -1:
-                hidden = false
+                hidden = false;
                 break;
             default:
-                hidden = null
+                hidden = undefined;
                 break;
         }
-
         this.setState({ hidden })
-    }
+    };
 
     toggleModalConfig = () => {
         let { open_config_modal } = this.state;
         if (!open_config_modal) {
             let id = localStorage.getItem("id_mgm");
-            this.props.getAnnoucementDetail(id);
-        };
+            this.props.getAnnouncementDetail(id);
+        }
         this.setState({ open_config_modal: !open_config_modal });
-    }
+    };
 
     render() {
         let { data_table, show_modal, type_management, value_type, loading_table, open_config_modal } = this.state;
@@ -356,7 +347,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     <div className="annou-edit-modal">
                         <p>
                             <Icon type="user" />
-                            <IptLetter value={" " + annoucement_detail.admin.firstName + " " + annoucement_detail.admin.lastName} />
+                            <IptLetter
+                                value={" " + annoucement_detail.admin.firstName + " " + annoucement_detail.admin.lastName} />
                         </p>
                         <p>
                             <Icon type="calendar" />
@@ -371,8 +363,10 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                     namebtn1="Hủy"
                     namebtn2={"Xóa"}
                     isOpen={open_config_modal}
-                    toggleModal={() => { this.setState({ open_config_modal: !open_config_modal }) }}
-                    handleOk={async () => this.deleteAnnoun()}
+                    toggleModal={() => {
+                        this.setState({ open_config_modal: !open_config_modal })
+                    }}
+                    handleOk={async () => this.deleteAnnouncements()}
                     handleClose={async () => this.toggleModalConfig()}
                 >
                     <div>
@@ -403,15 +397,15 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                 margin: "0px 5px"
                             }}
                         >
-                            <Link to='/admin/job-management/create' >
+                            <Link to='/admin/job-management/create'>
                                 <Icon type="plus" />
                                 Tạo bài viết mới
                             </Link>
                         </Button>
                     </h5>
                     <div className="table-operations">
-                        <Row >
-                            <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
+                        <Row>
+                            <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6}>
                                 <p>
                                     <IptLetter value={"Chọn loại đối tượng"} />
                                 </p>
@@ -421,7 +415,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     style={{ width: "100%" }}
                                     onChange={this.onChangeTarget}
                                 >
-                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={undefined}>Tất cả</Option>
                                     <Option value={TYPE.SCHOOL}>Nhà trường</Option>
                                     <Option value={TYPE.EMPLOYER}>Nhà tuyển dụng</Option>
                                     <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
@@ -429,7 +423,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     <Option value={TYPE.PUBLIC}>Public</Option>
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6} >
+                            <Col xs={24} sm={12} md={6} lg={5} xl={6} xxl={6}>
                                 <p>
                                     <IptLetter value={"Chọn loại bài đăng"} />
                                 </p>
@@ -441,20 +435,21 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     value={value_type}
                                     onChange={this.onChangeType}
                                 >
-                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={undefined}>Tất cả</Option>
                                     {
                                         type_management &&
-                                        type_management.map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
+                                        type_management.map((item, index) => <Option key={index}
+                                            value={item.id}>{item.name}</Option>)
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={12} lg={14} xl={12} xxl={8} >
+                            <Col xs={24} sm={12} md={12} lg={14} xl={12} xxl={8}>
                                 <p>
                                     <IptLetter value={"Chọn thời gian đăng bài"} />
                                 </p>
                                 <DatePicker
                                     placeholder="ex: 02/05/2019"
-                                    defaultValue={null}
+                                    defaultValue={undefined}
                                     onChange={this.onChangeCreatedDate}
                                     format={'DD/MM/YYYY'}
                                 />
@@ -465,13 +460,14 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                                     defaultValue={"Trạng thái"}
                                     onChange={this.onChangeHidden}
                                 >
-                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={undefined}>Tất cả</Option>
                                     <Option value={0}>Đã ẩn</Option>
                                     <Option value={-1}>Hiện</Option>
                                 </Select>
                             </Col>
                         </Row>
                         <Table
+                            // @ts-ignore
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
@@ -482,8 +478,11 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                             onChange={this.setPageIndex}
                             onRow={(record, rowIndex) => {
                                 return {
-                                    onClick: event => { }, // click row
-                                    onMouseEnter: (event) => { localStorage.setItem('id_mgm', record.key) }, // mouse enter row
+                                    onClick: event => {
+                                    }, // click row
+                                    onMouseEnter: (event) => {
+                                        localStorage.setItem('id_mgm', record.key)
+                                    }, // mouse enter row
                                 };
                             }}
                         />
@@ -494,18 +493,23 @@ class MngList extends PureComponent<MngListProps, MngListState> {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListTypeManagement: (data) => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data }),
-    getAnnoucements: (pageIndex, pageSize, body) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS, pageIndex, pageSize, body }),
-    getAnnoucementDetail: (id) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id })
-})
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+    getListTypeManagement: (data: any) => dispatch({ type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data }),
+    getAnnouncements: (pageIndex: number, pageSize: number, body: any) => dispatch({
+        type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS,
+        pageIndex,
+        pageSize,
+        body
+    }),
+    getAnnouncementDetail: (id: string) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id })
+});
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: any, ownProps: any) => ({
     type_management: state.TypeManagement.items,
     list_announcements: state.Announcements.items,
     annoucement_detail: state.AnnouncementDetail.data,
     totalItems: state.Announcements.totalItems
-})
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

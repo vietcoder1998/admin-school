@@ -3,13 +3,13 @@ export interface IApi {
     method?: string;
     route?: string;
     description?: string
-};
+}
 
 export interface IApis {
     name?: string;
     description?: string;
     apis?: Array<IApi>
-};
+}
 
 export interface IApiFunctions {
     name?: string;

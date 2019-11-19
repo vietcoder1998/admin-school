@@ -24,7 +24,7 @@ interface DataMgmProps extends StateProps, DispatchProps {
 }
 
 class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             show_menu: true,
@@ -33,7 +33,7 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
     }
 
     render() {
-       let {path} = this.props.match
+       let {path} = this.props.match;
         return (
             <Fragment >
                 <Switch>
@@ -51,12 +51,13 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 
-})
+});
 
-const mapStateToProps = (state, ownProps) => ({
-})
+const mapStateToProps = (state: any, ownProps: any) => ({
+
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

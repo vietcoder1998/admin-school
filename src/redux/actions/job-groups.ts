@@ -1,7 +1,7 @@
-import { IJobGroups } from './../models/job-groups';
-import { REDUX } from '../../common/const/actions';
+import {IJobGroups} from '../models/job-groups';
+import {REDUX} from '../../common/const/actions';
 
 export const getListJobGroups = (data: IJobGroups) => ({
-    type: REDUX.JOB_GROUPS.GET_JOB_GROUPS, 
+    type: REDUX.JOB_GROUPS.GET_JOB_GROUPS,
     data
 });

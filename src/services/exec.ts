@@ -1,57 +1,112 @@
-import { notification } from 'antd';
-import { GET, POST, PUT, DELETE } from '../common/const/method';
-import { _delete, _get, _post, _put } from './base-api';
-import { exceptionShowNoti } from '../config/exception';
+import {notification} from 'antd';
+import {GET, POST, PUT, DELETE} from '../common/const/method';
+import {_delete, _get, _post, _put} from './base-api';
 import Swal from 'sweetalert2';
-import { TYPE } from '../common/const/type';
+import {authHeaders} from "./auth";
 
 export const _requestToServer = async (
     method: string,
+    api: string,
     data?: any,
-    api?: string,
-    host?: string,
-    headers?: any,
     params?: any,
-    show_noti?: boolean,
-    show_alert?: boolean,
+    headers?: any,
+    host?: string,
+    show_noti = true,
+    show_alert = false
 ) => {
-    let res;
-
+    if (!host) {
+        host = process.env.REACT_APP_API_HOST;
+    }
+    let response;
     try {
+        if (!headers) {
+            headers = authHeaders;
+        }
+        logRequest(method, host, api, data, params, headers);
         switch (method) {
             case GET:
-                res = await _get(params, api, host, headers);
+                response = await _get(host, api, params, headers);
                 break;
             case POST:
-                res = await _post(data, api, host, headers, params);
+                response = await _post(host, api, data, params, headers);
                 break;
             case PUT:
-                res = await _put(data, api, host, headers);
+                response = await _put(host, api, data, params, headers);
                 break;
             case DELETE:
-                res = await _delete(data, api, host, headers);
+                response = await _delete(host, api, data, params, headers);
                 break;
             default:
                 break;
-        };
-
-        if (res) {
-            if (show_noti) {
-                notification.success({ description: res.msg, message: "Worksvn thông báo" })
-            } else
-                if (show_alert) {
-                    let msg = TYPE.SUCCESS;
-                    Swal.fire(
-                        "Worksvn thông báo",
-                        msg,
-                        'success',
-                    );
-                };
         }
-
+        logResponse(method, host, api, response, params, headers);
+        if (response) {
+            if (show_noti) {
+                notification.success({
+                    message: "Thành công",
+                    description: response.msg,
+                    duration: 2
+                })
+            }
+            if (show_alert) {
+                Swal.fire(
+                    "Thành công",
+                    response.msg,
+                    'success',
+                );
+            }
+        }
+        return response;
     } catch (err) {
-        return res = exceptionShowNoti(err);
+        let code;
+        let msg;
+        if (err.response) {
+            let data = err.response.data;
+            if (data) {
+                code = data.code;
+                msg = data.msg;
+            } else {
+                code = err.response.code;
+            }
+        } else {
+            code = "UNKNOWN";
+            msg = err.message;
+        }
+        if (show_noti) {
+            notification.error({
+                message: "Có lỗi xảy ra (" + code + ")",
+                description: msg,
+            })
+        }
+        if (show_alert) {
+            Swal.fire(
+                "Có lỗi xảy ra",
+                msg,
+                'error',
+            );
+        }
+        throw err;
     }
+};
 
-    return res;
+function logRequest(method: string, host: string | undefined, api: string, body?: any, params?: any, headers?: any) {
+    if (process.env.REACT_APP_ENABLE_LOGGING) {
+        console.log('REQUEST ' + method + ' ' + host + api, {
+            api: method + " " + host + api,
+            body: body,
+            params: params,
+            headers: headers
+        });
+    }
+}
+
+function logResponse(method: string, host: string | undefined, api: string, responseBody?: any, params?: any, headers?: any) {
+    if (process.env.REACT_APP_ENABLE_LOGGING) {
+        console.log('RESPONSE ' + method + ' ' + host + api, {
+            api: method + " " + host + api,
+            body: responseBody,
+            params: params,
+            headers: headers
+        });
+    }
 }

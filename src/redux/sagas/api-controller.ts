@@ -1,13 +1,11 @@
 import { API_CONTROLLER } from '../../services/api/private.api';
 import { IApiController } from '../models/api-controller';
-import { authHeaders } from '../../services/auth';
 import { GET } from '../../common/const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
 
-function* getListApiControllerData(action) {
+function* getListApiControllerData(action: any) {
     let res = yield call(callApiController, action);
     if (res.code === 200) {
         let data: IApiController = res.data;
@@ -18,14 +16,11 @@ function* getListApiControllerData(action) {
     }
 }
 
-function callApiController(action) {
+function callApiController(action: any) {
     return _requestToServer(
-        GET,
-        null,
-        API_CONTROLLER,
-        ADMIN_HOST,
-        authHeaders,
-        null
+        GET, API_CONTROLLER,
+        undefined,
+        undefined, undefined, undefined, false, false
     )
 }
 

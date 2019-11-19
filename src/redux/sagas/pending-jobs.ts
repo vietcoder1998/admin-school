@@ -1,14 +1,12 @@
-import { IPendingJobs } from './../../common/models/pending-job';
-import { POST } from './../../common/const/method';
-import { PENDING_JOBS_API } from './../../services/api/private.api';
-import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
-import { authHeaders } from '../../services/auth';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
-import { ADMIN_HOST } from '../../environment/dev';
+import {POST} from '../../common/const/method';
+import {PENDING_JOBS} from '../../services/api/private.api';
+import {takeEvery, put, call,} from 'redux-saga/effects';
+import {_requestToServer} from '../../services/exec';
+import {REDUX_SAGA, REDUX} from '../../common/const/actions'
+import {IPendingJobs} from "../models/pending-job";
 
 
-function* getListPendingJobsData(action) {
+function* getListPendingJobsData(action: any) {
     let res = yield call(callPendingJobs, action);
 
     let data: IPendingJobs = {
@@ -16,7 +14,7 @@ function* getListPendingJobsData(action) {
         pageIndex: 0,
         pageSize: 0,
         totalItems: 0,
-    }
+    };
 
     if (res.code === 200) {
         data.list_jobs = res.data.items;
@@ -31,19 +29,20 @@ function* getListPendingJobsData(action) {
     }
 }
 
-function callPendingJobs(action) {
+function callPendingJobs(action: any) {
     return _requestToServer(
-        POST,
+        POST, PENDING_JOBS,
         {
             employerID: action.body.employerID,
             state: action.body.state,
             jobType: action.body.jobType,
             jobNameID: action.body.jobNameID,
         },
-        PENDING_JOBS_API,
-        ADMIN_HOST,
-        authHeaders,
-        { pageIndex: action.body.pageIndex, pageSize: 10 },
+        {
+            pageIndex: action.body.pageIndex,
+            pageSize: action.body.pageSize
+        },
+        undefined, undefined, false, false
     )
 }
 

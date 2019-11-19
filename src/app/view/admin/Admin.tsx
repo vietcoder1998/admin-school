@@ -19,7 +19,7 @@ const { Content, Header } = Layout;
 interface AdminState {
     show_menu: boolean;
     location?: string;
-    data_breakcumb?: Array<string>
+    data_breakcumb: Array<string>
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -33,7 +33,7 @@ interface AdminProps extends StateProps, DispatchProps {
 
 
 class Admin extends PureComponent<AdminProps, AdminState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             show_menu: false,
@@ -50,12 +50,12 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListApiController();
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.location.pathname !== prevState.pathname) {
             localStorage.setItem("last_url", nextProps.location.pathname);
             let list_breakcumb = nextProps.location.pathname.split("/");
-            let data_breakcumb = [];
-            list_breakcumb.forEach(item => item !== "" && data_breakcumb.push(item));
+            let data_breakcumb: any = [];
+            list_breakcumb.forEach((item: any) => item !== "" && data_breakcumb.push(item));
 
             return {
                 pathname: nextProps.location.pathname,
@@ -68,7 +68,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
     logOut = () => {
         clearStorage()
-    }
+    };
 
     render() {
         let { show_menu, data_breakcumb } = this.state;
@@ -96,8 +96,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 }}
                             />
                             <DropdownConfig>
-                                <OptionConfig icon="logout" value="" label="Đăng xuất" onClick={this.logOut} />
-                                <OptionConfig icon="user" value="" label="Tài khoản" onClick={() => { }} />
+                                <OptionConfig icon="logout" key="1" value="" label="Đăng xuất" onClick={this.logOut} />
+                                <OptionConfig icon="user" key="2" value="" label="Tài khoản" onClick={() => { }} />
                             </DropdownConfig>
                         </div>
                     </Header>
@@ -126,7 +126,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                             </Breadcrumb.Item>
                                         )
                                     }
-                                })
+                                });
 
                                 return newBreakCump
                             })}
@@ -144,12 +144,12 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    getListJobNames: (body) => dispatch({
+const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+    getListJobNames: (body: any) => dispatch({
         type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES,
         body
     }),
-    getListTypeManagement: (data) => dispatch({
+    getListTypeManagement: (data: any) => dispatch({
         type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data
     }),
     getListJobGroups: () => dispatch({
@@ -161,10 +161,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getListApiController: () => dispatch({
         type: REDUX_SAGA.API_CONTROLLER.GET_API_CONTROLLER
     }),
-})
+});
 
-const mapStateToProps = (state, ownProps) => ({
-})
+const mapStateToProps = (state: any, ownProps: any) => ({
+});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
