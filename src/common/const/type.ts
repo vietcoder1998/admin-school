@@ -18,5 +18,7 @@ export const TYPE = {
     EDIT: "EDIT",
     INPUT: "INPUT",
     SELECT: "SELECT",
-    DELETE: "DELETE"
+    DELETE: "DELETE",
+    NORMAL_LOGIN: "NORMAL_LOGIN",
+    REFESH_LOGIN: "REFESH_LOGIN"
 }

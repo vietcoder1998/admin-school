@@ -37,7 +37,3 @@ export const msgConvertTime = (seconds: number): string => {
 
     return stringReturn;
 }
-
-export const timeExactly = (seconds: number): string =>{
-    return moment(seconds).toDate().format("ss:mm:HH DD/MM/YY")
-}

@@ -4,6 +4,7 @@ import './Login.scss';
 import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
 import { loginUser } from '../../../services/login';
+import { TYPE } from '../../../common/const/type';
 let cookies = new Cookies();
 
 interface LoginState {
@@ -36,7 +37,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
 
     createRequest = async () => {
         let { password, username } = this.state;
-        loginUser({username, password});
+        loginUser({username, password}, TYPE.NORMAL_LOGIN);
     }
 
     handleSubmit = e => {
