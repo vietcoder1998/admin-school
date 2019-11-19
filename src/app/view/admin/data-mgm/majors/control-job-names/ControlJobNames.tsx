@@ -1,23 +1,21 @@
 import React, {PureComponent, Fragment} from 'react'
 import {connect} from 'react-redux';
-import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
-import CreateMajors from './create-majors/CreateMajors';
-import ListMajors from './list-majors/ListMajors';
-import ControlJobNames from './control-job-names/ControlJobNames';
+import ErrorBoundaryRoute from '../../../../../../routes/ErrorBoundaryRoute';
+import ListMajorJobNames from './list-major-job-names/ListMajorJobNames';
 const Switch = require("react-router-dom").Switch;
 
-interface MajorsState {
+interface ControlJobNamesState {
     show_menu: boolean;
     to_logout: boolean;
 }
 
-interface MajorsProps extends StateProps, DispatchProps {
+interface ControlJobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getListJobNames: Function;
     getListTypeManagement: Function;
 }
 
-class Majors extends PureComponent<MajorsProps, MajorsState> {
+class ControlJobNames extends PureComponent<ControlJobNamesProps, ControlJobNamesState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -31,9 +29,7 @@ class Majors extends PureComponent<MajorsProps, MajorsState> {
         return (
             <Fragment>
                 <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateMajors}/>
-                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListMajors}/>
-                    <ErrorBoundaryRoute path={`${path}/:id/job-names`} component={ControlJobNames}/>
+                    <ErrorBoundaryRoute exact path={`${path}/list`} component={ListMajorJobNames}/>
                 </Switch>
             </Fragment>
         )
@@ -47,4 +43,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({});
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Majors)
+export default connect(mapStateToProps, mapDispatchToProps)(ControlJobNames)

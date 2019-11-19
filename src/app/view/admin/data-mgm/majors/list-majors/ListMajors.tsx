@@ -1,19 +1,20 @@
-import React, {PureComponent, Fragment} from 'react'
-import {connect} from 'react-redux';
-import {Icon, Table, Button} from 'antd';
-import {REDUX_SAGA} from '../../../../../../common/const/actions';
-import {IMajor} from '../../../../../../redux/models/majors';
-import {Link} from 'react-router-dom';
-import {IBranches} from '../../../../../../redux/models/branches';
-import {MAJORS} from '../../../../../../services/api/private.api';
-import {DELETE, PUT, GET} from '../../../../../../common/const/method';
-import {_requestToServer} from '../../../../../../services/exec';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
-import {TYPE} from '../../../../../../common/const/type';
-import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
+import React, { PureComponent, Fragment } from 'react'
+import { connect } from 'react-redux';
+import { Icon, Table, Button } from 'antd';
+import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { IMajor } from '../../../../../../redux/models/majors';
+import { Link } from 'react-router-dom';
+import { IBranches } from '../../../../../../redux/models/branches';
+import { MAJORS } from '../../../../../../services/api/private.api';
+import { DELETE, PUT, GET } from '../../../../../../common/const/method';
+import { _requestToServer } from '../../../../../../services/exec';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
+import { TYPE } from '../../../../../../common/const/type';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
+    history: any;
     getListMajors: Function;
 }
 
@@ -59,7 +60,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.list_majors !== prevState.list_majors) {
             let data_table: any = [];
-            let {pageIndex, pageSize} = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_majors.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
@@ -78,7 +79,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
         if (nextProps.list_branches !== prevState.list_branches) {
             let list_data: any = [];
-            nextProps.list_branches.forEach((item: any) => list_data.push({value: item.id, label: item.name}));
+            nextProps.list_branches.forEach((item: any) => list_data.push({ value: item.id, label: item.name }));
             return {
                 list_branches: nextProps.list_branches,
                 list_data,
@@ -91,46 +92,54 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     EditContent = (
         <div>
-            <Icon key="delete" style={{padding: "5px 10px"}} type="delete" theme="twoTone" twoToneColor="red"
-                  onClick={() => this.toggleModal(TYPE.DELETE)}/>
-            <Icon key="edit" style={{padding: "5px 10px"}} type="edit" theme="twoTone"
-                  onClick={() => this.toggleModal(TYPE.EDIT)}/>
+            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+                onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+                onClick={() => this.toggleModal(TYPE.EDIT)} />
+            <Icon type="unordered-list" style={{ padding: "5px 10px" }}
+                onClick={() => this.createListJobName()}
+            />
         </div>
     );
 
     toggleModal = (type?: string) => {
-        let {openModal} = this.state;
+        let { openModal } = this.state;
         if (type) {
-            this.setState({type})
+            this.setState({ type })
         }
-        this.setState({openModal: !openModal})
+        this.setState({ openModal: !openModal })
     };
 
     choseMajor = async (event: any) => {
-        await this.setState({id: event.key, name: event.name, branchName: event.branchName});
-        await this.getMajorDetail(event.key)
+        await this.getMajorDetail();
     };
 
-    getMajorDetail = async (id: number) => {
+    createListJobName = () => {
+        let { id } = this.state;
+        this.props.history.push(`/admin/data/majors/${id}/job-names/list`)
+    }
+
+    getMajorDetail = async () => {
+        let { id } = this.state;
         await _requestToServer(
             GET, MAJORS + `/${id}`,
             undefined,
             undefined, undefined, undefined, false, false
         ).then((res: any) => {
             if (res) {
-                this.setState({branchID: res.data.branch.id})
+                this.setState({ branchID: res.data.branch.id })
             }
         })
     };
 
     handleChoseMajor = (id: number) => {
-        let {list_data} = this.state;
+        let { list_data } = this.state;
         list_data.forEach(item => {
             if (item.value === id) {
-                this.setState({branchName: item.label})
+                this.setState({ branchName: item.label })
             }
         });
-        this.setState({branchID: id})
+        this.setState({ branchID: id })
     };
 
     columns = [
@@ -167,12 +176,12 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize});
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListMajors(event.current - 1, event.pageSize)
     };
 
     editMajor = async () => {
-        let {name, id, branchID} = this.state;
+        let { name, id, branchID } = this.state;
         if (name) {
             await _requestToServer(
                 PUT, MAJORS + `/${id}`,
@@ -188,7 +197,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     removeMajor = async () => {
-        let {id} = this.state;
+        let { id } = this.state;
         await _requestToServer(
             DELETE, MAJORS,
             [id]
@@ -199,8 +208,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     render() {
-        let {data_table, loading_table, type, openModal, list_data, name, branchName} = this.state;
-        let {totalItems} = this.props;
+        let { data_table, loading_table, type, openModal, list_data, name, branchName } = this.state;
+        let { totalItems } = this.props;
         return (
             <Fragment>
                 <div>
@@ -213,7 +222,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             }}
                         >
                             <Link to='/admin/data/majors/create'>
-                                <Icon type="plus"/>
+                                <Icon type="plus" />
                                 Thêm chuyên ngành mới
                             </Link>
                         </Button>
@@ -235,8 +244,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                     placeholder="Thay đổi tên"
                                     value={name}
                                     widthInput={"250px"}
-                                    style={{padding: "0px 20px"}}
-                                    onChange={(event: any) => this.setState({name: event})}
+                                    style={{ padding: "10px 0px" }}
+                                    onChange={(event: any) => this.setState({ name: event })}
                                 />
                                 <InputTitle
                                     type={TYPE.SELECT}
@@ -244,7 +253,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                     placeholder="Chọn chuyên ngành "
                                     value={branchName}
                                     list_value={list_data}
-                                    style={{padding: "0px 20px"}}
+                                    style={{ padding: "10px 0px" }}
                                     onChange={this.handleChoseMajor}
                                 />
                             </Fragment>
@@ -255,12 +264,17 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}
-                        scroll={{x: 1000}}
+                        scroll={{ x: 1000 }}
                         bordered
-                        pagination={{total: totalItems, showSizeChanger: true}}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({onClick: () => this.choseMajor(event)})}
+                        onRow={(event) => ({
+                            onMouseEnter: () => {
+                                this.setState({ id: event.key, name: event.name, branchName: event.branchName });
+                                localStorage.setItem("name_major", event.name)
+                            }
+                        })}
                     />
                 </div>
             </Fragment>

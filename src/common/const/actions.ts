@@ -67,7 +67,12 @@ export const REDUX = {
 
     ADMIN_ACCOUNTS: {
         GET_ADMIN_ACCOUNTS: "GET_ADMIN_ACCOUNTS"
-    }
+    },
+
+    MAJOR_JOB_NAMES: {
+        GET_MAJOR_JOB_NAMES: "GET_MAJOR_JOB_NAMES",
+    },
+
 };
 
 export const REDUX_SAGA = {
@@ -79,6 +84,11 @@ export const REDUX_SAGA = {
     JOB_NAMES: {
         GET_JOB_NAMES: "GET_JOB_NAMES_DATA",
     },
+
+    MAJOR_JOB_NAMES: {
+        GET_MAJOR_JOB_NAMES: "GET_MAJOR_JOB_NAMES_DATA",
+    },
+
 
     ANNOU_TYPES: {
         GET_ANNOU_TYPES: "GET_ANNOU_TYPES_DATA",
