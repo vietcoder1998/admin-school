@@ -1,3 +1,4 @@
+import { AnnouComments } from './../reducers/annou-comments';
 import { MajorJobNames } from './../reducers/major-job-names';
 import { AdminAccounts } from './../reducers/admin-accounts';
 import { ApiControllerRoles } from '../reducers/api-controller-roles';
@@ -36,7 +37,8 @@ const myReducer = combineReducers({
     RoleDetail,
     ApiControllerRoles,
     AdminAccounts,
-    MajorJobNames
+    MajorJobNames,
+    AnnouComments
 });
 
 export default myReducer

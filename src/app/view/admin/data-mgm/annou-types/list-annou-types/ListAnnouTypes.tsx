@@ -9,7 +9,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
 import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../common/const/type';
-import { IAnnouTypes } from '../../../../../../redux/models/annou-types';
+import { IAnnouType} from '../../../../../../redux/models/annou-types';
 
 interface ListAnnouTypesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -17,7 +17,7 @@ interface ListAnnouTypesProps extends StateProps, DispatchProps {
 }
 
 interface ListAnnouTypesState {
-    list_annou_types: Array<IAnnouTypes>,
+    list_annou_types: Array<IAnnouType>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;

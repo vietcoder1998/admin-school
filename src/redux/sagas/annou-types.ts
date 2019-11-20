@@ -1,4 +1,4 @@
-import {IAnnouTypess} from '../models/annou-types';
+import {IAnnouTypes} from '../models/annou-types';
 import {GET} from '../../common/const/method';
 import {takeEvery, put, call,} from 'redux-saga/effects';
 import {_requestToServer} from '../../services/exec';
@@ -8,7 +8,7 @@ import {ANNOU_TYPES} from '../../services/api/private.api';
 function* getListAnnouTypesData(action: any) {
     let res = yield call(callAnnouTypes, action);
     if (res) {
-        let data: IAnnouTypess = res.data;
+        let data: IAnnouTypes = res.data;
         yield put({
             type: REDUX.ANNOU_TYPES.GET_ANNOU_TYPES,
             data

@@ -15,3 +15,4 @@ export const UPLOAD_IMAGE = "/api/admins/announcements/images/upload";
 export const API_CONTROLLER = "/api/admins/authentication/rbac/apis";
 export const API_CONTROLLER_ROLES = "/api/admins/authentication/rbac/roles";
 export const REGISTRATION_ADMINS = "/api/admins/registration";
+export const ANNOU_COMMENTS = "/api/admins/announcements/";

@@ -1,14 +1,14 @@
-export interface IAnnouTypes {
+export interface IAnnouType{
     id: number;
     name: string;
     priority: number;
     targets: Array<string>;
 }
 
-export interface IAnnouTypess {
-    items: Array<IAnnouTypes>;
+export interface IAnnouTypes {
+    items: Array<IAnnouType>;
     pageIndex: number;
     pageSize: number;
     totalItems: number;
-    single_data: IAnnouTypes
+    single_data: IAnnouType
 }

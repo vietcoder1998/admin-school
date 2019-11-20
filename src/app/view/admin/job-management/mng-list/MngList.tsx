@@ -1,18 +1,20 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
-import { Button, Table, Icon, Select, Row, Col, Modal, DatePicker, Rate } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Modal, DatePicker, Rate, Tabs, List, Avatar, Skeleton, Checkbox } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../common/utils/convertTime';
 import './MngList.scss';
-import {TYPE} from '../../../../../common/const/type';
-import {Link} from 'react-router-dom';
-import {IptLetter} from '../../../layout/common/Common';
-import {ModalConfig} from '../../../layout/modal-config/ModalConfig';
-import {_requestToServer} from '../../../../../services/exec';
-import {DELETE} from '../../../../../common/const/method';
-import {ANNOUNCEMENT_DETAIL} from '../../../../../services/api/private.api';
+import { TYPE } from '../../../../../common/const/type';
+import { Link } from 'react-router-dom';
+import { IptLetter } from '../../../layout/common/Common';
+import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
+import { _requestToServer } from '../../../../../services/exec';
+import { DELETE } from '../../../../../common/const/method';
+import { ANNOUNCEMENT_DETAIL, ANNOU_COMMENTS } from '../../../../../services/api/private.api';
+import { IAnnouCommentsBody, IAnnouComment } from '../../../../../redux/models/annou-comments';
 
 let { Option } = Select;
+const { TabPane } = Tabs;
 
 let ImageRender = (props: any) => {
     if (props.src && props.src !== "") {
@@ -25,11 +27,12 @@ let ImageRender = (props: any) => {
 };
 
 interface MngListProps extends StateProps, DispatchProps {
-    match?: any,
-    history?: any,
-    getListTypeManagement: Function,
-    getAnnouncements: Function,
-    getAnnouncementDetail: Function,
+    match?: any;
+    history?: any;
+    getListTypeManagement: Function;
+    getAnnouncements: Function;
+    getAnnouncementDetail: Function;
+    getListAnnouComment: Function;
 }
 
 interface JobMmgtable {
@@ -46,7 +49,7 @@ interface JobMmgtable {
         announcementType: string;
         render: JSX.Element;
     }
-}
+};
 
 interface MngListState {
     data_table?: Array<any>;
@@ -58,7 +61,6 @@ interface MngListState {
     jobNameID?: string;
     jobId?: string;
     show_modal?: boolean;
-    loading?: boolean;
     pendingJob?: any;
     message?: string;
     list_annou_types?: Array<any>;
@@ -71,7 +73,19 @@ interface MngListState {
     id?: string;
     loading_table?: boolean;
     open_config_modal?: boolean;
-}
+    initLoading?: boolean;
+    loading?: boolean;
+    data?: Array<any>;
+    list?: Array<any>;
+    loadingMore?: boolean;
+    count?: number;
+    body?: IAnnouCommentsBody;
+    pageIndexAC?: number;
+    pageSizeAC?: number;
+    tabKey: number;
+    list_remove: Array<string | number>;
+    tab_key: string;
+};
 
 class MngList extends PureComponent<MngListProps, MngListState> {
     constructor(props: any) {
@@ -83,12 +97,30 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             createdDate: undefined,
             adminID: undefined,
             hidden: undefined,
-            pageIndex: 0,
             list_announcements: [],
             id: "",
-            loading_table: true
+            loading_table: true,
+            initLoading: false,
+            loading: false,
+            data: [],
+            loadingMore: false,
+            count: 5,
+            pageIndex: 0,
+            pageSize: 10,
+            pageIndexAC: 0,
+            pageSizeAC: 5,
+            body: {
+                rating: null,
+                userID: null,
+                userType: null,
+                createdDate: null,
+                lastModified: null
+            },
+            tabKey: 1,
+            list_remove: [],
+            tab_key: "1",
         }
-    }
+    };
 
     EditJob = (
         <React.Fragment>
@@ -196,7 +228,8 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             let id = localStorage.getItem("id_mgm");
             this.props.getAnnouncementDetail(id);
         }
-        this.setState({ show_modal: !show_modal });
+        this.getData();
+        this.setState({ show_modal: !show_modal, pageSizeAC: 5, tab_key: "1", list_remove: [] });
     };
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
@@ -206,7 +239,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                 value_type: "Tất cả",
                 announcementTypeID: null
             }
-        }
+        };
 
         if (nextProps.list_announcements !== prevState.list_announcements) {
             let { pageIndex, pageSize } = prevState;
@@ -229,14 +262,29 @@ class MngList extends PureComponent<MngListProps, MngListState> {
                 list_announcements: nextProps.list_annou_types,
                 data_table,
                 loading_table: false,
-            }
+            };
         }
         return null;
-    }
+    };
+
+    getData = async () => {
+        let { pageIndexAC, pageSizeAC, body } = this.state;
+        let id = localStorage.getItem("id_mgm");
+        await this.props.getListAnnouComment(pageIndexAC, pageSizeAC + 5, id, body);
+        await this.setState({ loadingMore: false, pageSizeAC: pageSizeAC + 5 });
+    };
 
     async componentDidMount() {
         await this.searchAnnouncement();
-    }
+    };
+
+    onLoadMore = async () => {
+        await this.setState({
+            loadingMore: true,
+        });
+        await this.getData();
+    };
+
 
     handleId = (event: any) => {
         if (event.key) {
@@ -259,6 +307,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             hidden,
             target,
         } = this.state;
+
         await this.props.getAnnouncements(
             pageIndex,
             pageSize,
@@ -316,47 +365,189 @@ class MngList extends PureComponent<MngListProps, MngListState> {
 
     toggleModalConfig = () => {
         let { open_config_modal } = this.state;
+        let id = localStorage.getItem("id_mgm");
         if (!open_config_modal) {
-            let id = localStorage.getItem("id_mgm");
             this.props.getAnnouncementDetail(id);
+            this.getData();
         }
+
         this.setState({ open_config_modal: !open_config_modal });
     };
 
+    removeComment = async () => {
+        let id = localStorage.getItem("id_mgm");
+        let {list_remove} = this.state;
+        await _requestToServer(
+            DELETE, ANNOU_COMMENTS + `/${id}/comments`, list_remove
+        )
+        
+        await this.onToggleModal();
+        await this.getData();
+    }
+
+    loadMore = () => {
+        let { loadingMore } = this.state;
+        return (
+            < div
+                style={{
+                    textAlign: 'center',
+                    marginTop: 12,
+                    height: 32,
+                    lineHeight: '32px',
+                }}
+            >
+                <Button loading={loadingMore} onClick={this.onLoadMore}>loading more</Button>
+            </div >)
+    };
+
+    onClickCheckBox = (event: boolean, id: string | number) => {
+        let { list_remove } = this.state;
+        if (event) {
+            list_remove.push(id);
+        } else {
+            list_remove.forEach((item: string | number, index: number) => {
+                if (item === id) {
+                    list_remove.splice(index, 1);
+                }
+            })
+        };
+
+        this.setState({ list_remove });
+    };
+
     render() {
-        let { data_table, show_modal, list_annou_types, value_type, loading_table, open_config_modal } = this.state;
-        let { annoucement_detail, totalItems } = this.props;
+        let {
+            data_table,
+            show_modal,
+            list_annou_types,
+            value_type,
+            loading_table,
+            open_config_modal,
+            initLoading,
+            loadingMore,
+            tab_key,
+            list_remove
+        } = this.state;
+
+        let { annoucement_detail, totalItems, list_annou_comment } = this.props;
         return (
             <Fragment>
                 <Modal
                     visible={show_modal}
                     title="XEM TRƯỚC BÀI VIẾT"
                     onCancel={this.onToggleModal}
-                    style={{ top: "5vh" }}
+                    destroyOnClose={true}
+                    style={{ top: "5vh", height: "90vh!important" }}
+                    width={700}
                     footer={[
                         <Button
                             key="back"
-                            type="danger"
-                            onClick={this.onToggleModal}
+                            icon="left"
+                            onClick={() => { this.onToggleModal(); }}
                         >
                             Thoát
-                        </Button>
+                        </Button>,
+                        <Button
+                            key="remove"
+                            type="danger"
+                            icon="delete"
+                            style={{display: tab_key==="2" ? "block": "none", float: "right"}}
+                            onClick={() => { this.removeComment() }}
+                            disabled={list_remove.length === 0}
+                        >
+                            Xóa các bình luận
+                        </Button>,
                     ]}
                 >
-                    <h5>{annoucement_detail.title}</h5>
-                    <div className="annou-edit-modal">
-                        <p>
-                            <Icon type="user" />
-                            <IptLetter
-                                value={" " + annoucement_detail.admin.firstName + " " + annoucement_detail.admin.lastName} />
-                        </p>
-                        <p>
-                            <Icon type="calendar" />
-                            <IptLetter value={timeConverter(annoucement_detail.createdDate, 1000)} />
-                        </p>
-                        <Rate disabled defaultValue={4} />
-                        <div className="content-edit" dangerouslySetInnerHTML={{ __html: annoucement_detail.content }} />
-                    </div>
+                    <Tabs activeKey={tab_key} onChange={(event: any) => this.setState({ tab_key: event })}>
+                        <TabPane
+                            tab={
+                                <span>
+                                    <Icon type="search" />
+                                    Thông tin bài viết
+                                </span>
+                            }
+                            style={{
+                                overflowY: "auto"
+                            }}
+                            key={"1"}
+                        >
+                            <h5>{annoucement_detail.title}</h5>
+                            <div className="annou-edit-modal">
+                                <p>
+                                    <Icon type="user" />
+                                    <IptLetter
+                                        value={" " + annoucement_detail.admin.firstName + " " + annoucement_detail.admin.lastName} />
+                                </p>
+                                <p>
+                                    <Icon type="calendar" />
+                                    <IptLetter value={timeConverter(annoucement_detail.createdDate, 1000)} />
+                                </p>
+                                <Rate disabled defaultValue={4} />
+                                <div className="content-edit" dangerouslySetInnerHTML={{ __html: annoucement_detail.content }} />
+                            </div>
+                        </TabPane>
+                        <TabPane
+                            tab={
+                                <span>
+                                    <Icon type="message" />
+                                    Quản lý nhận xét
+                                </span>
+                            }
+                            key={"2"}
+                        >
+                            <List
+                                itemLayout="vertical"
+                                className="demo-loadmore-list"
+                                loading={initLoading}
+                                loadMore={this.loadMore()}
+                                dataSource={list_annou_comment}
+                                renderItem={(item: IAnnouComment) => {
+                                    let sub_title = "";
+                                    switch (item.userType) {
+                                        case TYPE.CANDIDATE:
+                                            sub_title = "Ứng viên"
+                                            break;
+                                        case TYPE.EMPLOYER:
+                                            sub_title = "Nhà tuyển dụng"
+                                            break;
+                                        case TYPE.STUDENT:
+                                            sub_title = "Sinh viên"
+                                            break;
+                                        case TYPE.SCHOOL:
+                                            sub_title = "Trường"
+                                            break;
+                                        case TYPE.PUBLIC:
+                                            sub_title = "Khách"
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                    return (
+                                        <List.Item
+                                            extra={
+                                                <Checkbox onChange={(event: any) => this.onClickCheckBox(event.target.checked, item.id)} />
+                                            }
+                                        >
+                                            <Skeleton avatar title={false} loading={loadingMore} active>
+                                                <List.Item.Meta
+                                                    avatar={
+                                                        <Avatar icon="user" style={{ marginTop: 5, border: "solid #1890ff 2px" }} src={item.avatarUrl} />
+                                                    }
+                                                    title={<span>{item.name}</span>}
+                                                    description={sub_title}
+                                                />
+                                                <div className="content-list" >
+                                                    <Rate key={item.id} disabled defaultValue={item.rating} style={{ fontSize: 12 }} /><span >{item.comment}</span>
+                                                </div>
+                                            </Skeleton>
+                                        </List.Item>
+                                    )
+                                }}
+                            />
+                        </TabPane>
+                    </Tabs>
                 </Modal>
                 <ModalConfig
                     title={"Xoá bài viết"}
@@ -491,7 +682,7 @@ class MngList extends PureComponent<MngListProps, MngListState> {
             </Fragment>
         )
     }
-}
+};
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getListTypeManagement: (data: any) => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, data }),
@@ -501,17 +692,25 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         pageSize,
         body
     }),
-    getAnnouncementDetail: (id: string) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id })
+    getAnnouncementDetail: (id: string) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id }),
+    getListAnnouComment: (
+        pageIndex: number,
+        pageSize: number,
+        id: string | number,
+        body: IAnnouCommentsBody
+    ) =>
+        dispatch({ type: REDUX_SAGA.ANNOU_COMMENTS.GET_ANNOU_COMMENTS, pageIndex, pageSize, id, body })
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({
     list_annou_types: state.AnnouTypes.items,
     list_announcements: state.Announcements.items,
     annoucement_detail: state.AnnouncementDetail.data,
-    totalItems: state.Announcements.totalItems
+    totalItems: state.Announcements.totalItems,
+    list_annou_comment: state.AnnouComments.items,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(MngList)
+export default connect(mapStateToProps, mapDispatchToProps)(MngList);

@@ -17,6 +17,7 @@ import { RoleDetailWatcher } from '../sagas/role-detail';
 import { ApiControllerRolesWatcher } from '../sagas/api-controller-roles';
 import { AdminAccountsWatcher } from '../sagas/admin-accounts';
 import { MajorJobNamesWatcher } from '../sagas/major-job-names';
+import { AnnouCommentsWatcher } from '../sagas/annou-comments';
 
 export default function* rootSaga() {
     yield all([
@@ -38,5 +39,6 @@ export default function* rootSaga() {
         ApiControllerRolesWatcher(),
         AdminAccountsWatcher(),
         MajorJobNamesWatcher(),
+        AnnouCommentsWatcher(),
     ])
 } 

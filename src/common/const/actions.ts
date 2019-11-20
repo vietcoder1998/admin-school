@@ -73,6 +73,9 @@ export const REDUX = {
         GET_MAJOR_JOB_NAMES: "GET_MAJOR_JOB_NAMES",
     },
 
+    ANNOU_COMMENTS: {
+        GET_ANNOU_COMMENTS: "GET_ANNOU_COMMENTS",
+    },
 };
 
 export const REDUX_SAGA = {
@@ -92,6 +95,10 @@ export const REDUX_SAGA = {
 
     ANNOU_TYPES: {
         GET_ANNOU_TYPES: "GET_ANNOU_TYPES_DATA",
+    },
+
+    ANNOU_COMMENTS: {
+        GET_ANNOU_COMMENTS: "GET_ANNOU_COMMENTS_DATA",
     },
 
     ANNOUNCEMENTS: {

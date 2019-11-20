@@ -4,6 +4,19 @@
   }
 
   .content-edit {
-      padding: 20px 5px;
+    padding: 20px 5px;
+    text-align: justify;
   }
+}
+
+.ant-list-item-meta {
+  margin-bottom: 5px !important;
+}
+
+.ant-list-item-meta-title {
+  margin-bottom: 5px !important;
+}
+.content-list {
+  margin-left: 50px;
+  text-align: justify;
 }
