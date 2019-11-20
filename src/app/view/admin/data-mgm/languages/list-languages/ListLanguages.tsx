@@ -7,7 +7,7 @@ import {_requestToServer} from '../../../../../../services/exec';
 import {POST, PUT, DELETE} from '../../../../../../common/const/method';
 import {LANGUAGES} from '../../../../../../services/api/private.api';
 import {TYPE} from '../../../../../../common/const/type';
-import {AppModal} from "../../../../layout/modal-config/app-modal";
+import {AppModal} from "../../../../layout/modal-config/AppModal";
 import {InputTitle} from "../../../../layout/input-tittle/InputTitle";
 
 interface ListLanguagesProps extends StateProps, DispatchProps {

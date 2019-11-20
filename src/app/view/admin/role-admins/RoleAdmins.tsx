@@ -2,6 +2,7 @@ import React, {PureComponent, Fragment} from 'react'
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import {connect} from 'react-redux';
 import Roles from './roles/Roles';
+import AdminAccounts from './admin-accounts/AdminAccounts';
 
 const Switch = require("react-router-dom").Switch;
 
@@ -30,6 +31,7 @@ class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {
             <Fragment>
                 <Switch>
                     <ErrorBoundaryRoute path={`${path}/roles`} component={Roles}/>
+                    <ErrorBoundaryRoute path={`${path}/admin-accounts`} component={AdminAccounts}/>
                 </Switch>
             </Fragment>
         )

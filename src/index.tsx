@@ -13,10 +13,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
 import 'sweetalert2/src/sweetalert2.scss';
 import 'cropperjs/dist/cropper.css';
-// import { Atlg } from './services/auto-login';
+import { Atlg } from './services/auto-login';
 
 require('dotenv').config();
-// Atlg();
+Atlg();
 const rootEl = document.getElementById('root');
 const appRenderer = (Component: any) => ReactDOM.render(
     <ErrorBoundary >

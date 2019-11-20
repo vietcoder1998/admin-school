@@ -57,7 +57,7 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
                 <InputTitle
                     type={TYPE.INPUT}
                     title="Tên nhóm ngành mới"
-                    placeholder="Nhập tên nhóm ngành"
+                    placeholder="NhậpTên chuyên ngành"
                     widthInput="400px"
                     value={name}
                     style={{padding: "10px 30px"}}

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import CreateMajors from './create-majors/CreateMajors';
 import ListMajors from './list-majors/ListMajors';
-
+import ControlJobNames from './control-job-names/ControlJobNames';
 const Switch = require("react-router-dom").Switch;
 
 interface MajorsState {
@@ -33,6 +33,7 @@ class Majors extends PureComponent<MajorsProps, MajorsState> {
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateMajors}/>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListMajors}/>
+                    <ErrorBoundaryRoute path={`${path}/:id/job-names`} component={ControlJobNames}/>
                 </Switch>
             </Fragment>
         )

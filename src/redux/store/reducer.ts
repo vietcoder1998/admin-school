@@ -1,26 +1,27 @@
-import {ApiControllerRoles} from '../reducers/api-controller-roles';
-import {RoleDetail} from '../reducers/role-detail';
-import {ApiController} from '../reducers/api-controller';
-import {Roles} from '../reducers/roles';
-import {Branches} from '../reducers/branches';
-import {JobGroups} from '../reducers/job-groups';
-import {Majors} from '../reducers/majors';
-import {Skills} from '../reducers/skills';
-import {TypeSchools} from '../reducers/type-school';
-import {Regions} from '../reducers/regions';
-import {Languages} from '../reducers/languages';
-import {PendingJobs} from '../reducers/pending-jobs';
-import {JobNames} from '../reducers/job-names';
-import {TypeManagement} from '../reducers/type-management';
-import {Announcements} from '../reducers/announcements';
-import {AnnouncementDetail} from '../reducers/announcement-detail';
-import {combineReducers} from 'redux';
-
+import { MajorJobNames } from './../reducers/major-job-names';
+import { AdminAccounts } from './../reducers/admin-accounts';
+import { ApiControllerRoles } from '../reducers/api-controller-roles';
+import { RoleDetail } from '../reducers/role-detail';
+import { ApiController } from '../reducers/api-controller';
+import { Roles } from '../reducers/roles';
+import { Branches } from '../reducers/branches';
+import { JobGroups } from '../reducers/job-groups';
+import { Majors } from '../reducers/majors';
+import { Skills } from '../reducers/skills';
+import { TypeSchools } from '../reducers/type-school';
+import { Regions } from '../reducers/regions';
+import { Languages } from '../reducers/languages';
+import { PendingJobs } from '../reducers/pending-jobs';
+import { JobNames } from '../reducers/job-names';
+import { AnnouTypes } from '../reducers/annou-types';
+import { Announcements } from '../reducers/announcements';
+import { AnnouncementDetail } from '../reducers/announcement-detail';
+import { combineReducers } from 'redux';
 
 const myReducer = combineReducers({
     PendingJobs,
     JobNames,
-    TypeManagement,
+    AnnouTypes,
     Announcements,
     AnnouncementDetail,
     Languages,
@@ -33,7 +34,9 @@ const myReducer = combineReducers({
     Roles,
     ApiController,
     RoleDetail,
-    ApiControllerRoles
+    ApiControllerRoles,
+    AdminAccounts,
+    MajorJobNames
 });
 
 export default myReducer

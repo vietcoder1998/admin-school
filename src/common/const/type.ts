@@ -26,4 +26,7 @@ export const TYPE = {
 
     INPUT: "INPUT",
     SELECT: "SELECT",
+
+    NORMAL_LOGIN: "NORMAL_LOGIN",
+    REFESH_LOGIN: "REFESH_LOGIN"
 };

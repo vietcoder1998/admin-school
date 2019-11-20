@@ -150,7 +150,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         body
     }),
     getListTypeManagement: (data: any) => dispatch({
-        type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT, data
+        type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, data
     }),
     getListJobGroups: () => dispatch({
         type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS

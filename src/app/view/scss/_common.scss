@@ -43,6 +43,31 @@ code {
 
 .ant-layout-sider-children {
   position: fixed;
+  overflow: auto;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.ant-menu-submenu-title {
+  padding-right: 30px !important;
 }
 
 //.ant-modal-body {
@@ -54,6 +79,16 @@ code {
 //.ant-modal {
 //  width: 80vw !important;
 //}
+
+// .ant-layout-sider-dark {
+//   min-width: 220px!important;
+// }
+
+.ant-modal-body {
+  max-height: 55vh;
+  overflow: auto;
+  background-color: #f1f1f1a7;
+}
 
 .ant-table-body {
   &:hover {
@@ -182,9 +217,9 @@ textarea {
 
   .children-dropdown {
     padding: 5px 10px;
-    cursor: hand;
+    cursor: pointer;
     transition: 0.5s;
-    svg{
+    svg {
       margin: 0px 5px 5px;
     }
 

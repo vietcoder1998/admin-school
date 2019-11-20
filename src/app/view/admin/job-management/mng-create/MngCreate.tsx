@@ -17,7 +17,7 @@ import {sendImageHeader} from '../../../../../services/auth';
 interface MngCreateState {
     title?: string;
     announcementTypeID: string;
-    type_management?: Array<any>;
+    ANNOU_TYPES?: Array<any>;
     list_item?: Array<{ label?: string, value?: string }>,
     loading?: boolean;
     fileList?: Array<any>;
@@ -48,7 +48,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         this.state = {
             title: "",
             announcementTypeID: "",
-            type_management: [],
+            ANNOU_TYPES: [],
             list_item: [],
             loading: false,
             fileList: [],
@@ -82,10 +82,10 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             }
         }
 
-        if (nextProps.type_management !== prevState.type_management) {
+        if (nextProps.ANNOU_TYPES !== prevState.ANNOU_TYPES) {
             let list_item = [];
-            for (let i = 0; i < nextProps.type_management.length; i++) {
-                const element = nextProps.type_management[i];
+            for (let i = 0; i < nextProps.ANNOU_TYPES.length; i++) {
+                const element = nextProps.ANNOU_TYPES[i];
                 const list_target = element.targets;
                 let target = "";
 
@@ -101,7 +101,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 
             return {
                 list_item,
-                type_management: nextProps.type_management
+                ANNOU_TYPES: nextProps.ANNOU_TYPES
             }
         }
 
@@ -369,12 +369,12 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getTypeManagements: () => dispatch({type: REDUX_SAGA.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT}),
+    getTypeManagements: () => dispatch({type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES}),
     getAnnouncementDetail: (id: string) => dispatch({type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id}),
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-    type_management: state.TypeManagement.items,
+    ANNOU_TYPES: state.TypeManagement.items,
     announcement_detail: state.AnnouncementDetail.data
 });
 

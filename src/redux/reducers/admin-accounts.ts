@@ -1,15 +1,17 @@
-import {REDUX} from '../../common/const/actions';
+import { IAdminAccounts} from '../models/admin-accounts';
+import { REDUX } from '../../common/const/actions';
 
-let initState = {
+let initState: IAdminAccounts= {
     items: [],
     pageIndex: 0,
     pageSize: 0,
     totalItems: 0,
+    role_detail: {}
 };
 
-export const TypeManagement = (state = initState, action: any) => {
+export const AdminAccounts= (state = initState, action: any) => {
     switch (action.type) {
-        case REDUX.TYPE_MANAGEMENT.GET_TYPE_MANAGEMENT:
+        case REDUX.ADMIN_ACCOUNTS.GET_ADMIN_ACCOUNTS:
             return {
                 ...state,
                 items: action.data.items,
@@ -17,7 +19,6 @@ export const TypeManagement = (state = initState, action: any) => {
                 pageSize: action.data.pageSize,
                 totalItems: action.data.totalItems
             };
-
         default:
             return state;
     }

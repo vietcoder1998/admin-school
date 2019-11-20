@@ -86,25 +86,25 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
         return (
             <Fragment>
                 <div>
-                    <h5>Thêm nhóm ngành mới</h5>
-                    <Divider orientation="left">Chi tiết nhóm ngành</Divider>
+                    <h5>Thêm chuyên ngành mới</h5>
+                    <Divider orientation="left">Chi tiết chuyên ngành</Divider>
                 </div>
                 <InputTitle
                     type={TYPE.INPUT}
-                    title="Tên nhóm ngành mới"
-                    placeholder="Nhập tên nhóm ngành"
+                    title="Tên chuyên ngành mới"
+                    placeholder="Nhập tên chuyên ngành"
                     value={name}
                     widthInput="300px"
-                    style={{padding: "0px 20px"}}
+                    style={{padding: "10px 0px"}}
                     onChange={(event: any) => this.setState({name: event})}
                 />
                 <InputTitle
                     type={TYPE.SELECT}
-                    title="Chọn nhóm ngành"
-                    placeholder="Chọn nhóm ngành"
+                    title="Chọn chuyên ngành"
+                    placeholder="Chọn chuyên ngành"
                     value={branchName}
                     list_value={list_data}
-                    style={{padding: "0px 20px"}}
+                    style={{padding: "10px 0px"}}
                     onChange={this.handleChoseMajor}
                 />
                 <Button
@@ -114,7 +114,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     onClick={this.createNewData}
                     disabled={!name ||  !branchID}
                 >
-                    Tạo nhóm ngành mới
+                    Tạo chuyên ngành mới
                 </Button>
                 <Button
                     type="danger"

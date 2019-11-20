@@ -10,6 +10,7 @@ import Skills from './skills/Skills';
 import TypeSchools from './type-schools/TypeSchools';
 import JobGroups from './job-groups/JobGroups';
 import Branches from './branches/Branches';
+import AnnouTypes from './annou-types/AnnouTypes';
 const Switch = require("react-router-dom").Switch;
 
 interface DataMgmState {
@@ -45,6 +46,7 @@ class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
                     <ErrorBoundaryRoute  path={`${path}/type-schools`} component={TypeSchools} />
                     <ErrorBoundaryRoute  path={`${path}/job-groups`} component={JobGroups} />
                     <ErrorBoundaryRoute  path={`${path}/branches`} component={Branches} />
+                    <ErrorBoundaryRoute  path={`${path}/annou-types`} component={AnnouTypes} />
                 </Switch>
             </Fragment>
         )
