@@ -191,7 +191,8 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                             </Link>
                         </Button>
                     </h5>
-                    <Table
+                      <Table
+                        // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}

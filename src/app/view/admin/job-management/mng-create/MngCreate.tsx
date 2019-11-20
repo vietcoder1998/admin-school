@@ -17,7 +17,7 @@ import {sendImageHeader} from '../../../../../services/auth';
 interface MngCreateState {
     title?: string;
     announcementTypeID: string;
-    ANNOU_TYPES?: Array<any>;
+    list_anno_type?: Array<any>;
     list_item?: Array<{ label?: string, value?: string }>,
     loading?: boolean;
     fileList?: Array<any>;
@@ -48,7 +48,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         this.state = {
             title: "",
             announcementTypeID: "",
-            ANNOU_TYPES: [],
+            list_anno_type: [],
             list_item: [],
             loading: false,
             fileList: [],
@@ -101,7 +101,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 
             return {
                 list_item,
-                ANNOU_TYPES: nextProps.ANNOU_TYPES
+                list_anno_type: nextProps.ANNOU_TYPES
             }
         }
 
@@ -374,7 +374,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-    ANNOU_TYPES: state.TypeManagement.items,
+    list_anno_type: state.AnnouTypes.items,
     announcement_detail: state.AnnouncementDetail.data
 });
 
