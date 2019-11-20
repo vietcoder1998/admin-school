@@ -47,10 +47,10 @@ export const NewInput = (props: INewInput) => {
             defaultValue={defaultValue}
             style={{ width: widthInput ? widthInput : "auto" }}
             value={value}
-            onChange={event => onChange(event.target.value)}
+            onChange={event => onChange? onChange(event.target.value) : undefined}
             maxLength={220}
         />)
-}
+};
 
 export const NewSelect = (props: INewSelect) => {
     let { placeholder, list_value, value, onChange, widthSelect, defaultValue } = props;
@@ -62,7 +62,7 @@ export const NewSelect = (props: INewSelect) => {
             style={{ width: widthSelect ? widthSelect : "200px" }}
             value={value}
             defaultValue={defaultValue}
-            onChange={event => onChange(event)}
+            onChange={event => onChange? onChange(event) : undefined}
         >
             {
                 list_value &&
@@ -73,7 +73,7 @@ export const NewSelect = (props: INewSelect) => {
             }
         </Select>
     )
-}
+};
 
 export const InputTitle = (props: IInputitleProps) => {
     let {
@@ -89,7 +89,7 @@ export const InputTitle = (props: IInputitleProps) => {
     } = props;
     let ComponentReturn;
     const defaultStyle = {
-    }
+    };
     switch (props.type) {
         case TYPE.INPUT:
             ComponentReturn = (
@@ -109,7 +109,7 @@ export const InputTitle = (props: IInputitleProps) => {
                     defaultValue={defaultValue}
                     list_value={list_value}
                     placeholder={placeholder}
-                    onChange={event => props.onChange(event)}
+                    onChange={(event: any) => props.onChange? props.onChange(event) : undefined}
                     widthSelect={widthSelect}
                 />
             );
@@ -141,4 +141,4 @@ export const InputTitle = (props: IInputitleProps) => {
     } catch (err) {
         return (<span>bug</span>)
     }
-}
+};

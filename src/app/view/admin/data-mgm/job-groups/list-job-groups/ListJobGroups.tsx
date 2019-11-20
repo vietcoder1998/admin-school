@@ -4,7 +4,7 @@ import {Icon, Table, Button} from 'antd';
 import {REDUX_SAGA} from '../../../../../../common/const/actions';
 import {IJobGroup} from '../../../../../../redux/models/job-groups';
 import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
+import {ModalConfig} from '../../../../layout/modal-config/modal-config';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
 import {_requestToServer} from '../../../../../../services/exec';
 import {PUT, DELETE} from '../../../../../../common/const/method';

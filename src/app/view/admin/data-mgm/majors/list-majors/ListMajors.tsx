@@ -8,7 +8,7 @@ import {IBranches} from '../../../../../../redux/models/branches';
 import {MAJORS} from '../../../../../../services/api/private.api';
 import {DELETE, PUT, GET} from '../../../../../../common/const/method';
 import {_requestToServer} from '../../../../../../services/exec';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
+import {ModalConfig} from '../../../../layout/modal-config/modal-config';
 import {TYPE} from '../../../../../../common/const/type';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
 

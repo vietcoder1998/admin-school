@@ -1,22 +1,29 @@
 export const TYPE = {
+    ALL: "ALL",
+
     SUCCESS: 'success',
     ERROR: "error",
     WARNING: "warning",
-    PENDING: "PENDING",
+
     REJECTED: "REJECTED",
     ACCEPTED: "ACCEPTED",
+    PENDING: "PENDING",
+
     PARTTIME: "PARTTIME",
-    FULLTIME: "FULLTIME",   
+    FULLTIME: "FULLTIME",
     INTERNSHIP: "INTERNSHIP",
+
     CANDIDATE: "CANDIDATE",
     EMPLOYER: "EMPLOYER",
     SCHOOL: "SCHOOL",
     PUBLIC: "PUBLIC",
     STUDENT: "STUDENT",
-    ALL: "ALL",
+
     CREATE: "CREATE",
     EDIT: "EDIT",
+    DELETE: "DELETE",
+    DELETE_SELECTED: "DELETE_SELECTED",
+
     INPUT: "INPUT",
     SELECT: "SELECT",
-    DELETE: "DELETE"
 };

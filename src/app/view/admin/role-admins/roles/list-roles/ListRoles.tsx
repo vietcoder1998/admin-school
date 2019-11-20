@@ -2,7 +2,7 @@ import React, {PureComponent, Fragment} from 'react'
 import {connect} from 'react-redux';
 import {Icon, Table, Button} from 'antd';
 import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
+import {ModalConfig} from '../../../../layout/modal-config/modal-config';
 import {TYPE} from '../../../../../../common/const/type';
 import {REDUX_SAGA} from '../../../../../../common/const/actions';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';

@@ -7,7 +7,7 @@ import './MngList.scss';
 import {TYPE} from '../../../../../common/const/type';
 import {Link} from 'react-router-dom';
 import {IptLetter} from '../../../layout/common/Common';
-import {ModalConfig} from '../../../layout/modal-config/ModalConfig';
+import {ModalConfig} from '../../../layout/modal-config/modal-config';
 import {_requestToServer} from '../../../../../services/exec';
 import {DELETE} from '../../../../../common/const/method';
 import {ANNOUNCEMENT_DETAIL} from '../../../../../services/api/private.api';

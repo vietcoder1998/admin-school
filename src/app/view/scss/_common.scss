@@ -45,15 +45,15 @@ code {
   position: fixed;
 }
 
-.ant-modal-body {
-  height: 55vh;
-  overflow: auto;
-  background-color: #f1f1f1a7;
-}
-
-.ant-modal {
-  width: 80vw !important;
-}
+//.ant-modal-body {
+//  height: 55vh;
+//  overflow: auto;
+//  background-color: #f1f1f1a7;
+//}
+//
+//.ant-modal {
+//  width: 80vw !important;
+//}
 
 .ant-table-body {
   &:hover {
@@ -63,7 +63,7 @@ code {
   }
   /* width */
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 12px;
   }
 
   /* Track */
@@ -73,7 +73,7 @@ code {
 
   &::-webkit-scrollbar-thumb {
     color: whitesmoke;
-    width: 5px;
+    width: 12px;
   }
 
   /* Handle */
@@ -543,8 +543,8 @@ i {
 
 .timer {
   font-size: 0.7rem;
-  padding: 0px;
-  margin: 0px 5px;
+  padding: 0;
+  margin: 0 5px;
   width: auto;
 }
 
@@ -552,12 +552,12 @@ i {
 .pagination-result {
   text-align: center;
   li {
-    padding: 0px;
+    padding: 0;
     width: 5px;
   }
 
   .ant-pagination {
-    margin: 10px 0px;
+    margin: 10px 0;
   }
 
   .ant-pagination-item-active {
@@ -575,7 +575,7 @@ i {
 .l_c {
   text-transform: lowercase;
   list-style-type: none;
-  margin: 0px !important;
+  margin: 0 !important;
 
   &::first-letter {
     text-transform: uppercase;
@@ -585,7 +585,7 @@ i {
 .l_ca {
   text-transform: capitalize;
   list-style-type: none;
-  margin: 0px !important;
+  margin: 0 !important;
 }
 
 h1,
@@ -594,9 +594,9 @@ h3,
 
 // Grid
 
-.ant-modal-body {
-  padding: 15px !important;
-}
+//.ant-modal-body {
+//  padding: 15px !important;
+//}
 
 .ant-table-row-level-0 > {
   border-right: 1px solid #d9d9d9 !important;

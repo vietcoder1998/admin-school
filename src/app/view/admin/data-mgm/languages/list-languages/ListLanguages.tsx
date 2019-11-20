@@ -1,15 +1,14 @@
 import React, {PureComponent, Fragment} from 'react'
 import {connect} from 'react-redux';
-import {Icon, Table, Button} from 'antd';
+import {Icon, Table, Button, Row, Col, Popover, Modal} from 'antd';
 import {REDUX_SAGA} from '../../../../../../common/const/actions';
 import {ILanguages} from '../../../../../../redux/models/languages';
-import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
-import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
 import {_requestToServer} from '../../../../../../services/exec';
-import {PUT, DELETE} from '../../../../../../common/const/method';
+import {POST, PUT, DELETE} from '../../../../../../common/const/method';
 import {LANGUAGES} from '../../../../../../services/api/private.api';
 import {TYPE} from '../../../../../../common/const/type';
+import {AppModal} from "../../../../layout/modal-config/app-modal";
+import {InputTitle} from "../../../../layout/input-tittle/InputTitle";
 
 interface ListLanguagesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -69,28 +68,19 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         return null;
     }
 
-
     EditContent = (
         <div>
-            <Icon style={{padding: "5px 10px"}} type="delete" theme="twoTone" twoToneColor="red"
-                  onClick={() => this.toggleModal(TYPE.DELETE)}/>
             <Icon key="edit" style={{padding: "5px 10px"}} type="edit" theme="twoTone"
-                  onClick={() => this.toggleModal(TYPE.EDIT)}/>
+                  onClick={() => this.toggleModal(true, TYPE.EDIT)}/>
+            <Icon style={{padding: "5px 10px"}} type="delete" theme="twoTone" twoToneColor="red"
+                  onClick={() => this.toggleModal(true, TYPE.DELETE)}/>
         </div>
     );
 
-    toggleModal = (type?: string) => {
-        let {openModal} = this.state;
-        this.setState({openModal: !openModal});
-        if (type) {
-            this.setState({type})
-        }
-    };
-
     columns = [
         {
-            title: '#',
-            width: 150,
+            title: 'STT',
+            width: 50,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
@@ -99,7 +89,6 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             title: 'Tên ngôn ngữ',
             dataIndex: 'name',
             key: 'name',
-            width: 755,
             className: 'action',
 
         },
@@ -107,8 +96,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 200,
-            fixed: "right",
+            width: 120,
             render: () => this.EditContent,
         },
     ];
@@ -118,7 +106,21 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         this.props.getListLanguages(event.current - 1, event.pageSize)
     };
 
-    editLanguages = async () => {
+    addLanguage = async () => {
+        let {name} = this.state;
+        if (name) {
+            await _requestToServer(
+                POST, LANGUAGES,
+                {
+                    name: name.trim()
+                }
+            ).then((res: any) => {
+                this.props.getListLanguages();
+            })
+        }
+    };
+
+    editLanguage = async () => {
         let {name, id} = this.state;
         if (name) {
             await _requestToServer(
@@ -128,7 +130,6 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                 }
             ).then((res: any) => {
                 this.props.getListLanguages();
-                this.toggleModal();
             })
         }
     };
@@ -140,8 +141,27 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             [id]
         ).then((res: any) => {
             this.props.getListLanguages();
-            this.toggleModal();
         })
+    };
+
+    getModalTitle = () => {
+        let {type} = this.state;
+        if (type) {
+            switch (type) {
+                case TYPE.CREATE:
+                    return "Thêm ngôn ngữ";
+                case TYPE.EDIT:
+                    return "Cập nhật ngôn ngữ";
+            }
+        }
+    };
+
+    toggleModal = (visible: boolean, type?: string) => {
+        let {openModal} = this.state;
+        this.setState({
+            openModal: !openModal,
+            type
+        });
     };
 
     render() {
@@ -149,58 +169,84 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         let {totalItems} = this.props;
         return (
             <Fragment>
-                <ModalConfig
-                    title={type === TYPE.EDIT ? "Sửa ngôn ngữ" : "Xóa ngôn ngữ"}
-                    namebtn1="Hủy"
-                    namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
-                    isOpen={openModal}
-                    toggleModal={() => {
-                        this.setState({openModal: !openModal})
+                <AppModal
+                    title={this.getModalTitle()}
+                    visible={openModal}
+                    changeVisible={(visible: boolean) => {
+                        this.toggleModal(visible);
                     }}
-                    handleOk={async () => type === TYPE.EDIT ? this.editLanguages() : this.removeLanguages()}
-                    handleClose={async () => this.toggleModal()}
-                >
-                    {type === TYPE.EDIT ?
-                        (<InputTitle
-                            title="Sửa tên ngôn ngữ"
-                            type={TYPE.INPUT}
-                            value={name}
-                            placeholder="Tên ngôn ngữ"
-                            onChange={(event: any) => this.setState({name: event})}
-                            widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa ngôn ngữ: {name}</div>
-                    }
-                </ModalConfig>
-                <div>
-                    <h5>
-                        Danh sách ngôn ngữ
-                        <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
+                    width={500}
+                    onOk={() => {
+                        if (type == TYPE.CREATE) {
+                            this.addLanguage();
+                        } else if (type == TYPE.EDIT) {
+                            this.editLanguage();
+                        }
+                    }}
+                    onCancel={() => {
 
-                            <Link to='/admin/data/skills/create'>
-                                <Icon type="plus"/>
-                                Thêm ngôn ngữ mới
-                            </Link>
-                        </Button>
-                    </h5>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{x: 1000}}
-                        bordered
-                        pagination={{total: totalItems, showSizeChanger: true}}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name})})}
-                    />
+                    }}
+                >
+                    <InputTitle
+                        title="Tên ngôn ngữ*"
+                        type={TYPE.INPUT}
+                        value={name}
+                        placeholder="Tên ngôn ngữ"
+                        onChange={(event: any) => this.setState({name: event})}
+                        widthInput="500px"/>
+                </AppModal>
+
+                <div>
+                    <Row gutter={10}>
+                        <Col span={6}/>
+                        <Col span={10}>
+                            <h4>Danh sách ngôn ngữ</h4>
+                        </Col>
+                        <Col span={1}>
+                            <Popover content="Xóa đã chọn" trigger="hover">
+                                <Button
+                                    onClick={() => {
+                                    }}
+                                    shape="circle"
+                                    type="danger"
+                                    icon="delete"
+                                >
+                                </Button>
+                            </Popover>
+                        </Col>
+                        <Col span={1}>
+                            <Popover content="Thêm mới" trigger="hover">
+                                <Button
+                                    onClick={() => this.toggleModal(true, TYPE.CREATE)}
+                                    shape="circle"
+                                    type="primary"
+                                    icon="plus"
+                                >
+                                    {/*<Link to='/admin/data/skills/create'/>*/}
+                                </Button>
+                            </Popover>
+                        </Col>
+                        <Col span={6}/>
+                    </Row>
+                    <Row>
+                        <Col span={6}/>
+                        <Col span={12}>
+                            <Table
+                                // @ts-ignore
+                                columns={this.columns}
+                                loading={loading_table}
+                                dataSource={data_table}
+                                useFixedHeader={true}
+                                scroll={{y: 450}}
+                                bordered
+                                pagination={{total: totalItems, showSizeChanger: true}}
+                                size="middle"
+                                onChange={this.setPageIndex}
+                                onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name})})}
+                            />
+                        </Col>
+                        <Col span={6}/>
+                    </Row>
                 </div>
             </Fragment>
         )
@@ -208,7 +254,11 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListLanguages: (pageIndex: number, pageSize: number) => dispatch({type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES, pageIndex, pageSize})
+    getListLanguages: (pageIndex: number, pageSize: number) => dispatch({
+        type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES,
+        pageIndex,
+        pageSize
+    })
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({
