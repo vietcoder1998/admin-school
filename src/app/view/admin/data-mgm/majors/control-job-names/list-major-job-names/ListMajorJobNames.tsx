@@ -1,23 +1,23 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Select } from 'antd';
+import { Icon, Button, Select, Divider } from 'antd';
 import { REDUX_SAGA } from '../../../../../../../common/const/actions';
 import { IJobName } from '../../../../../../../redux/models/job-type';
 import { Link } from 'react-router-dom';
-import { ModalConfig } from '../../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../../services/exec';
 import { MAJORS } from '../../../../../../../services/api/private.api';
-import { DELETE, PUT, GET } from '../../../../../../../common/const/method';
+import { PUT } from '../../../../../../../common/const/method';
 import { TYPE } from '../../../../../../../common/const/type';
 import { IJobGroup } from '../../../../../../../redux/models/job-groups';
-import { IptLetter } from '../../../../../layout/common/Common';
 
 const { Option } = Select;
 
 interface ListMajorJobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
+    history: Readonly<any>;
     getListMajorJobNames: Function;
+    getListJobNames: Function;
 }
 
 interface ListMajorJobNamesState {
@@ -36,6 +36,8 @@ interface ListMajorJobNamesState {
     list_id?: Array<string>
     list_name?: any;
     list_data?: Array<{ label?: string, value?: any }>
+    list_opntion?: JSX.Element;
+    list_major_job_names?: Array<IJobName>
 }
 
 class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJobNamesState> {
@@ -56,7 +58,8 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             jobGroupName: undefined,
             list_id: [],
             list_name: [],
-            list_data: []
+            list_data: [],
+            list_major_job_names: []
         }
     }
 
@@ -67,29 +70,20 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.list_major_job_names && nextProps.list_major_job_names !== prevState.list_major_job_names) {
             let data_table: any = [];
-            let { pageIndex, pageSize } = prevState;
+            let list_id: Array<string> = [];
+            let list_name: Array<string> = [];
             nextProps.list_major_job_names.forEach((item: any, index: any) => {
-                data_table.push({
-                    key: item.id,
-                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    name: item.name,
-                    jobGroupName: item.jobGroup.name
-                });
+                list_id.push(item.id);
+                list_name.push(item.name)
             });
 
             return {
                 list_job_names: nextProps.list_job_names,
                 data_table,
-                loading_table: false
-            }
-        }
-
-        if (nextProps.list_job_groups !== prevState.list_job_groups) {
-            let list_data: any = [];
-            nextProps.list_job_groups.forEach((item: any) => list_data.push({ value: item.id, label: item.name }));
-            return {
-                list_job_groups: nextProps.list_job_groups,
-                list_data,
+                loading_table: false,
+                list_id,
+                list_name,
+                list_major_job_names: nextProps.list_major_job_names
             }
         }
 
@@ -99,15 +93,19 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             }
         }
 
-
         if (nextProps.match.params.id !== undefined && nextProps.match.params.id !== prevState.id) {
             nextProps.getListMajorJobNames(0, 10, nextProps.match.params.id);
-            nextProps.getListMajor(0, 0);
+            nextProps.getListJobNames(0, 0);
             return {
                 id: nextProps.match.params.id
             }
         }
         return null;
+    }
+
+    list_option = () => {
+        let { list_job_names } = this.props;
+        return list_job_names.map((item, index) => (<Option key={item.id + index} value={item.name}> {item.name}</Option>))
     }
 
     toggleModal = (type?: string) => {
@@ -118,187 +116,63 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
         this.setState({ openModal: !openModal })
     };
 
-    EditContent: JSX.Element = (
-        <div>
-            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
-                onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
-                onClick={() => this.toggleModal(TYPE.EDIT)} />
-        </div>
-    );
-
-    columns = [
-        {
-            title: '#',
-            width: 150,
-            dataIndex: 'index',
-            key: 'index',
-            className: 'action',
-            fixed: false,
-        },
-        {
-            title: 'Loại công việc',
-            dataIndex: 'name',
-            key: 'name',
-            width: 500,
-            className: 'action',
-            fixed: false,
-        },
-        {
-            title: 'Thuộc nhóm công việc',
-            dataIndex: 'jobGroupName',
-            key: 'jobGroupName',
-            width: 500,
-            className: 'action',
-            fixed: false,
-        },
-        {
-            title: 'Thao tác',
-            key: 'operation',
-            className: 'action',
-            width: 200,
-            fixed: "right",
-            render: () => this.EditContent,
-        },
-    ];
-
-    onChangeData = (event?: any) => {
-       this.setState({list_id: event})
+    onChangeData = async (event?: any) => {
+        await this.setState({ list_name: event })
+        await this.handleChangeListId(event);
     }
 
-    setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        await this.props.getListMajorJobNames(event.current - 1, event.pageSize);
-    };
-
-    choseJobName = (event: any) => {
-        this.setState({ id: event.key, name: event.name, jobGroupName: event.jobGroupName });
-        this.getJobNameDetail(event.key);
-    };
-
-    getJobNameDetail = async (id: number) => {
-        await _requestToServer(
-            GET, MAJORS + `/${id}/jobNames`,
-            undefined,
-            undefined, undefined, undefined, false, false
-        ).then((res: any) => {
-            if (res) {
-                this.setState({ jobGroupID: res.data.jobGroup.id })
-            }
-        })
-    };
-
-    handleChoseJobGroup = (id: number) => {
-        let { list_data } = this.state;
-        list_data.forEach(item => {
-            if (item.value === id) {
-                this.setState({ jobGroupName: item.label })
-            }
-        });
-        this.setState({ jobGroupID: id })
-    };
-
-    handleChoseJobId = (event?: any) => {
-        let { list_id } = this.state;
-        list_id.forEach((item, index) => {
-            if (item === event) {
-                list_id.push(event);
-            }
-        })
-        this.setState({ list_id });
-    }
-
-    editMajorJobNames = async () => {
-        let { name, id, jobGroupID } = this.state;
-        if (name) {
-            await _requestToServer(
-                PUT, MAJORS + `/${id}/jobNames`,
-                {
-                    name: name.trim(),
-                    jobGroupID
+    handleChangeListId = async (event: any) => {
+        let { list_job_names } = this.props;
+        let { list_name } = this.state;
+        let list_id = [];
+        await list_name.forEach((item: string) => {
+            list_job_names.forEach((element: IJobName) => {
+                if (element.name === item) {
+                    list_id.push(element.id)
                 }
-            ).then((res: any) => {
-                this.props.getListMajorJobNames(0);
-                this.toggleModal();
-            })
-        }
-    };
+            });
 
-    removeMajorJobNames = async () => {
-        let { id } = this.state;
-        await _requestToServer(
-            DELETE, MAJORS + `/${id}/jobNames`,
-            [id]
-        ).then((res: any) => {
-            this.props.getListMajorJobNames(0);
-            this.toggleModal();
         })
+
+        await this.setState({ list_id })
+    }
+
+    onSearchJob = (name: string | null) => {
+        this.props.getListJobNames(0, 10, name);
     };
 
     createNewData = async () => {
-        let {list_id} = this.state;
-        let {id} = this.props.match.params
+        let { list_id } = this.state;
+        let { id } = this.props.match.params
         await _requestToServer(
             PUT, MAJORS + `/${id}/jobNames`, list_id
         )
         await this.props.getListMajorJobNames(0, 10, id);
-        await this.setState({list_id: []});
     }
 
     render() {
-        let { data_table, loading_table, openModal, type, name, jobGroupName, list_data, id, list_job_names, list_name, list_id } = this.state;
-        let { totalItems } = this.props;
+        let {
+            list_name,
+        } = this.state;
         return (
             <Fragment>
-                <ModalConfig
-                    namebtn1={"Hủy"}
-                    namebtn2={"Hoàn thành"}
-                    title="Thay đổi công việc"
-                    isOpen={openModal}
-                    handleOk={() => type === TYPE.EDIT ? this.editMajorJobNames() : this.removeMajorJobNames()}
-                    handleClose={this.toggleModal}
-                    toggleModal={this.toggleModal}
-                >
-                    {type === TYPE.EDIT ? (
-                        <Fragment>
-                            <InputTitle
-                                type={TYPE.INPUT}
-                                title="Sửa tên công việc"
-                                widthLabel="120px"
-                                placeholder="Thay đổi tên"
-                                value={name}
-                                widthInput={"250px"}
-                                style={{ padding: "0px 20px" }}
-                                onChange={(event: any) => this.setState({ name: event })}
-                            />
-                            <InputTitle
-                                type={TYPE.SELECT}
-                                title="Chọn nhóm công việc"
-                                placeholder="Chọn nhóm công việc"
-                                list_value={list_data}
-                                value={jobGroupName}
-                                style={{ padding: "0px 20px" }}
-                                onChange={this.handleChoseJobGroup}
-                            />
-                        </Fragment>
-                    ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
-                </ModalConfig>
                 <div>
                     <h5>
                         {localStorage.getItem("name_major")}
                         <Button
-                            onClick={() => {
-                                this.createNewData()
+                            onClick={async () => {
+                                await this.createNewData();
+                                await this.props.history.push('/admin/data/majors/list');
                             }}
-                            type="danger"
                             style={{
                                 float: "right",
-                                marginLeft: "5px"
+                                marginLeft: "5px",
+                                background: "greenyellow"
                             }}
                         >
 
                             <Icon type="check" />
-                            Xác nhận
+                            Lưu
                         </Button>
                         <Button
                             onClick={() => {
@@ -309,37 +183,33 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                             }}
                         >
 
-                            <Link to={`/admin/data/major/${id}/job-names/create`}>
+                            <Link to={`/admin/data/job-names/create`}>
                                 <Icon type="plus" />
                                 Thêm loại công việc mới
                             </Link>
                         </Button>
                     </h5>
-                    <p style={{ margin: "none!important" }}>
-                        <IptLetter value="Chọn tên công việc" />
-                    </p>
-                    <Select
-                        mode="multiple"
-                        placeholder="Nhập tên công việc"
-                        style={{ width: '400px', margin: "10px 0px" }}
-                        onChange={(event: string) => this.onChangeData(event)}
+                    <Divider
+                        orientation="left"
                     >
-                        {
-                            list_job_names.map((item, index) => (<Option key={item.id} value={item.id}> {item.name}</Option>))
-                        }
-                    </Select>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 1000 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event: any) => ({ onClick: () => this.choseJobName(event) })}
-                    />
+                        Danh sách các công việc thuộc chuyên ngành
+                    </Divider>
+                    <InputTitle
+                        title="Chọn tên công việc"
+                    >
+                        <Select
+                            mode="multiple"
+                            size="large"
+                            placeholder="Nhập tên công việc"
+                            style={{ width: '100%', margin: "10px 0px" }}
+                            value={list_name}
+                            onSearch={(event: any) => this.onSearchJob(event)}
+                            onChange={(event: any) => this.onChangeData(event)}
+                        >
+                            {this.list_option()}
+                        </Select>
+                    </InputTitle>
+
                 </div>
             </Fragment>
         )
@@ -350,14 +220,13 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getListMajorJobNames: (pageIndex: number, pageSize: number, id: string | number) => dispatch({
         type: REDUX_SAGA.MAJOR_JOB_NAMES.GET_MAJOR_JOB_NAMES, pageIndex, pageSize, id
     }),
-    getListJobNames: (pageIndex: number, pageSize: number) => dispatch({
-        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize
+    getListJobNames: (pageIndex: number, pageSize: number, name: string | null, id: number | string | undefined) => dispatch({
+        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize, name, id
     })
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({
     list_major_job_names: state.MajorJobNames.items,
-    list_job_groups: state.JobGroups.items,
     list_job_names: state.JobNames.items,
     totalItems: state.MajorJobNames.totalItems,
 });
