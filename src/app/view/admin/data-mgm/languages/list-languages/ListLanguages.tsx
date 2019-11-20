@@ -1,6 +1,6 @@
 import React, {PureComponent, Fragment} from 'react'
 import {connect} from 'react-redux';
-import {Icon, Table, Button, Row, Col, Popover, Modal} from 'antd';
+import {Icon, Table, Button, Row, Col, Popover} from 'antd';
 import {REDUX_SAGA} from '../../../../../../common/const/actions';
 import {ILanguages} from '../../../../../../redux/models/languages';
 import {_requestToServer} from '../../../../../../services/exec';
@@ -177,9 +177,9 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                     }}
                     width={500}
                     onOk={() => {
-                        if (type == TYPE.CREATE) {
+                        if (type === TYPE.CREATE) {
                             this.addLanguage();
-                        } else if (type == TYPE.EDIT) {
+                        } else if (type === TYPE.EDIT) {
                             this.editLanguage();
                         }
                     }}
