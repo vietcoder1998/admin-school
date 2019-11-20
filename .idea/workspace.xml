@@ -2,49 +2,76 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08b70a2-4352-463e-9b93-c7053cd75bf0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/image/logo-color.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/image/logo-icon-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/image/logo-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/common/const/icon-font-cn.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/annou-types/AnnouTypes.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/annou-types/AnnouTypes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/annou-types/create-annou-types/CreateAnnouTypes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/annou-types/list-annou-types/ListAnnouTypes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/control-job-names/ControlJobNames.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/control-job-names/list-major-job-names/ListMajorJobNames.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/admin-accounts/AdminAccounts.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/admin-accounts/create-admin-accounts/CreateAdminAccounts.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/admin-accounts/create-admin-accounts/CreateAdminAccounts.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/admin-accounts/list-admin-accounts/ListAdminAccounts.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/utils/toUnixTime.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/actions/admin-accounts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/actions/annou-types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/actions/major-job-names.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/models/admin-accounts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/models/major-job-names.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/reducers/admin-accounts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/reducers/major-job-names.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/sagas/admin-accounts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/sagas/major-job-names.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.env" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/view/admin/Admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/Admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/DataMgm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/Majors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/Majors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/create-majors/CreateMajors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/create-majors/CreateMajors.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/list-regions/ListRegions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/regions/list-regions/ListRegions.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/list-type-schools/ListTypeSchools.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/data-mgm/type-schools/list-type-schools/ListTypeSchools.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-create/MngCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-create/MngCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-list/MngList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/job-management/mng-list/MngList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/layout/config/DropdownConfig.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/layout/config/DropdownConfig.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/layout/header/Header.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/layout/header/Header.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/role-admins/RoleAdmins.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/RoleAdmins.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/list-roles/ListRoles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/list-roles/ListRoles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/layout/input-tittle/InputTitle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/layout/input-tittle/InputTitle.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/layout/modal-config/app-modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/layout/modal-config/AppModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/layout/modal-config/modal-config.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/view/scss/_common.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/view/scss/_common.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/const/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/const/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/const/break-cumb.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/const/break-cumb.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/const/code.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/const/code.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/const/type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/const/type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/utils/convertTime.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/utils/convertTime.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/utils/convertTimeMsg.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/utils/convertTimeMsg.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo-01.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions/job-names.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/job-names.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/announcement-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/announcement-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/announcement-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/announcement-detail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/type-management.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/type-schools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/type-schools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/models/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/models/annou-types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/annou-types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/sagas/announcements.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/announcements.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/api-controller-roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/api-controller-roles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/api-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/api-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/branches.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/branches.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/job-groups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/job-groups.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/job-names.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/job-names.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/languages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/languages.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/sagas/majors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/majors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/pending-jobs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/pending-jobs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/regions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/regions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/role-detail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/role-detail.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/roles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/roles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/skills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/skills.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/type-management.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/sagas/type-schools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/type-schools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/sagas/type-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/sagas/annou-types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store/reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store/reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store/saga.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store/saga.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store/store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/api/private.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api/private.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/api/public.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api/public.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auto-login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auto-login.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/clearStorage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/clearStorage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/exec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/exec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/login.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -59,65 +86,70 @@
     <session id="-27882702">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.7" value="2" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="css" value="1" />
           <entry key="env" value="11" />
-          <entry key="html" value="1" />
+          <entry key="html" value="3" />
           <entry key="jpg" value="3" />
           <entry key="js" value="5" />
           <entry key="json" value="4" />
           <entry key="png" value="3" />
-          <entry key="scss" value="6" />
+          <entry key="scss" value="12" />
           <entry key="svg" value="1" />
-          <entry key="ts" value="231" />
-          <entry key="tsx" value="119" />
+          <entry key="ts" value="259" />
+          <entry key="tsx" value="150" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key=".env file" value="11" />
-          <entry key="HTML" value="1" />
+          <entry key="CSS" value="1" />
+          <entry key="Enforced Plain Text" value="1" />
+          <entry key="HTML" value="3" />
           <entry key="Image" value="6" />
           <entry key="JSON" value="3" />
           <entry key="JavaScript" value="5" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="SCSS" value="6" />
+          <entry key="SCSS" value="12" />
           <entry key="SVG" value="1" />
-          <entry key="TypeScript" value="231" />
-          <entry key="TypeScript JSX" value="119" />
+          <entry key="TypeScript" value="259" />
+          <entry key="TypeScript JSX" value="149" />
           <entry key="tsconfig" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="152" />
-          <entry key="html" value="13" />
+          <entry key="html" value="22" />
           <entry key="js" value="52" />
-          <entry key="scss" value="159" />
-          <entry key="ts" value="4496" />
-          <entry key="tsx" value="3911" />
+          <entry key="scss" value="167" />
+          <entry key="ts" value="4544" />
+          <entry key="tsx" value="7588" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="152" />
-          <entry key="HTML" value="13" />
+          <entry key="HTML" value="22" />
           <entry key="JavaScript" value="52" />
-          <entry key="SCSS" value="159" />
-          <entry key="TypeScript" value="4496" />
-          <entry key="TypeScript JSX" value="3911" />
+          <entry key="SCSS" value="167" />
+          <entry key="TypeScript" value="4544" />
+          <entry key="TypeScript JSX" value="7588" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="TypeScriptServerServiceImpl" value="2" />
+          <entry key="TypeScriptServerServiceImpl" value="5" />
         </counts>
       </usages-collector>
     </session>
@@ -125,23 +157,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx">
+        <entry file="file://$PROJECT_DIR$/src/app/view/scss/_common.scss">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
-              <caret line="71" column="61" selection-start-line="71" selection-start-column="61" selection-end-line="71" selection-end-column="61" />
-              <folding>
-                <element signature="e#0#44#0" expanded="true" />
-                <element signature="e#306#344#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/common/const/icon-font-cn.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+              <caret line="90" column="3" lean-forward="true" selection-start-line="90" selection-start-column="3" selection-end-line="90" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -157,16 +176,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>googleAPIKey</find>
-      <find>SKIP_PREFLIGHT_CHECK</find>
-      <find>base-api</find>
-      <find>createAuthozization</find>
-      <find>axios</find>
-      <find>INTERSHIP</find>
-      <find>_requestToServer</find>
-      <find>data_breakcumb</find>
-      <find>fix</find>
-      <find>ADMIN_HO</find>
       <find>ADMIN</find>
       <find>dev.js</find>
       <find>RFTK_LOGIN</find>
@@ -187,6 +196,16 @@
       <find>image</find>
       <find>../../../../logo-01.png</find>
       <find>wid</find>
+      <find>scroll</find>
+      <find>ant-table-body</find>
+      <find>Root</find>
+      <find>id=&quot;roo</find>
+      <find>.ant-modal</find>
+      <find>ant-modal</find>
+      <find>closeModal</find>
+      <find>TYPE.CREATE</find>
+      <find>over</find>
+      <find>onCan</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\LENOVO\Desktop\worksvn-web-admin\src\app\view\layout\config</dir>
@@ -198,20 +217,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/create-languages/CreateLanguages.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/JobNames.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/JobGroups.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/list-job-groups/ListJobGroups.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-groups/create-job-groups/CreateJobGroups.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/Branches.tsx" />
         <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/create-branches/CreateBranches.tsx" />
         <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/create-job-names/CreateJobNames.tsx" />
         <option value="$PROJECT_DIR$/src/services/base-api.ts" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/common/const/actions.ts" />
         <option value="$PROJECT_DIR$/src/app/view/admin/role-admins/roles/Roles.tsx" />
         <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/branches/list-branches/ListBranches.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" />
         <option value="$PROJECT_DIR$/src/services/clearStorage.ts" />
         <option value="$PROJECT_DIR$/src/common/const/break-cumb.ts" />
         <option value="$PROJECT_DIR$/src/common/utils/convertTime.ts" />
@@ -227,7 +238,6 @@
         <option value="$PROJECT_DIR$/src/redux/sagas/type-schools.ts" />
         <option value="$PROJECT_DIR$/src/redux/sagas/regions.ts" />
         <option value="$PROJECT_DIR$/src/redux/sagas/job-groups.ts" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" />
         <option value="$PROJECT_DIR$/src/redux/sagas/majors.ts" />
         <option value="$PROJECT_DIR$/src/redux/sagas/languages.ts" />
         <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx" />
@@ -237,9 +247,7 @@
         <option value="$PROJECT_DIR$/src/redux/sagas/roles.ts" />
         <option value="$PROJECT_DIR$/src/redux/sagas/api-controller.ts" />
         <option value="$PROJECT_DIR$/src/services/exec.ts" />
-        <option value="$PROJECT_DIR$/src/common/const/type.ts" />
         <option value="$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx" />
-        <option value="$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx" />
         <option value="$PROJECT_DIR$/src/app/view/layout/header/Header.js" />
         <option value="$PROJECT_DIR$/src/services/login.ts" />
         <option value="$PROJECT_DIR$/src/app/view/layout/config/DropdownConfig.tsx" />
@@ -249,6 +257,17 @@
         <option value="$PROJECT_DIR$/src/App.tsx" />
         <option value="$PROJECT_DIR$/src/common/const/icon-font-cn.tsx" />
         <option value="$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/layout/modal-config/modal-config.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/layout/common/Common.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/layout/modal-config/app-modal.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/common/const/type.ts" />
+        <option value="$PROJECT_DIR$/src/app/view/layout/input-tittle/InputTitle.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/job-management/mng-list/MngList.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx" />
+        <option value="$PROJECT_DIR$/src/app/view/scss/_common.scss" />
       </list>
     </option>
   </component>
@@ -322,7 +341,47 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="menu-navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="majors" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="data-mgm" type="462c0819:PsiDirectoryNode" />
+              <item name="majors" type="462c0819:PsiDirectoryNode" />
+              <item name="list-majors" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="job-management" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="job-management" type="462c0819:PsiDirectoryNode" />
+              <item name="mng-list" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
@@ -338,13 +397,25 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+              <item name="input-tittle" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
               <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+              <item name="modal-config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="scss" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
@@ -356,28 +427,7 @@
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
               <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="const" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="redux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="redux" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="redux" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
@@ -405,13 +455,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="worksvn-web-admin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="worksvn-web-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -429,13 +472,14 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\assets\image" />
-      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\services" />
       <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\services\api" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\app\view\layout\modal-config" />
+      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin\src\assets\image" />
+      <recent name="C:\Users\LENOVO\Desktop\worksvn-web-admin" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -470,24 +514,27 @@
       <option name="presentableId" value="Default" />
       <updated>1573892716082</updated>
       <workItem from="1573892718566" duration="32793000" />
-      <workItem from="1573956204509" duration="9838000" />
+      <workItem from="1573956204509" duration="19167000" />
+      <workItem from="1574147889698" duration="5474000" />
+      <workItem from="1574218705088" duration="6907000" />
+      <workItem from="1574229329929" duration="1290000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42631000" />
+    <option name="totallyTimeSpent" value="65631000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25776604" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29940516" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26770538" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21529745" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -496,7 +543,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="RNConsole" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32294616" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.41076487" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -532,241 +579,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/redux/reducers/job-names.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/store/store.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/store/saga.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/actions/job-names.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="30" lean-forward="true" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/create-job-names/CreateJobNames.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="57" column="17" lean-forward="true" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/api/public.api.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/pending-jobs.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/announcements.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="43" column="8" lean-forward="true" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/announcement-detail.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="36" column="53" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/skills/list-skills/ListSkills.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="195" column="37" selection-start-line="195" selection-start-column="37" selection-end-line="195" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/skills.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/type-schools.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="38" column="46" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/regions.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="37" column="42" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/job-groups.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="251" column="34" lean-forward="true" selection-start-line="251" selection-start-column="34" selection-end-line="251" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/majors.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/languages.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/job-names.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/job-names/list-job-names/ListJobNames.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="155" column="21" selection-start-line="155" selection-start-column="21" selection-end-line="155" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/type-management.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/branches.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="26" column="42" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/role-detail.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/roles.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="36" column="42" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/api-controller.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/sagas/api-controller-roles.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#0#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/api/private.api.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/exec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="111" column="1" lean-forward="true" selection-start-line="111" selection-start-column="1" selection-end-line="111" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/const/type.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/pending-jobs/PendingJobs.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="356" column="40" lean-forward="true" selection-start-line="356" selection-start-column="40" selection-end-line="356" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logo-01.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/image/login-image.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -777,16 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="981">
-          <caret line="91" column="31" lean-forward="true" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -794,32 +596,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/layout/header/Header.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/header/Header.js" />
     <entry file="file://$PROJECT_DIR$/src/app/view/login/Login.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2099">
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-2099" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/services/login.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="553">
           <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -834,16 +620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="491">
           <caret line="64" column="29" lean-forward="true" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/layout/config/DropdownConfig.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="57" column="36" lean-forward="true" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -872,16 +648,6 @@
     <entry file="file://$PROJECT_DIR$/src/common/const/method.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/const/actions.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -896,31 +662,266 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/const/icon-font-cn.tsx" />
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="77" column="43" lean-forward="true" selection-start-line="77" selection-start-column="43" selection-end-line="77" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/Languages.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/row/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/col/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/prop-types/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/grid/row.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="23" column="15" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/grid/col.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="33" column="56" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/table/Table.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/config-table/ConfigTable.tsx">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/config/DropdownConfig.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="57" column="36" lean-forward="true" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/table/style/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="30" column="1" selection-start-line="30" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/create-languages/CreateLanguages.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-867" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/Languages.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/button/button.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="4571" column="23" selection-start-line="4571" selection-start-column="23" selection-end-line="4571" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/modal/Modal.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="387" column="10" selection-start-line="387" selection-start-column="10" selection-end-line="387" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/common/Common.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        <state relative-caret-position="68">
+          <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/auth.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/languages/list-languages/ListLanguages.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/modal-config/ModalConfig.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/const/icon-font-cn.tsx">
+    <entry file="file://$PROJECT_DIR$/src/redux/store/reducer.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        <state relative-caret-position="-434">
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/menu-navigation/MenuNavigation.tsx">
+    <entry file="file://$PROJECT_DIR$/src/redux/actions/admin-accounts.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/actions/annou-types.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/actions/announcement-detail.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/actions/type-schools.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/const/type.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/input-tittle/InputTitle.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1046">
+          <caret line="66" column="13" lean-forward="true" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/layout/modal-config/AppModal.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="22" lean-forward="true" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/job-management/mng-list/MngList.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8159">
+          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/data-mgm/majors/list-majors/ListMajors.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/scss/_common.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="71" column="61" selection-start-line="71" selection-start-column="61" selection-end-line="71" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-            <element signature="e#306#344#0" expanded="true" />
-          </folding>
+          <caret line="90" column="3" lean-forward="true" selection-start-line="90" selection-start-column="3" selection-end-line="90" selection-end-column="3" />
         </state>
       </provider>
     </entry>

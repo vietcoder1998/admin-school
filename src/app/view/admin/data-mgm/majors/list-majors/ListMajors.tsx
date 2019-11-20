@@ -12,6 +12,7 @@ import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { TYPE } from '../../../../../../common/const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 
+
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     history: any;

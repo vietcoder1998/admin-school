@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon} from 'antd';
+import {Button, Icon, Modal} from 'antd';
 
 export interface IConfigModalProps {
     toggleModal: Function;

@@ -4,13 +4,13 @@ import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { Button, Table, Icon, Select, Row, Col, Modal, DatePicker, Rate } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../common/utils/convertTime';
 import './MngList.scss';
-import { TYPE } from '../../../../../common/const/type';
-import { Link } from 'react-router-dom';
-import { IptLetter } from '../../../layout/common/Common';
-import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
-import { _requestToServer } from '../../../../../services/exec';
-import { DELETE } from '../../../../../common/const/method';
-import { ANNOUNCEMENT_DETAIL } from '../../../../../services/api/private.api';
+import {TYPE} from '../../../../../common/const/type';
+import {Link} from 'react-router-dom';
+import {IptLetter} from '../../../layout/common/Common';
+import {ModalConfig} from '../../../layout/modal-config/ModalConfig';
+import {_requestToServer} from '../../../../../services/exec';
+import {DELETE} from '../../../../../common/const/method';
+import {ANNOUNCEMENT_DETAIL} from '../../../../../services/api/private.api';
 
 let { Option } = Select;
 
