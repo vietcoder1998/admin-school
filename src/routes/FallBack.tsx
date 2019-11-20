@@ -1,23 +1,40 @@
 import React from 'react'
-import {Icon} from 'antd'
+import { Icon } from 'antd';
+// @ts-ignore
+import CatGif from './../assets/image/cat-chocolate.gif';
+
+let sound = new Audio("http://www.tomandjerryonline.com/sounds/tjintro.wav");
 
 export default function FallBack(props: any) {
+    sound.play();
+
     return (
         <div
-            className="none-footer"
+            className="fallback-content test"
+            style={{
+                width: "100%",
+                height: "100%",
+                paddingTop: "20vh",
+               
+            }}
         >
-            <div className="fallback-content test">
-                <h4 className='a_c'>
-                    Đang tải nội dung
+            <h4 className='a_c'
+            // style={{ color: "white" }}
+            >
+                Đang tải trang
                 </h4>
-                <div className='msg-noti a_c'>
-                    <p className=' a_c'>
-                        Đang tải nội dung
+            <div className=' a_c'>
+                <p className=' a_c'>
+                    <Icon type="loading-3-quarters" style={{ color: "blue", padding: "5px" }} spin />
+                    loaddddddddddddding...
                     </p>
-                    <p className="icon-noti">
-                        <Icon type="loading"/>
-                    </p>
-                </div>
+                <img src={CatGif}
+                    style={{
+                        width: 200,
+                        height: 200,
+                    }}
+                    alt="gif"
+                />
             </div>
         </div>
     )
