@@ -19,7 +19,7 @@ import { Announcements } from '../reducers/announcements';
 import { AnnouncementDetail } from '../reducers/announcement-detail';
 import { combineReducers } from 'redux';
 
-const myReducer = combineReducers({
+const rootReducer = combineReducers({
     PendingJobs,
     JobNames,
     AnnouTypes,
@@ -41,4 +41,5 @@ const myReducer = combineReducers({
     AnnouComments
 });
 
-export default myReducer
+export type IAppState = ReturnType<typeof rootReducer>;
+export default rootReducer;
