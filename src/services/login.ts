@@ -12,7 +12,7 @@ export function loginUser(data?: any, type?: string) {
         type === TYPE.NORMAL_LOGIN ? ADMIN_LOGIN : RFTK_LOGIN,
         data,
         undefined, 
-        loginHeaders("worksvn-admin-web", "worksvn-admin-web@works.vn")
+        loginHeaders(process.env.REACT_APP_CLIENT_ID, process.env.REACT_APP_CLIENT_SECRET)
     ).then(res => {
         if (res && res.code === 200) {
             let cookie = new Cookies();
