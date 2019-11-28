@@ -3,9 +3,6 @@ import { Icon } from 'antd';
 // @ts-ignore
 import CatGif from './../assets/image/cat-chocolate.gif';
 
-let sound = new Audio("http://www.tomandjerryonline.com/sounds/tjintro.wav");
-sound.play();
-
 export default function FallBack(props: any) {
     return (
         <div
