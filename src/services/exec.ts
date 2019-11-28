@@ -91,7 +91,7 @@ export const _requestToServer = async (
 };
 
 function logRequest(method: string, host: string | undefined, api: string, body?: any, params?: any, headers?: any) {
-    if (process.env.REACT_APP_LOG_API) {
+    if (process.env.REACT_APP_LOG_API == 'true') {
         console.log('REQUEST ' + method + ' ' + host + api, {
             api: method + " " + host + api,
             body: body,
@@ -102,7 +102,7 @@ function logRequest(method: string, host: string | undefined, api: string, body?
 }
 
 function logResponse(method: string, host: string | undefined, api: string, responseBody?: any, params?: any, headers?: any) {
-    if (process.env.REACT_APP_LOG_API) {
+    if (process.env.REACT_APP_LOG_API == 'true') {
         console.log('RESPONSE ' + method + ' ' + host + api, {
             api: method + " " + host + api,
             body: responseBody,
