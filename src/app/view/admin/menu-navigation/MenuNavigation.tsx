@@ -140,15 +140,9 @@ export default class MenuNavigation extends PureComponent<MenuNavigationProps, M
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="13">
-                            <Link to='/admin/role-admins/admin-accounts/create'>
-                                <Icon type="user-add" />
-                                <span>Tài khoản admin</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="14">
-                            <Link to='/admin/role-admins/admin-accounts/create'>
+                            <Link to='/admin/role-admins/admin-accounts/list'>
                                 <Icon type="key" />
-                                <span>Đổi mật khẩu</span>
+                                <span>Tài khoản admin</span>
                             </Link>
                         </Menu.Item>
                     </SubMenu>

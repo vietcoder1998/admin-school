@@ -4,10 +4,9 @@ import { Icon } from 'antd';
 import CatGif from './../assets/image/cat-chocolate.gif';
 
 let sound = new Audio("http://www.tomandjerryonline.com/sounds/tjintro.wav");
+sound.play();
 
 export default function FallBack(props: any) {
-    sound.play();
-
     return (
         <div
             className="fallback-content test"
