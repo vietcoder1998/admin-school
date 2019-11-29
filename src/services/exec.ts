@@ -16,7 +16,6 @@ export const _requestToServer = async (
 ) => {
     if (!host) {
         host = process.env.REACT_APP_API_HOST;
-        console.log(host)
     }
     let response;
     try {
