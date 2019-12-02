@@ -18,13 +18,6 @@ interface MajorsProps extends StateProps, DispatchProps {
 }
 
 class Majors extends PureComponent<MajorsProps, MajorsState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

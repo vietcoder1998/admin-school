@@ -1,11 +1,13 @@
 import React from 'react';
 import { Icon } from 'antd';
+import './DropdownConfig.scss';
 
 export interface IDropdownConfigProps {
     children?: any;
     style?: any;
     param?: any;
     title?: string;
+    iconColor?: string;
 }
 export interface IDropdownConfigState {
     toggleTo?: boolean;
@@ -16,6 +18,7 @@ export interface IOp {
     label?: string;
     value?: string;
     icon?: string;
+    iconColor?: string;
     onClick?: () => void;
 }
 
@@ -29,13 +32,14 @@ export class OptionConfig extends React.PureComponent<IOp, IDropdownConfigState>
     render() {
         let {
             label,
-            icon
+            icon,
+            iconColor
         } = this.props;
 
         return (
             <div className="children-dropdown " onClick={() => this.toggle()}>
                 <li>
-                    {icon ? <Icon type={icon} /> : null}
+                    {icon ? <Icon type={icon} style={{color: iconColor ? iconColor: "gray"}} /> : null}
                     <span>{label}</span>
                 </li>
             </div>
@@ -53,18 +57,21 @@ export class DropdownConfig extends React.PureComponent<IDropdownConfigProps, ID
     render() {
         let {
             children,
+            param,
+            iconColor
         } = this.props;
 
         let { isOpen } = this.state;
         return (
             <React.Fragment>
                 <span style={{ padding: "5px" }} onClick={this.toggleDropdown}>
-                    <Icon type={isOpen ? "up" : "down"} />
+                    {param}
+                    <Icon type={isOpen ? "up" : "down"} style={{color: iconColor ? iconColor: "gray"}}/>
                 </span>
                 <div
                     className={`dropdown-config${isOpen ? " visible" : " hidden"}`}
                     onClick={this.toggleDropdown}
-                    onInvalidCapture={() => {console.log("uninvalid")}}
+                    onInvalidCapture={() => { console.log("uninvalid") }}
                 >
                     {children ? children : null}
                 </div>

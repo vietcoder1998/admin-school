@@ -18,13 +18,6 @@ interface JobGroupsProps extends StateProps, DispatchProps {
 }
 
 class JobGroups extends PureComponent<JobGroupsProps, JobGroupsState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

@@ -18,13 +18,6 @@ interface BranchesProps extends StateProps, DispatchProps {
 }
 
 class Branches extends PureComponent<BranchesProps, BranchesState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

@@ -19,6 +19,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+* {
+  font-family: $font_base;
+  letter-spacing: 0.3px;
+}
+
+svg {
+  margin-bottom: 5px;
+}
+
 .ant-layout {
   height: auto !important;
 }

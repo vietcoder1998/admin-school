@@ -4,14 +4,17 @@ import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
 import PendingJobs from './pending-jobs/PendingJobs';
-import { REDUX_SAGA } from '../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../common/const/actions';
 import { connect } from 'react-redux';
 import JobManagement from './job-management/JobManagement';
 import DataMgm from './data-mgm/DataMgm';
 import clearStorage from '../../../services/clearStorage';
-import { breakCumb } from '../../../common/const/break-cumb';
+import { breakCumb, IBrk } from '../../../common/const/break-cumb';
 import RoleAdmins from './role-admins/RoleAdmins';
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
+import Loading from '../layout/loading/Loading';
+
+import { IAppState } from '../../../redux/store/reducer';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -29,6 +32,7 @@ interface AdminProps extends StateProps, DispatchProps {
     getListJobGroups: Function;
     getListBranches: Function;
     getListApiController: Function;
+    handleLoading: Function;
 }
 
 
@@ -56,6 +60,10 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             let list_breakcumb = nextProps.location.pathname.split("/");
             let data_breakcumb: any = [];
             list_breakcumb.forEach((item: any) => item !== "" && data_breakcumb.push(item));
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+                nextProps.handleLoading(false);
+            }, 250);
 
             return {
                 pathname: nextProps.location.pathname,
@@ -70,12 +78,19 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         clearStorage()
     };
 
+    componentWillUnmount() {
+        window.removeEventListener("scroll", () => { });
+    }
+
     render() {
         let { show_menu, data_breakcumb } = this.state;
-        let { match } = this.props;
+        let { match, loading } = this.props;
         return (
             <Layout>
-                <MenuNavigation show_menu={show_menu} />
+                <MenuNavigation
+                    show_menu={show_menu}
+                    onCallLoading={() => this.props.handleLoading(true)}
+                />
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Icon
@@ -88,16 +103,21 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
                         />
                         <div className="avatar-header" >
-                            <Avatar
-                                icon="user"
-                                style={{
-                                    width: "30px",
-                                    height: "30px",
-                                }}
-                            />
-                            <DropdownConfig>
-                                <OptionConfig icon="logout" key="1" value="" label="Đăng xuất" onClick={this.logOut} />
+                            <DropdownConfig
+                                param={
+                                    <Avatar
+                                        icon="user"
+                                        style={{
+                                            width: "30px",
+                                            height: "30px",
+                                            border: "solid #fff 2px",
+                                            margin: "0px 5px"
+                                        }}
+                                    />
+                                }
+                            >
                                 <OptionConfig icon="user" key="2" value="" label="Tài khoản" onClick={() => { }} />
+                                <OptionConfig icon="logout" key="1" value="" label="Đăng xuất" onClick={() => clearStorage()} />
                             </DropdownConfig>
                         </div>
                     </Header>
@@ -116,26 +136,31 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     <Icon type="home" />
                                 </a>
                             </Breadcrumb.Item>
-                            {data_breakcumb.map(item => {
+                            {data_breakcumb.map((item: any) => {
                                 let newBreakCump = null;
-                                breakCumb.forEach((item_brk, index) => {
+                                breakCumb.forEach((item_brk: IBrk, index: number) => {
                                     if (item_brk.label === item) {
                                         newBreakCump = (
                                             <Breadcrumb.Item key={index}>
-                                                <a href={item_brk.url} >{item_brk.name}</a>
+                                                {item_brk.icon ? <Icon type={item_brk.icon} /> : null}
+                                                {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
                                             </Breadcrumb.Item>
                                         )
                                     }
-                                });
+                                })
 
                                 return newBreakCump
                             })}
                         </Breadcrumb>
                         <Switch>
-                            <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
-                            <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
-                            <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
-                            <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
+
+                            {!loading ? <Switch>
+                                <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
+                                <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
+                                <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
+                                <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
+                            </Switch> : <Loading />}
+
                         </Switch>
                     </Content>
                 </Layout>
@@ -161,9 +186,11 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getListApiController: () => dispatch({
         type: REDUX_SAGA.API_CONTROLLER.GET_API_CONTROLLER
     }),
+    handleLoading: (loading: boolean) => dispatch({ type: REDUX.HANDLE_LOADING, loading })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: IAppState, ownProps: any) => ({
+    loading: state.MutilBox.loading
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

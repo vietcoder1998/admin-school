@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Select, Popconfirm, Tooltip } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
@@ -9,14 +9,14 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../common/const/method';
 import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../common/const/type';
-import { IAnnouType} from '../../../../../../redux/models/annou-types';
+import { IAnnouType } from '../../../../../../redux/models/annou-types';
 
-interface ListAnnouTypesProps extends StateProps, DispatchProps {
+interface IListAnnouTypesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getListAnnouTypes: Function;
 }
 
-interface ListAnnouTypesState {
+interface IListAnnouTypesState {
     list_annou_types: Array<IAnnouType>,
     loading_table: boolean;
     data_table: Array<any>;
@@ -26,9 +26,10 @@ interface ListAnnouTypesState {
     name?: string;
     id?: string;
     type?: string;
+    targets?: Array<any>;
 }
 
-class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesState> {
+class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypesState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -41,50 +42,12 @@ class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesSt
             id: undefined,
             type: TYPE.EDIT,
             pageSize: 10,
+            targets: [TYPE.ALL]
         }
-    }
+    };
 
     async componentDidMount() {
         await this.props.getListAnnouTypes(0, 10);
-    }
-
-    static getDerivedStateFromProps(nextProps: any, prevState: any) {
-        if (nextProps.list_annou_types !== prevState.list_annou_types) {
-            let data_table: any = [];
-            let { pageIndex, pageSize } = prevState;
-            nextProps.list_annou_types.forEach((item: any, index: number) => {
-                data_table.push({
-                    key: item.id,
-                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    name: item.name,
-                });
-            });
-
-            return {
-                list_annou_types: nextProps.list_annou_types,
-                data_table,
-                loading_table: false
-            }
-        }
-        return null;
-    }
-
-
-    EditContent = (
-        <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
-                onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
-                onClick={() => this.toggleModal(TYPE.EDIT)} />
-        </div>
-    );
-
-    toggleModal = (type?: string) => {
-        let { openModal } = this.state;
-        this.setState({ openModal: !openModal });
-        if (type) {
-            this.setState({ type })
-        }
     };
 
     columns = [
@@ -99,7 +62,15 @@ class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesSt
             title: 'Tên nhóm bài viết',
             dataIndex: 'name',
             key: 'name',
-            width: 755,
+            width: 250,
+            className: 'action',
+
+        },
+        {
+            title: 'Đối tượng',
+            dataIndex: 'targets',
+            key: 'targets',
+            width: 400,
             className: 'action',
 
         },
@@ -113,24 +84,122 @@ class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesSt
         },
     ];
 
+    static getDerivedStateFromProps(nextProps: IListAnnouTypesProps, prevState: IListAnnouTypesState) {
+        if (nextProps.list_annou_types !== prevState.list_annou_types) {
+            let data_table: any = [];
+            let { pageIndex, pageSize } = prevState;
+            nextProps.list_annou_types.forEach((item: IAnnouType, index: number) => {
+                data_table.push({
+                    key: item.id,
+                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
+                    name: item.name,
+                    targets: item.targets.length > 0 ?
+                        item.targets.map((element: string, index: number) => element + (index === item.targets.length - 1 ? '' : ',')) : TYPE.ALL
+                });
+            });
+
+            return {
+                list_annou_types: nextProps.list_annou_types,
+                data_table,
+                loading_table: false
+            }
+        }
+        return null;
+    };
+
+
+    list_option = () => {
+        let list_type = [
+            { id: 1, name: TYPE.CANDIDATE },
+            { id: 2, name: TYPE.EMPLOYER },
+            { id: 3, name: TYPE.SCHOOL },
+            { id: 4, name: TYPE.PUBLIC },
+            { id: 5, name: TYPE.STUDENT },
+            { id: 5, name: TYPE.ALL },
+        ];
+        return list_type.map(
+            (item: { id: number, name: string }, index: number) => (<Select.Option key={item.id + index} value={item.name}> {item.name}</Select.Option>)
+        );
+    };
+
+    setTypeAnnou = (event?: Array<string>) => {
+        let targets = []
+        event && event.forEach((item: string) => {
+            if (item !== TYPE.ALL) {
+                if (item && item.includes(",")) {
+                    let newItem = item.split(",");
+                    item = newItem[0];
+                }
+
+                targets.push(item)
+            }
+        });
+
+        return targets;
+    }
+
+    handleSampleValue = (event: any) => {
+        if (event && event.length !== 0 && event[1] !== TYPE.ALL && event.length !== 5) {
+            let targets = this.setTypeAnnou(event);
+            return this.setState({ targets })
+        } else {
+            return this.setState({ targets: [TYPE.ALL] })
+        }
+    }
+
+    EditContent = (
+        <>
+            <Popconfirm
+                title="Bạn chắc chắn chứ？"
+                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+                okText="Xóa"
+                cancelText="Hủy"
+                onConfirm={() => this.removeAnnouTypes()}
+            >
+                <Icon type="delete" theme="twoTone" twoToneColor="red" style={{ padding: "5px 10px" }} />
+            </Popconfirm>
+            <Tooltip placement="top" title={"Sửa bài đăng"}>
+                <Icon type="edit" theme="twoTone" style={{ padding: "5px 10px" }} onClick={() => this.toggleModal(TYPE.EDIT)} />
+            </Tooltip>
+
+        </>
+    );
+
+    toggleModal = (type?: string) => {
+        let { openModal } = this.state;
+        this.setState({ openModal: !openModal });
+        if (type) {
+            this.setState({ type })
+        }
+    };
+
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListAnnouTypes(event.current - 1, event.pageSize)
     };
 
     editAnnouTypes = async () => {
-        let { name, id } = this.state;
+        let { name, id, targets } = this.state;
+
+        if (typeof targets === "string" || targets === [TYPE.ALL]) {
+            targets = [TYPE.CANDIDATE, TYPE.EMPLOYER, TYPE.SCHOOL, TYPE.PUBLIC, TYPE.STUDENT]
+        }
+
+        targets = this.setTypeAnnou(targets);
+
         if (name) {
             await _requestToServer(
                 PUT, ANNOU_TYPES + `/${id}`,
                 {
-                    name: name.trim()
+                    name: name.trim(),
+                    targets,
+                    priority: undefined
                 }
             ).then((res: any) => {
                 this.props.getListAnnouTypes();
                 this.toggleModal();
-            })
-        }
+            });
+        };
     };
 
     removeAnnouTypes = async () => {
@@ -140,12 +209,11 @@ class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesSt
             [id]
         ).then((res: any) => {
             this.props.getListAnnouTypes();
-            this.toggleModal();
-        })
+        });
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { data_table, loading_table, openModal, name, type, targets } = this.state;
         let { totalItems } = this.props;
         return (
             <Fragment>
@@ -157,19 +225,33 @@ class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesSt
                     toggleModal={() => {
                         this.setState({ openModal: !openModal })
                     }}
-                    handleOk={async () => type === TYPE.EDIT ? this.editAnnouTypes() : this.removeAnnouTypes()}
+                    handleOk={async () => this.editAnnouTypes()}
                     handleClose={async () => this.toggleModal()}
                 >
-                    {type === TYPE.EDIT ?
-                        (<InputTitle
-                            title="Sửa tên nhóm bài viết"
-                            type={TYPE.INPUT}
-                            value={name}
-                            placeholder="Tên nhóm bài viết"
-                            onChange={(event: any) => this.setState({ name: event })}
-                            widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa nhóm bài viết : {name}</div>
-                    }
+
+                    <InputTitle
+                        title="Sửa tên nhóm bài viết"
+                        type={TYPE.INPUT}
+                        value={name}
+                        placeholder="Tên nhóm bài viết"
+                        onChange={(event: any) => this.setState({ name: event })}
+                        widthInput="250px"
+                    />
+                    <InputTitle
+                        title="Chọn tên công việc"
+                    >
+                        <Select
+                            mode="multiple"
+                            size="default"
+                            placeholder="Nhập loại đối tượng"
+                            value={targets}
+                            style={{ width: '100%', margin: "10px 0px" }}
+                            onSearch={(event: any) => { }}
+                            onChange={(event: any) => this.handleSampleValue(event)}
+                        >
+                            {this.list_option()}
+                        </Select>
+                    </InputTitle>
                 </ModalConfig>
                 <div>
                     <h5>
@@ -198,7 +280,9 @@ class ListAnnouTypes extends PureComponent<ListAnnouTypesProps, ListAnnouTypesSt
                         pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                        onRow={(event) => ({
+                            onClick: () => this.setState({ id: event.key, name: event.name, targets: event.targets }),
+                        })}
                     />
                 </div>
             </Fragment>

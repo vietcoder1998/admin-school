@@ -1,3 +1,4 @@
+import { MutilBox } from './../reducers/mutil-box';
 import { AnnouComments } from './../reducers/annou-comments';
 import { MajorJobNames } from './../reducers/major-job-names';
 import { AdminAccounts } from './../reducers/admin-accounts';
@@ -38,7 +39,8 @@ const rootReducer = combineReducers({
     ApiControllerRoles,
     AdminAccounts,
     MajorJobNames,
-    AnnouComments
+    AnnouComments,
+    MutilBox
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

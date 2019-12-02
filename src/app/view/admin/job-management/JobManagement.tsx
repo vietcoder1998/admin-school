@@ -18,13 +18,6 @@ interface JobManagementProps extends StateProps, DispatchProps {
 }
 
 class JobManagement extends PureComponent<JobManagementProps, JobManagementState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

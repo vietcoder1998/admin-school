@@ -18,13 +18,6 @@ interface LanguagesProps extends StateProps, DispatchProps {
 }
 
 class Languages extends PureComponent<LanguagesProps, LanguagesState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

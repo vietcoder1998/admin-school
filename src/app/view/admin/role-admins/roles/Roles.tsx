@@ -17,13 +17,6 @@ interface RolesProps extends StateProps, DispatchProps {
 }
 
 class Roles extends PureComponent<RolesProps, RolesState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

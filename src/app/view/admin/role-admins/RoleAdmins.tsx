@@ -17,13 +17,6 @@ interface RoleAdminsProps extends StateProps, DispatchProps {
 }
 
 class RoleAdmins extends PureComponent<RoleAdminsProps, RoleAdminsState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

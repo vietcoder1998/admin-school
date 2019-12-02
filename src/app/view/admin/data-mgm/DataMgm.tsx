@@ -25,13 +25,6 @@ interface DataMgmProps extends StateProps, DispatchProps {
 }
 
 class DataMgm extends PureComponent<DataMgmProps, DataMgmState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
        let {path} = this.props.match;

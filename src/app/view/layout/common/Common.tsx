@@ -17,14 +17,6 @@ export const IconLabel = (props: any) => {
     return <div className="icon_label">{props.icon}</div>
 };
 
-export function Loading() {
-    return (
-        <div className='loading'>
-            Loadding...
-        </div>
-    )
-}
-
 export function Timer(props: any) {
     return (
         <label className='timer'>

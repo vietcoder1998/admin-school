@@ -10,6 +10,7 @@ import { DELETE } from '../../../../../../common/const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { IRole } from '../../../../../../redux/models/roles';
 import { ROLES } from '../../../../../../services/api/private.api';
+import { REDUX_SAGA } from '../../../../../../common/const/actions';
 
 interface ListAdminAccountsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -50,7 +51,7 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
     }
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
-        if (nextProps.list_roles !== prevState.list_roles) {
+        if (nextProps.list_roles && nextProps.list_roles !== prevState.list_roles) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.list_roles.forEach((item: any, index: number) => {
@@ -221,6 +222,11 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+    getListAdminAccounts: (pageIndex: number, pageSize: number) =>  dispatch({
+        type: REDUX_SAGA.ADMIN_ACCOUNTS.GET_ADMIN_ACCOUNTS,
+        pageIndex,
+        pageSize
+    })
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({

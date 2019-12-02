@@ -18,13 +18,6 @@ interface RegionsProps extends StateProps, DispatchProps {
 }
 
 class Regions extends PureComponent<RegionsProps, RegionsState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;

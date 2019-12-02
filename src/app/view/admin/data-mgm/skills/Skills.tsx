@@ -19,13 +19,6 @@ interface ISkillsProps extends StateProps, DispatchProps {
 }
 
 class Skills extends PureComponent<ISkillsProps, ISkillsState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            show_menu: true,
-            to_logout: false,
-        }
-    }
 
     render() {
         let {path} = this.props.match;
