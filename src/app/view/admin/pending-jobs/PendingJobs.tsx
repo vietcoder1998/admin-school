@@ -231,7 +231,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
         if (show_job) {
             message = ""
         }
-        this.setState({show_job: !show_job, message});
+        this.setState({show_job: !show_job, message, loading: false});
     };
 
     getPendingJob = async (jobId: string) => {
@@ -257,7 +257,6 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
             {message},
             null, null, undefined, true, false
         );
-        await this.setState({loading: false});
         await this.onToggleModal();
         await this.queryPendingJob();
     };
