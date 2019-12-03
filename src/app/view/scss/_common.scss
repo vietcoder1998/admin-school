@@ -73,25 +73,12 @@ svg {
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+  padding-bottom: 65px;
 }
 
 .ant-menu-submenu-title {
   padding-right: 30px !important;
 }
-
-//.ant-modal-body {
-//  height: 55vh;
-//  overflow: auto;
-//  background-color: #f1f1f1a7;
-//}
-//
-//.ant-modal {
-//  width: 80vw !important;
-//}
-
-// .ant-layout-sider-dark {
-//   min-width: 220px!important;
-// }
 
 .ant-modal-body {
   max-height: 65vh;

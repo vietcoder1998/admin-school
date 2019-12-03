@@ -15,7 +15,8 @@ interface IMenuNavigationProps {
     onCallLoading: Function,
 }
 
-export default function MenuNavigation(props: IMenuNavigationProps) {
+export default function MenuNavigation(props: IMenuNavigationProps ) {
+
     let { show_menu } = props;
     let state_bar: any = '1';
     if (localStorage.getItem("state_bar")) {
@@ -28,11 +29,9 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     alt="logo" />
             </div>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={[state_bar]}
-                onClick={(event: any) => {
+                onClick={(event: any) =>{ 
                     localStorage.setItem("state_bar", event.key);
-                    props.onCallLoading()
-                }}
-            >
+                     props.onCallLoading()}}>
                 <SubMenu
                     key="sub1"
                     title={

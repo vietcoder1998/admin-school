@@ -255,7 +255,7 @@ class PendingJobs extends PureComponent<PendingJobProps, PendingJobState> {
         await _requestToServer(
             POST, PENDING_JOBS + `/${jobId}/${state}`,
             {message},
-            null, null, undefined, false
+            null, null, undefined, true, false
         );
         await this.setState({loading: false});
         await this.onToggleModal();
