@@ -1,20 +1,27 @@
-import {TYPE_SCHOOLS} from '../../services/api/private.api';
-import {ITypeSchools} from '../models/type-schools';
-import {GET} from '../../common/const/method';
-import {takeEvery, put, call,} from 'redux-saga/effects';
-import {_requestToServer} from '../../services/exec';
-import {REDUX_SAGA, REDUX} from '../../common/const/actions'
+import { TYPE_SCHOOLS } from '../../services/api/private.api';
+import { ITypeSchools } from '../models/type-schools';
+import { GET } from '../../common/const/method';
+import { takeEvery, put, call, } from 'redux-saga/effects';
+import { _requestToServer } from '../../services/exec';
+import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
 function* getListTypeSchoolsData(action: any) {
     let res = yield call(callTypeSchools, action);
+    let data: ITypeSchools = {
+        items: [],
+        pageIndex: 0,
+        pageSize: 0,
+        totalItems: 0,
+    };
 
     if (res.code === 200) {
-        let data: ITypeSchools = res.data;
-        yield put({
-            type: REDUX.TYPE_SCHOOLS.GET_TYPE_SCHOOLS,
-            data
-        });
+        data = res.data
     }
+
+    yield put({
+        type: REDUX.TYPE_SCHOOLS.GET_TYPE_SCHOOLS,
+        data
+    });
 }
 
 function callTypeSchools(action: any) {

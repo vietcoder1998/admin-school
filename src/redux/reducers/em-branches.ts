@@ -1,25 +1,25 @@
+import { IEmBranches } from '../models/em-branches';
 import { REDUX } from '../../common/const/actions';
-import { IPendingJobs } from '../models/pending-job';
 
-let initState: IPendingJobs = {
+let initState: IEmBranches = {
     items: [],
     pageIndex: 0,
     pageSize: 0,
     totalItems: 0,
-};
+}
 
-export const PendingJobs = (state = initState, action: any): IPendingJobs => {
+export const EmBranches = (state: IEmBranches = initState, action: any): IEmBranches => {
     switch (action.type) {
-        case REDUX.PENDING_JOBS.GET_PENDING_JOBS:
+        case REDUX.EM_BRANCHES.GET_EM_BRANCHES:
             return {
-                ...state, 
+                ...state,
                 items: action.data.items,
                 pageIndex: action.data.pageIndex,
                 pageSize: action.data.pageSize,
                 totalItems: action.data.totalItems
-            };
+            }
 
         default:
             return state;
     }
-};
+}

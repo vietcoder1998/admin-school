@@ -1,48 +1,48 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
-import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { TYPE } from '../../../../../../common/const/type';
 // import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { DELETE } from '../../../../../../common/const/method';
 import { _requestToServer } from '../../../../../../services/exec';
-import { IRole } from '../../../../../../redux/models/roles';
 import { ROLES } from '../../../../../../services/api/private.api';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { IAppState } from '../../../../../../redux/store/reducer';
+import { IAdminAccount } from '../../../../../../redux/models/admin-accounts';
+import { timeConverter } from '../../../../../../common/utils/convertTime';
 
-interface ListAdminAccountsProps extends StateProps, DispatchProps {
+interface IListAdminAccountsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     history: any;
     getListAdminAccounts: Function;
 }
 
-interface ListAdminAccountsState {
-    list_roles: Array<IRole>,
+interface IListAdminAccountsState {
     loading_table: boolean;
+    list_admin_accounts: Array<IAdminAccount>;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
-    name?: string;
+    email?: string;
     id?: string;
     type?: string;
 }
 
-class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminAccountsState> {
+class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdminAccountsState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            list_roles: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
-            name: "",
+            email: "",
             id: "",
             type: TYPE.EDIT,
+            list_admin_accounts: []
         }
     }
 
@@ -50,21 +50,26 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
         await this.props.getListAdminAccounts(0, 10);
     }
 
-    static getDerivedStateFromProps(nextProps: any, prevState: any) {
-        if (nextProps.list_roles && nextProps.list_roles !== prevState.list_roles) {
+    static getDerivedStateFromProps(nextProps: IListAdminAccountsProps, prevState: IListAdminAccountsState) {
+        if (nextProps.list_admin_accounts && nextProps.list_admin_accounts !== prevState.list_admin_accounts) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_roles.forEach((item: any, index: number) => {
+            nextProps.list_admin_accounts.forEach((item: IAdminAccount, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    name: item.name,
-                    type: item.type
+                    avatarUrl: <Avatar shape="square" src={item.avatarUrl} icon="user" /> ,
+                    email: item.email,
+                    lastName: item.lastName,
+                    firstName: item.firstName,
+                    createdDate: item.createdDate ? timeConverter(item.createdDate, 1000, "HH:mm DD/MM/YYYY") : "",
+                    lastActive: item.lastActive ? timeConverter(item.lastActive, 1000, "HH:mm DD/MM/YYYY") : "",
+                    role: item.role ? item.role.name : "Chưa có"
                 });
             });
 
             return {
-                list_roles: nextProps.list_roles,
+                list_rolist_admin_accountsles: nextProps.list_admin_accounts,
                 data_table,
                 loading_table: false
             }
@@ -98,32 +103,68 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
     columns = [
         {
             title: '#',
-            width: 150,
+            width: 50,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
         },
         {
-            title: 'Tên AdminAccounts',
-            dataIndex: 'name',
-            key: 'name',
-            width: 755,
+            title: 'Ảnh',
+            dataIndex: 'avatarUrl',
+            key: 'avatarUrl',
+            width: 60,
+            className: 'action',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+            width: 150,
             className: 'action',
 
         },
         {
-            title: 'Loại quyền',
-            dataIndex: 'type',
-            key: 'type',
-            width: 755,
+            title: 'Họ',
+            dataIndex: 'lastName',
+            key: 'lastName',
+            width: 150,
             className: 'action',
 
+        },
+        {
+            title: 'Tên',
+            dataIndex: 'firstName',
+            key: 'firstName',
+            width: 150,
+            className: 'action',
+
+        },
+        {
+            title: 'Quyền',
+            dataIndex: 'role',
+            key: 'role',
+            width: 100,
+            className: 'action',
+        },
+        {
+            title: 'Đăng nhập cuối',
+            dataIndex: 'lastActive',
+            key: 'lastActive',
+            width: 140,
+            className: 'action',
+        },
+        {
+            title: 'Ngày tạo',
+            dataIndex: 'createdDate',
+            key: 'createdDate',
+            width: 140,
+            className: 'action',
         },
         {
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 300,
+            width: 80,
             fixed: "right",
             render: () => this.EditContent,
         },
@@ -151,35 +192,13 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { data_table, loading_table} = this.state;
         // let { totalItems } = this.props;
         return (
             <Fragment>
-                <ModalConfig
-                    title={type === TYPE.EDIT ? "Sửa quyền" : "Xóa quyền"}
-                    namebtn1="Hủy"
-                    namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
-                    isOpen={openModal}
-                    toggleModal={() => {
-                        this.setState({ openModal: !openModal })
-                    }}
-                    handleOk={async () => type === TYPE.EDIT ? this.editAdminAccounts() : this.removeAdminAccounts()}
-                    handleClose={async () => this.toggleModal()}
-                >
-                    {type === TYPE.EDIT ?
-                        (<InputTitle
-                            title="Sửa tên quyền"
-                            type={TYPE.INPUT}
-                            value={name}
-                            placeholder="Tênquyền"
-                            onChange={(event: any) => this.setState({ name: event })}
-                            widthInput="250px"
-                        />) : <div>Bạn chắc chắn sẽ xóa quyền : {name}</div>
-                    }
-                </ModalConfig>
                 <div>
                     <h5>
-                        Danh sáchquyền
+                        Danh sách admin
                         <Button
                             onClick={() => {
                             }}
@@ -191,7 +210,7 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
 
                             <Link to='/admin/role-admins/roles/create'>
                                 <Icon type="plus" />
-                                Thêm quyền mới
+                                Thêm admin mới
                             </Link>
                         </Button>
                     </h5>
@@ -222,14 +241,15 @@ class ListAdminAccounts extends PureComponent<ListAdminAccountsProps, ListAdminA
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListAdminAccounts: (pageIndex: number, pageSize: number) =>  dispatch({
+    getListAdminAccounts: (pageIndex: number, pageSize: number) => dispatch({
         type: REDUX_SAGA.ADMIN_ACCOUNTS.GET_ADMIN_ACCOUNTS,
         pageIndex,
         pageSize
     })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: IAppState, ownProps: any) => ({
+    list_admin_accounts: state.AdminAccounts.items
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

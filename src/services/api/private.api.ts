@@ -16,3 +16,6 @@ export const API_CONTROLLER = "/api/admins/authentication/rbac/apis";
 export const API_CONTROLLER_ROLES = "/api/admins/authentication/rbac/roles";
 export const REGISTRATION_ADMINS = "/api/admins/registration";
 export const ANNOU_COMMENTS = "/api/admins/announcements/";
+export const EM_BRANCHES_API = "/api/admins/employers/"
+export const EMPLOYER = "/api/admins/employers/query"
+export const ADMIN_ACCOUNTS = "/api/admins"

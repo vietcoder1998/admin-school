@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Select, Popconfirm, Tooltip } from 'antd';
+import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber } from 'antd';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
@@ -27,6 +27,7 @@ interface IListAnnouTypesState {
     id?: string;
     type?: string;
     targets?: Array<any>;
+    priority?: number;
 }
 
 class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypesState> {
@@ -42,7 +43,8 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             id: undefined,
             type: TYPE.EDIT,
             pageSize: 10,
-            targets: [TYPE.ALL]
+            targets: [TYPE.ALL],
+            priority: 0,
         }
     };
 
@@ -75,10 +77,18 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
 
         },
         {
+            title: 'Độ ưu tiên',
+            dataIndex: 'priority',
+            key: 'priority',
+            width: 200,
+            className: 'action',
+
+        },
+        {
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 200,
+            width: 100,
             fixed: "right",
             render: () => this.EditContent,
         },
@@ -94,7 +104,8 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
                     targets: item.targets.length > 0 ?
-                        item.targets.map((element: string, index: number) => element + (index === item.targets.length - 1 ? '' : ',')) : TYPE.ALL
+                        item.targets.map((element: string, index: number) => element + (index === item.targets.length - 1 ? '' : ',')) : TYPE.ALL,
+                    priority: item.priority
                 });
             });
 
@@ -179,7 +190,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     editAnnouTypes = async () => {
-        let { name, id, targets } = this.state;
+        let { name, id, targets, priority } = this.state;
 
         if (typeof targets === "string" || targets === [TYPE.ALL]) {
             targets = [TYPE.CANDIDATE, TYPE.EMPLOYER, TYPE.SCHOOL, TYPE.PUBLIC, TYPE.STUDENT]
@@ -193,7 +204,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                 {
                     name: name.trim(),
                     targets,
-                    priority: undefined
+                    priority
                 }
             ).then((res: any) => {
                 this.props.getListAnnouTypes();
@@ -213,7 +224,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, targets } = this.state;
+        let { data_table, loading_table, openModal, name, type, targets, priority } = this.state;
         let { totalItems } = this.props;
         return (
             <Fragment>
@@ -252,6 +263,21 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             {this.list_option()}
                         </Select>
                     </InputTitle>
+                    <InputTitle
+                        title="Chọn độ ưu tiên"
+                        widthLabel="100px"
+                        style={{ padding: "10px 30px" }}
+                    >
+                        <InputNumber
+                            min={-10000000}
+                            max={1000000}
+                            defaultValue={0}
+                            value={priority}
+                            onChange={
+                                (priority: number) => this.setState({ priority })
+                            }
+                        />
+                    </InputTitle>
                 </ModalConfig>
                 <div>
                     <h5>
@@ -281,7 +307,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(event) => ({
-                            onClick: () => this.setState({ id: event.key, name: event.name, targets: event.targets }),
+                            onClick: () => this.setState({ id: event.key, name: event.name, targets: event.targets, priority: event.priority }),
                         })}
                     />
                 </div>

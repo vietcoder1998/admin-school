@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Divider, Row, Col, Button, Input, DatePicker, Select, Tabs, message, Result } from 'antd';
+import { Icon, Divider, Row, Col, Button, Input, DatePicker, Select, Tabs, message } from 'antd';
 import { connect } from 'react-redux';
 import './PendingJobsCreate.scss';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
@@ -9,11 +9,14 @@ import { IAppState } from '../../../../../redux/store/reducer';
 import { findIdWithValue } from '../../../../../common/utils/findIdWithValue';
 import { _requestToServer } from '../../../../../services/exec';
 import { POST, PUT } from '../../../../../common/const/method';
-import { PENDING_JOBS } from '../../../../../services/api/private.api';
-import { EMPLOYER_HOST } from '../../../../environment/dev';
+import { EM_BRANCHES_API } from '../../../../../services/api/private.api';
 import moment from 'moment';
-import { IShifts } from '../../../../../redux/models/pending-job';
-import ShiftContent from '../../../layout/annou-shift/AnnouShift';
+import { IShifts, IAnnoucementBody } from '../../../../../redux/models/pending-job';
+import ShiftContent, { newShift } from '../../../layout/annou-shift/AnnouShift';
+import { IJobName } from '../../../../../redux/models/job-type';
+import { IEmBranch, IEmBranchesFilter } from '../../../../../redux/models/em-branches';
+import { IEmployerFilter, IEmployer } from '../../../../../redux/models/employers';
+import { ISkill } from '../../../../../redux/models/skills';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -33,28 +36,17 @@ interface IPendingJobsCreateState {
     jobName?: string;
     address?: string;
     skills?: Array<string>
+    filter_em?: IEmployerFilter,
+    employer?: IEmployer,
 };
 
 interface IPendingJobsCreateProps extends StateProps, DispatchProps {
     match: any;
     history: any;
     getPendingsJobDetail: Function;
-    getListEmBranches: Function;
+    getListEmBranches: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter, id?: any) => any;
+    getListEmployers: (pageIndex?: number, pageSize?: number, body?: IEmployerFilter) => any;
 };
-
-const getBody = () => {
-    return {
-        id: null,
-        jobTitle: null,
-        jobNameID: null,
-        employerBranchID: null,
-        description: null,
-        requiredSkillIDs: [],
-        jobType: TYPE.FULLTIME,
-        expirationDate: null,
-        shifts: []
-    }
-}
 
 class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsCreateState> {
     constructor(props) {
@@ -95,52 +87,27 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                 ]
             },
             id: null,
+            filter_em: {
+                employerName: null,
+                taxCode: null,
+                regionID: null,
+                profileVerified: null,
+                ids: null
+            },
+            employer: {
+                id: null,
+                employerName: null,
+                logoUrl: null,
+                profileVerified: null
+            },
         };
     };
 
     async componentDidMount() {
-        if (this.props.match.params.id) {
-            let id = this.props.match.params.id;
-            await this.props.getPendingsJobDetail(id);
-        };
-
-        this.props.getListEmBranches();
+        let { filter_em } = this.state;
+        this.props.getListEmployers(0, 10, filter_em);
+        this.props.getListEmBranches(0, 0, null, null);
     };
-
-    static getDerivedStateFromProps(props: any, state: IPendingJobsCreateState) {
-        if (
-            props.pending_job_detail &&
-            props.match.params.id &&
-            props.match.params.id !== state.body.id
-        ) {
-            let type_cpn = TYPE.CREATE;
-            if (props.match.url.includes("fix")) {
-                type_cpn = TYPE.EDIT;
-            };
-            if (props.match.url.includes("copy")) {
-                type_cpn = TYPE.COPY;
-            };
-
-            let pending_job_detail = props.pending_job_detail;
-            let body = getBody();
-            body.id = pending_job_detail.id
-            body.description = pending_job_detail.description;
-            body.jobTitle = pending_job_detail.jobTitle;
-            body.jobNameID = pending_job_detail.jobName.id;
-            body.jobType = pending_job_detail.jobType;
-            body.employerBranchID = pending_job_detail.employerBranchID;
-            body.description = pending_job_detail.description;
-            body.expirationDate = pending_job_detail.expirationDate;
-            body.shifts = pending_job_detail.shifts;
-            body.requiredSkillIDs = pending_job_detail.requiredSkills.length && pending_job_detail.requiredSkills.map((item: any) => { return item.id })
-            return {
-                body,
-                type_cpn,
-                id: props.match.params.id
-            }
-        }
-        return null
-    }
 
     onChangeValue = (event: any, param: string) => {
         let { body } = this.state;
@@ -188,26 +155,25 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
     };
 
     createRequest = async () => {
-        let { body, type_cpn, id } = this.state;
+        let { body, type_cpn, employer } = this.state;
         let newBody = this.pretreatmentBody(body, type_cpn);
-        let matching = type_cpn === TYPE.EDIT ? `/${id}` : ``;
         let METHOD = type_cpn === TYPE.EDIT ? PUT : POST;
 
         await _requestToServer(
             METHOD,
-            JOB_ANNOUNCEMENTS + matching,
+            EM_BRANCHES_API + `/${employer.id}/jobs`,
             newBody,
             null,
             undefined,
-            EMPLOYER_HOST,
+            undefined,
             true,
             false,
         ).then((res: any) => {
-            this.props.history.push('/v1/admin/jobs/job-announcements/list');
+            this.props.history.push('/admin/pending-jobs/list');
         })
     }
 
-    pretreatmentBody = (body: IAnnoucementBody, type_cpn: string) => {
+    pretreatmentBody = (body?: IAnnoucementBody, type_cpn?: string) => {
         let newBody = body;
         newBody.shifts.forEach((element: any, index: number) => {
             element.genderRequireds = element.genderRequireds.map((item: any, index: number) => {
@@ -254,13 +220,14 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
         let {
             type_cpn,
             body,
+            employer
         } = this.state;
 
         let {
             list_job_names,
             list_em_branches,
             list_skills,
-            pending_job_detail
+            list_employers
         } = this.props;
 
         let ct_btn_ex = "Huỷ";
@@ -285,29 +252,19 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
         };
 
         let list_job_name_options = list_job_names.map((item: IJobName) => ({ label: item.name, value: item.id }));
-        let list_em_branches_options = list_em_branches.map((item: any) => ({ label: item.branchName, value: item.id }));
-        let list_skill_options = list_skills.map((item: IJobName, index: number) => (<Option key={index} value={item.name} children={item.name} />));
-
-        if (
-            type_cpn === TYPE.EDIT &&( !pending_job_detail || !pending_job_detail.id)
-        ) {
-            return <Result
-                status="404"
-                title="404"
-                subTitle="Sorry, the page you visited does not exist."
-                extra={<Button type="primary">Back Home</Button>}
-            />
-        }
+        let list_em_branches_options = list_em_branches.map((item: IEmBranch) => ({ label: item.branchName, value: item.id }));
+        let list_skill_options = list_skills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
+        let list_em_ployer_options = list_employers.map((item: IEmployer, index: number) => ({ label: item.employerName, value: item.id }));
 
         return (
             <div className='common-content'>
                 <h5>
-                   {type_cpn === TYPE.EDIT ? "Thông tin bài viết(sửa)": "Tạo bài viết mới"}  
+                    Đăng bài hộ
                 </h5>
                 <Row>
                     <Col xs={0} sm={1} md={2} lg={3} xl={3} xxl={4}></Col>
                     <Col xs={0} sm={22} md={20} lg={18} xl={18} xxl={16}>
-                        <Divider orientation="left" >Nội dung bài viết</Divider>
+                        <Divider orientation="left" >Chọn loại công việc</Divider>
                         <div className="announcements-create-content">
                             <InputTitle
                                 type={TYPE.INPUT}
@@ -370,7 +327,6 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                                 title="Chọn công việc"
                                 type={TYPE.SELECT}
                                 list_value={list_job_name_options}
-                                value={findIdWithValue(list_job_names, body.jobNameID, "id", "name")}
                                 onChange={
                                     (event: any) => {
                                         body.jobNameID = event;
@@ -382,13 +338,32 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                                 placeholder="ex: Nhân viên văn phòng"
                             />
                             <InputTitle
+                                title="Chọn nhà tuyển dụng"
+                                type={TYPE.SELECT}
+                                list_value={list_em_ployer_options}
+                                onChange={
+                                    async (event: string) => {
+                                        employer.id = event;
+                                        this.setState({ employer });
+                                        this.props.getListEmBranches(0, 0, null, event);
+                                    }
+                                }
+                                onSearch={
+                                    async (event: any) => {
+                                        this.props.getListEmployers(0, 0, { employerName: event });
+                                    }
+                                }
+                                widthLabel="200px"
+                                widthSelect="550px"
+                                placeholder="ex: Công ti abc"
+                            />
+                            <InputTitle
                                 title="Chọn địa chỉ đăng tuyển"
                                 type={TYPE.SELECT}
                                 list_value={list_em_branches_options}
-                                value={findIdWithValue(list_em_branches, body.employerBranchID, "id", "branchName")}
                                 onChange={
                                     (event: any) => {
-                                        body.employerBranchID = event;
+                                        body.employerBranchID = event
                                         this.setState({ body });
                                     }
                                 }
@@ -405,11 +380,10 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                                     mode="multiple"
                                     size="default"
                                     placeholder="ex: Giao tiếp, Tiếng Anh"
-                                    value={findIdWithValue(list_skills, body.requiredSkillIDs, "id", "name")}
                                     onChange={
                                         (event: any) => {
-                                            let list_data = findIdWithValue(list_skills, event, "name", "id")
-                                            body.requiredSkillIDs = list_data;
+                                            let newRequiredSkillIDs = findIdWithValue(list_skills, event, "name", "id")
+                                            body.requiredSkillIDs = newRequiredSkillIDs;
                                             this.setState({ body })
                                         }
                                     }
@@ -419,7 +393,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                                 </Select>
                             </InputTitle>
                         </div>
-                        <Divider orientation="left" >Thời gian làm việc</Divider>
+                        <Divider orientation="left" >Chọn loại công việc</Divider>
                         <div className="announcements-create-content">
                             <Tabs
                                 activeKey={body.jobType}
@@ -479,7 +453,6 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                                                     onChange={(event) => this.handleBodyShift(event, index)}
                                                 />
                                             </div>
-
                                         ))
                                     }
                                 </TabPane>
@@ -520,15 +493,19 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
 };
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getPendingsJobDetail: (id) => dispatch({ type: REDUX_SAGA.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL, id }),
-    getListEmBranches: () => dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES }),
+    getPendingsJobDetail: (id) =>
+        dispatch({ type: REDUX_SAGA.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL, id }),
+    getListEmBranches: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter, id?: string) =>
+        dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES, pageIndex, pageSize, id }),
+    getListEmployers: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter) =>
+        dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, pageIndex, pageSize, body }),
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_job_names: state.JobNames.items,
-    pending_job_detail: state.PendingsJobDetail,
     list_skills: state.Skills.items,
     list_em_branches: state.EmBranches.items,
+    list_employers: state.Employers.items,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

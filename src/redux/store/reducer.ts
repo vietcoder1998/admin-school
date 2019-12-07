@@ -1,3 +1,5 @@
+import { Employers } from './../reducers/employers';
+import { EmBranches } from './../reducers/em-branches';
 import { PendingJobDetail } from './../reducers/pending-job-detail';
 import { MutilBox } from './../reducers/mutil-box';
 import { AnnouComments } from './../reducers/annou-comments';
@@ -42,7 +44,9 @@ const rootReducer = combineReducers({
     MajorJobNames,
     AnnouComments,
     MutilBox,
-    PendingJobDetail
+    PendingJobDetail,
+    EmBranches,
+    Employers
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

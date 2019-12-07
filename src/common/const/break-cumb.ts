@@ -37,7 +37,7 @@ export const routeLink = {
 
     // role
     ROLES_ADMIN: routePath.ADMIN + routePath.JOBS + routePath.ROLES,
-    ADMIN_ACCOUNTS: routePath.ADMIN + routePath.ADMIN_ACCOUNTS,
+    ADMIN_ACCOUNTS: routePath.ADMIN + routePath.ROLES + routePath.ADMIN_ACCOUNTS,
 
     // job management
     PENDING_JOBS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,

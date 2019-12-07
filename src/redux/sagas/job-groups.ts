@@ -1,19 +1,27 @@
-import {JOB_GROUPS} from '../../services/api/private.api';
-import {IJobGroups} from '../models/job-groups';
-import {GET} from '../../common/const/method';
-import {takeEvery, put, call,} from 'redux-saga/effects';
-import {_requestToServer} from '../../services/exec';
-import {REDUX_SAGA, REDUX} from '../../common/const/actions'
+import { JOB_GROUPS } from '../../services/api/private.api';
+import { IJobGroups } from '../models/job-groups';
+import { GET } from '../../common/const/method';
+import { takeEvery, put, call, } from 'redux-saga/effects';
+import { _requestToServer } from '../../services/exec';
+import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
 function* getListJobGroupsData(action: any) {
     let res = yield call(callJobGroups, action);
+    let data: IJobGroups = {
+        items: [],
+        pageIndex: 0,
+        pageSize: 0,
+        totalItems: 0,
+    };
+
     if (res) {
-        let data: IJobGroups = res.data;
-        yield put({
-            type: REDUX.JOB_GROUPS.GET_JOB_GROUPS,
-            data
-        });
+        data = res.data;
     }
+
+    yield put({
+        type: REDUX.JOB_GROUPS.GET_JOB_GROUPS,
+        data
+    });
 }
 
 function callJobGroups(action: any) {

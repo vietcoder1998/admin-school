@@ -19,6 +19,9 @@ export default function Routes(props: any) {
                     <Route exact path='/login' component={Login} /> :
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
+                    <Route exact path='/' component={Login} /> :
+                </Suspense>
+                <Suspense fallback={<FallBack />}>
                     <Route exact path='*' component={NotFound} /> :
                 </Suspense>
             </Router>

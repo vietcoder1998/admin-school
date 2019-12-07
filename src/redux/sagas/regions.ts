@@ -1,20 +1,28 @@
-import {REGIONS} from '../../services/api/private.api';
-import {IRegions} from '../models/regions';
-import {GET} from '../../common/const/method';
-import {takeEvery, put, call,} from 'redux-saga/effects';
-import {_requestToServer} from '../../services/exec';
-import {REDUX_SAGA, REDUX} from '../../common/const/actions'
+import { REGIONS } from '../../services/api/private.api';
+import { IRegions } from '../models/regions';
+import { GET } from '../../common/const/method';
+import { takeEvery, put, call, } from 'redux-saga/effects';
+import { _requestToServer } from '../../services/exec';
+import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
 function* getListRegionsData(action: any) {
     let res = yield call(callRegions, action);
 
+    let data: IRegions = {
+        items: [],
+        pageIndex: 0,
+        pageSize: 0,
+        totalItems: 0,
+    };
+
     if (res.code === 200) {
-        let data: IRegions = res.data;
-        yield put({
-            type: REDUX.REGIONS.GET_REGIONS,
-            data
-        });
-    }
+        data = res.data
+    };
+
+    yield put({
+        type: REDUX.REGIONS.GET_REGIONS,
+        data
+    });
 }
 
 function callRegions(action: any) {

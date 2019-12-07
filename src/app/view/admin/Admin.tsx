@@ -3,7 +3,6 @@ import { Layout, Icon, Avatar, Breadcrumb } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
-import PendingJobs from './pending-jobs/pendin-jobs-list/PendingJobsList';
 import { REDUX_SAGA, REDUX } from '../../../common/const/actions';
 import { connect } from 'react-redux';
 import JobManagement from './job-management/JobManagement';
@@ -15,6 +14,7 @@ import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
 import Loading from '../layout/loading/Loading';
 
 import { IAppState } from '../../../redux/store/reducer';
+import PendingJobs from './pending-jobs/PendingJobs';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -31,6 +31,7 @@ interface AdminProps extends StateProps, DispatchProps {
     getListTypeManagement: Function;
     getListJobGroups: Function;
     getListBranches: Function;
+    getListSkills: Function;
     getListApiController: Function;
     handleLoading: Function;
 }
@@ -52,6 +53,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListJobGroups();
         await this.props.getListBranches();
         await this.props.getListApiController();
+        await this.props.getListSkills();
     }
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
@@ -185,6 +187,9 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     }),
     getListApiController: () => dispatch({
         type: REDUX_SAGA.API_CONTROLLER.GET_API_CONTROLLER
+    }),
+    getListSkills: () => dispatch({
+        type: REDUX_SAGA.SKILLS.GET_SKILLS
     }),
     handleLoading: (loading: boolean) => dispatch({ type: REDUX.HANDLE_LOADING, loading })
 });

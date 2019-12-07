@@ -15,10 +15,10 @@ interface IMenuNavigationProps {
     onCallLoading: Function,
 }
 
-export default function MenuNavigation(props: IMenuNavigationProps ) {
+export default function MenuNavigation(props: IMenuNavigationProps) {
 
     let { show_menu } = props;
-    let state_bar: any = '1';
+    let state_bar: any = '20';
     if (localStorage.getItem("state_bar")) {
         state_bar = localStorage.getItem("state_bar")
     }
@@ -29,28 +29,51 @@ export default function MenuNavigation(props: IMenuNavigationProps ) {
                     alt="logo" />
             </div>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={[state_bar]}
-                onClick={(event: any) =>{ 
+                onClick={(event: any) => {
                     localStorage.setItem("state_bar", event.key);
-                     props.onCallLoading()}}>
+                    props.onCallLoading()
+                }}>
+                <SubMenu
+                    key="sub0"
+                    title={
+                        <span>
+                            <Icon type="file-done" />
+                            <span>Bài đăng</span>
+                        </span>
+                    }
+                >
+                    <Menu.Item key="20">
+                        <Link to='/admin/pending-jobs/list'>
+                            <Icon type="audit" />
+                            <span>Xét duyệt bài đăng</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="21">
+                        <Link to='/admin/pending-jobs/create'>
+                            <Icon type="file-search" />
+                            <span>Đăng hộ bài</span>
+                        </Link>
+                    </Menu.Item>
+                </SubMenu>
                 <SubMenu
                     key="sub1"
                     title={
                         <span>
-                            <Icon type="file-done" />
-                            <span>Bài đăng tuyển dụng</span>
+                            <Icon type="form" />
+                            <span>Bài viết</span>
                         </span>
                     }
                 >
+                    <Menu.Item key="0">
+                        <Link to='/admin/job-management/create'>
+                            <Icon type="file-add" theme="filled" />
+                            <span>Tạo bài viết mới</span>
+                        </Link>
+                    </Menu.Item>
                     <Menu.Item key="1">
                         <Link to='/admin/job-management/list'>
                             <Icon type="file-search" />
                             <span>Quản lý bài viết</span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Link to='/admin/pending-jobs/list'>
-                            <Icon type="audit" />
-                            <span>Xét duyệt bài đăng</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>

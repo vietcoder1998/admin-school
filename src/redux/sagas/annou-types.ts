@@ -7,13 +7,22 @@ import {ANNOU_TYPES} from '../../services/api/private.api';
 
 function* getListAnnouTypesData(action: any) {
     let res = yield call(callAnnouTypes, action);
-    if (res) {
-        let data: IAnnouTypes = res.data;
-        yield put({
-            type: REDUX.ANNOU_TYPES.GET_ANNOU_TYPES,
-            data
-        });
+
+    let data: IAnnouTypes = {
+        items: [],
+        pageIndex: 0,
+        pageSize: 0,
+        totalItems: 0
+    };
+    
+    if (res.code === 200) {
+        data = res.data
     }
+    
+    yield put({
+        type: REDUX.ANNOU_TYPES.GET_ANNOU_TYPES,
+        data
+    });
 }
 
 function callAnnouTypes(action: any) {

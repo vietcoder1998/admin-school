@@ -7,13 +7,19 @@ import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
 function* getListApiControllerData(action: any) {
     let res = yield call(callApiController, action);
+
+    let data: IApiController = {
+        data: []
+    };
+
     if (res.code === 200) {
-        let data: IApiController = res.data;
-        yield put({
-            type: REDUX.API_CONTROLLER.GET_API_CONTROLLER,
-            data
-        });
+        data = res.data
     }
+
+    yield put({
+        type: REDUX.API_CONTROLLER.GET_API_CONTROLLER,
+        data
+    });
 }
 
 function callApiController(action: any) {

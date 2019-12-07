@@ -25,6 +25,7 @@ export interface IGenderData {
     id?: string,
     gender?: 'BOTH' | 'MALE' | 'FEMALE',
     quantity?: number,
+    applied?:number
 }
 
 export interface IShifts {
@@ -67,8 +68,37 @@ export interface IPendingJobDetail {
 }
 
 export interface IPendingJobs {
-    list_jobs?: Array<IPendingJob>;
+    items?: Array<IPendingJob>;
     pageIndex?: number;
     pageSize?: number;
     totalItems?: number;
+}
+
+export interface IShifts {
+    id?: string,
+    startTime?: string,
+    endTime?: string,
+    minSalary?: number,
+    maxSalary?: number,
+    unit?: string | 'ca' | 'giờ' | 'ngày' | 'tháng' | 'sản phẩm',
+    mon?: boolean,
+    tue?: boolean,
+    wed?: boolean,
+    thu?: boolean,
+    fri?: boolean,
+    sat?: boolean,
+    sun?: boolean,
+    genderRequireds?: Array<IGenderData>
+}
+
+export interface IAnnoucementBody {
+    id?: string,
+    jobTitle?: string,
+    jobNameID?: number,
+    employerBranchID?: string,
+    description?: string,
+    requiredSkillIDs?: Array<any>,
+    jobType?: string,
+    expirationDate?: number,
+    shifts?: Array<IShifts>
 }

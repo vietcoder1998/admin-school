@@ -1,19 +1,24 @@
-import {ROLES} from '../../services/api/private.api';
-import {IRoles} from '../models/roles';
-import {GET} from '../../common/const/method';
-import {takeEvery, put, call} from 'redux-saga/effects';
-import {_requestToServer} from '../../services/exec';
-import {REDUX_SAGA, REDUX} from '../../common/const/actions'
+import { IRoleDetail } from './../models/role-detail';
+import { ROLES } from '../../services/api/private.api';
+import { GET } from '../../common/const/method';
+import { takeEvery, put, call } from 'redux-saga/effects';
+import { _requestToServer } from '../../services/exec';
+import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
 function* getRoleDetailData(action: any) {
     let res = yield call(callRolesDetail, action);
+    let data: IRoleDetail = {
+       data: {}
+    };
+
     if (res.code === 200) {
-        let data: IRoles = res.data;
-        yield put({
-            type: REDUX.ROLES.GET_ROLE_DETAIL,
-            data
-        });
+        data = res.data;
     }
+
+    yield put({
+        type: REDUX.ROLES.GET_ROLE_DETAIL,
+        data
+    });
 }
 
 function callRolesDetail(action: any) {

@@ -19,6 +19,8 @@ import { AdminAccountsWatcher } from '../sagas/admin-accounts';
 import { MajorJobNamesWatcher } from '../sagas/major-job-names';
 import { AnnouCommentsWatcher } from '../sagas/annou-comments';
 import { PendingJobDetailWatcher } from '../sagas/pending-job-detail';
+import { EmBranchesWatcher } from '../sagas/em-branches';
+import { EmployersWatcher } from '../sagas/employers';
 
 
 export default function* rootSaga() {
@@ -42,6 +44,9 @@ export default function* rootSaga() {
         AdminAccountsWatcher(),
         MajorJobNamesWatcher(),
         AnnouCommentsWatcher(),
-        PendingJobDetailWatcher()
+        PendingJobDetailWatcher(),
+        EmBranchesWatcher(),
+        EmployersWatcher(),
+        AdminAccountsWatcher()
     ])
 } 

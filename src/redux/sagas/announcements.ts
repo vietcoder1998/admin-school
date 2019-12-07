@@ -20,11 +20,12 @@ function* getListAnnouncementsData(action: any) {
         data.pageIndex = res.data.pageIndex;
         data.pageSize = res.data.pageSize;
         data.totalItems = res.data.totalItems;
-        yield put({
-            type: REDUX.ANNOUNCEMENTS.GET_ANNOUNCEMENTS,
-            data
-        });
     }
+
+    yield put({
+        type: REDUX.ANNOUNCEMENTS.GET_ANNOUNCEMENTS,
+        data
+    });
 }
 
 function callAnnouncements(action: any) {

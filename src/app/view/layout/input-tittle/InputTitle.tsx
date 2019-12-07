@@ -1,8 +1,7 @@
 import { Input, Select, } from "antd";
 import React, { CSSProperties } from 'react';
 import { TYPE } from "../../../../common/const/type";
-
-let { Option } = Select;
+import randomID from "../../../../common/utils/randomID";
 
 interface IInputitleProps {
     title?: string;
@@ -18,6 +17,7 @@ interface IInputitleProps {
     style?: any;
     widthSelect?: string;
     onChange?: Function;
+    onSearch?: Function;
 }
 
 interface INewSelect {
@@ -27,6 +27,7 @@ interface INewSelect {
     defaultValue?: string;
     widthSelect?: string;
     onChange?: Function;
+    onSearch?: Function;
     style?: CSSProperties;
 }
 
@@ -53,30 +54,48 @@ export const NewInput = (props: INewInput) => {
 };
 
 export const NewSelect = (props: INewSelect) => {
-    let { placeholder, list_value, onChange, widthSelect, defaultValue, style } = props;
+    let { placeholder, list_value, onChange, widthSelect, defaultValue, style, value, onSearch } = props;
 
-    let newprops = {
-        ...props,
-        placeholder,
-        optionFilterProp: "children",
-        style: style ? style : { width: widthSelect ? widthSelect : "200px" },
-        defaultValue,
-        onChange: onChange ? (event: any) => onChange(event) : undefined
-    };
-
-    return (
-        <Select
-            {...newprops}
-        >
-            {
-                list_value &&
-                    list_value.length > 0 ?
-                    list_value.map(
-                        (item, index) => <Option key={index} value={item.value}>{item.label}</Option>
-                    ) : null
-            }
-        </Select >
-    );
+    if (value) {
+        return (
+            <Select
+                showSearch
+                placeholder={placeholder}
+                optionFilterProp="children"
+                value={value}
+                defaultValue={defaultValue}
+                style={style ? style : { width: widthSelect ? widthSelect : "200px" }}
+                onChange={onChange ? (event: any) => onChange(event) : undefined}
+                onSearch={onSearch ? (event: any) => onSearch(event) : undefined}
+            >
+                {
+                    list_value &&
+                        list_value.length > 0 ?
+                        list_value.map(
+                            (item, index) => <Select.Option key={randomID(16)} value={item.value}>{item.label}</Select.Option>
+                        ) : null
+                }
+            </Select >)
+    } else
+        return (
+            <Select
+                showSearch
+                placeholder={placeholder}
+                optionFilterProp="children"
+                defaultValue={defaultValue}
+                style={style ? style : { width: widthSelect ? widthSelect : "200px" }}
+                onChange={onChange ? (event: any) => onChange(event) : undefined}
+                onSearch={onSearch ? (event: any) => onSearch(event) : undefined}
+            >
+                {
+                    list_value &&
+                        list_value.length > 0 ?
+                        list_value.map(
+                            (item, index) => <Select.Option key={randomID(16)} value={item.value}>{item.label}</Select.Option>
+                        ) : null
+                }
+            </Select >
+        );
 };
 
 export const InputTitle = (props: IInputitleProps) => {
@@ -90,6 +109,7 @@ export const InputTitle = (props: IInputitleProps) => {
         style,
         widthInput,
         widthSelect,
+        onSearch,
     } = props;
     let ComponentReturn;
     const defaultStyle = {
@@ -113,6 +133,7 @@ export const InputTitle = (props: IInputitleProps) => {
                     defaultValue={defaultValue}
                     list_value={list_value}
                     placeholder={placeholder}
+                    onSearch={onSearch ? onSearch : undefined}
                     onChange={(event: any) => props.onChange ? props.onChange(event) : undefined}
                     widthSelect={widthSelect}
                 />

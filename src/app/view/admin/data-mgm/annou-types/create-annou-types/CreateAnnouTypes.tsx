@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Divider, Button, Icon, Select } from 'antd';
+import { Divider, Button, Icon, Select, InputNumber } from 'antd';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
@@ -12,6 +12,7 @@ import { TYPE } from '../../../../../../common/const/type';
 interface ICreateAnnouTypesState {
     name?: string;
     targets?: Array<string>;
+    priority?: number;
 }
 
 interface ICreateAnnouTypesProps extends StateProps, DispatchProps {
@@ -26,11 +27,12 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
         this.state = {
             name: "",
             targets: [TYPE.ALL],
+            priority: 1,
         }
     }
 
     createNewData = async () => {
-        let { name, targets } = this.state;
+        let { name, targets, priority } = this.state;
 
         if (typeof targets === "string" || targets[0] === TYPE.ALL) {
             targets = [TYPE.CANDIDATE, TYPE.EMPLOYER, TYPE.SCHOOL, TYPE.PUBLIC, TYPE.STUDENT]
@@ -41,7 +43,8 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
                 POST, ANNOU_TYPES,
                 {
                     name: name.trim(),
-                    targets: targets
+                    targets,
+                    priority
                 }
             ).then((res: any) => {
                 this.props.getListAnnouTypes();
@@ -122,6 +125,13 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
                     >
                         {this.list_option()}
                     </Select>
+                </InputTitle>
+                <InputTitle
+                    title="Chọn độ ưu tiên"
+                    widthLabel="100px"
+                    style={{ padding: "10px 30px" }}
+                >
+                    <InputNumber min={-10000000} max={1000000} defaultValue={0} onChange={(priority: number) => this.setState({ priority })} />
                 </InputTitle>
                 <Button
                     type="primary"

@@ -1,15 +1,15 @@
-import React, {PureComponent, Fragment} from 'react'
-import {connect} from 'react-redux';
-import {Icon, Table, Button} from 'antd';
-import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
-import {TYPE} from '../../../../../../common/const/type';
-import {REDUX_SAGA} from '../../../../../../common/const/actions';
-import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
-import {DELETE} from '../../../../../../common/const/method';
-import {_requestToServer} from '../../../../../../services/exec';
-import {IRole} from '../../../../../../redux/models/roles';
-import {ROLES} from '../../../../../../services/api/private.api';
+import React, { PureComponent, Fragment } from 'react'
+import { connect } from 'react-redux';
+import { Icon, Table, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
+import { TYPE } from '../../../../../../common/const/type';
+import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { DELETE } from '../../../../../../common/const/method';
+import { _requestToServer } from '../../../../../../services/exec';
+import { IRole } from '../../../../../../redux/models/roles';
+import { ROLES } from '../../../../../../services/api/private.api';
 
 interface ListRolesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -34,7 +34,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
         super(props);
         this.state = {
             list_roles: [],
-            loading_table: true,
+            loading_table: false,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -50,9 +50,9 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     }
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
-        if (nextProps.list_roles !== prevState.list_roles) {
+        if (nextProps.list_roles && nextProps.list_roles !== prevState.list_roles) {
             let data_table: any = [];
-            let {pageIndex, pageSize} = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_roles.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
@@ -74,10 +74,10 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
 
     EditContent = (
         <div>
-            <Icon style={{padding: "5px 10px"}} type="delete" theme="twoTone" twoToneColor="red"
-                  onClick={() => this.toggleModal(TYPE.DELETE)}/>
-            <Icon key="edit" style={{padding: "5px 10px"}} type="edit" theme="twoTone"
-                  onClick={() => this.toFixRoles()}/>
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+                onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+                onClick={() => this.toFixRoles()} />
         </div>
     );
 
@@ -87,17 +87,17 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     };
 
     toggleModal = (type?: string) => {
-        let {openModal} = this.state;
-        this.setState({openModal: !openModal});
+        let { openModal } = this.state;
+        this.setState({ openModal: !openModal });
         if (type) {
-            this.setState({type})
+            this.setState({ type })
         }
     };
 
     columns = [
         {
             title: '#',
-            width: 150,
+            width: 50,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
@@ -106,7 +106,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
             title: 'Tên Roles',
             dataIndex: 'name',
             key: 'name',
-            width: 755,
+            width: 400,
             className: 'action',
 
         },
@@ -114,7 +114,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
             title: 'Loại quyền',
             dataIndex: 'type',
             key: 'type',
-            width: 755,
+            width: 400,
             className: 'action',
 
         },
@@ -122,14 +122,14 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
             title: 'Thao tác',
             key: 'operation',
             className: 'action',
-            width: 300,
+            width: 150,
             fixed: "right",
             render: () => this.EditContent,
         },
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize});
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListRoles(event.current - 1, event.pageSize)
     };
 
@@ -139,7 +139,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     };
 
     removeRoles = async () => {
-        let {id} = this.state;
+        let { id } = this.state;
         await _requestToServer(
             DELETE, ROLES,
             [id],
@@ -150,8 +150,8 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     };
 
     render() {
-        let {data_table, loading_table, openModal, name, type} = this.state;
-        let {totalItems} = this.props;
+        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { totalItems } = this.props;
         return (
             <Fragment>
                 <ModalConfig
@@ -160,7 +160,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => {
-                        this.setState({openModal: !openModal})
+                        this.setState({ openModal: !openModal })
                     }}
                     handleOk={async () => type === TYPE.EDIT ? this.editRoles() : this.removeRoles()}
                     handleClose={async () => this.toggleModal()}
@@ -171,7 +171,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                             type={TYPE.INPUT}
                             value={name}
                             placeholder="Tênquyền"
-                            onChange={(event: any) => this.setState({name: event})}
+                            onChange={(event: any) => this.setState({ name: event })}
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóaquyền : {name}</div>
                     }
@@ -187,21 +187,20 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                                 float: "right",
                             }}
                         >
-
                             <Link to='/admin/role-admins/roles/create'>
-                                <Icon type="plus"/>
+                                <Icon type="plus" />
                                 Thêm quyền mới
                             </Link>
                         </Button>
                     </h5>
-                      <Table
+                    <Table
                         // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}
-                        scroll={{x: 1000}}
+                        scroll={{ x: 850 }}
                         bordered
-                        pagination={{total: totalItems, showSizeChanger: true}}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
                         onRow={(record, rowIndex) => {
@@ -221,7 +220,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListRoles: (pageIndex: number, pageSize: number) => dispatch({type: REDUX_SAGA.ROLES.GET_ROLES, pageIndex, pageSize})
+    getListRoles: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES, pageIndex, pageSize })
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({

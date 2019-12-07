@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../common/const/actions';
-import { Button, Table, Icon, Select, Row, Col, Modal, DatePicker, Rate, Tabs, List, Avatar, Skeleton, Checkbox, Popconfirm, message, Tooltip, Drawer } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, DatePicker, Rate, Tabs, List, Avatar, Skeleton, Checkbox, Popconfirm, message, Tooltip, Drawer } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../common/utils/convertTime';
 import './MngList.scss';
 import { TYPE } from '../../../../../common/const/type';

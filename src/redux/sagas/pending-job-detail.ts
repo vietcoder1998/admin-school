@@ -27,14 +27,15 @@ function* getListPendingJobDetailData(action: any) {
         repliedDate: null,
         state: null,
     };
-    
+
     if (res.code === 200) {
         data = res.data;
-        yield put({
-            type: REDUX.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL,
-            data
-        });
     }
+
+    yield put({
+        type: REDUX.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL,
+        data
+    });
 }
 
 function callPendingJobDetail(action: any) {

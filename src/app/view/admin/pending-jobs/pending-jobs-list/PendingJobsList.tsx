@@ -10,7 +10,7 @@ import { GET, POST } from '../../../../../common/const/method';
 import { PENDING_JOBS } from '../../../../../services/api/private.api';
 import { TYPE } from '../../../../../common/const/type';
 import { IptLetter } from '../../../layout/common/Common';
-import { IPendingJobs, IPendingJob } from '../../../../../redux/models/pending-job';
+import { IPendingJob } from '../../../../../redux/models/pending-job';
 import { IAppState } from '../../../../../redux/store/reducer';
 
 let { Option } = Select;
@@ -259,7 +259,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     };
 
     render() {
-        let { data_table, show_job, loading, pendingJob, message, loading_table, state } = this.state;
+        let { data_table, show_job, loading, message, loading_table, state } = this.state;
         let { list_jobs_group, totalItems } = this.props;
 
         return (
@@ -410,7 +410,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
-    list_jobs: state.PendingJobs.list_jobs,
+    list_jobs: state.PendingJobs.items,
     list_jobs_group: state.JobNames.items,
     totalItems: state.PendingJobs.totalItems,
 });

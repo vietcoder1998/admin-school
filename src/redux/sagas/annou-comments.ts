@@ -7,13 +7,20 @@ import { ANNOU_COMMENTS } from '../../services/api/private.api';
 
 function* getListAnnouCommentsData(action: any) {
     let res = yield call(callAnnouComments, action);
-    if (res) {
-        let data: IAnnouComments = res.data;
-        yield put({
-            type: REDUX.ANNOU_COMMENTS.GET_ANNOU_COMMENTS,
-            data
-        });
+    let data: IAnnouComments = {
+        items: [],
+        pageIndex: 0,
+        pageSize: 0,
+        totalItems: 0
+    };
+    
+    if (res.code === 200) {
+        data = res.data
     }
+    yield put({
+        type: REDUX.ANNOU_COMMENTS.GET_ANNOU_COMMENTS,
+        data
+    });
 }
 
 function callAnnouComments(action: any) {

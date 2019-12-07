@@ -6,9 +6,9 @@ export interface IAnnouType{
 }
 
 export interface IAnnouTypes {
-    items: Array<IAnnouType>;
-    pageIndex: number;
-    pageSize: number;
-    totalItems: number;
-    single_data: IAnnouType
+    items?: Array<IAnnouType>;
+    pageIndex?: number;
+    pageSize?: number;
+    totalItems?: number;
+    single_data?: IAnnouType
 }

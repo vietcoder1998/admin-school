@@ -81,6 +81,12 @@ export const REDUX = {
     ANNOU_COMMENTS: {
         GET_ANNOU_COMMENTS: "GET_ANNOU_COMMENTS",
     },
+    EM_BRANCHES: {
+        GET_EM_BRANCHES: "GET_EM_BRANCHES"
+    },
+    EMPLOYER: {
+        GET_EMPLOYER: "GET_EMPLOYER"
+    }
 };
 
 export const REDUX_SAGA = {
@@ -145,4 +151,10 @@ export const REDUX_SAGA = {
     ADMIN_ACCOUNTS: {
         GET_ADMIN_ACCOUNTS: "GET_ADMIN_ACCOUNTS_DATA"
     },
+    EM_BRANCHES: {
+        GET_EM_BRANCHES: "GET_EM_BRANCHES_DATA"
+    },
+    EMPLOYER: {
+        GET_EMPLOYER: "GET_EMPLOYER_DATA"
+    }
 };
