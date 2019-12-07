@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './app/view/scss/_keyFrame.scss';
 import './app/view/scss/_common.scss'
-import App from './App';
 import ErrorBoundary from './app/view/layout/common/ErrorBoudary';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
@@ -14,6 +13,7 @@ import "antd/dist/antd.css";
 import 'sweetalert2/src/sweetalert2.scss';
 import 'cropperjs/dist/cropper.css';
 import { Atlg } from './services/auto-login';
+import Routes from './routes/Routes';
 
 require('dotenv').config();
 Atlg();
@@ -25,7 +25,7 @@ const appRenderer = (Component: any) => ReactDOM.render(
         </Provider>
     </ErrorBoundary>, rootEl);
 
-appRenderer(App);
+appRenderer(Routes);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,4 +1,4 @@
-export function randomID(len: number): string {
+export default function randomID(len: number): string {
     let result: string = "";
     var characters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var charactersLength: number = characters.length;

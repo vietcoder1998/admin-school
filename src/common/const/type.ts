@@ -28,5 +28,11 @@ export const TYPE = {
     SELECT: "SELECT",
 
     NORMAL_LOGIN: "NORMAL_LOGIN",
-    REFESH_LOGIN: "REFESH_LOGIN"
+    REFESH_LOGIN: "REFESH_LOGIN",
+
+    COPY: "COPY",
+    FIX: "FIX",
+    MALE: "MALE",
+    FEMALE: "FEMALE",
+    BOTH: "BOTH"
 };

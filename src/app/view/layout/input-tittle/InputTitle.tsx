@@ -1,5 +1,5 @@
 import { Input, Select, } from "antd";
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { TYPE } from "../../../../common/const/type";
 
 let { Option } = Select;
@@ -18,7 +18,6 @@ interface IInputitleProps {
     style?: any;
     widthSelect?: string;
     onChange?: Function;
-
 }
 
 interface INewSelect {
@@ -28,6 +27,7 @@ interface INewSelect {
     defaultValue?: string;
     widthSelect?: string;
     onChange?: Function;
+    style?: CSSProperties;
 }
 
 interface INewInput {
@@ -47,22 +47,26 @@ export const NewInput = (props: INewInput) => {
             defaultValue={defaultValue}
             style={{ width: widthInput ? widthInput : "auto" }}
             value={value}
-            onChange={event => onChange? onChange(event.target.value) : undefined}
+            onChange={event => onChange ? onChange(event.target.value) : undefined}
             maxLength={220}
         />)
 };
 
 export const NewSelect = (props: INewSelect) => {
-    let { placeholder, list_value, value, onChange, widthSelect, defaultValue } = props;
+    let { placeholder, list_value, onChange, widthSelect, defaultValue, style } = props;
+
+    let newprops = {
+        ...props,
+        placeholder,
+        optionFilterProp: "children",
+        style: style ? style : { width: widthSelect ? widthSelect : "200px" },
+        defaultValue,
+        onChange: onChange ? (event: any) => onChange(event) : undefined
+    };
+
     return (
         <Select
-            showSearch
-            placeholder={placeholder}
-            optionFilterProp="children"
-            style={{ width: widthSelect ? widthSelect : "200px" }}
-            value={value}
-            defaultValue={defaultValue}
-            onChange={event => onChange? onChange(event) : undefined}
+            {...newprops}
         >
             {
                 list_value &&
@@ -71,8 +75,8 @@ export const NewSelect = (props: INewSelect) => {
                         (item, index) => <Option key={index} value={item.value}>{item.label}</Option>
                     ) : null
             }
-        </Select>
-    )
+        </Select >
+    );
 };
 
 export const InputTitle = (props: IInputitleProps) => {
@@ -109,7 +113,7 @@ export const InputTitle = (props: IInputitleProps) => {
                     defaultValue={defaultValue}
                     list_value={list_value}
                     placeholder={placeholder}
-                    onChange={(event: any) => props.onChange? props.onChange(event) : undefined}
+                    onChange={(event: any) => props.onChange ? props.onChange(event) : undefined}
                     widthSelect={widthSelect}
                 />
             );

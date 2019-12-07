@@ -3,7 +3,7 @@ import { Layout, Icon, Avatar, Breadcrumb } from 'antd';
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
-import PendingJobs from './pending-jobs/PendingJobs';
+import PendingJobs from './pending-jobs/pendin-jobs-list/PendingJobsList';
 import { REDUX_SAGA, REDUX } from '../../../common/const/actions';
 import { connect } from 'react-redux';
 import JobManagement from './job-management/JobManagement';

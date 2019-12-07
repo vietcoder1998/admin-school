@@ -1,5 +1,5 @@
 import { IApiFunctions, IApi, IApis } from './../../redux/models/api-controller';
-import { randomID } from './randomID';
+import  randomID  from './randomID';
 
 export interface ITreeParent {
     value?: any;

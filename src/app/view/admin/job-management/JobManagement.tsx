@@ -18,7 +18,6 @@ interface JobManagementProps extends StateProps, DispatchProps {
 }
 
 class JobManagement extends PureComponent<JobManagementProps, JobManagementState> {
-
     render() {
         let {path} = this.props.match;
         return (

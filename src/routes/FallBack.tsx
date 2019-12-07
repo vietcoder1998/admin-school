@@ -11,7 +11,8 @@ export default function FallBack(props: any) {
                 width: "100%",
                 height: "100%",
                 paddingTop: "20vh",
-               
+                zIndex: 4,
+                backgroundColor: "white"
             }}
         >
             <h4 className='a_c'

@@ -6,9 +6,10 @@ import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
 import { loginUser } from '../../../services/login';
 import { TYPE } from '../../../common/const/type';
+import { routeLink, routePath } from '../../../common/const/break-cumb';
 let cookies = new Cookies();
 
-interface LoginState {
+interface ILoginState {
     email?: string;
     exactly?: boolean;
     is_loading?: boolean;
@@ -16,13 +17,15 @@ interface LoginState {
     password?: string;
     username?: string;
     show_password?: boolean;
+    state?: string;
 }
 
-interface LoginProps {
-    form?: any
+interface ILoginProps {
+    form?: any,
+    match?: any,
 }
 
-class Login extends PureComponent<LoginProps, LoginState> {
+class Login extends PureComponent<ILoginProps, ILoginState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,12 +36,26 @@ class Login extends PureComponent<LoginProps, LoginState> {
             password: null,
             username: null,
             show_password: false,
+            state: "LOGIN"
+        }
+    }
+
+    componentDidMount() {
+        let is_authen = localStorage.getItem("token") ? true : false;
+        if (is_authen) {
+            window.location.href = routeLink.JOB_MANAGEMENTS + routePath.LIST;
+        } else {
+            let state = this.props.match.path.replace("/", "");
+            if (state) {
+                state = state.toUpperCase();
+                this.setState({ state })
+            }
         }
     }
 
     createRequest = async () => {
         let { password, username } = this.state;
-        loginUser({username, password}, TYPE.NORMAL_LOGIN);
+        loginUser({ username, password }, TYPE.NORMAL_LOGIN);
     }
 
     handleSubmit = e => {
@@ -134,7 +151,7 @@ class Login extends PureComponent<LoginProps, LoginState> {
                                             )}
                                         </Form.Item>
                                         <p>
-                                            <Checkbox onChange={(event) => { cookies.set("atlg", event.target.checked)}} >Tự động đăng nhập</Checkbox>
+                                            <Checkbox onChange={(event) => { cookies.set("atlg", event.target.checked) }} >Tự động đăng nhập</Checkbox>
                                         </p>
                                     </Form>
                                     {exactly ? "" : <p>{err_msg}</p>}

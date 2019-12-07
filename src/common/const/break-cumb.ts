@@ -41,7 +41,7 @@ export const routeLink = {
 
     // job management
     PENDING_JOBS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
-    JOB_MANAGEMENT: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS
+    JOB_MANAGEMENTS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS
 };
 
 export const breakCumb = [
@@ -53,7 +53,7 @@ export const breakCumb = [
     { label: "data", name: "Danh mục dữ liêu", icon: "database", url: "/data", disable: true },
     { label: "roles", name: "Quyền", icon: null, url: "/roles", disable: true },
 
-    { label: "job-management", name: "Quản lý bài đăng", icon: "file", url: "/" },
+    { label: "job-management", name: "Quản lý bài viết", icon: "file", url: "/" },
     { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: "clock-circle", url: routeLink.PENDING_JOBS },
     { label: "languages", name: "Ngôn ngữ", icon: null, url:routeLink.LANGUAGES + routePath.LIST },
     { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST  },

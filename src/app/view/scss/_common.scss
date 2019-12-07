@@ -80,6 +80,14 @@ svg {
   padding-right: 30px !important;
 }
 
+.not-found {
+  position: fixed;
+  top: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: -2;
+}
+
 .ant-modal-body {
   max-height: 65vh;
   overflow: auto;

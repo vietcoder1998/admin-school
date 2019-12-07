@@ -1,22 +1,23 @@
-import React, {PureComponent} from 'react'
-import {Icon, Divider, Switch, Button} from 'antd';
+import React, { PureComponent } from 'react'
+import { Icon, Divider, Switch, Button } from 'antd';
 import './MngCreate.scss';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
-import {InputTitle} from '../../../layout/input-tittle/InputTitle';
-import {REDUX_SAGA} from '../../../../../common/const/actions';
-import {Link} from 'react-router-dom';
-import {IAnnouncementDetail} from '../../../../../redux/models/announcement_detail';
-import {TYPE} from '../../../../../common/const/type';
-import {ICreateNewAnnoucement} from '../../../../../redux/models/announcements';
-import {_requestToServer} from '../../../../../services/exec';
-import {POST, PUT} from '../../../../../common/const/method';
-import {UPLOAD_IMAGE, ANNOUNCEMENT_DETAIL} from '../../../../../services/api/private.api';
-import {sendImageHeader} from '../../../../../services/auth';
+import { InputTitle } from '../../../layout/input-tittle/InputTitle';
+import { REDUX_SAGA } from '../../../../../common/const/actions';
+import { Link } from 'react-router-dom';
+import { IAnnouncementDetail } from '../../../../../redux/models/announcement_detail';
+import { TYPE } from '../../../../../common/const/type';
+import { ICreateNewAnnoucement } from '../../../../../redux/models/announcements';
+import { _requestToServer } from '../../../../../services/exec';
+import { POST, PUT } from '../../../../../common/const/method';
+import { UPLOAD_IMAGE, ANNOUNCEMENT_DETAIL } from '../../../../../services/api/private.api';
+import { sendImageHeader } from '../../../../../services/auth';
+import { IAnnouType } from '../../../../../redux/models/annou-types';
 
-interface MngCreateState {
+interface IMngCreateState {
     title?: string;
-    announcementTypeID: string;
+    announcementTypeID: number;
     list_anno_type?: Array<any>;
     list_item?: Array<{ label?: string, value?: string }>,
     loading?: boolean;
@@ -35,32 +36,32 @@ interface MngCreateState {
     id?: string;
 }
 
-interface MngCreateProps extends StateProps, DispatchProps {
-    getTypeManagements: Function;
-    getAnnouncementDetail: Function;
+interface IMngCreateProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    getTypeManagements: Function;
+    getAnnouncementDetail: Function;
 }
 
-class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
+class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            title: "",
-            announcementTypeID: "",
+            title: null,
+            announcementTypeID: null,
             list_anno_type: [],
             list_item: [],
             loading: false,
             fileList: [],
             imageUrl: undefined,
             hidden: false,
-            value_annou: "chọn loại bài viết",
+            value_annou: "Chọn loại bài viết",
             announcement_detail: {
                 id: "",
                 admin: {},
                 viewNumber: 0,
                 modifyAdmin: {},
-                announcementType: {id: 0, name: "", priority: 0},
+                announcementType: { id: 0, name: "", priority: 0 },
                 hidden: false,
                 imageUrl: "",
                 content: "",
@@ -74,43 +75,18 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
         }
     }
 
-    static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    static getDerivedStateFromProps(nextProps: IMngCreateProps, prevState: IMngCreateState) {
         if (nextProps.match.params.id && nextProps.match.params.id !== prevState.id) {
-            nextProps.getAnnouncementDetail(nextProps.match.params.id)
             return {
                 id: nextProps.match.params.id
             }
         }
 
-        if (nextProps.ANNOU_TYPES !== prevState.ANNOU_TYPES) {
-            let list_item = [];
-            for (let i = 0; i < nextProps.ANNOU_TYPES.length; i++) {
-                const element = nextProps.ANNOU_TYPES[i];
-                const list_target = element.targets;
-                let target = "";
-
-                if (list_target.length === 0) {
-                    target = "Mọi đối tượng";
-                } else {
-                    list_target.forEach((element: any, index: number) => {
-                        target += element + (index !== list_target.length - 1 ? ', ' : "")
-                    });
-                }
-                list_item.push({label: element.name + ` ( ${target} ) `, value: element.id});
-            }
-
-            return {
-                list_item,
-                list_anno_type: nextProps.ANNOU_TYPES
-            }
-        }
-
         if (
-            nextProps.match.params.id !== "" &&
             nextProps.announcement_detail &&
-            nextProps.announcement_detail.id !== prevState.announcement_detail.id
+            nextProps.announcement_detail !== prevState.announcement_detail
         ) {
-            let {announcement_detail} = nextProps;
+            let { announcement_detail } = nextProps;
             let fileList: any = [];
             return {
                 title: announcement_detail.title,
@@ -121,33 +97,43 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                 announcementTypeID: announcement_detail.announcementType.id,
                 value_annou: announcement_detail.announcementType.name,
                 type_cpn: TYPE.EDIT,
-                imageUrl: announcement_detail.imageUrl
+                imageUrl: announcement_detail.imageUrl,
             }
         }
 
-        if (prevState.announcementTypeID) {
-            let {list_item, announcementTypeID} = prevState;
-            let value_annou = "";
-            list_item.forEach((item: any) => {
-                if (item.value === announcementTypeID) {
-                    value_annou = item.label
+        if (nextProps.list_anno_type  ) {
+            let { list_anno_type } = nextProps;
+            let list_item = [];
+            list_anno_type.forEach((item: IAnnouType, index: number) => {
+                const list_target = item.targets;
+                let target = "";
+
+                if (list_target.length === 0) {
+                    target = "Mọi đối tượng";
+                } else {
+                    list_target.forEach((element: any, index: number) => {
+                        target += element + (index !== list_target.length - 1 ? ', ' : "")
+                    });
                 }
+                list_item.push({ label: item.name + ` ( ${target} ) `, value: item.id });
             });
 
             return {
-                value_annou,
+                list_item
             }
         }
 
         return {
             type_cpn: TYPE.CREATE,
             value_annou: "Chọn loại bài viết",
-
-        }
-    }
+        };
+    };
 
     async componentDidMount() {
         await this.props.getTypeManagements()
+        if (this.props.match.params.id) {
+            await this.props.getAnnouncementDetail(this.props.match.params.id)
+        }
     };
 
     uploadFileToServer = async (file?: Blob, typeState?: string) => {
@@ -155,9 +141,9 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             return;
         }
         if (typeState === "imageUrl") {
-            await this.setState({imageUrl: "", loading_avatar: true});
+            await this.setState({ imageUrl: "", loading_avatar: true });
         } else {
-            await this.setState({loading_content_img: true})
+            await this.setState({ loading_content_img: true })
         }
         await this.setState({});
         let formData = new FormData();
@@ -168,11 +154,11 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             formData,
             sendImageHeader
         ).then((res: any) => {
-            this.setState({loading_avatar: false});
+            this.setState({ loading_avatar: false });
             if (res) {
                 imageUrl = res.data.url;
                 if (typeState === "imageUrl") {
-                    this.setState({imageUrl})
+                    this.setState({ imageUrl })
                 } else {
                     this.addImage(imageUrl);
                 }
@@ -181,16 +167,27 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
     };
 
     addImage = (url: string, style?: any, alt?: string) => {
-        let {content} = this.state;
+        let { content } = this.state;
         let defaultStyle = "width: 100%; height: auto; max-width: 1000px";
         let defaultDivStyle = "width: 100%; padding: 5vh 0vh; text-align: center";
         let newImage = `<div style="${defaultDivStyle}"><img style="${style ? style : defaultStyle}" src="${url}" alt="${alt}" /><div>`;
         content = content + newImage;
-        this.setState({content})
+        this.setState({ content })
     };
 
     updateAvatarUrl = (imageUrl?: string) => {
-        this.setState({imageUrl})
+        this.setState({ imageUrl })
+    };
+
+    choseAnou = (announcementTypeID?: number) => {
+        let { list_item, value_annou } = this.state;
+        list_item.forEach((item: any) => {
+            if (item.value === announcementTypeID) {
+                value_annou = item.label
+            }
+        });
+
+        return this.setState({ value_annou, announcementTypeID })
     };
 
     createAnnoucement = async () => {
@@ -200,41 +197,39 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
             announcementTypeID,
             hidden,
             content,
-            type_cpn
+            type_cpn,
         } = this.state;
-
-        let data = {
-            title,
-            imageUrl,
-            announcementTypeID,
-            hidden,
-            content
-        };
 
         await _requestToServer(
             type_cpn === TYPE.CREATE ? POST : PUT,
             type_cpn === TYPE.CREATE ? ANNOUNCEMENT_DETAIL : ANNOUNCEMENT_DETAIL + `/${this.props.match.params.id}`,
-            data
-        ).then((res: any) => {
-            if (res.code === 200) {
-                this.props.history.push('/admin/job-management/list')
+            {
+                title,
+                imageUrl,
+                announcementTypeID,
+                hidden,
+                content,
             }
+        ).then((res: any) => {
+            if (res) {
+                this.props.history.push('/admin/job-management/list')
+            };
         })
     };
-
 
     render() {
         let {
             title,
-            list_item,
             hidden,
             content,
-            value_annou,
             type_cpn,
             loading_avatar,
             imageUrl,
             loading_content_img,
+            value_annou,
+            list_item
         } = this.state;
+
         return (
             <React.Fragment>
                 <div className='common-content'>
@@ -250,7 +245,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             placeholder="Tiêu đề"
                             widthLabel="200px"
                             widthInput="400px"
-                            onChange={(event: any) => this.setState({title: event})}
+                            onChange={(event: any) => this.setState({ title: event })}
                         />
                         <InputTitle
                             type={TYPE.SELECT}
@@ -261,7 +256,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             widthSelect="400px"
                             value={value_annou}
                             list_value={list_item}
-                            onChange={(event: any) => this.setState({announcementTypeID: event})}
+                            onChange={(event: any) => this.choseAnou(event)}
                         />
                         <InputTitle
                             type="SWITCH"
@@ -269,9 +264,9 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             widthLabel="200px"
                         >
                             <Switch checked={!hidden} onClick={() => {
-                                this.setState({hidden: !hidden})
-                            }}/>
-                            <label style={{width: "40px", textAlign: "center", fontWeight: 500}}>
+                                this.setState({ hidden: !hidden })
+                            }} />
+                            <label style={{ width: "40px", textAlign: "center", fontWeight: 500 }}>
                                 {hidden ? "Ẩn" : "Hiện"}
                             </label>
                         </InputTitle>
@@ -281,21 +276,21 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             widthLabel="200px"
                         >
                             <React.Fragment>
-                                <div className="image-crop-url" style={{display: imageUrl ? "block" : "none"}}>
+                                <div className="image-crop-url" style={{ display: imageUrl ? "block" : "none" }}>
                                     <div className="image-cover">
-                                        <Icon type="eye"/>
+                                        <Icon type="eye" />
                                     </div>
-                                    <img id="avatar-announcements" src={imageUrl} alt='ảnh đại diện'/>
+                                    <img id="avatar-announcements" src={imageUrl} alt='ảnh đại diện' />
                                 </div>
                                 <input
                                     id="avatarUrl"
                                     type="file"
                                     onChange={
                                         (event: any) => this.uploadFileToServer(event.target.files[0], "imageUrl")
-                                    }/>
+                                    } />
                                 <label className='upload-img' htmlFor="avatarUrl">
-                                    {!loading_avatar ? <Icon type="plus"/> :
-                                        <Icon type="loading" style={{color: "blue"}}/>}
+                                    {!loading_avatar ? <Icon type="plus" /> :
+                                        <Icon type="loading" style={{ color: "blue" }} />}
                                     <div className="ant-upload-text">Upload</div>
                                 </label>
                             </React.Fragment>
@@ -312,10 +307,10 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                                     type="file"
                                     onChange={
                                         (event: any) => this.uploadFileToServer(event.target.files[0], "imageContent")
-                                    }/>
+                                    } />
                                 <label className='upload-img-content' htmlFor="imgContent">
-                                    {!loading_content_img ? <Icon type="upload"/> :
-                                        <Icon type="loading" style={{color: "blue"}}/>}
+                                    {!loading_content_img ? <Icon type="upload" /> :
+                                        <Icon type="loading" style={{ color: "blue" }} />}
                                     Upload
                                 </label>
                             </div>
@@ -329,7 +324,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                                 onBeforeLoad={(ckEditor: any) => (ckEditor.disableAutoInline = true)}
                                 onInit={(event: any) => {
                                 }}
-                                onChange={(event: any) => this.setState({content: event.editor.getData()})}
+                                onChange={(event: any) => this.setState({ content: event.editor.getData() })}
                                 data={content}
                             />
                         </InputTitle>
@@ -346,7 +341,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             onClick={this.createAnnoucement}
                         >
                             {type_cpn === TYPE.CREATE ? "Tạo mới" : "Lưu lại"}
-                            <Icon type="right"/>
+                            <Icon type="right" />
                         </Button>
                         <Button
                             type="danger"
@@ -357,7 +352,7 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
                             }}
                         >
                             <Link to='/admin/job-management/list'>
-                                <Icon type="close"/>
+                                <Icon type="close" />
                                 {type_cpn === TYPE.CREATE ? "Hủy bài" : "Hủy sửa"}
                             </Link>
                         </Button>
@@ -369,8 +364,8 @@ class MngCreate extends PureComponent<MngCreateProps, MngCreateState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getTypeManagements: () => dispatch({type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES}),
-    getAnnouncementDetail: (id: string) => dispatch({type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id}),
+    getTypeManagements: () => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES }),
+    getAnnouncementDetail: (id: string) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id }),
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({

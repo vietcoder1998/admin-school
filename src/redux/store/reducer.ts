@@ -1,3 +1,4 @@
+import { PendingJobDetail } from './../reducers/pending-job-detail';
 import { MutilBox } from './../reducers/mutil-box';
 import { AnnouComments } from './../reducers/annou-comments';
 import { MajorJobNames } from './../reducers/major-job-names';
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
     AdminAccounts,
     MajorJobNames,
     AnnouComments,
-    MutilBox
+    MutilBox,
+    PendingJobDetail
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

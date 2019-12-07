@@ -44,11 +44,11 @@ export default function MenuNavigation(props: IMenuNavigationProps ) {
                     <Menu.Item key="1">
                         <Link to='/admin/job-management/list'>
                             <Icon type="file-search" />
-                            <span>Quản lý bài đăng</span>
+                            <span>Quản lý bài viết</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="2">
-                        <Link to='/admin/pending-jobs'>
+                        <Link to='/admin/pending-jobs/list'>
                             <Icon type="audit" />
                             <span>Xét duyệt bài đăng</span>
                         </Link>
