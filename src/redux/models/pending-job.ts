@@ -45,27 +45,6 @@ export interface IShifts {
     unit?: string;
 }
 
-export interface IPendingJobDetail {
-    createdDate?: number;
-    description?: string;
-    employerBranchID?: string;
-    expirationDate?: number,
-    jobNameID?: number
-    jobTitle?: string
-    jobType?: 'FULLTIME' | 'PARTIME' | 'INTERNSHIP'
-    requiredSkillIDs?: Array<number>
-    shifts?: Array<any>
-    employer?: {
-        employerName?: string;
-        id?: string;
-        logoUrl?: string;
-    },
-    id?: string;
-    jobID?: string
-    message?: string
-    repliedDate?: number;
-    state?: 'PENDING' | 'ACCEPTED' | 'REJECTED'
-}
 
 export interface IPendingJobs {
     items?: Array<IPendingJob>;

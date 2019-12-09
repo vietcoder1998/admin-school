@@ -2,7 +2,7 @@ export interface IModalState {
     title?: string,
     open_modal?: boolean,
     children?: any,
-    type_modal: string,
+    type_modal?: string,
     msg?: any,
 }
 

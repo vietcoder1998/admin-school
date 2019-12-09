@@ -1,19 +1,23 @@
 import { REDUX } from '../../common/const/actions';
-import { IPendingJobDetail } from '../models/pending-job';
+import { IPendingJobDetail } from '../models/pending-job-detail';
 
 let initState: IPendingJobDetail = {
-    description: null,
-    employerBranchID: null,
-    expirationDate: null,
-    jobNameID: null,
-    jobTitle: null,
-    jobType: null,
-    requiredSkillIDs: [],
-    shifts: [],
+    createdDate: null,
     employer: {
         employerName: null,
         id: null,
         logoUrl: null,
+        profileVerified: false
+    },
+    data: {
+        description: null,
+        employerBranchID: null,
+        expirationDate: null,
+        jobNameID: null,
+        jobTitle: null,
+        jobType: null,
+        requiredSkillIDs: [],
+        shifts: [],
     },
     id: null,
     jobID: null,
@@ -22,12 +26,12 @@ let initState: IPendingJobDetail = {
     state: null,
 };
 
-export const PendingJobDetail = (state = initState, action: any) => {
+export const PendingJobDetail = (state: IPendingJobDetail = initState, action: any) => {
+    console.log(action)
     switch (action.type) {
         case REDUX.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL:
             return {
-                ...state,
-                data: action.data
+                ...action.data,
             };
 
         default:

@@ -1,4 +1,4 @@
-import { IPendingJobDetail } from '../models/pending-job';
+import { IPendingJobDetail } from '../models/pending-job-detail';
 import { GET } from '../../common/const/method';
 import { PENDING_JOBS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
@@ -8,18 +8,22 @@ import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 function* getListPendingJobDetailData(action: any) {
     let res = yield call(callPendingJobDetail, action);
     let data: IPendingJobDetail = {
-        description: null,
-        employerBranchID: null,
-        expirationDate: null,
-        jobNameID: null,
-        jobTitle: null,
-        jobType: null,
-        requiredSkillIDs: [],
-        shifts: [],
+        createdDate: null,
         employer: {
             employerName: null,
             id: null,
             logoUrl: null,
+            profileVerified: false
+        },
+        data: {
+            description: null,
+            employerBranchID: null,
+            expirationDate: null,
+            jobNameID: null,
+            jobTitle: null,
+            jobType: null,
+            requiredSkillIDs: [],
+            shifts: [],
         },
         id: null,
         jobID: null,
@@ -28,7 +32,7 @@ function* getListPendingJobDetailData(action: any) {
         state: null,
     };
 
-    if (res.code === 200) {
+    if (res) {
         data = res.data;
     }
 
@@ -39,7 +43,7 @@ function* getListPendingJobDetailData(action: any) {
 }
 
 function callPendingJobDetail(action: any) {
-    let id = null;
+    let id;
     if (action.id) {
         id = action.id;
     }
