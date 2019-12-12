@@ -34,6 +34,7 @@ interface IMngCreateState {
     embedUrl?: any;
     loading_content_img?: boolean;
     id?: string;
+    loading_rq?: boolean;
 }
 
 interface IMngCreateProps extends StateProps, DispatchProps {
@@ -71,7 +72,8 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             loading_avatar: false,
             loading_content_img: false,
             dataUrl: null,
-            id: undefined
+            id: undefined,
+            loading_rq: false
         }
     }
 
@@ -84,7 +86,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         }
 
         if (
-            nextProps.match.params.id &&  nextProps.announcement_detail &&
+            nextProps.match.params.id && nextProps.announcement_detail &&
             nextProps.announcement_detail !== prevState.announcement_detail
         ) {
             let { announcement_detail } = nextProps;
@@ -136,6 +138,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         }
     };
 
+
     uploadFileToServer = async (file?: Blob, typeState?: string) => {
         if (!file) {
             return;
@@ -163,17 +166,53 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                     this.addImage(imageUrl);
                 }
             }
-        })
+        });
+        await this.setState({ loading_content_img: false, loading_avatar: false })
     };
 
-    addImage = (url: string, style?: any, alt?: string) => {
-        let { content } = this.state;
-        let defaultStyle = "width: 100%; ; max-height: 1000px; height: auto; max-width: 1000px";
-        let defaultDivStyle = "width: 100%; max-height: 100vh; padding: 5vh 0vh; text-align: center";
-        let newImage = `<div style="${defaultDivStyle}"><img style="${style ? style : defaultStyle}" src="${url}" alt="${alt}" /><div>`;
-        content = content + newImage;
-        this.setState({ content })
+    addImage = (url: string) => {
+        this.addText(url);
     };
+
+
+    addText = async (text: any) => {
+        let sel, range;
+        let image = document.createElement('img');
+        let p = document.createElement('p');
+        let div = document.createElement('div')
+
+        image.src = text;
+        image.style.width = '100%';
+        image.style.height = '100%';
+        image.style.maxHeight = '100vw';
+        image.style.margin = '0.5vw 0px';
+
+        p.innerHTML = 'Chú thích ảnh';
+        p.style.fontStyle = 'italic';
+        p.style.width = '100%';
+        p.style.textAlign = 'center';
+
+        div.innerHTML = 'Nhập tiếp ...'
+
+        try {
+            let newWindow = document.getElementsByTagName('iframe')[0].contentWindow;
+
+            if (newWindow.getSelection()) {
+                sel = newWindow.getSelection();
+                if (sel.rangeCount) {
+                    range = sel.getRangeAt(0);
+                    range.deleteContents();
+                    await range.insertNode(div)
+                    await range.insertNode(p);
+                    await range.insertNode(image);
+                }
+            }
+            newWindow.focus();
+        } catch (err) {
+            throw err
+        }
+
+    }
 
     updateAvatarUrl = (imageUrl?: string) => {
         this.setState({ imageUrl })
@@ -200,6 +239,9 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             type_cpn,
         } = this.state;
 
+        await this.setState({ loading_rq: true })
+
+
         if (!title) {
             message.warning("Bài đăng chưa có tiêu đề", 2)
         }
@@ -218,6 +260,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         }
 
         if (title && imageUrl && announcementTypeID && content) {
+            let newContent = `<div style="text-align: justify;">${content}</div> `;
             await _requestToServer(
                 type_cpn === TYPE.CREATE ? POST : PUT,
                 type_cpn === TYPE.CREATE ? ANNOUNCEMENT_DETAIL : ANNOUNCEMENT_DETAIL + `/${this.props.match.params.id}`,
@@ -226,7 +269,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                     imageUrl,
                     announcementTypeID,
                     hidden,
-                    content,
+                    content: newContent,
                 }
             ).then((res: any) => {
                 if (res) {
@@ -235,11 +278,21 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                     }, 500);
 
                 };
+            }).finally(() => {
+                this.setState({ loading_rq: false })
             })
         }
 
 
     };
+
+    componentWillUnmount() {
+        window.removeEventListener("focus", () => {
+            console.log("ok")
+        })
+
+    }
+
 
     render() {
         let {
@@ -251,7 +304,8 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             imageUrl,
             loading_content_img,
             value_annou,
-            list_item
+            list_item,
+            loading_rq
         } = this.state;
 
         return (
@@ -299,7 +353,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                             title="Ảnh đại diện"
                             widthLabel="200px"
                         >
-                            <React.Fragment>
+                            <>
                                 <div className="image-crop-url" style={{ display: imageUrl ? "block" : "none" }}>
                                     <div className="image-cover">
                                         <Icon type="eye" />
@@ -317,9 +371,8 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                                         <Icon type="loading" style={{ color: "blue" }} />}
                                     <div className="ant-upload-text">Upload</div>
                                 </label>
-                            </React.Fragment>
+                            </>
                         </InputTitle>
-
                         <InputTitle
                             title="Nội dung"
                             widthLabel="200px"
@@ -330,25 +383,33 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                                     id="imgContent"
                                     type="file"
                                     onChange={
-                                        (event: any) => this.uploadFileToServer(event.target.files[0], "imageContent")
-                                    } />
-                                <label className='upload-img-content' htmlFor="imgContent">
+                                        (event: any) => {
+                                            this.uploadFileToServer(event.target.files[0], "imageContent")
+                                        }
+                                    }
+                                />
+                                <label
+                                    className='upload-img-content'
+                                    htmlFor="imgContent"
+                                // onClick={(e: any) => e.preventDefault()}
+                                >
                                     {!loading_content_img ? <Icon type="upload" /> :
                                         <Icon type="loading" style={{ color: "blue" }} />}
                                     Upload
                                 </label>
                             </div>
                             <CKEditor
-                                id={"yeah"}
+                                id={"editor-value"}
                                 editorName="editor2"
                                 config={{
                                     extraPlugins: 'stylesheetparser',
                                     height: '60vh'
                                 }}
                                 onBeforeLoad={(ckEditor: any) => (ckEditor.disableAutoInline = true)}
-                                onInit={(event: any) => {
+                                onBlur={event => console.log(event.editor)}
+                                onChange={(event: any) => {
+                                    this.setState({ content: event.editor.getData() })
                                 }}
-                                onChange={(event: any) => this.setState({ content: event.editor.getData() })}
                                 data={content}
                             />
                         </InputTitle>
@@ -357,7 +418,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                     <div className="mng-create-content">
                         <Button
                             type="primary"
-                            prefix={"check"}
+                            icon={loading_rq ? "loading" : "check"}
                             style={{
                                 margin: "10px 10px",
                                 float: "right"
@@ -365,7 +426,6 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                             onClick={this.createAnnoucement}
                         >
                             {type_cpn === TYPE.CREATE ? "Tạo mới" : "Lưu lại"}
-                            <Icon type="right" />
                         </Button>
                         <Button
                             type="danger"
