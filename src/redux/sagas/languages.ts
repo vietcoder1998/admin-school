@@ -22,23 +22,27 @@ function* getListLanguagesData(action: any) {
         type: REDUX.LANGUAGES.GET_LANGUAGES,
         data
     });
-}
+};
 
 function callLanguages(action: any) {
-    return _requestToServer(
-        GET, LANGUAGES,
-        null,
-        {
-            pageIndex: action.pageIndex ? action.pageIndex : 0,
-            pageSize: action.pageSize ? action.pageSize : 0
-        },
-        undefined, undefined, false, false
-    )
-}
+    try {
+        return _requestToServer(
+            GET, LANGUAGES,
+            null,
+            {
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 0
+            },
+            undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e;
+    };
+};
 
 export function* LanguagesWatcher() {
     yield takeEvery(
         REDUX_SAGA.LANGUAGES.GET_LANGUAGES,
         getListLanguagesData
     )
-}
+};

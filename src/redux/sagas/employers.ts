@@ -26,23 +26,27 @@ function* getListEmployersData(action: any) {
 };
 
 function callEmployers(action: any) {
-    let target;
-    let body;
+    try {
+        let target;
+        let body;
 
-    if (action.body) {
-        body = action.body
-    };
+        if (action.body) {
+            body = action.body
+        };
 
-    return _requestToServer(
-        POST, EMPLOYER,
-        body,
-        {
-            pageIndex: action.pageIndex ? action.pageIndex : 0,
-            pageSize: action.pageSize ? action.pageSize : 0,
-            target
-        },
-        undefined, undefined, false, false
-    );
+        return _requestToServer(
+            POST, EMPLOYER,
+            body,
+            {
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 0,
+                target
+            },
+            undefined, undefined, false, false
+        );
+    } catch (e) {
+        throw e;
+    }
 };
 
 export function* EmployersWatcher() {

@@ -26,31 +26,35 @@ function* getListEmBranchesData(action: any) {
 };
 
 function callEmBranches(action: any) {
-    let body: IEmBranchesFilter = {
-        headquarters: null,
-        regionID: null
-    };
-    if (action.body) {
-        body = action.body
-    };
+    try {
+        let body: IEmBranchesFilter = {
+            headquarters: null,
+            regionID: null
+        };
 
-    if (action.id) {
-        return _requestToServer(
-            POST,
-            EM_BRANCHES_API + `/${action.id}/employerBranchs/query`,
-            body,
-            {
-                pageIndex: action.pageIndex ? action.pageIndex : 0,
-                pageSize: action.pageSize ? action.pageSize : 0
-            },
-            undefined,
-            undefined,
-            false,
-            false
-        );
+
+        if (action.body) {
+            body = action.body
+        };
+
+        if (action.id) {
+            return _requestToServer(
+                POST,
+                EM_BRANCHES_API + `/${action.id}/employerBranchs/query`,
+                body,
+                {
+                    pageIndex: action.pageIndex ? action.pageIndex : 0,
+                    pageSize: action.pageSize ? action.pageSize : 0
+                },
+                undefined,
+                undefined,
+                false,
+                false
+            );
+        }
+    } catch (e) {
+        throw e;
     }
-
-    return
 };
 
 export function* EmBranchesWatcher() {

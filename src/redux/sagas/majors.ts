@@ -13,7 +13,7 @@ function* getListMajorsData(action: any) {
         pageSize: 0,
         totalItems: 0,
     };
-    
+
     if (res.code === 200) {
         data = res.data
     }
@@ -25,26 +25,30 @@ function* getListMajorsData(action: any) {
 }
 
 function callMajors(action: any) {
-    let pageIndex;
-    let pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
-    }
+    try {
+        let pageIndex;
+        let pageSize;
+        if (action.pageIndex) {
+            pageIndex = action.pageIndex;
+        }
 
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
+        if (action.pageSize) {
+            pageSize = action.pageSize;
+        }
 
-    return _requestToServer(
-        GET, MAJORS,
-        undefined,
-        {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 10
-        },
-        undefined, undefined, false, false
-    )
-}
+        return _requestToServer(
+            GET, MAJORS,
+            undefined,
+            {
+                pageIndex: pageIndex ? pageIndex : 0,
+                pageSize: pageSize ? pageSize : 10
+            },
+            undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e;
+    }
+};
 
 export function* MajorsWatcher() {
     yield takeEvery(

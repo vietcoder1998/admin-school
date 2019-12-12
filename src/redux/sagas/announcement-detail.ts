@@ -17,7 +17,7 @@ function* getListAnnouncementDetailData(action: any) {
         lastModified: undefined,
         createdDate: 0
     };
-    
+
     if (res.code === 200) {
         data = res.data;
     }
@@ -29,15 +29,20 @@ function* getListAnnouncementDetailData(action: any) {
 }
 
 function callAnnouncementDetail(action: any) {
-    let id = "";
-    if (action.id) {
-        id = action.id;
+    try {
+        let id = "";
+        if (action.id) {
+            id = action.id;
+            return _requestToServer(
+                GET, ANNOUNCEMENT_DETAIL + `/${id}`,
+                undefined,
+                undefined, undefined, undefined, false, false
+            )
+        }
+    } catch (e) {
+        throw e
     }
-    return _requestToServer(
-        GET, ANNOUNCEMENT_DETAIL + `/${id}`,
-        undefined,
-        undefined, undefined, undefined, false, false
-    )
+
 }
 
 export function* AnnouncementDetailWatcher() {

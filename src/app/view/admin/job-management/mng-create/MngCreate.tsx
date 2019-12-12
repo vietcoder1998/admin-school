@@ -84,7 +84,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         }
 
         if (
-            nextProps.announcement_detail &&
+            nextProps.match.params.id &&  nextProps.announcement_detail &&
             nextProps.announcement_detail !== prevState.announcement_detail
         ) {
             let { announcement_detail } = nextProps;

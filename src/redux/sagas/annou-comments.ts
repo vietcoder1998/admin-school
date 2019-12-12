@@ -13,7 +13,7 @@ function* getListAnnouCommentsData(action: any) {
         pageSize: 0,
         totalItems: 0
     };
-    
+
     if (res.code === 200) {
         data = res.data
     };
@@ -25,29 +25,34 @@ function* getListAnnouCommentsData(action: any) {
 };
 
 function callAnnouComments(action: any) {
-    let body;
-    let id = action.id;
+    try {
+        let body;
+        let id = action.id;
 
-    if (action.body) {
-        body = action.body;
-    };
+        if (action.body) {
+            body = action.body;
+        };
 
-    return _requestToServer(
-        POST, ANNOU_COMMENTS + `/${id}/comments/query`,
-        {
-            rating: body.body ? body.rating : null,
-            userID: body.userId ? body.userID : null,
-            userType: body.userType ? body.userType : null,
-            createdDate: body.createdDate ? body.createdDate : null,
-            lastModified: body.lastModified ? body.lastModified : null,
-        },
-        {
+        return _requestToServer(
+            POST, ANNOU_COMMENTS + `/${id}/comments/query`,
+            {
+                rating: body.body ? body.rating : null,
+                userID: body.userId ? body.userID : null,
+                userType: body.userType ? body.userType : null,
+                createdDate: body.createdDate ? body.createdDate : null,
+                lastModified: body.lastModified ? body.lastModified : null,
+            },
+            {
 
-            pageIndex: action.pageIndex ? action.pageIndex : 0,
-            pageSize: action.pageSize ? action.pageSize : 0,
-        },
-        undefined, undefined, false, false
-    );
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 0,
+            },
+            undefined, undefined, false, false
+        );
+    } catch (error) {
+        throw error
+    }
+
 };
 
 export function* AnnouCommentsWatcher() {

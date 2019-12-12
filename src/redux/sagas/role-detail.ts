@@ -8,7 +8,7 @@ import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 function* getRoleDetailData(action: any) {
     let res = yield call(callRolesDetail, action);
     let data: IRoleDetail = {
-       data: {}
+        data: {}
     };
 
     if (res.code === 200) {
@@ -19,24 +19,28 @@ function* getRoleDetailData(action: any) {
         type: REDUX.ROLES.GET_ROLE_DETAIL,
         data
     });
-}
+};
 
 function callRolesDetail(action: any) {
-    let rid;
-    if (action.rid) {
-        rid = action.rid;
-    }
+    try {
+        let rid;
+        if (action.rid) {
+            rid = action.rid;
+        };
 
-    return _requestToServer(
-        GET, ROLES + (rid ? `/${rid}` : ''),
-        undefined,
-        undefined, undefined, undefined, false, false
-    )
-}
+        return _requestToServer(
+            GET, ROLES + (rid ? `/${rid}` : ''),
+            undefined,
+            undefined, undefined, undefined, false, false
+        );
+    } catch (e) {
+        throw e;
+    };
+};
 
 export function* RoleDetailWatcher() {
     yield takeEvery(
         REDUX_SAGA.ROLES.GET_ROLE_DETAIL,
         getRoleDetailData
-    )
-}
+    );
+};

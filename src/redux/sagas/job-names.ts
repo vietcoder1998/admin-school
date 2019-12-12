@@ -25,16 +25,20 @@ function* getListJobNameData(action: any) {
 }
 
 function callJobName(action: any) {
-    return _requestToServer(
-        GET, JOB_NAMES,
-        null,
-        {
-            pageIndex: action.pageIndex ? action.pageIndex : 0,
-            pageSize: action.pageSize ? action.pageSize : 0,
-            name: action.name ? action.name : "",
-            jobGroupID: action.id ? action.id : undefined,
-        }, undefined, undefined, false, false
-    )
+    try {
+        return _requestToServer(
+            GET, JOB_NAMES,
+            null,
+            {
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 0,
+                name: action.name ? action.name : "",
+                jobGroupID: action.id ? action.id : undefined,
+            }, undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e
+    }
 }
 
 export function* JobNameWatcher() {

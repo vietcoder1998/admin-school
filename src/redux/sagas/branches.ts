@@ -25,15 +25,20 @@ function* getListBranchesData(action: any) {
 }
 
 function callBranches(action: any) {
-    return _requestToServer(
-        GET, BRANCHES,
-        null,
-        {
-            pageIndex: action.pageIndex ? action.pageIndex : 0,
-            pageSize: action.pageSize ? action.pageSize : 0
-        },
-        undefined, undefined, false, false
-    )
+    try {
+        return _requestToServer(
+            GET, BRANCHES,
+            null,
+            {
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 0
+            },
+            undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e
+    }
+
 }
 
 export function* BranchesWatcher() {

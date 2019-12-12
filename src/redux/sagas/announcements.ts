@@ -15,11 +15,8 @@ function* getListAnnouncementsData(action: any) {
         totalItems: 0,
     };
 
-    if (res.code === 200) {
-        data.items = res.data.items;
-        data.pageIndex = res.data.pageIndex;
-        data.pageSize = res.data.pageSize;
-        data.totalItems = res.data.totalItems;
+    if (res) {
+        data = res.data;
     }
 
     yield put({
@@ -29,24 +26,26 @@ function* getListAnnouncementsData(action: any) {
 }
 
 function callAnnouncements(action: any) {
-
-
-    if (action.body) {
-        return _requestToServer(
-            POST, ANNOUNCEMENTS,
-            {
-                adminID: action.body.adminID,
-                hidden: action.body.hidden,
-                createdDate: action.body.createdDate,
-                target: action.body.target,
-                announcementTypeID: action.body.announcementTypeID,
-            },
-            {
-                pageIndex: action.pageIndex ? action.pageIndex : 0,
-                pageSize: action.pageSize ? action.pageSize : 10
-            },
-            undefined, undefined, false, false
-        )
+    try {
+        if (action.body) {
+            return _requestToServer(
+                POST, ANNOUNCEMENTS,
+                {
+                    adminID: action.body.adminID,
+                    hidden: action.body.hidden,
+                    createdDate: action.body.createdDate,
+                    target: action.body.target,
+                    announcementTypeID: action.body.announcementTypeID,
+                },
+                {
+                    pageIndex: action.pageIndex ? action.pageIndex : 0,
+                    pageSize: action.pageSize ? action.pageSize : 10
+                },
+                undefined, undefined, false, false
+            )
+        }
+    } catch (e) {
+        throw e;
     }
 }
 

@@ -34,29 +34,33 @@ function* getListPendingJobDetailData(action: any) {
 
     if (res) {
         data = res.data;
-    }
+    };
 
     yield put({
         type: REDUX.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL,
         data
     });
-}
+};
 
 function callPendingJobDetail(action: any) {
-    let id;
-    if (action.id) {
-        id = action.id;
-    }
-    return _requestToServer(
-        GET, PENDING_JOBS + `/${id}`,
-        undefined,
-        undefined, undefined, undefined, false, false
-    )
-}
+    try {
+        let id;
+        if (action.id) {
+            id = action.id;
+            return _requestToServer(
+                GET, PENDING_JOBS + `/${id}`,
+                undefined,
+                undefined, undefined, undefined, false, false
+            )
+        };
+    } catch (e) {
+        throw e;
+    };
+};
 
 export function* PendingJobDetailWatcher() {
     yield takeEvery(
         REDUX_SAGA.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL,
         getListPendingJobDetailData
     )
-}
+};

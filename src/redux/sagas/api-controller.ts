@@ -23,11 +23,16 @@ function* getListApiControllerData(action: any) {
 }
 
 function callApiController(action: any) {
-    return _requestToServer(
-        GET, API_CONTROLLER,
-        undefined,
-        undefined, undefined, undefined, false, false
-    )
+    try {
+        return _requestToServer(
+            GET, API_CONTROLLER,
+            undefined,
+            undefined, undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e
+    }
+
 }
 
 export function* ApiControllerWatcher() {

@@ -26,25 +26,30 @@ function* getListRegionsData(action: any) {
 }
 
 function callRegions(action: any) {
-    var pageIndex;
-    var pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
+    try {
+        let pageIndex;
+        let pageSize;
+        if (action.pageIndex) {
+            pageIndex = action.pageIndex;
+        }
+
+        if (action.pageSize) {
+            pageSize = action.pageSize;
+        }
+
+        return _requestToServer(
+            GET, REGIONS,
+            null,
+            {
+                pageIndex: pageIndex ? pageIndex : 0,
+                pageSize: pageSize ? pageSize : 10
+            },
+            undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e;
     }
 
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
-
-    return _requestToServer(
-        GET, REGIONS,
-        null,
-        {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 10
-        },
-        undefined, undefined, false, false
-    )
 }
 
 export function* RegionsWatcher() {

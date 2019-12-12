@@ -1,5 +1,5 @@
 import { IAdminAccounts } from '../models/admin-accounts';
-import {  POST } from '../../common/const/method';
+import { POST } from '../../common/const/method';
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
@@ -18,37 +18,42 @@ function* getListAdminAccountsData(action: any) {
 }
 
 function callAdminAccounts(action: any) {
-    var pageIndex;
-    var pageSize;
-    let body = {
-        firstName: null,
-        lastName: null,
-        roleID: null,
-        roleType: null,
-        ids: null
-    };
+    try {
+        let pageIndex;
+        let pageSize;
+        let body = {
+            firstName: null,
+            lastName: null,
+            roleID: null,
+            roleType: null,
+            ids: null
+        };
 
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
+        if (action.pageIndex) {
+            pageIndex = action.pageIndex;
+        }
+
+        if (action.pageSize) {
+            pageSize = action.pageSize;
+        }
+
+        if (action.body) {
+            body = action.body
+        }
+
+        return _requestToServer(
+            POST, ADMIN_ACCOUNTS + '/query',
+            body,
+            {
+                pageIndex: pageIndex ? pageIndex : 0,
+                pageSize: pageSize ? pageSize : 10
+            },
+            undefined, undefined, false
+        )
+    } catch (e) {
+        throw e;
     }
 
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
-
-    if (action.body) {
-        body = action.body
-    }
-
-    return _requestToServer(
-        POST, ADMIN_ACCOUNTS + '/query',
-        body,
-        {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize: pageSize ? pageSize : 10
-        },
-        undefined, undefined, false
-    )
 }
 
 export function* AdminAccountsWatcher() {

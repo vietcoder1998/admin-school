@@ -25,27 +25,32 @@ function* getListTypeSchoolsData(action: any) {
 }
 
 function callTypeSchools(action: any) {
-    var pageIndex;
-    var pageSize;
-    if (action.pageIndex) {
-        pageIndex = action.pageIndex;
-    }
+    try {
+        let pageIndex;
+        let pageSize;
+        if (action.pageIndex) {
+            pageIndex = action.pageIndex;
+        }
 
-    if (action.pageSize) {
-        pageSize = action.pageSize;
-    }
+        if (action.pageSize) {
+            pageSize = action.pageSize;
+        }
 
-    return _requestToServer(
-        GET, TYPE_SCHOOLS,
-        null,
-        {
-            pageIndex: pageIndex ? pageIndex : 0,
-            pageSize:
-                pageSize ? pageSize : 10
-        },
-        undefined, undefined, undefined, false
-    )
-}
+        return _requestToServer(
+            GET, TYPE_SCHOOLS,
+            null,
+            {
+                pageIndex: pageIndex ? pageIndex : 0,
+                pageSize:
+                    pageSize ? pageSize : 10
+            },
+            undefined, undefined, undefined, false
+        );
+    } catch (e) {
+        throw e
+    };
+
+};
 
 export function* TypeSchoolsWatcher() {
     yield takeEvery(

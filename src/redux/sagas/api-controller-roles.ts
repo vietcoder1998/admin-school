@@ -22,15 +22,20 @@ function* getListApiControllerRolesData(action: any) {
 }
 
 function callApiControllerRoles(action: any) {
-    let id: any;
-    if (action.id) {
-        id = action.id
+    try {
+        let id: any;
+        if (action.id) {
+            id = action.id
+        }
+        return _requestToServer(
+            GET, API_CONTROLLER_ROLES + (id ? `/${id}/apis` : ''),
+            null,
+            undefined, undefined, undefined, false, false
+        )
+    } catch (e) {
+        throw e;
     }
-    return _requestToServer(
-        GET, API_CONTROLLER_ROLES + (id ? `/${id}/apis` : ''),
-        null,
-        undefined, undefined, undefined, false, false
-    )
+
 }
 
 export function* ApiControllerRolesWatcher() {

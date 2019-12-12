@@ -20,4 +20,5 @@ export interface IAdminAccounts {
     pageIndex?: number;
     pageSize?: number;
     totalItems?: number;
+    role_detail?: any;
 }

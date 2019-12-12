@@ -26,19 +26,22 @@ function* getListMajorJobNamesData(action: any) {
 
 function callMajorJobNames(action: any) {
     let id;
-
-    if (action.id) {
-        id = action.id
-    }
-    return _requestToServer(
-        GET, MAJORS + `/${id}/jobNames`,
-        null,
-        {
-            pageIndex: action.pageIndex ? action.pageIndex : 0,
-            pageSize: action.pageSize ? action.pageSize : 0
-        }, undefined, undefined, false, false
-    )
-}
+    try {
+        if (action.id) {
+            id = action.id
+        }
+        return _requestToServer(
+            GET, MAJORS + `/${id}/jobNames`,
+            null,
+            {
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 0
+            }, undefined, undefined, false, false
+        );
+    } catch (e) {
+        throw e;
+    };
+};
 
 export function* MajorJobNamesWatcher() {
     yield takeEvery(
