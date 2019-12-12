@@ -6,12 +6,12 @@ import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { TYPE } from '../../../../../common/const/type';
 import { IAppState } from '../../../../../redux/store/reducer';
-import  findIdWithValue  from '../../../../../common/utils/findIdWithValue';
+import findIdWithValue from '../../../../../common/utils/findIdWithValue';
 import { _requestToServer } from '../../../../../services/exec';
 import { POST, PUT } from '../../../../../common/const/method';
 import { EM_BRANCHES_API } from '../../../../../services/api/private.api';
 import moment from 'moment';
-import { IShifts, IAnnoucementBody } from '../../../../../redux/models/pending-job';
+import { IShifts, IAnnoucementBody } from '../../../../../redux/models/pending-jobs';
 import ShiftContent, { newShift } from '../../../layout/annou-shift/AnnouShift';
 import { IJobName } from '../../../../../redux/models/job-type';
 import { IEmBranch, IEmBranchesFilter } from '../../../../../redux/models/em-branches';
@@ -156,21 +156,63 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
 
     createRequest = async () => {
         let { body, type_cpn, employer } = this.state;
-        let newBody = this.pretreatmentBody(body, type_cpn);
-        let METHOD = type_cpn === TYPE.EDIT ? PUT : POST;
 
-        await _requestToServer(
-            METHOD,
-            EM_BRANCHES_API + `/${employer.id}/jobs`,
-            newBody,
-            null,
-            undefined,
-            undefined,
-            true,
-            false,
-        ).then((res: any) => {
-            this.props.history.push('/admin/pending-jobs/list');
-        })
+        if (!body.shifts) {
+            message.warning("Bài đăng chưa chọn ca làm việc", 2)
+        }
+
+        if (!body.jobTitle) {
+            message.warning("Bài đăng chưa có tiêu đề", 2)
+        }
+
+        if (!body.jobType) {
+            message.warning("Bài đăng chưa chọn loại công việc", 2)
+        }
+
+        if (!body.expirationDate) {
+            message.warning("Bài đăng chưa chọn ngày hết hạn", 2)
+        }
+
+        if (!body.jobTitle) {
+            message.warning("Bài đăng chưa có tiêu đề", 2)
+        }
+
+        if (!body.description) {
+            message.warning("Bài đăng chưa có mô tả", 2)
+        }
+
+        if (!body.employerBranchID) {
+            message.warning("Bài đăng chưa chọn chi nhánh tuyển dụng", 2)
+        }
+
+        if (
+            body.shifts &&
+            body.description &&
+            body.jobTitle &&
+            body.jobType &&
+            body.employerBranchID &&
+            body.expirationDate &&
+            employer
+        ) {
+            let newBody = this.pretreatmentBody(body, type_cpn);
+            let METHOD = type_cpn === TYPE.EDIT ? PUT : POST;
+
+            await _requestToServer(
+                METHOD,
+                EM_BRANCHES_API + `/${employer.id}/jobs`,
+                newBody,
+                null,
+                undefined,
+                undefined,
+                true,
+                false,
+            ).then((res: any) => {
+                setTimeout(() => {
+                    this.props.history.push('/admin/pending-jobs/list');
+                }, 500);
+            })
+        }
+
     }
 
     pretreatmentBody = (body?: IAnnoucementBody, type_cpn?: string) => {
@@ -264,7 +306,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                 <Row>
                     <Col xs={0} sm={1} md={2} lg={3} xl={3} xxl={4}></Col>
                     <Col xs={0} sm={22} md={20} lg={18} xl={18} xxl={16}>
-                        <Divider orientation="left" >Chọn loại công việc</Divider>
+                        <Divider orientation="left" >Nội dung công việc</Divider>
                         <div className="announcements-create-content">
                             <InputTitle
                                 type={TYPE.INPUT}
@@ -292,9 +334,9 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                                 widthComponent="400px"
                             >
                                 <TextArea
-                                    rows={5}
+                                    rows={12}
                                     style={{ width: 550 }}
-                                    maxLength={260}
+                                    maxLength={5000}
                                     placeholder="ex: Yêu cầu: giao tiếp tiếng Anh tốt"
                                     value={body.description}
                                     onChange={

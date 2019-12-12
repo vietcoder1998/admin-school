@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Icon, Divider, Switch, Button } from 'antd';
+import { Icon, Divider, Switch, Button, message } from 'antd';
 import './MngCreate.scss';
 import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
@@ -78,7 +78,8 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
     static getDerivedStateFromProps(nextProps: IMngCreateProps, prevState: IMngCreateState) {
         if (nextProps.match.params.id && nextProps.match.params.id !== prevState.id) {
             return {
-                id: nextProps.match.params.id
+                id: nextProps.match.params.id,
+                type_cpn: TYPE.EDIT
             }
         }
 
@@ -96,12 +97,11 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                 announcement_detail,
                 announcementTypeID: announcement_detail.announcementType.id,
                 value_annou: announcement_detail.announcementType.name,
-                type_cpn: TYPE.EDIT,
                 imageUrl: announcement_detail.imageUrl,
             }
         }
 
-        if (nextProps.list_anno_type  ) {
+        if (nextProps.list_anno_type) {
             let { list_anno_type } = nextProps;
             let list_item = [];
             list_anno_type.forEach((item: IAnnouType, index: number) => {
@@ -168,8 +168,8 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
 
     addImage = (url: string, style?: any, alt?: string) => {
         let { content } = this.state;
-        let defaultStyle = "width: 100%; height: auto; max-width: 1000px";
-        let defaultDivStyle = "width: 100%; padding: 5vh 0vh; text-align: center";
+        let defaultStyle = "width: 100%; ; max-height: 1000px; height: auto; max-width: 1000px";
+        let defaultDivStyle = "width: 100%; max-height: 100vh; padding: 5vh 0vh; text-align: center";
         let newImage = `<div style="${defaultDivStyle}"><img style="${style ? style : defaultStyle}" src="${url}" alt="${alt}" /><div>`;
         content = content + newImage;
         this.setState({ content })
@@ -200,21 +200,45 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             type_cpn,
         } = this.state;
 
-        await _requestToServer(
-            type_cpn === TYPE.CREATE ? POST : PUT,
-            type_cpn === TYPE.CREATE ? ANNOUNCEMENT_DETAIL : ANNOUNCEMENT_DETAIL + `/${this.props.match.params.id}`,
-            {
-                title,
-                imageUrl,
-                announcementTypeID,
-                hidden,
-                content,
-            }
-        ).then((res: any) => {
-            if (res) {
-                this.props.history.push('/admin/job-management/list')
-            };
-        })
+        if (!title) {
+            message.warning("Bài đăng chưa có tiêu đề", 2)
+        }
+
+        if (!imageUrl) {
+            message.warning("Bài đăng chưa có ảnh đại diện", 2)
+        }
+
+
+        if (!announcementTypeID) {
+            message.warning("Bài đăng chưa chọn loại bài viết", 2)
+        }
+
+        if (!content) {
+            message.warning("Bài đăng chưa có nội dung", 2)
+        }
+
+        if (title && imageUrl && announcementTypeID && content) {
+            await _requestToServer(
+                type_cpn === TYPE.CREATE ? POST : PUT,
+                type_cpn === TYPE.CREATE ? ANNOUNCEMENT_DETAIL : ANNOUNCEMENT_DETAIL + `/${this.props.match.params.id}`,
+                {
+                    title,
+                    imageUrl,
+                    announcementTypeID,
+                    hidden,
+                    content,
+                }
+            ).then((res: any) => {
+                if (res) {
+                    setTimeout(() => {
+                        this.props.history.push('/admin/job-management/list')
+                    }, 500);
+
+                };
+            })
+        }
+
+
     };
 
     render() {

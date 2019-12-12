@@ -16,12 +16,13 @@ function* getListAnnouCommentsData(action: any) {
     
     if (res.code === 200) {
         data = res.data
-    }
+    };
+
     yield put({
         type: REDUX.ANNOU_COMMENTS.GET_ANNOU_COMMENTS,
         data
     });
-}
+};
 
 function callAnnouComments(action: any) {
     let body;
@@ -29,7 +30,7 @@ function callAnnouComments(action: any) {
 
     if (action.body) {
         body = action.body;
-    }
+    };
 
     return _requestToServer(
         POST, ANNOU_COMMENTS + `/${id}/comments/query`,
@@ -46,12 +47,12 @@ function callAnnouComments(action: any) {
             pageSize: action.pageSize ? action.pageSize : 0,
         },
         undefined, undefined, false, false
-    )
-}
+    );
+};
 
 export function* AnnouCommentsWatcher() {
     yield takeEvery(
         REDUX_SAGA.ANNOU_COMMENTS.GET_ANNOU_COMMENTS,
         getListAnnouCommentsData
-    )
-}
+    );
+};

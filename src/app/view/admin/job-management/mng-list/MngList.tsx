@@ -268,7 +268,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                         </Tooltip>
 
                         <Tooltip
-                            title={item.hidden ? "Ẩn bài đăng" : "Hiện bài đăng"}
+                            title={!item.hidden ? "Ẩn bài đăng" : "Hiện bài đăng"}
                         >
                             <Icon type={item.hidden ? "eye" : "eye-invisible"} style={{ padding: "5px 10px" }} onClick={async () =>
                                 await _requestToServer(

@@ -27,7 +27,6 @@ let initState: IPendingJobDetail = {
 };
 
 export const PendingJobDetail = (state: IPendingJobDetail = initState, action: any) => {
-    console.log(action)
     switch (action.type) {
         case REDUX.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL:
             return {

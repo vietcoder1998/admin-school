@@ -1,5 +1,5 @@
 import { REDUX } from '../../common/const/actions';
-import { IPendingJobs } from '../models/pending-job';
+import { IPendingJobs } from '../models/pending-jobs';
 
 let initState: IPendingJobs = {
     items: [],
