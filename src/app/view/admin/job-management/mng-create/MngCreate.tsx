@@ -184,7 +184,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         image.src = text;
         image.style.width = '100%';
         image.style.height = '100%';
-        image.style.maxHeight = '100vw';
+        image.style.maxHeight = '100%';
         image.style.margin = '0.5vw 0px';
 
         p.innerHTML = 'Chú thích ảnh';
