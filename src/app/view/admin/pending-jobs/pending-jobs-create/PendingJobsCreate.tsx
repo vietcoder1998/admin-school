@@ -72,8 +72,8 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     {
                         startTime: "00:00",
                         endTime: "00:00",
-                        minSalary: null,
-                        maxSalary: null,
+                        minSalary: 0,
+                        maxSalary: 0,
                         unit: 'ca',
                         mon: false,
                         tue: false,

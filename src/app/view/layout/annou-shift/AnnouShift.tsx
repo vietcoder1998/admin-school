@@ -25,8 +25,8 @@ export function newShift(): IShifts {
         id: randomID(8),
         startTime: null,
         endTime: null,
-        minSalary: null,
-        maxSalary: null,
+        minSalary: 0,
+        maxSalary: 0,
         unit: 'ca',
         mon: false,
         tue: false,
@@ -43,8 +43,8 @@ export default function ShiftContent(props: IShiftContent) {
     const [id, setId] = React.useState(randomID(16));
     const [startTime, setStartTime] = React.useState(null);
     const [endTime, setEndTime] = React.useState(null);
-    const [minSalary, setMinsalary] = React.useState(null);
-    const [maxSalary, setMaxSalary] = React.useState(null);
+    const [minSalary, setMinsalary] = React.useState(0);
+    const [maxSalary, setMaxSalary] = React.useState(0);
     const [agreement, setAgreement] = React.useState(true);
     const [mon, setMon] = React.useState(false);
     const [tue, setTue] = React.useState(false);
