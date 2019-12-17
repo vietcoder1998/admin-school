@@ -230,6 +230,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 break;
             case TYPE.FALSE:
                 value = false;
+                break;
             default:
                 break;
         }

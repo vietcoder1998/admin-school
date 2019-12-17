@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Divider, Row, Col, Button, Input, DatePicker, Select, Tabs, message } from 'antd';
+import { Icon, Divider, Button, Input, DatePicker, Select, Tabs, message } from 'antd';
 import { connect } from 'react-redux';
 import './PendingJobsCreate.scss';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
