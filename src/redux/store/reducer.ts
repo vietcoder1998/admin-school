@@ -1,3 +1,4 @@
+import { UserControllers } from './../reducers/user-controller';
 import { Employers } from './../reducers/employers';
 import { EmBranches } from './../reducers/em-branches';
 import { PendingJobDetail } from './../reducers/pending-job-detail';
@@ -46,7 +47,8 @@ const rootReducer = combineReducers({
     MutilBox,
     PendingJobDetail,
     EmBranches,
-    Employers
+    Employers,
+    UserControllers
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

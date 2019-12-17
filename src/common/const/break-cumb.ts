@@ -20,7 +20,8 @@ export const routePath = {
     ROLES_ADMIN: '/role-admins',
     ADMIN_ACCOUNTS: "/admin-accounts",
     ANNOU_TYPE: "/annou-types",
-    JOB_MANAGEMENT: "/job-management"
+    JOB_MANAGEMENT: "/job-management",
+    USER_CONTROLLER:'/user-controller'
 };
 
 export const routeLink = {
@@ -41,7 +42,10 @@ export const routeLink = {
 
     // job management
     PENDING_JOBS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
-    JOB_MANAGEMENTS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS
+    JOB_MANAGEMENTS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
+
+    // user management
+    USER_CONTROLLER: routePath.ADMIN + routePath.USER_CONTROLLER
 };
 
 export const breakCumb = [
@@ -66,6 +70,7 @@ export const breakCumb = [
     { label: "role-admins", name: "Quản trị viên", icon: null, url: routeLink.ROLES_ADMIN + routePath.LIST },
     { label: "admin-accounts", name: "Tài khoản admin", icon: null, url: routeLink.ADMIN_ACCOUNTS + routePath.LIST },
     { label: "annou-types", name: "Tài khoản admin", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST },
+    { label: "user-controller", name: "Quản lí người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
 ]
 
 export interface IBrk {

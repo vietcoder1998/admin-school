@@ -321,9 +321,9 @@ export default function ShiftContent(props: IShiftContent) {
 
     return (
         <div
+            className='test'
             style={{
                 margin: "10px 10px",
-                border: "solid gray 1px",
                 borderRadius: "5px",
                 padding: "2vh 2vw",
                 position: "relative",

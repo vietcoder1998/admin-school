@@ -6,6 +6,7 @@ import logo from '../../../../assets/image/logo-white.png'
 import logoIcon from '../../../../assets/image/logo-icon-white.png'
 import { Link } from 'react-router-dom';
 import './MenuNavigation.scss';
+import { routePath, routeLink } from '../../../../common/const/break-cumb';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -161,6 +162,22 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         <Link to='/admin/role-admins/admin-accounts/list'>
                             <Icon type="key" />
                             <span>Tài khoản admin</span>
+                        </Link>
+                    </Menu.Item>
+                </SubMenu>
+                <SubMenu
+                    key="sub4"
+                    title={
+                        <span>
+                            <Icon type="property-safety" />
+                            <span>Quản lí người dùng</span>
+                        </span>
+                    }
+                >
+                    <Menu.Item key="12">
+                        <Link to={routeLink.USER_CONTROLLER + routePath.LIST }>
+                            <Icon type="user" />
+                            <span>Phân quyền</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>

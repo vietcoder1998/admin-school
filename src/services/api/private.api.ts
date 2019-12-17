@@ -19,3 +19,5 @@ export const ANNOU_COMMENTS = "/api/admins/announcements/";
 export const EM_BRANCHES_API = "/api/admins/employers/"
 export const EMPLOYER = "/api/admins/employers/query"
 export const ADMIN_ACCOUNTS = "/api/admins"
+export const USER_CONTROLLER = "/api/admins/users"
+

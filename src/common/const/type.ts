@@ -23,6 +23,7 @@ export const TYPE = {
     EDIT: "EDIT",
     DELETE: "DELETE",
     DELETE_SELECTED: "DELETE_SELECTED",
+    BAN: "BAN",
 
     INPUT: "INPUT",
     SELECT: "SELECT",
@@ -34,5 +35,17 @@ export const TYPE = {
     FIX: "FIX",
     MALE: "MALE",
     FEMALE: "FEMALE",
-    BOTH: "BOTH"
+    BOTH: "BOTH",
+
+    TRUE: "TRUE",
+    FALSE: "FALSE",
+
+    USER_CONTROLLER: {
+        username: 'username',
+        email: 'email',
+        activated: 'activated',
+        createdDate: 'createdDate',
+        lastActive: 'lastActive',
+        banned: 'banned',
+    }
 };

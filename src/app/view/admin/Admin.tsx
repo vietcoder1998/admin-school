@@ -1,20 +1,24 @@
 import React, { PureComponent } from 'react'
 import { Layout, Icon, Avatar, Breadcrumb } from 'antd';
-import MenuNavigation from './menu-navigation/MenuNavigation';
 import './Admin.scss';
+
+import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
 import { REDUX_SAGA, REDUX } from '../../../common/const/actions';
 import { connect } from 'react-redux';
+
 import JobManagement from './job-management/JobManagement';
 import DataMgm from './data-mgm/DataMgm';
 import clearStorage from '../../../services/clearStorage';
-import { breakCumb, IBrk } from '../../../common/const/break-cumb';
 import RoleAdmins from './role-admins/RoleAdmins';
-import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
-import Loading from '../layout/loading/Loading';
-
-import { IAppState } from '../../../redux/store/reducer';
 import PendingJobs from './pending-jobs/PendingJobs';
+import UserController from './user-controller/UserController';
+
+import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
+import { breakCumb, IBrk } from '../../../common/const/break-cumb';
+import { IAppState } from '../../../redux/store/reducer';
+
+import Loading from '../layout/loading/Loading';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -161,6 +165,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
                                 <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
                                 <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
+                                <ErrorBoundaryRoute path={`${match.url}/user-controller`} component={UserController} />
                             </Switch> : <Loading />}
 
                         </Switch>
