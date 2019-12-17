@@ -7,6 +7,8 @@ export const routePath = {
     FIX: '/fix',
     DETAIL: '/detail',
     DATA: '/data',
+    USER: '/user',
+
     PENDING_JOBS: '/pending-jobs',
     LANGUAGES: '/languages',
     MAJORS: '/majors',
@@ -21,7 +23,9 @@ export const routePath = {
     ADMIN_ACCOUNTS: "/admin-accounts",
     ANNOU_TYPE: "/annou-types",
     JOB_MANAGEMENT: "/job-management",
-    USER_CONTROLLER:'/user-controller'
+    USER_CONTROLLER:'/user-controller',
+    EM_CONTROLLER:'/em-controller',
+    EM_BRANCHES: '/em-branches',
 };
 
 export const routeLink = {
@@ -45,7 +49,9 @@ export const routeLink = {
     JOB_MANAGEMENTS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
 
     // user management
-    USER_CONTROLLER: routePath.ADMIN + routePath.USER_CONTROLLER
+    USER_CONTROLLER: routePath.ADMIN + routePath.USER + routePath.USER_CONTROLLER,
+    EM_CONTROLLER: routePath.ADMIN + routePath.USER + routePath.EM_CONTROLLER,
+    EM_BRANCHES: routePath.ADMIN + routePath.USER + routePath.EM_BRANCHES,
 };
 
 export const breakCumb = [
@@ -56,6 +62,7 @@ export const breakCumb = [
     { label: "fix", name: "Chỉnh sửa", icon: null, url: "/fix", disable: true },
     { label: "data", name: "Danh mục dữ liêu", icon: "database", url: "/data", disable: true },
     { label: "roles", name: "Quyền", icon: null, url: "/roles", disable: true },
+    { label: "user", name: "Quản lí tài khoản", icon: null, url: "/user", disable: true },
 
     { label: "job-management", name: "Quản lý bài viết", icon: "file-add", url: "/" },
     { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: "clock-circle", url: routeLink.PENDING_JOBS },
@@ -69,9 +76,11 @@ export const breakCumb = [
     { label: "branches", name: "Nhóm ngành", icon: null, url: routeLink.BRANCHES + routePath.LIST },
     { label: "role-admins", name: "Quản trị viên", icon: null, url: routeLink.ROLES_ADMIN + routePath.LIST },
     { label: "admin-accounts", name: "Tài khoản admin", icon: null, url: routeLink.ADMIN_ACCOUNTS + routePath.LIST },
-    { label: "annou-types", name: "Tài khoản admin", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST },
-    { label: "user-controller", name: "Quản lí tài khoản", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
-]
+    { label: "annou-types", name: "Loại bài viết", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST },
+    { label: "user-controller", name: "Quản lí người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
+    { label: "em-controller", name: "Quản lí NTD", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST },
+    { label: "em-branches", name: "Danh sách chi nhánh", icon: null, url: routeLink.EM_BRANCHES + routePath.LIST },
+];
 
 export interface IBrk {
     label?: string;
@@ -79,4 +88,4 @@ export interface IBrk {
     icon?: string;
     url?: string;
     disable?: boolean;
-}
+};

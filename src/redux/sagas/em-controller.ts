@@ -1,14 +1,13 @@
-import { REGIONS } from '../../services/api/private.api';
-import { IRegions } from '../models/regions';
-import { GET } from '../../common/const/method';
+import { POST } from '../../common/const/method';
+import { EM_CONTROLLER } from '../../services/api/private.api';
+import { IEmControllers } from '../models/em-controller';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
-function* getListRegionsData(action: any) {
-    let res = yield call(callRegions, action);
-
-    let data: IRegions = {
+function* getListEmControllersData(action: any) {
+    let res = yield call(callEmControllers, action);
+    let data: IEmControllers = {
         items: [],
         pageIndex: 0,
         pageSize: 0,
@@ -17,15 +16,15 @@ function* getListRegionsData(action: any) {
 
     if (res.code === 200) {
         data = res.data
-    };
+    }
 
     yield put({
-        type: REDUX.REGIONS.GET_REGIONS,
+        type: REDUX.EM_CONTROLLER.GET_EM_CONTROLLER,
         data
     });
 }
 
-function callRegions(action: any) {
+function callEmControllers(action: any) {
     try {
         let pageIndex;
         let pageSize;
@@ -38,23 +37,24 @@ function callRegions(action: any) {
         }
 
         return _requestToServer(
-            GET, REGIONS,
-            null,
+            POST, EM_CONTROLLER + `/query`,
+            action.body ? action.body : undefined,
             {
                 pageIndex: pageIndex ? pageIndex : 0,
-                pageSize: pageSize ? pageSize : 0
+                pageSize: pageSize ? pageSize : 10,
+                sortBy: 'e.createdDate',
+                sortType: 'desc'
             },
             undefined, undefined, false, false
         )
     } catch (e) {
         throw e;
-    }
-
+    };
 }
 
-export function* RegionsWatcher() {
+export function* EmControllersWatcher() {
     yield takeEvery(
-        REDUX_SAGA.REGIONS.GET_REGIONS,
-        getListRegionsData
+        REDUX_SAGA.EM_CONTROLLER.GET_EM_CONTROLLER,
+        getListEmControllersData
     )
 }

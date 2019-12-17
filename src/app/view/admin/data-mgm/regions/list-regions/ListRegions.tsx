@@ -1,15 +1,15 @@
-import React, {PureComponent, Fragment} from 'react'
-import {connect} from 'react-redux';
-import {Icon, Table, Button} from 'antd';
-import {REDUX_SAGA} from '../../../../../../common/const/actions';
-import {ILanguage} from '../../../../../../redux/models/languages';
-import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
-import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
-import {_requestToServer} from '../../../../../../services/exec';
-import {PUT, DELETE} from '../../../../../../common/const/method';
-import {REGIONS} from '../../../../../../services/api/private.api';
-import {TYPE} from '../../../../../../common/const/type';
+import React, { PureComponent, Fragment } from 'react'
+import { connect } from 'react-redux';
+import { Icon, Table, Button } from 'antd';
+import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { ILanguage } from '../../../../../../redux/models/languages';
+import { Link } from 'react-router-dom';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { _requestToServer } from '../../../../../../services/exec';
+import { PUT, DELETE } from '../../../../../../common/const/method';
+import { REGIONS } from '../../../../../../services/api/private.api';
+import { TYPE } from '../../../../../../common/const/type';
 
 interface ListRegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -36,11 +36,11 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             loading_table: true,
             data_table: [],
             pageIndex: 0,
+            pageSize: 10,
             openModal: false,
             name: undefined,
             id: undefined,
             type: TYPE.EDIT,
-            pageSize: 10,
         }
     }
 
@@ -51,7 +51,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if (nextProps.list_regions !== prevState.list_regions) {
             let data_table: any = [];
-            let {pageIndex, pageSize} = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_regions.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
@@ -72,18 +72,18 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 
     EditContent = (
         <div>
-            <Icon style={{padding: "5px 10px"}} type="delete" theme="twoTone" twoToneColor="red"
-                  onClick={() => this.toggleModal(TYPE.DELETE)}/>
-            <Icon key="edit" style={{padding: "5px 10px"}} type="edit" theme="twoTone"
-                  onClick={() => this.toggleModal(TYPE.EDIT)}/>
+            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+                onClick={() => this.toggleModal(TYPE.DELETE)} />
+            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+                onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     );
 
     toggleModal = (type?: string) => {
-        let {openModal} = this.state;
-        this.setState({openModal: !openModal});
+        let { openModal } = this.state;
+        this.setState({ openModal: !openModal });
         if (type) {
-            this.setState({type})
+            this.setState({ type })
         }
     };
 
@@ -114,12 +114,12 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize});
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListRegions(event.current - 1, event.pageSize)
     };
 
     editRegions = async () => {
-        let {name, id} = this.state;
+        let { name, id } = this.state;
         if (name) {
             await _requestToServer(
                 PUT, REGIONS + `/${id}`,
@@ -134,7 +134,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     };
 
     removeRegions = async () => {
-        let {id} = this.state;
+        let { id } = this.state;
         await _requestToServer(
             DELETE, REGIONS,
             [id]
@@ -145,8 +145,8 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     };
 
     render() {
-        let {data_table, loading_table, openModal, name, type} = this.state;
-        let {totalItems} = this.props;
+        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { totalItems } = this.props;
         return (
             <Fragment>
                 <ModalConfig
@@ -155,7 +155,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => {
-                        this.setState({openModal: !openModal})
+                        this.setState({ openModal: !openModal })
                     }}
                     handleOk={async () => type === TYPE.EDIT ? this.editRegions() : this.removeRegions()}
                     handleClose={async () => this.toggleModal()}
@@ -166,7 +166,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             type={TYPE.INPUT}
                             value={name}
                             placeholder="Tên tỉnh"
-                            onChange={(event: any) => this.setState({name: event})}
+                            onChange={(event: any) => this.setState({ name: event })}
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa tỉnh : {name}</div>
                     }
@@ -183,22 +183,22 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             }}
                         >
                             <Link to='/admin/data/regions/create'>
-                                <Icon type="plus"/>
+                                <Icon type="plus" />
                                 Thêm tỉnh thành mới
                             </Link>
                         </Button>
                     </h5>
-                      <Table
+                    <Table
                         // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}
-                        scroll={{x: 1000}}
+                        scroll={{ x: 1000 }}
                         bordered
-                        pagination={{total: totalItems, showSizeChanger: true}}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name})})}
+                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />
                 </div>
             </Fragment>
@@ -207,7 +207,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListRegions: (pageIndex: number, pageSize: number) => dispatch({type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize})
+    getListRegions: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize })
 });
 
 const mapStateToProps = (state: any, ownProps: any) => ({

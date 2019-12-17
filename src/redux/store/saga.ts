@@ -22,6 +22,7 @@ import { PendingJobDetailWatcher } from '../sagas/pending-job-detail';
 import { EmBranchesWatcher } from '../sagas/em-branches';
 import { EmployersWatcher } from '../sagas/employers';
 import { UserControllersWatcher } from '../sagas/user-controller';
+import { EmControllersWatcher } from '../sagas/em-controller';
 
 
 export default function* rootSaga() {
@@ -49,6 +50,7 @@ export default function* rootSaga() {
         EmBranchesWatcher(),
         EmployersWatcher(),
         AdminAccountsWatcher(),
-        UserControllersWatcher()
+        UserControllersWatcher(),
+        EmControllersWatcher(),
     ])
 } 

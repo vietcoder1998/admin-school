@@ -44,13 +44,13 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </span>
                     }
                 >
-                    <Menu.Item key="20">
+                    <Menu.Item key="14">
                         <Link to='/admin/pending-jobs/list'>
                             <Icon type="audit" />
                             <span>Xét duyệt bài đăng</span>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="21">
+                    <Menu.Item key="15">
                         <Link to='/admin/pending-jobs/create'>
                             <Icon type="file-search" />
                             <span>Đăng hộ bài</span>
@@ -175,10 +175,16 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </span>
                     }
                 >
-                    <Menu.Item key="19">
+                    <Menu.Item key="16">
                         <Link to={routeLink.USER_CONTROLLER + routePath.LIST }>
                             <Icon type="user" />
                             <span>Người dùng</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="17">
+                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
+                            <Icon type="shop" />
+                            <span>Nhà tuyển dụng</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>

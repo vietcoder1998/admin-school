@@ -64,14 +64,6 @@ class CreateAdminAccounts extends PureComponent<CreateAdminAccountsProps, Create
     }
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
-        // if (nextProps.role_detail !== prevState.role_detail) {
-        //     return {
-        //         username: nextProps.role_detail.username,
-        //         type: nextProps.role_detail.type,
-        //         role_detail: nextProps.role_detail
-        //     }
-        // }
-
         if (nextProps.list_roles && nextProps.list_roles !== prevState.list_roles) {
             let list_value = nextProps.list_roles.map(item => ({ label: item.name, value: item.id }))
             return {

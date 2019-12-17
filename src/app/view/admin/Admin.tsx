@@ -12,7 +12,7 @@ import DataMgm from './data-mgm/DataMgm';
 import clearStorage from '../../../services/clearStorage';
 import RoleAdmins from './role-admins/RoleAdmins';
 import PendingJobs from './pending-jobs/PendingJobs';
-import UserController from './user-controller/UserController';
+import User from './user/User';
 
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
 import { breakCumb, IBrk } from '../../../common/const/break-cumb';
@@ -38,6 +38,7 @@ interface AdminProps extends StateProps, DispatchProps {
     getListBranches: Function;
     getListSkills: Function;
     getListApiController: Function;
+    getListRegions: Function;
     handleLoading: Function;
 }
 
@@ -58,6 +59,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListJobGroups();
         await this.props.getListBranches();
         await this.props.getListApiController();
+        await this.props.getListRegions();
         await this.props.getListSkills();
     }
 
@@ -168,7 +170,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
                                     <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
                                     <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
-                                    <ErrorBoundaryRoute path={`${match.url}/user-controller`} component={UserController} />
+                                    <ErrorBoundaryRoute path={`${match.url}/user`} component={User} />
                                 </Switch> : <Loading />}
                             </Col >
                             <Col sm={1} md={1} lg={2}></Col>
@@ -199,6 +201,9 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     }),
     getListSkills: () => dispatch({
         type: REDUX_SAGA.SKILLS.GET_SKILLS
+    }),
+    getListRegions: () => dispatch({
+        type: REDUX_SAGA.REGIONS.GET_REGIONS
     }),
     handleLoading: (loading: boolean) => dispatch({ type: REDUX.HANDLE_LOADING, loading })
 });

@@ -87,8 +87,15 @@ export const REDUX = {
     EMPLOYER: {
         GET_EMPLOYER: "GET_EMPLOYER"
     },
-    USER_CONTROLLER:  {
+    USER_CONTROLLER: {
         GET_USER_CONTROLLER: "GET_USER_CONTROLLER"
+    },
+
+    EM_CONTROLLER: {
+        GET_EM_CONTROLLER: "GET_EM_CONTROLLER"
+    },
+    EM_BRANCH: {
+        GET_EM_BRANCH: "GET_EM_BRANCH",
     }
 };
 
@@ -160,7 +167,13 @@ export const REDUX_SAGA = {
     EMPLOYER: {
         GET_EMPLOYER: "GET_EMPLOYER_DATA"
     },
-    USER_CONTROLLER:  {
+    USER_CONTROLLER: {
         GET_USER_CONTROLLER: "GET_USER_CONTROLLER_DATA"
+    },
+    EM_CONTROLLER: {
+        GET_EM_CONTROLLER: "GET_EM_CONTROLLER_DATA"
+    },
+    EM_BRANCH: {
+        GET_EM_BRANCH: "GET_EM_BRANCH_DATA",
     }
 };

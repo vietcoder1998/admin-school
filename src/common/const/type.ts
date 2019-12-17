@@ -47,5 +47,18 @@ export const TYPE = {
         createdDate: 'createdDate',
         lastActive: 'lastActive',
         banned: 'banned',
-    }
+    },
+
+    EM_CONTROLLER: {
+        employerName: 'employerName',
+        taxCode: 'taxCode',
+        regionID: 'regionID',
+        profileVerified: 'profileVerified',
+        ids: "ids"
+    },
+
+    EM_BRANCHES: {
+        headquarters: 'headquarters',
+        regionID: 'regionID'
+    },
 };
