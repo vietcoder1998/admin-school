@@ -57,7 +57,7 @@ export const breakCumb = [
     { label: "data", name: "Danh mục dữ liêu", icon: "database", url: "/data", disable: true },
     { label: "roles", name: "Quyền", icon: null, url: "/roles", disable: true },
 
-    { label: "job-management", name: "Quản lý bài viết", icon: "file", url: "/" },
+    { label: "job-management", name: "Quản lý bài viết", icon: "file-add", url: "/" },
     { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: "clock-circle", url: routeLink.PENDING_JOBS },
     { label: "languages", name: "Ngôn ngữ", icon: null, url:routeLink.LANGUAGES + routePath.LIST },
     { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST  },
@@ -70,7 +70,7 @@ export const breakCumb = [
     { label: "role-admins", name: "Quản trị viên", icon: null, url: routeLink.ROLES_ADMIN + routePath.LIST },
     { label: "admin-accounts", name: "Tài khoản admin", icon: null, url: routeLink.ADMIN_ACCOUNTS + routePath.LIST },
     { label: "annou-types", name: "Tài khoản admin", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST },
-    { label: "user-controller", name: "Quản lí người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
+    { label: "user-controller", name: "Quản lí tài khoản", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
 ]
 
 export interface IBrk {

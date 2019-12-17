@@ -44,7 +44,7 @@ function callTypeSchools(action: any) {
                 pageSize:
                     pageSize ? pageSize : 10
             },
-            undefined, undefined, undefined, false
+            undefined, undefined, false, false
         );
     } catch (e) {
         throw e

@@ -1,38 +1,23 @@
 import React from 'react'
-import { Icon } from 'antd';
 // @ts-ignore
-import CatGif from './../assets/image/cat-chocolate.gif';
+import BarLoading from '../assets/image/cat-chocolate.gif';
 
-export default function FallBack(props: any) {
+export default function FallBack(props) {
     return (
-        <div
-            className="fallback-content test"
+        <div className="fallback-content test"
             style={{
-                width: "100%",
-                height: "100%",
-                paddingTop: "20vh",
-                zIndex: 4,
-                backgroundColor: "white"
+                zIndex: 999,
+                width: "100vw",
+                height: "100vh",
+                position: "fixed",
+                textAlign: "center",
+                padding: "40vh 0",
+                top: 0,
+                left: 0,
+                backgroundColor: "#fff"
             }}
         >
-            <h4 className='a_c'
-            // style={{ color: "white" }}
-            >
-                Đang tải trang
-                </h4>
-            <div className=' a_c'>
-                <p className=' a_c'>
-                    <Icon type="loading-3-quarters" style={{ color: "blue", padding: "5px" }} spin />
-                    loaddddddddddddding...
-                    </p>
-                <img src={CatGif}
-                    style={{
-                        width: 200,
-                        height: 200,
-                    }}
-                    alt="gif"
-                />
-            </div>
+            <img src={BarLoading} alt='Bar' style={{width: 'auto', height: '10vh'}}/>
         </div>
     )
 }

@@ -1,37 +1,48 @@
 .dropdown-config {
-    min-width: 120px;
-    border: solid rgb(209, 209, 209) 1px;
-    background-color: white;
-    min-height: 30px;
-    position: absolute;
-    right: 0px;
-    border-radius: 5px;
-    line-height: 20px;
-    padding: 5px 0px;
-    li {
-      list-style-type: none;
+  min-width: 120px;
+  border: solid rgb(209, 209, 209) 1px;
+  background-color: white;
+  min-height: 40px;
+  position: absolute;
+  right: 0px;
+  border-radius: 5px;
+  padding: 5px 0px;
+
+  li {
+    list-style-type: none;
+    line-height: 30px;
+  }
+
+  .children-dropdown {
+    padding: 5px 10px;
+    transition: 0.25s;
+    cursor: pointer;
+
+    svg {
+      margin: 0px 5px 5px;
     }
-  
-    .children-dropdown {
-      padding: 5px 10px;
-      cursor: pointer;
-      transition: 0.5s;
-      svg {
-        margin: 0px 5px 5px;
-      }
-  
-      &:hover {
-        background-color: #1890ff;
-        color: white;
-      }
+
+    &:hover {
+      background-color: #1890ff;
+      color: white;
     }
   }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .visible {
-    display: block;
-  }
-  
+}
+
+.tg-dr-cf-main {
+  width: 100px;
+}
+
+.d-tg {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

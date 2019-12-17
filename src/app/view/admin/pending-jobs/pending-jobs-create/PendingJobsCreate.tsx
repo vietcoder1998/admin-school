@@ -303,232 +303,244 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                 <h5>
                     Đăng bài hộ
                 </h5>
-                <Row>
-                    <Col xs={0} sm={1} md={2} lg={3} xl={3} xxl={4}></Col>
-                    <Col xs={0} sm={22} md={20} lg={18} xl={18} xxl={16}>
-                        <Divider orientation="left" >Nội dung công việc</Divider>
-                        <div className="announcements-create-content">
-                            <InputTitle
-                                type={TYPE.INPUT}
-                                title="Tiêu đề"
-                                widthLabel="200px"
-                                children={
-                                    <Input
-                                        style={{ width: 550 }}
-                                        type="text"
-                                        maxLength={260}
-                                        placeholder="ex: Tuyển nhân viên bán hàng"
-                                        value={body.jobTitle}
-                                        onChange={
-                                            (event: any) => {
-                                                body.jobTitle = event.target.value;
-                                                this.setState({ body });
-                                            }
-                                        }
-                                    />
-                                }
-                            />
-                            <InputTitle
-                                title="Nội dung bài đăng"
-                                widthLabel="200px"
-                                widthComponent="400px"
-                            >
-                                <TextArea
-                                    rows={12}
-                                    style={{ width: 550 }}
-                                    maxLength={5000}
-                                    placeholder="ex: Yêu cầu: giao tiếp tiếng Anh tốt"
-                                    value={body.description}
-                                    onChange={
-                                        (event: any) => {
-                                            body.description = event.target.value;
-                                            this.setState({ body });
-                                        }
-                                    }
-                                />
-                            </InputTitle>
-                            <InputTitle
-                                title="Chọn thời gian hết hạn"
-                                type="SWITCH"
-                                widthLabel="200px"
-                            >
-                                <DatePicker
-                                    format={"DD/MM/YYYY"}
-                                    style={{ width: 550 }}
-                                    placeholder="ex: 07/12/2019"
-                                    value={body.expirationDate ? moment(body.expirationDate) : null}
-                                    onChange={
-                                        (event?: any) => {
-                                            event ? body.expirationDate = event.unix() * 1000 : body.expirationDate = null;
-                                            this.setState({ body });
-                                        }
-                                    }
-                                />
-                            </InputTitle>
-                            <InputTitle
-                                title="Chọn công việc"
-                                type={TYPE.SELECT}
-                                list_value={list_job_name_options}
-                                onChange={
-                                    (event: any) => {
-                                        body.jobNameID = event;
-                                        this.setState({ body });
-                                    }
-                                }
-                                widthLabel="200px"
-                                widthSelect="550px"
-                                placeholder="ex: Nhân viên văn phòng"
-                            />
-                            <InputTitle
-                                title="Chọn nhà tuyển dụng"
-                                type={TYPE.SELECT}
-                                list_value={list_em_ployer_options}
-                                onChange={
-                                    async (event: string) => {
-                                        employer.id = event;
-                                        this.setState({ employer });
-                                        this.props.getListEmBranches(0, 0, null, event);
-                                    }
-                                }
-                                onSearch={
-                                    async (event: any) => {
-                                        this.props.getListEmployers(0, 0, { employerName: event });
-                                    }
-                                }
-                                widthLabel="200px"
-                                widthSelect="550px"
-                                placeholder="ex: Công ti abc"
-                            />
-                            <InputTitle
-                                title="Chọn địa chỉ đăng tuyển"
-                                type={TYPE.SELECT}
-                                list_value={list_em_branches_options}
-                                onChange={
-                                    (event: any) => {
-                                        body.employerBranchID = event
-                                        this.setState({ body });
-                                    }
-                                }
-                                widthLabel="200px"
-                                widthSelect="550px"
-                                placeholder="ex: Công ti abc"
-                            />
 
-                            <InputTitle
-                                title="Chọn loại kĩ năng"
-                                widthLabel="200px"
-                            >
-                                <Select
-                                    mode="multiple"
-                                    size="default"
-                                    placeholder="ex: Giao tiếp, Tiếng Anh"
-                                    onChange={
-                                        (event: any) => {
-                                            let newRequiredSkillIDs = findIdWithValue(list_skills, event, "name", "id")
-                                            body.requiredSkillIDs = newRequiredSkillIDs;
-                                            this.setState({ body })
-                                        }
+                <Divider orientation="left" >Nội dung công việc</Divider>
+                <div className="announcements-create-content">
+                    <InputTitle
+                        type={TYPE.INPUT}
+                        title="Tiêu đề"
+                        widthLabel="200px"
+                        children={
+                            <TextArea
+                                style={{ width: '100%' }}
+                                maxLength={400}
+                                placeholder="ex: Tuyển nhân viên bán hàng  (Tối đa : 400)"
+                                value={body.jobTitle}
+                                onChange={
+                                    (event: any) => {
+                                        body.jobTitle = event.target.value;
+                                        this.setState({ body });
                                     }
-                                    style={{ width: 550 }}
-                                >
-                                    {list_skill_options}
-                                </Select>
-                            </InputTitle>
-                        </div>
-                        <Divider orientation="left" >Chọn loại công việc</Divider>
-                        <div className="announcements-create-content">
-                            <Tabs
-                                activeKey={body.jobType}
-                                style={{ width: "100%" }}
-                                onChange={(event: string) => {
-                                    body.jobType = event;
+                                }
+                            />
+                        }
+                    />
+                    <div style={{ textAlign: "center" }}>
+                        Hiện tại:
+                        <span
+                            style={
+                                { color: body.jobTitle && body.jobTitle.length < 6000 ? '#168ECD' : 'red' }
+                            }
+                            children={body.jobTitle && body.jobTitle.length ? body.jobTitle.length : 0}
+                        />  kí tự
+                    </div>
+                    <InputTitle
+                        title="Nội dung bài đăng"
+                        widthLabel="200px"
+                        widthComponent="400px"
+                    >
+                        <TextArea
+                            rows={12}
+                            style={{ width: '100%' }}
+                            maxLength={10000}
+                            placeholder="ex: Yêu cầu: giao tiếp tiếng Anh tốt (Tối đa : 10000)"
+                            value={body.description}
+                            onChange={
+                                (event: any) => {
+                                    body.description = event.target.value;
                                     this.setState({ body });
-                                    type_cpn === TYPE.CREATE && this.replaceShift();
-                                }}
-                            >
-                                <TabPane tab="Toàn thời gian" key={TYPE.FULLTIME}>
-                                    {body.shifts &&
-                                        body.shifts.length > 0 &&
-                                        body.shifts.map((item: any, index: number) => (
-                                            <div key={index}>
-                                                <ShiftContent
-                                                    shifts={item}
-                                                    type={TYPE.FULLTIME}
-                                                    removeButton={false}
-                                                    id={item.id}
-                                                    onChange={(event) => this.handleBodyShift(event, index)}
-                                                />
-                                            </div>
+                                }
+                            }
+                        />
+                    </InputTitle>
+                    <div style={{ textAlign: "center" }}>
+                        Hiện tại:
+                        <span
+                            style={
+                                { color: body.description && body.description.length < 6000 ? '#168ECD' : 'red' }
+                            }
+                            children={body.description && body.description.length ? body.description.length : 0}
+                        />  kí tự
+                    </div>
+                    <InputTitle
+                        title="Chọn thời gian hết hạn"
+                        type="SWITCH"
+                        widthLabel="200px"
+                    >
+                        <DatePicker
+                            format={"DD/MM/YYYY"}
+                            style={{ width: '100%' }}
+                            placeholder="ex: 07/12/2019"
+                            value={body.expirationDate ? moment(body.expirationDate) : null}
+                            onChange={
+                                (event?: any) => {
+                                    event ? body.expirationDate = event.unix() * 1000 : body.expirationDate = null;
+                                    this.setState({ body });
+                                }
+                            }
+                        />
+                    </InputTitle>
+                    <InputTitle
+                        title="Chọn công việc"
+                        type={TYPE.SELECT}
+                        list_value={list_job_name_options}
+                        onChange={
+                            (event: any) => {
+                                body.jobNameID = event;
+                                this.setState({ body });
+                            }
+                        }
+                        widthLabel="200px"
+                        widthSelect="100%"
+                        placeholder="ex: Nhân viên văn phòng"
+                    />
+                    <InputTitle
+                        title="Chọn nhà tuyển dụng"
+                        type={TYPE.SELECT}
+                        list_value={list_em_ployer_options}
+                        onChange={
+                            async (event: string) => {
+                                employer.id = event;
+                                this.setState({ employer });
+                                this.props.getListEmBranches(0, 0, null, event);
+                            }
+                        }
+                        onSearch={
+                            async (event: any) => {
+                                this.props.getListEmployers(0, 0, { employerName: event });
+                            }
+                        }
+                        widthLabel="200px"
+                        widthSelect="100%"
+                        placeholder="ex: Công ti abc"
+                    />
+                    <InputTitle
+                        title="Chọn địa chỉ đăng tuyển"
+                        type={TYPE.SELECT}
+                        list_value={list_em_branches_options}
+                        onChange={
+                            (event: any) => {
+                                body.employerBranchID = event
+                                this.setState({ body });
+                            }
+                        }
+                        widthLabel="200px"
+                        widthSelect="100%"
+                        placeholder="ex: Công ti abc"
+                    />
 
-                                        ))
-                                    }
-                                </TabPane>
-                                <TabPane tab="Bán thời gian" key={TYPE.PARTTIME}>
-                                    {body.shifts &&
-                                        body.shifts.length > 0 &&
-                                        body.shifts.map((item: any, index: number) => (
-                                            <div key={index}>
-                                                <ShiftContent
-                                                    shifts={item}
-                                                    index={index}
-                                                    type={TYPE.PARTTIME}
-                                                    id={item.id}
-                                                    removeButton={true}
-                                                    removeShift={(id: number | string) => this.removeShift(id)}
-                                                    onChange={(event: IShifts) => this.handleBodyShift(event, index)}
-                                                />
-                                            </div>
-                                        ))
-                                    }
-                                    <Button type="primary" icon="plus" onClick={() => this.addShift()} >Thêm ca</Button>
-                                </TabPane>
-                                <TabPane tab="Thực tập sinh" key={TYPE.INTERNSHIP} >
-                                    {body.shifts &&
-                                        body.shifts.length > 0 &&
-                                        body.shifts.map((item: any, index: number) => (
-                                            <div key={index}>
-                                                < ShiftContent
-                                                    shifts={item}
-                                                    type={TYPE.INTERNSHIP}
-                                                    removeButton={false}
-                                                    id={item.id}
-                                                    onChange={(event) => this.handleBodyShift(event, index)}
-                                                />
-                                            </div>
-                                        ))
-                                    }
-                                </TabPane>
-                            </Tabs>
-                        </div>
-                        <div className="Announcements-create-content">
-                            <Button
-                                type="primary"
-                                prefix={"check"}
-                                style={{
-                                    margin: "10px 10px",
-                                    float: "right"
-                                }}
-                                onClick={() => this.createRequest()}
-                            >
-                                {ct_btn_nt}
-                                <Icon type="right" />
-                            </Button>
-                            <Button
-                                type="danger"
-                                prefix={"check"}
-                                style={{
-                                    margin: "10px 10px",
-                                    float: "right"
-                                }}
-                                onClick={() => { this.props.history.push('/v1/admin/jobs/job-announcements/list') }}
-                            >
-                                <Icon type="close" />
-                                {ct_btn_ex}
-                            </Button>
-                        </div>
-                    </Col>
-                    <Col xs={0} sm={1} md={2} lg={3} xl={3} xxl={4}></Col>
-                </Row>
+                    <InputTitle
+                        title="Chọn loại kĩ năng"
+                        widthLabel="200px"
+                    >
+                        <Select
+                            mode="multiple"
+                            size="default"
+                            placeholder="ex: Giao tiếp, Tiếng Anh"
+                            onChange={
+                                (event: any) => {
+                                    let newRequiredSkillIDs = findIdWithValue(list_skills, event, "name", "id")
+                                    body.requiredSkillIDs = newRequiredSkillIDs;
+                                    this.setState({ body })
+                                }
+                            }
+                            style={{ width: '100%' }}
+                        >
+                            {list_skill_options}
+                        </Select>
+                    </InputTitle>
+                </div>
+                <Divider orientation="left" >Chọn loại công việc</Divider>
+                <div className="announcements-create-content">
+                    <Tabs
+                        activeKey={body.jobType}
+                        style={{ width: "100%" }}
+                        onChange={(event: string) => {
+                            body.jobType = event;
+                            this.setState({ body });
+                            type_cpn === TYPE.CREATE && this.replaceShift();
+                        }}
+                    >
+                        <TabPane tab="Toàn thời gian" key={TYPE.FULLTIME}>
+                            {body.shifts &&
+                                body.shifts.length > 0 &&
+                                body.shifts.map((item: any, index: number) => (
+                                    <div key={index}>
+                                        <ShiftContent
+                                            shifts={item}
+                                            type={TYPE.FULLTIME}
+                                            removeButton={false}
+                                            id={item.id}
+                                            onChange={(event) => this.handleBodyShift(event, index)}
+                                        />
+                                    </div>
+
+                                ))
+                            }
+                        </TabPane>
+                        <TabPane tab="Bán thời gian" key={TYPE.PARTTIME}>
+                            {body.shifts &&
+                                body.shifts.length > 0 &&
+                                body.shifts.map((item: any, index: number) => (
+                                    <div key={index}>
+                                        <ShiftContent
+                                            shifts={item}
+                                            index={index}
+                                            type={TYPE.PARTTIME}
+                                            id={item.id}
+                                            removeButton={true}
+                                            removeShift={(id: number | string) => this.removeShift(id)}
+                                            onChange={(event: IShifts) => this.handleBodyShift(event, index)}
+                                        />
+                                    </div>
+                                ))
+                            }
+                            <Button type="primary" icon="plus" onClick={() => this.addShift()} >Thêm ca</Button>
+                        </TabPane>
+                        <TabPane tab="Thực tập sinh" key={TYPE.INTERNSHIP} >
+                            {body.shifts &&
+                                body.shifts.length > 0 &&
+                                body.shifts.map((item: any, index: number) => (
+                                    <div key={index}>
+                                        < ShiftContent
+                                            shifts={item}
+                                            type={TYPE.INTERNSHIP}
+                                            removeButton={false}
+                                            id={item.id}
+                                            onChange={(event) => this.handleBodyShift(event, index)}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </TabPane>
+                    </Tabs>
+                </div>
+                <div className="Announcements-create-content">
+                    <Button
+                        type="primary"
+                        prefix={"check"}
+                        style={{
+                            margin: "10px 10px",
+                            float: "right"
+                        }}
+                        onClick={() => this.createRequest()}
+                    >
+                        {ct_btn_nt}
+                        <Icon type="right" />
+                    </Button>
+                    <Button
+                        type="danger"
+                        prefix={"check"}
+                        style={{
+                            margin: "10px 10px",
+                            float: "right"
+                        }}
+                        onClick={() => { this.props.history.push('/v1/admin/jobs/job-announcements/list') }}
+                    >
+                        <Icon type="close" />
+                        {ct_btn_ex}
+                    </Button>
+                </div>
             </div >
         )
     };

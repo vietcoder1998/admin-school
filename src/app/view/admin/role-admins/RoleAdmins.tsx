@@ -12,7 +12,7 @@ interface RoleAdminsProps extends StateProps, DispatchProps {
 }
 
 function RoleAdmins(props?: RoleAdminsProps) {
-    let { path } = this.props.match;
+    let { path } = props.match;
     return (
         <>
             <Switch>
@@ -24,7 +24,6 @@ function RoleAdmins(props?: RoleAdminsProps) {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({});
-
 const mapStateToProps = (state: any, ownProps: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;

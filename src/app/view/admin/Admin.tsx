@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col } from 'antd';
 import './Admin.scss';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
@@ -27,6 +27,7 @@ interface AdminState {
     show_menu: boolean;
     location?: string;
     data_breakcumb: Array<string>
+    loading?: boolean;
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -40,14 +41,14 @@ interface AdminProps extends StateProps, DispatchProps {
     handleLoading: Function;
 }
 
-
 class Admin extends PureComponent<AdminProps, AdminState> {
     constructor(props: any) {
         super(props);
         this.state = {
             show_menu: false,
             location: "/",
-            data_breakcumb: []
+            data_breakcumb: [],
+            loading: false,
         }
     }
 
@@ -67,10 +68,6 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             let data_breakcumb: any = [];
             list_breakcumb.forEach((item: any) => item !== "" && data_breakcumb.push(item));
             window.scrollTo(0, 0);
-            setTimeout(() => {
-                nextProps.handleLoading(false);
-            }, 250);
-
             return {
                 pathname: nextProps.location.pathname,
                 data_breakcumb
@@ -89,13 +86,18 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 
     render() {
-        let { show_menu, data_breakcumb } = this.state;
-        let { match, loading } = this.props;
+        let { show_menu, data_breakcumb, loading } = this.state;
+        let { match } = this.props;
         return (
             <Layout>
                 <MenuNavigation
                     show_menu={show_menu}
-                    onCallLoading={() => this.props.handleLoading(true)}
+                    onCallLoading={() => {
+                        this.setState({ loading: true });
+                        setTimeout(() => {
+                            this.setState({ loading: false });
+                        }, 300);
+                    }}
                 />
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
@@ -103,10 +105,10 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             className="trigger"
                             type={show_menu ? 'menu-unfold' : 'menu-fold'}
                             style={{
-                                marginTop: "20px"
+                                marginTop: 15,
+                                fontSize: 20
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
-
                         />
                         <div className="avatar-header" >
                             <DropdownConfig
@@ -158,17 +160,19 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 return newBreakCump
                             })}
                         </Breadcrumb>
-                        <Switch>
-
-                            {!loading ? <Switch>
-                                <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
-                                <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
-                                <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
-                                <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
-                                <ErrorBoundaryRoute path={`${match.url}/user-controller`} component={UserController} />
-                            </Switch> : <Loading />}
-
-                        </Switch>
+                        <Row>
+                            <Col sm={1} md={1} lg={2}></Col>
+                            <Col sm={22} md={22} lg={20}>
+                                {!loading ? <Switch>
+                                    <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
+                                    <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
+                                    <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
+                                    <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
+                                    <ErrorBoundaryRoute path={`${match.url}/user-controller`} component={UserController} />
+                                </Switch> : <Loading />}
+                            </Col >
+                            <Col sm={1} md={1} lg={2}></Col>
+                        </Row>
                     </Content>
                 </Layout>
             </Layout >

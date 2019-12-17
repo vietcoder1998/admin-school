@@ -1,15 +1,13 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Button, Table, Icon, Modal, Tooltip, Popconfirm, Col, Select, Row, Input } from 'antd';
+import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input } from 'antd';
 import './UserControllerList.scss';
-import { Link } from 'react-router-dom';
-import { routeLink, routePath } from '../../../../../common/const/break-cumb';
-import { IUserController } from '../../../../../redux/models/user-controller';
+import { IUserController, IUserControllerFilter } from '../../../../../redux/models/user-controller';
 import { timeConverter } from '../../../../../common/utils/convertTime';
 import { IAppState } from '../../../../../redux/store/reducer';
 import { REDUX_SAGA } from '../../../../../common/const/actions';
 import { _requestToServer } from '../../../../../services/exec';
-import { DELETE } from '../../../../../common/const/method';
+import { DELETE, PUT } from '../../../../../common/const/method';
 import { USER_CONTROLLER } from '../../../../../services/api/private.api';
 import { TYPE } from '../../../../../common/const/type';
 import { IptLetterP } from '../../../layout/common/Common';
@@ -30,8 +28,9 @@ interface IUserControllerListState {
     value_type?: string;
     id?: string;
     loading_table?: boolean;
-    body?: IUserController;
-    list_user_controller?: Array<IUserController>
+    body?: IUserControllerFilter;
+    list_user_controller?: Array<IUserController>;
+    banned_state?: string;
 };
 
 class UserControllerList extends PureComponent<IUserControllerListProps, IUserControllerListState> {
@@ -45,35 +44,27 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             loading: false,
             id: null,
             loading_table: true,
+            banned_state: null,
             body: {
                 username: null,
                 email: null,
+                banned: false,
                 activated: null,
                 createdDate: null,
                 lastActive: null,
-                banned: null,
             },
             list_user_controller: []
         };
     }
 
     editToolAction = () => {
-        let { id } = this.state;
+        let { body } = this.state;
         return <>
-            <Tooltip
-                title={"Xem chi tiết"}
-            >
-                <Link to={routeLink.USER_CONTROLLER + routePath.DETAIL + `/${id}`} target="_blank">
-                    <Icon
-                        style={{ padding: "5px 10px", color: "" }}
-                        type="search"
-                    />
-                </Link>
-            </Tooltip>
             <Popconfirm
                 placement="topRight"
                 title={"Xóa khỏi danh sách"}
-                onConfirm={(event: any) => this.createRequest()}
+                onConfirm={() => this.createRequest(TYPE.DELETE)}
+                okType={'danger'}
                 okText="Xóa"
                 cancelText="Hủy"
             >
@@ -81,12 +72,18 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             </Popconfirm>
             <Popconfirm
                 placement="topRight"
-                title={"Chặn người dùng này"}
-                onConfirm={(event: any) => this.createRequest()}
-                okText="Chặn"
+                title={body.banned ? "Hủy chặn người dùng" : "Chặn người dùng này"}
+                onConfirm={() => this.createRequest(TYPE.BAN)}
+                okType={body.banned ? 'primary' : 'danger'}
+                okText={body.banned ? "Hủy chặn" : "Chặn"}
                 cancelText="Hủy"
             >
-                <Icon style={{ padding: "5px 10px" }} type="stop" theme="twoTone" twoToneColor="red" />
+                <Icon
+                    style={{ padding: "5px 10px" }}
+                    type={body.banned ? "check-circle" : "stop"}
+                    theme={"twoTone"}
+                    twoToneColor={body.banned ? "blue" : "red"}
+                />
             </Popconfirm>
         </>
     };
@@ -161,7 +158,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     username: item.username ? item.username : '',
                     email: item.email ? item.email : '',
-                    banned: item.banned ? item.banned : "",
+                    banned: item.banned ? 'true' : 'false',
                     lastActive: item.lastActive !== -1 ? timeConverter(item.lastActive, 1000) : null,
                     createdDate: timeConverter(item.createdDate, 1000),
                 });
@@ -195,22 +192,23 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     };
 
     createRequest = async (type?: string) => {
-        let { id } = this.state;
+        let { id, banned_state } = this.state;
         let method = null;
+        let api = USER_CONTROLLER;
         switch (type) {
             case TYPE.DELETE:
-
+                method = DELETE;
                 break;
             case TYPE.BAN:
-
+                method = PUT;
+                api = api + `/banned/${banned_state === 'true' ? 'false' : 'true'}`
                 break;
-
             default:
                 break;
         }
         await _requestToServer(
-            DELETE,
-            USER_CONTROLLER + '/saved',
+            method,
+            api,
             [id],
             undefined,
             undefined,
@@ -236,7 +234,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 break;
         }
         body[type] = value;
-        this.setState(body);
+        this.setState({ body });
     }
 
     render() {
@@ -266,7 +264,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                     </h5>
                     <Row>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Tên tài khoản"} style={{}} >
+                            <IptLetterP value={"Tên tài khoản"}  >
                                 <Input
                                     placeholder='ex: works'
                                     onChange={
@@ -283,9 +281,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                             </IptLetterP>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Địa chỉ Email"} style={{}} >
+                            <IptLetterP value={"Địa chỉ Email"}  >
                                 <Input
-                                    placeholder='ex: works'
+                                    placeholder='ex: works@gmail.com'
                                     onChange={
                                         (event: any) => this.onChangeFilter(event.target.value, TYPE.USER_CONTROLLER.email)
                                     }
@@ -306,8 +304,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                                 placeholder="Tất cả"
                                 optionFilterProp="children"
                                 style={{ width: "100%" }}
+                                onChange={(event?: any) => this.onChangeFilter(event, TYPE.USER_CONTROLLER.activated)}
                             >
-                                <Select.Option key="1" value={undefined}>Tất cả</Select.Option>
+                                <Select.Option key="1" value={null}>Tất cả</Select.Option>
                                 <Select.Option key="3" value={TYPE.TRUE}>Đang hoạt động</Select.Option>
                                 <Select.Option key="4" value={TYPE.FALSE}>Không hoạt động</Select.Option>
                             </Select>
@@ -320,9 +319,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                                 defaultValue="Tất cả"
                                 onChange={(event?: any) => this.onChangeFilter(event, TYPE.USER_CONTROLLER.banned)}
                             >
-                                <Select.Option key="1" value={undefined}>Tất cả</Select.Option>
-                                <Select.Option key="2" value={TYPE.PENDING}>Đang bị cấm</Select.Option>
-                                <Select.Option key="3" value={TYPE.REJECTED}>Không bị cấm</Select.Option>
+                                <Select.Option key="1" value={null}>Tất cả</Select.Option>
+                                <Select.Option key="2" value={TYPE.TRUE}>Đang bị cấm</Select.Option>
+                                <Select.Option key="3" value={TYPE.FALSE}>Không bị cấm</Select.Option>
                             </Select>
                         </Col>
                     </Row>
@@ -340,7 +339,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                             onRow={(record: any, rowIndex: any) => {
                                 return {
                                     onClick: () => {
-                                        this.setState({ id: record.key })
+                                        this.setState({ id: record.key, banned_state: record.banned })
                                     }, // mouse enter row
                                 };
                             }}

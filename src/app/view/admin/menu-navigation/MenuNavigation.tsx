@@ -17,12 +17,13 @@ interface IMenuNavigationProps {
 }
 
 export default function MenuNavigation(props: IMenuNavigationProps) {
-
     let { show_menu } = props;
     let state_bar: any = '20';
+    
     if (localStorage.getItem("state_bar")) {
         state_bar = localStorage.getItem("state_bar")
     }
+
     return (
         <Sider trigger={null} collapsible collapsed={show_menu} width={210}>
             <div className="logo" style={{ padding: show_menu ? "20px 0px" : "0px 0px" }}>
@@ -170,14 +171,14 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     title={
                         <span>
                             <Icon type="property-safety" />
-                            <span>Quản lí người dùng</span>
+                            <span>Quản lí tài khoản</span>
                         </span>
                     }
                 >
-                    <Menu.Item key="12">
+                    <Menu.Item key="19">
                         <Link to={routeLink.USER_CONTROLLER + routePath.LIST }>
                             <Icon type="user" />
-                            <span>Phân quyền</span>
+                            <span>Người dùng</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>

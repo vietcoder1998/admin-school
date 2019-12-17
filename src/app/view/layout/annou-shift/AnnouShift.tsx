@@ -248,7 +248,7 @@ export default function ShiftContent(props: IShiftContent) {
                     <Col xs={12} sm={12} md={12} lg={10} xl={12}>
                         <IptLetterP value="Người" icon="team">
                             <InputNumber
-                                min={1}
+                                min={0}
                                 defaultValue={0}
                                 value={valueBoth[0].quantity}
                                 onChange={
