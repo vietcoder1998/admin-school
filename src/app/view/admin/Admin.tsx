@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb, Row, Col } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip } from 'antd';
 import './Admin.scss';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
@@ -17,6 +17,7 @@ import User from './user/User';
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
 import { breakCumb, IBrk } from '../../../common/const/break-cumb';
 import { IAppState } from '../../../redux/store/reducer';
+import ClearCache from 'react-clear-cache';
 
 import Loading from '../layout/loading/Loading';
 
@@ -103,6 +104,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                 />
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
+
                         <Icon
                             className="trigger"
                             type={show_menu ? 'menu-unfold' : 'menu-fold'}
@@ -112,6 +114,31 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
+                        <Tooltip title={"Cập nhật phiên bản"}>
+                            <ClearCache>
+                                {({ isLatestVersion, emptyCacheStorage }) =>
+                                    <div>
+                                        {!isLatestVersion && (
+                                            <Icon type={'sync'}
+                                                style={{
+                                                    fontSize: 20,
+                                                    float: "right",
+                                                    margin: 15
+                                                }}
+
+                                                onClick={
+                                                    () => {
+                                                        this.setState({ loading: true });
+                                                        emptyCacheStorage();
+                                                    }
+                                                }
+                                                spin={loading}
+                                            />
+                                        )}
+                                    </div>
+                                }
+                            </ClearCache>
+                        </Tooltip>
                         <div className="avatar-header" >
                             <DropdownConfig
                                 param={

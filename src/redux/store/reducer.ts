@@ -1,3 +1,4 @@
+import { Students } from './../reducers/students';
 import { Schools } from './../reducers/schools';
 import { EmControllers } from './../reducers/em-controller';
 import { UserControllers } from './../reducers/user-controller';
@@ -52,7 +53,8 @@ const rootReducer = combineReducers({
     Employers,
     UserControllers,
     EmControllers,
-    Schools
+    Schools,
+    Students
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

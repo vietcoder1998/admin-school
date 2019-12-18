@@ -22,3 +22,5 @@ export const ADMIN_ACCOUNTS = "/api/admins";
 export const USER_CONTROLLER = "/api/admins/users";
 export const EM_CONTROLLER = "/api/admins/employers";
 export const SCHOOLS = "/api/admins/schools";
+export const STUDENTS = "/api/admins/students";
+

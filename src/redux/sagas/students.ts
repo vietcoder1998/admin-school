@@ -1,13 +1,13 @@
-import { SCHOOLS } from './../../services/api/private.api';
-import { ISchools } from '../models/schools';
+import { STUDENTS } from '../../services/api/private.api';
+import { IStudents } from '../models/students';
 import { POST } from '../../common/const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../common/const/actions'
 
-function* getListSchoolsData(action: any) {
-    let res = yield call(callSchools, action);
-    let data: ISchools = {
+function* getListStudentsData(action: any) {
+    let res = yield call(callStudents, action);
+    let data: IStudents = {
         items: [],
         pageIndex: 0,
         pageSize: 0,
@@ -19,16 +19,16 @@ function* getListSchoolsData(action: any) {
     }
 
     yield put({
-        type: REDUX.SCHOOLS.GET_SCHOOLS,
+        type: REDUX.STUDENTS.GET_STUDENTS,
         data
     });
 }
 
-function callSchools(action: any) {
+function callStudents(action: any) {
     try {
         if (action.body) {
             return _requestToServer(
-                POST, SCHOOLS + '/query',
+                POST, STUDENTS + '/query',
                 action.body ? action.body : undefined,
                 {
                     pageIndex: action.pageIndex ? action.pageIndex : 0,
@@ -42,9 +42,9 @@ function callSchools(action: any) {
     }
 }
 
-export function* SchoolsWatcher() {
+export function* StudentsWatcher() {
     yield takeEvery(
-        REDUX_SAGA.SCHOOLS.GET_SCHOOLS,
-        getListSchoolsData
+        REDUX_SAGA.STUDENTS.GET_STUDENTS,
+        getListStudentsData
     )
 }

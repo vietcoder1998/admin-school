@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip, Avatar } from 'antd';
-import './SchoolsList.scss';
+import './StudentsList.scss';
 import { timeConverter } from '../../../../../../common/utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
 import { REDUX_SAGA } from '../../../../../../common/const/actions';
@@ -10,19 +10,19 @@ import { DELETE, PUT } from '../../../../../../common/const/method';
 import { USER_CONTROLLER } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../common/const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
-import { ISchool, ISchoolsFilter } from '../../../../../../redux/models/schools';
+import { IStudent, IStudentsFilter } from '../../../../../../redux/models/students';
 import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
 import { IRegion } from '../../../../../../redux/models/regions';
 
-interface ISchoolsListProps extends StateProps, DispatchProps {
+interface IStudentsListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
-    getListSchools: Function;
+    getListStudents: Function;
     getAnnoucementDetail: Function;
 };
 
-interface ISchoolsListState {
+interface IStudentsListState {
     data_table?: Array<any>;
     pageIndex?: number;
     pageSize?: number;
@@ -31,12 +31,12 @@ interface ISchoolsListState {
     value_type?: string;
     id?: string;
     loading_table?: boolean;
-    body?: ISchoolsFilter;
-    list_schools?: Array<ISchool>;
+    body?: IStudentsFilter;
+    list_schools?: Array<IStudent>;
     educatedScale_state?: string;
 };
 
-class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
+class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -158,33 +158,33 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         this.setState({ show_modal: !show_modal });
     };
 
-    static getDerivedStateFromProps(nextProps?: ISchoolsListProps, prevState?: ISchoolsListState) {
-        if (nextProps.list_schools && nextProps.list_schools !== prevState.list_schools) {
-            let { pageIndex, pageSize } = prevState;
-            let data_table = [];
-            nextProps.list_schools.forEach((item: ISchool, index: number) => {
-                data_table.push({
-                    key: item.id,
-                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    name: item.name ? item.name : '',
-                    shortName: item.shortName ? item.shortName : '',
-                    educatedScale: item.educatedScale === -1 ? '' : item.educatedScale,
-                    region: item.region && item.region.name,
-                    createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
-                });
-            })
-            return {
-                list_schools: nextProps.list_schools,
-                data_table,
-                loading_table: false,
-            }
-        }
+    static getDerivedStateFromProps(nextProps?: IStudentsListProps, prevState?: IStudentsListState) {
+        // if (nextProps.list_schools && nextProps.list_schools !== prevState.list_schools) {
+        //     let { pageIndex, pageSize } = prevState;
+        //     let data_table = [];
+        //     nextProps.list_schools.forEach((item: IStudent, index: number) => {
+        //         data_table.push({
+        //             key: item.id,
+        //             index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
+        //             name: item.name ? item.name : '',
+        //             shortName: item.shortName ? item.shortName : '',
+        //             educatedScale: item.educatedScale === -1 ? '' : item.educatedScale,
+        //             region: item.region && item.region.name,
+        //             createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
+        //         });
+        //     })
+        //     return {
+        //         list_schools: nextProps.list_schools,
+        //         data_table,
+        //         loading_table: false,
+        //     }
+        // }
 
         return null;
     };
 
     async componentDidMount() {
-        await this.searchSchoolss();
+        await this.searchStudentss();
     };
 
     handleId = (event) => {
@@ -195,12 +195,12 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        await this.searchSchoolss();
+        await this.searchStudentss();
     };
 
-    searchSchoolss = async () => {
+    searchStudentss = async () => {
         let { pageIndex, pageSize, body } = this.state;
-        await this.props.getListSchools(pageIndex, pageSize, body);
+        await this.props.getListStudents(pageIndex, pageSize, body);
     };
 
     createRequest = async (type?: string) => {
@@ -229,7 +229,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             false,
         ).then(
             (res: any) => {
-                if (res) { this.searchSchoolss() }
+                if (res) { this.searchStudentss() }
             }
         )
     }
@@ -278,7 +278,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         Quản lý nhà trường
                         <Button
                             icon="filter"
-                            onClick={() => this.searchSchoolss()}
+                            onClick={() => this.searchStudentss()}
                             type="primary"
                             style={{
                                 float: "right",
@@ -314,17 +314,17 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 };
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListSchools: (pageIndex: number, pageSize: number, body?: ISchoolsFilter) =>
+    getListStudents: (pageIndex: number, pageSize: number, body?: IStudentsFilter) =>
         dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_schools: state.Schools.items,
+    list_schools: state.Students.items,
     list_regions: state.Regions.items,
-    totalItems: state.Schools.totalItems,
+    totalItems: state.Students.totalItems,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(SchoolsList);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentsList);

@@ -56,12 +56,10 @@ export const REDUX = {
     BRANCHES: {
         GET_BRANCHES: "GET_BRANCHES"
     },
-
     ROLES: {
         GET_ROLES: "GET_ROLES",
         GET_ROLE_DETAIL: "GET_ROLE_DETAIL"
     },
-
     API_CONTROLLER: {
         GET_API_CONTROLLER: "GET_API_CONTROLLER"
     },
@@ -101,6 +99,10 @@ export const REDUX = {
     SCHOOLS: {
         GET_SCHOOLS: "GET_SCHOOLS",
         GET_SCHOOL_DETAIl: "GET_SCHOOL_DETAIl"
+    },
+    STUDENTS: {
+        GET_STUDENTS: "GET_STUDENTS",
+        GET_STUDENT_DETAIl: "GET_STUDENT_DETAIl"
     }
 };
 
@@ -131,7 +133,6 @@ export const REDUX_SAGA = {
     },
     TYPE_SCHOOLS: {
         GET_TYPE_SCHOOLS: "GET_TYPE_SCHOOLS_DATA",
-
     },
     LANGUAGES: {
         GET_LANGUAGES: "GET_LANGUAGES_DATA"
@@ -185,5 +186,9 @@ export const REDUX_SAGA = {
     SCHOOLS: {
         GET_SCHOOLS: "GET_SCHOOLS_DATA",
         GET_SCHOOL_DETAIl: "GET_SCHOOL_DETAIl_DATA"
+    },
+    STUDENTS: {
+        GET_STUDENTS: "GET_STUDENTS_DATA",
+        GET_STUDENT_DETAIl: "GET_STUDENT_DETAIl_DAT"
     }
 };

@@ -693,7 +693,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                                     <Option value={TYPE.SCHOOL}>Nhà trường</Option>
                                     <Option value={TYPE.EMPLOYER}>Nhà tuyển dụng</Option>
                                     <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
-                                    <Option value={TYPE.STUDENT}>Học sinh </Option>
+                                    <Option value={TYPE.STUDENT}>Sinh viên </Option>
                                     <Option value={TYPE.PUBLIC}>Public</Option>
                                 </Select>
                             </Col>

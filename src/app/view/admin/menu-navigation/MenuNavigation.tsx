@@ -188,7 +188,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="18">
-                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
+                        <Link to={routeLink.SCHOOLS + routePath.LIST }>
                             <Icon type="share-alt" />
                             <span>Nhà trường</span>
                         </Link>
@@ -196,7 +196,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     <Menu.Item key="19">
                         <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
                             <Icon type="team" />
-                            <span>Học sinh</span>
+                            <span>Sinh viên</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>
