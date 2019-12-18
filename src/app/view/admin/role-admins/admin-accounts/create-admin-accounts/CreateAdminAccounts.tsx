@@ -195,7 +195,7 @@ class CreateAdminAccounts extends PureComponent<CreateAdminAccountsProps, Create
                     <InputTitle
                         type={TYPE.SELECT}
                         title="Loại tài khoản admins"
-                        placeholder="ex: Quản lí, Học sinh, SUPER_ADMINS, .v.v."
+                        placeholder="ex: Quản lý, Học sinh, SUPER_ADMINS, .v.v."
                         widthInput="400px"
                         value={role_name}
                         list_value={list_value}

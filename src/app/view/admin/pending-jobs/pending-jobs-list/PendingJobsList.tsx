@@ -247,8 +247,10 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             POST, PENDING_JOBS + `/${job_id}/${state}`,
             body,
             null, null, undefined, true, false
+        ).finally(
+            () => this.setState({ loading: false })
         );
-        await this.props.handleModal({open_modal: false})
+        await this.props.handleModal({ open_modal: false })
         await this.queryPendingJob();
     };
 
@@ -276,7 +278,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                         <Button
                             key="back"
                             type="danger"
-                            icon="close"
+                            icon={loading ? "loading" : "close"}
                             loading={loading}
                             onClick={async () => await this.handlePendingJob("rejected")}
                             disabled={state === TYPE.REJECTED || !message}
@@ -286,8 +288,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                         <Button
                             key="submit"
                             type="primary"
-                            icon="check"
-                            loading={loading}
+                            icon={loading ? "loading" : "check"}
                             onClick={async () => await this.handlePendingJob("accepted")}
                             disabled={state === TYPE.ACCEPTED}
                         >

@@ -68,7 +68,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                 >
                     <Menu.Item key="0">
                         <Link to='/admin/job-management/create'>
-                            <Icon type="file-add" theme="filled" />
+                            <Icon type="file-add" />
                             <span>Tạo bài viết mới</span>
                         </Link>
                     </Menu.Item>
@@ -171,7 +171,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     title={
                         <span>
                             <Icon type="property-safety" />
-                            <span>Quản lí tài khoản</span>
+                            <span>Quản lý tài khoản</span>
                         </span>
                     }
                 >
@@ -185,6 +185,18 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
                             <Icon type="shop" />
                             <span>Nhà tuyển dụng</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="18">
+                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
+                            <Icon type="share-alt" />
+                            <span>Nhà trường</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="19">
+                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
+                            <Icon type="team" />
+                            <span>Học sinh</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>

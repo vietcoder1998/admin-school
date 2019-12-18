@@ -43,7 +43,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
     componentDidMount() {
         let is_authen = localStorage.getItem("token") ? true : false;
         if (is_authen) {
-            window.location.href = routeLink.JOB_MANAGEMENTS + routePath.LIST;
+            window.location.href = routeLink.PENDING_JOBS + routePath.LIST;
         } else {
             let state = this.props.match.path.replace("/", "");
             if (state) {

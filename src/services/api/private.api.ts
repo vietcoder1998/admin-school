@@ -21,4 +21,4 @@ export const EMPLOYER = "/api/admins/employers/query";
 export const ADMIN_ACCOUNTS = "/api/admins";
 export const USER_CONTROLLER = "/api/admins/users";
 export const EM_CONTROLLER = "/api/admins/employers";
-
+export const SCHOOLS = "/api/admins/schools";

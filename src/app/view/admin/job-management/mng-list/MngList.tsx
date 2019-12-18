@@ -651,7 +651,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
 
 
                     <h5>
-                        Quản lí bài viết
+                        Quản lý bài viết
                         <Button
                             onClick={() => this.searchAnnouncement()}
                             type="primary"

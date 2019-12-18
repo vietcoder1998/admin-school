@@ -1,25 +1,28 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input } from 'antd';
-import './UserControllerList.scss';
-import { timeConverter } from './../../../../../../common/utils/convertTime';
-import { IAppState } from './../../../../../../redux/store/reducer';
-import { REDUX_SAGA } from './../../../../../../common/const/actions';
-import { _requestToServer } from './../../../../../../services/exec';
-import { DELETE, PUT } from './../../../../../../common/const/method';
-import { USER_CONTROLLER } from './../../../../../../services/api/private.api';
-import { TYPE } from './../../../../../../common/const/type';
-import { IptLetterP } from './../../../../layout/common/Common';
-import { IUserController, IUserControllerFilter } from './../../../../../../redux/models/user-controller';
+import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip, Avatar } from 'antd';
+import './SchoolsList.scss';
+import { timeConverter } from '../../../../../../common/utils/convertTime';
+import { IAppState } from '../../../../../../redux/store/reducer';
+import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { _requestToServer } from '../../../../../../services/exec';
+import { DELETE, PUT } from '../../../../../../common/const/method';
+import { USER_CONTROLLER } from '../../../../../../services/api/private.api';
+import { TYPE } from '../../../../../../common/const/type';
+import { IptLetterP } from '../../../../layout/common/Common';
+import { ISchool, ISchoolsFilter } from '../../../../../../redux/models/schools';
+import { Link } from 'react-router-dom';
+import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
+import { IRegion } from '../../../../../../redux/models/regions';
 
-interface IUserControllerListProps extends StateProps, DispatchProps {
+interface ISchoolsListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
-    getListUserControllers: Function;
+    getListSchoolss: Function;
     getAnnoucementDetail: Function;
 };
 
-interface IUserControllerListState {
+interface ISchoolsListState {
     data_table?: Array<any>;
     pageIndex?: number;
     pageSize?: number;
@@ -28,12 +31,12 @@ interface IUserControllerListState {
     value_type?: string;
     id?: string;
     loading_table?: boolean;
-    body?: IUserControllerFilter;
-    list_user_controller?: Array<IUserController>;
-    banned_state?: string;
+    body?: ISchoolsFilter;
+    list_user_controller?: Array<ISchool>;
+    profileVerified_state?: string;
 };
 
-class UserControllerList extends PureComponent<IUserControllerListProps, IUserControllerListState> {
+class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,22 +47,45 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             loading: false,
             id: null,
             loading_table: true,
-            banned_state: null,
+            profileVerified_state: null,
             body: {
-                username: null,
+                name: null,
+                shortName: null,
+                educatedScale: null,
+                regionID: null,
+                schoolTypeID: null,
                 email: null,
-                banned: false,
-                activated: null,
-                createdDate: null,
-                lastActive: null,
+                employerID: null,
+                connected: null,
+                createdDate: null
             },
             list_user_controller: []
         };
     }
 
     editToolAction = () => {
-        let { body } = this.state;
+        let { id } = this.state;
         return <>
+            <Tooltip title='Xem hồ sơ nhà tuyển dụng' >
+                <Icon
+                    style={{ padding: "5px 10px" }}
+                    type={"search"}
+                />
+            </Tooltip>
+            <Tooltip title='Xem danh sách chi nhánh' >
+                <Link to={routeLink.EM_BRANCHES + routePath.LIST + `/${id}`} target='_blank' >
+                    <Icon
+                        style={{ padding: "5px 10px" }}
+                        type={"container"}
+                    />
+                </Link>
+            </Tooltip>
+            <Tooltip title='Chứng thực nhà tuyển dụng' >
+                <Icon
+                    style={{ padding: "5px 10px" }}
+                    type={"safety-certificate"}
+                />
+            </Tooltip>
             <Popconfirm
                 placement="topRight"
                 title={"Xóa khỏi danh sách"}
@@ -69,21 +95,6 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 cancelText="Hủy"
             >
                 <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" />
-            </Popconfirm>
-            <Popconfirm
-                placement="topRight"
-                title={body.banned ? "Hủy chặn người dùng" : "Chặn người dùng này"}
-                onConfirm={() => this.createRequest(TYPE.BAN)}
-                okType={body.banned ? 'primary' : 'danger'}
-                okText={body.banned ? "Hủy chặn" : "Chặn"}
-                cancelText="Hủy"
-            >
-                <Icon
-                    style={{ padding: "5px 10px" }}
-                    type={body.banned ? "check-circle" : "stop"}
-                    theme={"twoTone"}
-                    twoToneColor={body.banned ? "blue" : "red"}
-                />
             </Popconfirm>
         </>
     };
@@ -97,25 +108,26 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             className: 'action',
             fixed: 'left',
         },
-
-        {
-            title: 'Tên tài khoản',
-            dataIndex: 'username',
-            className: 'action',
-            key: 'username',
-            width: 200,
-        },
         {
             title: 'Thư điện tử',
-            dataIndex: 'email',
-            key: 'email',
-            width: 200,
+            dataIndex: 'logoUrl',
+            className: 'action',
+            key: 'logoUrl',
+            width: 60,
         },
         {
-            title: 'Trạng thái cấm',
-            dataIndex: 'banned',
+            title: 'Tên nhà tuyển dụng',
+            dataIndex: 'employerName',
             className: 'action',
-            key: 'banned',
+            key: 'employerName',
+            width: 240,
+        },
+
+        {
+            title: 'Chứng thực hồ sơ',
+            dataIndex: 'profileVerified',
+            className: 'action',
+            key: 'profileVerified',
             width: 100,
         },
         {
@@ -123,16 +135,8 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             dataIndex: 'createdDate',
             className: 'action',
             key: 'createdDate',
-            width: 100,
+            width: 160,
         },
-        {
-            title: 'Đăng nhập cuối',
-            dataIndex: 'lastActive',
-            className: 'action',
-            key: 'lastActive',
-            width: 100,
-        },
-
         {
             title: 'Thao tác',
             key: 'operation',
@@ -148,19 +152,18 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         this.setState({ show_modal: !show_modal });
     };
 
-    static getDerivedStateFromProps(nextProps?: IUserControllerListProps, prevState?: IUserControllerListState) {
+    static getDerivedStateFromProps(nextProps?: ISchoolsListProps, prevState?: ISchoolsListState) {
         if (nextProps.list_user_controller && nextProps.list_user_controller !== prevState.list_user_controller) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            nextProps.list_user_controller.forEach((item: IUserController, index: number) => {
+            nextProps.list_user_controller.forEach((item: ISchool, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    username: item.username ? item.username : '',
-                    email: item.email ? item.email : '',
-                    banned: item.banned ? 'true' : 'false',
-                    lastActive: item.lastActive !== -1 ? timeConverter(item.lastActive, 1000) : null,
-                    createdDate: timeConverter(item.createdDate, 1000),
+                    employerName: item.employerName ? item.employerName : '',
+                    logoUrl: <Avatar size="large" shape="square" src={item.logoUrl} icon="shop" />,
+                    profileVerified: item.profileVerified ? 'true' : 'false',
+                    createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
                 });
             })
             return {
@@ -172,7 +175,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     };
 
     async componentDidMount() {
-        await this.searchUserControllers();
+        await this.searchSchoolss();
     };
 
     handleId = (event) => {
@@ -183,16 +186,16 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        await this.searchUserControllers();
+        await this.searchSchoolss();
     };
 
-    searchUserControllers = async () => {
+    searchSchoolss = async () => {
         let { pageIndex, pageSize, body } = this.state;
-        await this.props.getListUserControllers(pageIndex, pageSize, body);
+        await this.props.getListSchoolss(pageIndex, pageSize, body);
     };
 
     createRequest = async (type?: string) => {
-        let { id, banned_state } = this.state;
+        let { id, profileVerified_state } = this.state;
         let method = null;
         let api = USER_CONTROLLER;
         switch (type) {
@@ -201,7 +204,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 break;
             case TYPE.BAN:
                 method = PUT;
-                api = api + `/banned/${banned_state === 'true' ? 'false' : 'true'}`
+                api = api + `/profileVerified/${profileVerified_state === 'true' ? 'false' : 'true'}`
                 break;
             default:
                 break;
@@ -217,13 +220,25 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             false,
         ).then(
             (res: any) => {
-                if (res) { this.searchUserControllers() }
+                if (res) { this.searchSchoolss() }
             }
         )
     }
 
     onChangeFilter = (value?: any, type?: string) => {
         let { body } = this.state;
+        let { list_regions } = this.props;
+        list_regions.forEach((item: IRegion) => { if (item.name === value) { value = item.id } });
+        switch (value) {
+            case TYPE.TRUE:
+                value = true;
+                break;
+            case TYPE.FALSE:
+                value = false;
+                break;
+            default:
+                break;
+        };
         switch (value) {
             case TYPE.TRUE:
                 value = true;
@@ -246,15 +261,16 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
 
         let {
             totalItems,
+            list_regions
         } = this.props
         return (
             <Fragment>
                 <div className="common-content">
                     <h5>
-                        Quản lý người dùng
+                        Quản lý nhà tuyển dụng
                         <Button
                             icon="filter"
-                            onClick={() => this.searchUserControllers()}
+                            onClick={() => this.searchSchoolss()}
                             type="primary"
                             style={{
                                 float: "right",
@@ -265,16 +281,16 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                     </h5>
                     <Row>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Tên tài khoản"}  >
+                            <IptLetterP value={"Tên nhà tuyển dụng"}  >
                                 <Input
                                     placeholder='ex: works'
                                     onChange={
-                                        (event: any) => this.onChangeFilter(event.target.value, TYPE.USER_CONTROLLER.username)
+                                        (event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.employerName)
                                     }
                                     onKeyDown={
                                         (event: any) => {
                                             if (event.keyCode === 13) {
-                                                this.searchUserControllers()
+                                                this.searchSchoolss()
                                             }
                                         }
                                     }
@@ -282,47 +298,33 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                             </IptLetterP>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Địa chỉ Email"}  >
-                                <Input
-                                    placeholder='ex: works@gmail.com'
-                                    onChange={
-                                        (event: any) => this.onChangeFilter(event.target.value, TYPE.USER_CONTROLLER.email)
-                                    }
-                                    onKeyDown={
-                                        (event: any) => {
-                                            if (event.keyCode === 13) {
-                                                this.searchUserControllers()
-                                            }
-                                        }
-                                    }
-                                />
-                            </IptLetterP>
-                        </Col>
-                        <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Trạng thái hoạt động"} />
+                            <IptLetterP value={"Tỉnh thành"} />
                             <Select
                                 showSearch
-                                placeholder="Tất cả"
-                                optionFilterProp="children"
+                                defaultValue="Tất cả"
                                 style={{ width: "100%" }}
-                                onChange={(event?: any) => this.onChangeFilter(event, TYPE.USER_CONTROLLER.activated)}
+                                onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.regionID)}
                             >
-                                <Select.Option key="1" value={null}>Tất cả</Select.Option>
-                                <Select.Option key="3" value={TYPE.TRUE}>Đang hoạt động</Select.Option>
-                                <Select.Option key="4" value={TYPE.FALSE}>Không hoạt động</Select.Option>
+                                <Select.Option value={null}>Tất cả</Select.Option>
+                                {
+                                    list_regions && list_regions.length >= 1 ?
+                                        list_regions.map((item: IRegion, index: number) =>
+                                            <Select.Option key={index} value={item.name}>{item.name}</Select.Option>
+                                        ) : null
+                                }
                             </Select>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Trạng thái cấm"} />
+                            <IptLetterP value={"Trạng thái chứng thực"} />
                             <Select
                                 showSearch
                                 style={{ width: "100%" }}
                                 defaultValue="Tất cả"
-                                onChange={(event?: any) => this.onChangeFilter(event, TYPE.USER_CONTROLLER.banned)}
+                                onChange={(event?: any) => this.onChangeFilter(event, TYPE.SCHOOLS.profileVerified)}
                             >
                                 <Select.Option key="1" value={null}>Tất cả</Select.Option>
-                                <Select.Option key="2" value={TYPE.TRUE}>Đang bị cấm</Select.Option>
-                                <Select.Option key="3" value={TYPE.FALSE}>Không bị cấm</Select.Option>
+                                <Select.Option key="2" value={TYPE.TRUE}>Đang chứng thực</Select.Option>
+                                <Select.Option key="3" value={TYPE.FALSE}>Không chứng thực</Select.Option>
                             </Select>
                         </Col>
                     </Row>
@@ -332,37 +334,38 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1050 }}
+                            scroll={{ x: 710 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
                             onChange={this.setPageIndex}
                             onRow={(record: any, rowIndex: any) => {
                                 return {
-                                    onClick: () => {
-                                        this.setState({ id: record.key, banned_state: record.banned })
+                                    onMouseEnter: () => {
+                                        this.setState({ id: record.key })
                                     }, // mouse enter row
                                 };
                             }}
                         />
                     </div>
                 </div>
-            </Fragment>
+            </Fragment >
         )
     }
 };
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListUserControllers: (pageIndex: number, pageSize: number, body?: IUserController) =>
-        dispatch({ type: REDUX_SAGA.USER_CONTROLLER.GET_USER_CONTROLLER, pageIndex, pageSize, body }),
+    getListSchoolss: (pageIndex: number, pageSize: number, body?: ISchools) =>
+        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
-    list_user_controller: state.UserControllers.items,
-    totalItems: state.UserControllers.totalItems,
+    list_user_controller: state.Schools.items,
+    list_regions: state.Regions.items,
+    totalItems: state.Schools.totalItems,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserControllerList);
+export default connect(mapStateToProps, mapDispatchToProps)(SchoolsList);

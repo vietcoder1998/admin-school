@@ -263,7 +263,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             <Fragment>
                 <div className="common-content">
                     <h5>
-                        Quản lí nhà tuyển dụng
+                        Quản lý nhà tuyển dụng
                         <Button
                             icon="filter"
                             onClick={() => this.searchEmControllers()}

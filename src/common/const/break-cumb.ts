@@ -26,6 +26,8 @@ export const routePath = {
     USER_CONTROLLER:'/user-controller',
     EM_CONTROLLER:'/em-controller',
     EM_BRANCHES: '/em-branches',
+    SCHOOLS: '/schools',
+    STUDENTS: '/students',
 };
 
 export const routeLink = {
@@ -52,6 +54,8 @@ export const routeLink = {
     USER_CONTROLLER: routePath.ADMIN + routePath.USER + routePath.USER_CONTROLLER,
     EM_CONTROLLER: routePath.ADMIN + routePath.USER + routePath.EM_CONTROLLER,
     EM_BRANCHES: routePath.ADMIN + routePath.USER + routePath.EM_BRANCHES,
+    SCHOOLS: routePath.ADMIN + routePath.USER + routePath.SCHOOLS,
+    STUDENTS: routePath.ADMIN + routePath.USER + routePath.STUDENTS,
 };
 
 export const breakCumb = [
@@ -62,7 +66,7 @@ export const breakCumb = [
     { label: "fix", name: "Chỉnh sửa", icon: null, url: "/fix", disable: true },
     { label: "data", name: "Danh mục dữ liêu", icon: "database", url: "/data", disable: true },
     { label: "roles", name: "Quyền", icon: null, url: "/roles", disable: true },
-    { label: "user", name: "Quản lí tài khoản", icon: null, url: "/user", disable: true },
+    { label: "user", name: "Quản lý tài khoản", icon: null, url: "/user", disable: true },
 
     { label: "job-management", name: "Quản lý bài viết", icon: "file-add", url: "/" },
     { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: "clock-circle", url: routeLink.PENDING_JOBS },
@@ -77,9 +81,12 @@ export const breakCumb = [
     { label: "role-admins", name: "Quản trị viên", icon: null, url: routeLink.ROLES_ADMIN + routePath.LIST },
     { label: "admin-accounts", name: "Tài khoản admin", icon: null, url: routeLink.ADMIN_ACCOUNTS + routePath.LIST },
     { label: "annou-types", name: "Loại bài viết", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST },
-    { label: "user-controller", name: "Quản lí người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
-    { label: "em-controller", name: "Quản lí NTD", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST },
+    // User
+    { label: "user-controller", name: "Quản lý người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
+    { label: "em-controller", name: "Quản lý NTD", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST },
     { label: "em-branches", name: "Danh sách chi nhánh", icon: null, url: routeLink.EM_BRANCHES + routePath.LIST },
+    { label: "schools", name: "Danh sách trường", icon: null, url: routeLink.SCHOOLS + routePath.LIST },
+    { label: "students", name: "Danh sách học sinh", icon: null, url: routeLink.STUDENTS + routePath.LIST },
 ];
 
 export interface IBrk {

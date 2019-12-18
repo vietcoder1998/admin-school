@@ -61,4 +61,16 @@ export const TYPE = {
         headquarters: 'headquarters',
         regionID: 'regionID'
     },
+
+    SCHOOLS: {
+        name: 'name',
+        shortName: 'shortName',
+        educatedScale: 'educatedScale',
+        regionID: 'regionID',
+        schoolTypeID: 'schoolTypeID',
+        email: 'email',
+        employerID: 'employerID',
+        connected: 'connected',
+        createdDate: 'createdDate'
+    }
 };
