@@ -49,7 +49,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             loading_table: true,
             educatedScale_state: null,
             body: {
-                name: null,
                 shortName: null,
                 educatedScale: null,
                 regionID: null,
