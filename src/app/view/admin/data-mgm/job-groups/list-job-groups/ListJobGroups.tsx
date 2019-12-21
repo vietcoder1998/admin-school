@@ -206,7 +206,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListJobGroups: (pageIndex: number, pageSize: number) => dispatch({
         type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS,
         pageIndex,
@@ -214,7 +214,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_job_groups: state.JobGroups.items,
     totalItems: state.JobGroups.totalItems
 });

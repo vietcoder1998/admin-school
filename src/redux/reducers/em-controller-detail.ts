@@ -5,7 +5,7 @@ let initState: IEmControllerDetail = {
    
 };
 
-export const AdminAccount = (state: IEmControllerDetail = initState, action: any): IEmControllerDetail => {
+export const EmployerDetail = (state: IEmControllerDetail = initState, action: any): IEmControllerDetail => {
     switch (action.type) {
         case REDUX.EM_CONTROLLER.GET_EM_CONTROLLER_DETAIL:
             return {

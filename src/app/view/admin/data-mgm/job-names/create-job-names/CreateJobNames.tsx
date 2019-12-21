@@ -129,11 +129,11 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListJobNames: () => dispatch({type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_job_groups: state.JobGroups.items,
 });
 

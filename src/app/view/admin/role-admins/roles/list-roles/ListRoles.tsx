@@ -74,9 +74,9 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
 
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+            <Icon className = 'test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red"
                 onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+            <Icon key="edit" className = 'test' style={{ padding: 5, margin: 2 }} type="edit" theme="twoTone"
                 onClick={() => this.toFixRoles()} />
         </div>
     );
@@ -219,11 +219,11 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListRoles: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES, pageIndex, pageSize })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_roles: state.Roles.items,
     totalItems: state.Roles.totalItems
 });

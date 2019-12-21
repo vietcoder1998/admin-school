@@ -253,7 +253,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListLanguages: (pageIndex: number, pageSize: number) => dispatch({
         type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES,
         pageIndex,
@@ -261,7 +261,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_skills: state.Languages.items,
     totalItems: state.Languages.totalItems
 });

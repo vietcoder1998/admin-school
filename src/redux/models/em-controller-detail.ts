@@ -21,5 +21,5 @@ export interface IEmControllerDetail {
         salaryRating?: number,
         ratingCount?: number
     },
-    profileVerified?: false
+    profileVerified?: boolean;
 }

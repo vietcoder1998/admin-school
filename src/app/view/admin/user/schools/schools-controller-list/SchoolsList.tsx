@@ -1,29 +1,47 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
-import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip, Avatar } from 'antd';
+import {
+    Button,
+    Table,
+    Icon,
+    Popconfirm,
+    // Col, 
+    // Select, 
+    // Row, 
+    // Input, 
+    Tooltip,
+    //  Avatar 
+} from 'antd';
 import './SchoolsList.scss';
 import { timeConverter } from '../../../../../../common/utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../../../../common/const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
 import { DELETE, PUT } from '../../../../../../common/const/method';
-import { USER_CONTROLLER } from '../../../../../../services/api/private.api';
+import { SCHOOLS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../common/const/type';
-import { IptLetterP } from '../../../../layout/common/Common';
+// import { IptLetterP } from '../../../../layout/common/Common';
 import { ISchool, ISchoolsFilter } from '../../../../../../redux/models/schools';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
 import { IRegion } from '../../../../../../redux/models/regions';
+import DrawerConfig from '../../../../layout/config/DrawerConfig';
+import { IDrawerState } from '../../../../../../redux/models/mutil-box';
+import SchoolInfo from '../../../../layout/school-info/SchoolInfo';
 
 interface ISchoolsListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    location?: any;
+    handleDrawer?: (drawerState?: IDrawerState) => any;
+    getSchoolDetail?: (id?: string) => any;
     getListSchools: Function;
     getAnnoucementDetail: Function;
 };
 
 interface ISchoolsListState {
     data_table?: Array<any>;
+    search?: any;
     pageIndex?: number;
     pageSize?: number;
     show_modal?: boolean;
@@ -66,35 +84,30 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     editToolAction = () => {
         let { id } = this.state;
         return <>
-            <Tooltip title='Xem hồ sơ nhà tuyển dụng' >
+            <Tooltip title='Xem chi tiết trường ' >
                 <Icon
-                    style={{ padding: "5px 10px" }}
+                    className='test'
+                    style={{ padding: 5, margin: 2 }}
                     type={"search"}
-                />
-            </Tooltip>
-            <Tooltip title='Xem danh sách chi nhánh' >
-                <Link to={routeLink.EM_BRANCHES + routePath.LIST + `/${id}`} target='_blank' >
-                    <Icon
-                        style={{ padding: "5px 10px" }}
-                        type={"container"}
-                    />
-                </Link>
-            </Tooltip>
-            <Tooltip title='Chứng thực nhà tuyển dụng' >
-                <Icon
-                    style={{ padding: "5px 10px" }}
-                    type={"safety-certificate"}
+                    onClick={() => {
+                        this.props.handleDrawer({ open_drawer: true });
+                        setTimeout(() => {
+                            this.props.getSchoolDetail(id);
+                        }, 500);
+                    }}
                 />
             </Tooltip>
             <Popconfirm
                 placement="topRight"
-                title={"Xóa khỏi danh sách"}
+                title={"Xóa "}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
                 okType={'danger'}
                 okText="Xóa"
                 cancelText="Hủy"
             >
-                <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" />
+                <Tooltip title='Xóa trường ' >
+                    <Icon className='test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
+                </Tooltip>
             </Popconfirm>
         </>
     };
@@ -206,7 +219,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     createRequest = async (type?: string) => {
         let { id, educatedScale_state } = this.state;
         let method = null;
-        let api = USER_CONTROLLER;
+        let api = SCHOOLS;
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
@@ -270,9 +283,24 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
         let {
             totalItems,
+            school_detail
         } = this.props
         return (
-            <Fragment>
+            <>
+                <DrawerConfig width={'50vw'} title={"Thông tin Nhà trường"}>
+                    <SchoolInfo data={school_detail} />
+                    <Button
+                        icon={"left"}
+                        onClick={
+                            () => {
+                                this.props.handleDrawer({ open_drawer: false });
+                                this.props.history.push(routeLink.EM_CONTROLLER + routePath.LIST);
+                            }
+                        }
+                    >
+                        Thoát
+                    </Button>
+                </DrawerConfig>
                 <div className="common-content">
                     <h5>
                         Quản lý nhà trường
@@ -308,19 +336,24 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         />
                     </div>
                 </div>
-            </Fragment >
+            </ >
         )
     }
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListSchools: (pageIndex: number, pageSize: number, body?: ISchoolsFilter) =>
         dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
+    getSchoolDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOL_DETAIL, id }),
+    handleDrawer: (drawerState?: IDrawerState) =>
+        dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_schools: state.Schools.items,
     list_regions: state.Regions.items,
+    school_detail: state.SchoolsDetail,
     totalItems: state.Schools.totalItems,
 });
 

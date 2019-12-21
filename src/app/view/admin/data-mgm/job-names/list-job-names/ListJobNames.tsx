@@ -62,7 +62,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
         if (nextProps.list_job_names !== prevState.list_job_names) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_job_names.forEach((item ?: IJobName, index?: any) => {
+            nextProps.list_job_names.forEach((item?: IJobName, index?: any) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -99,9 +99,20 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
 
     EditContent: JSX.Element = (
         <div>
-            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+            <Icon
+                className='test'
+                key="delete"
+                style={{ padding: 5, margin: 2 }}
+                type="delete"
+                theme="twoTone"
+                twoToneColor="red"
                 onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+            <Icon
+                className='test'
+                key="edit"
+                style={{ padding: 5, margin: 2 }}
+                type="edit"
+                theme="twoTone"
                 onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     );
@@ -274,13 +285,13 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListJobNames: (pageIndex: number, pageSize: number) => dispatch({
         type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize
     })
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_job_names: state.JobNames.items,
     list_job_groups: state.JobGroups.items,
     totalItems: state.JobNames.totalItems

@@ -1,0 +1,188 @@
+.school-info {
+  border-radius: 3px;
+  position: relative;
+  transition: 0.5s;
+  $color_black: black;
+  $color_gray: rgb(17, 13, 13);
+  $padding_base: 60px;
+  $height_head: 400px;
+  min-height: 80vh;
+  display: block;
+
+  .school-info-header {
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    border-radius: 3px;
+    position: relative;
+    border: solid rgb(255, 255, 255) 1px;
+    height: 25vw;
+    transition: 0.25s;
+    z-index: 2;
+
+    span {
+      letter-spacing: 0.5px;
+    }
+
+    .cover-image-profile {
+      width: 100%;
+      opacity: 1;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: 0;
+      min-height: auto;
+    }
+
+    &:hover {
+      .upload-cover {
+        opacity: 1;
+      }
+    }
+
+    .block-span {
+      width: 100px !important;
+      color: #168ecd;
+    }
+  
+    .block-image {
+      border-radius: 3px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      z-index: 2;
+      justify-content: center;
+  
+      .content-avatar {
+        height: 8vw;
+        width: 100%;
+        border-radius: 50%;
+        position: relative;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+      }
+
+      .name-school {
+        background-color: white;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .school-info-body {
+    position: relative;
+    min-height: 500px;
+    height: auto;
+    margin: 0px -10px;
+    background-color: white;
+
+    .description-info {
+      width: 100%;
+      min-height: 25vh;
+      padding: 0.5vw 2vw;
+      margin: 10px 0px;
+      text-align: center;
+      border-radius: 3px;
+      position: relative;
+      background-color: rgba(243, 243, 243, 0.659);
+      border: solid rgb(255, 255, 255) 1px;
+      transition: 0.25s;
+
+      &:hover {
+        // background-color: rgba(162, 255, 246, 0.408);
+        border: solid rgba(178, 178, 178, 0.639) 1px;
+        cursor: pointer;
+        // margin: 5px 15px;
+      }
+
+      .image-f-d {
+        height: 20vw;
+        width: 100%;
+      }
+
+      ul {
+        margin: 0px -10px;
+      }
+
+      li {
+        display: inline-flex;
+        width: 100%;
+        padding: 5px 10px;
+        .info {
+          margin-top: -5px;
+          padding: 5px 10px;
+        }
+      }
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        float: center;
+      }
+
+      .fix {
+        width: 100%;
+        margin: 20px 0px 10px;
+        background-color: #168ecd;
+        border: none;
+        color: white;
+        border-radius: 3px;
+        padding: 5px;
+      }
+
+      .exit {
+        width: 45%;
+        margin: 20px 0px 10px;
+        margin-right: 10%;
+        background-color: #cd6816;
+        border: none;
+        color: white;
+        border-radius: 3px;
+        padding: 5px;
+      }
+
+      .accepted {
+        width: 45%;
+        margin: 20px 0px 10px;
+        background-color: #16cd41;
+        border: none;
+        color: white;
+        border-radius: 3px;
+        padding: 5px;
+      }
+
+      .image-f-d {
+        position: relative;
+      }
+    }
+  }
+}
+
+.upload-image {
+  position: absolute;
+  margin: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 50%;
+  transition: 400ms;
+  text-align: center;
+  font-size: 20px;
+  padding: calc(25% - 15px) 0px;
+  display: hidden;
+  color: white;
+  opacity: 0;
+
+  z-index: 2;
+  &:hover {
+    background-color: rgba(26, 26, 26, 0.285);
+    display: block;
+    opacity: 1;
+    font-size: 20px;
+    p {
+      font-size: 15;
+    }
+  }
+}

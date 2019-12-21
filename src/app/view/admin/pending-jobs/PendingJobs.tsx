@@ -3,6 +3,8 @@ import './PendingJobs.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import PendingJobsList from './pending-jobs-list/PendingJobsList';
 import PendingJobsCreate from './pending-jobs-create/PendingJobsCreate';
+import { routePath } from '../../../../common/const/break-cumb';
+import JobAnnouncementsList from './job-announcements-list/JobAnnouncementsList';
 const Switch = require("react-router-dom").Switch;
 
 
@@ -19,6 +21,7 @@ function PendingJobs(props?: IPendingJobsProps) {
             <Switch>
                 <ErrorBoundaryRoute exact path={`${path}/list`} component={PendingJobsList} />
                 <ErrorBoundaryRoute exact path={`${path}/create`} component={PendingJobsCreate} />
+                <ErrorBoundaryRoute exact path={`${path}${routePath.JOB_ANNOUNCEMENTS + routePath.LIST}`} component={JobAnnouncementsList} />
             </Switch>
         </Fragment>
     )

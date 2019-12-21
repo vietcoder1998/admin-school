@@ -167,10 +167,22 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                 cancelText="Hủy"
                 onConfirm={() => this.removeAnnouTypes()}
             >
-                <Icon type="delete" theme="twoTone" twoToneColor="red" style={{ padding: "5px 10px" }} />
+                <Icon
+                    className='test'
+                    type="delete"
+                    theme="twoTone"
+                    twoToneColor="red"
+                    style={{ padding: 5, margin: 2 }}
+                />
             </Popconfirm>
             <Tooltip placement="top" title={"Sửa bài đăng"}>
-                <Icon type="edit" theme="twoTone" style={{ padding: "5px 10px" }} onClick={() => this.toggleModal(TYPE.EDIT)} />
+                <Icon
+                    className='test'
+                    type="edit"
+                    theme="twoTone"
+                    style={{ padding: 5, margin: 2 }}
+                    onClick={() => this.toggleModal(TYPE.EDIT)}
+                />
             </Tooltip>
 
         </>
@@ -316,11 +328,11 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListAnnouTypes: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, pageIndex, pageSize })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_annou_types: state.AnnouTypes.items,
     totalItems: state.AnnouTypes.totalItems
 });

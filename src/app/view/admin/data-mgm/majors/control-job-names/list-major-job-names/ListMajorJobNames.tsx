@@ -216,7 +216,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListMajorJobNames: (pageIndex: number, pageSize: number, id: string | number) => dispatch({
         type: REDUX_SAGA.MAJOR_JOB_NAMES.GET_MAJOR_JOB_NAMES, pageIndex, pageSize, id
     }),
@@ -225,7 +225,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_major_job_names: state.MajorJobNames.items,
     list_job_names: state.JobNames.items,
     totalItems: state.MajorJobNames.totalItems,

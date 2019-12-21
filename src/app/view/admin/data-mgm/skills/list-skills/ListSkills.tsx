@@ -210,11 +210,11 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListSkills: (pageIndex: number, pageSize: number) => dispatch({type: REDUX_SAGA.SKILLS.GET_SKILLS, pageIndex, pageSize})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_skills: state.Skills.items,
     totalItems: state.Skills.totalItems
 });

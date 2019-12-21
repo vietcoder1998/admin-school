@@ -19,11 +19,16 @@ export const TYPE = {
     PUBLIC: "PUBLIC",
     STUDENT: "STUDENT",
 
+    HIGHLIGHT: 'HIGHLIGHT',
+    IN_DAY: 'IN_DAY',
+    TOP: 'TOP',
+
     CREATE: "CREATE",
     EDIT: "EDIT",
     DELETE: "DELETE",
     DELETE_SELECTED: "DELETE_SELECTED",
     BAN: "BAN",
+    CERTIFICATE: "CERTIFICATE",
 
     INPUT: "INPUT",
     SELECT: "SELECT",
@@ -72,5 +77,23 @@ export const TYPE = {
         employerID: 'employerID',
         connected: 'connected',
         createdDate: 'createdDate'
-    }
+    },
+
+    JOB_FILTER: {
+        expired: 'expired',
+        hidden: 'hidden',
+        jobType: 'jobType',
+        homePriority: 'homePriority',
+        homeExpired: 'homeExpired',
+        searchPriority: 'searchPriority',
+        searchExpired: 'searchExpired',
+        excludedJobIDs: 'excludedJobIDs',
+        jobNameIDs: 'jobNameIDs',
+        jobGroupIDs: 'jobGroupIDs',
+        hasPendingApplied: 'hasPendingApplied',
+        hasAcceptedApplied: 'hasAcceptedApplied',
+        hasRejectedApplied: 'hasRejectedApplied',
+        jobShiftFilter: 'jobShiftFilter',
+        jobLocationFilter: 'jobLocationFilter'
+    },
 };

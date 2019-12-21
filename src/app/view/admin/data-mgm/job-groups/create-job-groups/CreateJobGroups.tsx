@@ -87,11 +87,11 @@ class CreateRegions extends PureComponent<CreateRegionsProps, CreateRegionsState
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListRegions: () => dispatch({type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({});
+const mapStateToProps = (state: any, ownProps?: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

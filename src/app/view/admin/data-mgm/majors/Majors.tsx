@@ -33,9 +33,9 @@ class Majors extends PureComponent<MajorsProps, MajorsState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({});
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({});
 
-const mapStateToProps = (state: any, ownProps: any) => ({});
+const mapStateToProps = (state: any, ownProps?: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

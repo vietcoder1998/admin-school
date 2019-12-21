@@ -19,7 +19,7 @@ interface IMenuNavigationProps {
 export default function MenuNavigation(props: IMenuNavigationProps) {
     let { show_menu } = props;
     let state_bar: any = '20';
-    
+
     if (localStorage.getItem("state_bar")) {
         state_bar = localStorage.getItem("state_bar")
     }
@@ -44,6 +44,12 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </span>
                     }
                 >
+                    <Menu.Item key="16">
+                        <Link to={routeLink.JOB_ANNOUNCEMENTS + routePath.LIST}>
+                            <Icon type="audit" />
+                            <span>Quản lý bài đăng</span>
+                        </Link>
+                    </Menu.Item>
                     <Menu.Item key="14">
                         <Link to='/admin/pending-jobs/list'>
                             <Icon type="audit" />
@@ -176,25 +182,25 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     }
                 >
                     <Menu.Item key="16">
-                        <Link to={routeLink.USER_CONTROLLER + routePath.LIST }>
+                        <Link to={routeLink.USER_CONTROLLER + routePath.LIST}>
                             <Icon type="user" />
                             <span>Người dùng</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="17">
-                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
+                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST}>
                             <Icon type="shop" />
                             <span>Nhà tuyển dụng</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="18">
-                        <Link to={routeLink.SCHOOLS + routePath.LIST }>
+                        <Link to={routeLink.SCHOOLS + routePath.LIST}>
                             <Icon type="share-alt" />
                             <span>Nhà trường</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="19">
-                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST }>
+                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST}>
                             <Icon type="team" />
                             <span>Sinh viên</span>
                         </Link>

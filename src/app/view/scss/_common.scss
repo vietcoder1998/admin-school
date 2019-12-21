@@ -24,10 +24,6 @@ code {
   letter-spacing: 0.3px;
 }
 
-svg {
-  margin-bottom: 5px;
-}
-
 .ant-layout {
   height: auto !important;
 }
@@ -223,6 +219,7 @@ textarea {
     padding: 5px 10px;
     cursor: pointer;
     transition: 0.5s;
+
     svg {
       margin: 0px 5px 5px;
     }
@@ -561,6 +558,9 @@ i {
 .test {
   border: solid $color_border 1px;
   border-radius: 3px;
+  &:hover {
+    border: solid rgba(71, 71, 71, 0.326) 1px;
+  }
 }
 
 // For Border

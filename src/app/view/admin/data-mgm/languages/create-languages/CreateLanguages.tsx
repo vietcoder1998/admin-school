@@ -87,11 +87,11 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListLanguages: () => dispatch({type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({});
+const mapStateToProps = (state: any, ownProps?: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

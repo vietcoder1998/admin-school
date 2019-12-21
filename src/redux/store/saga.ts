@@ -25,6 +25,10 @@ import { UserControllersWatcher } from '../sagas/user-controller';
 import { EmControllersWatcher } from '../sagas/em-controller';
 import { SchoolsWatcher } from '../sagas/schools';
 import { StudentsWatcher } from '../sagas/students';
+import { EmControllerDetailWatcher } from '../sagas/em-controller-detail';
+import { JobAnnouncementsWatcher } from '../sagas/job-announcements';
+import { JobAnnouncementDetailWatcher } from '../sagas/job-announcement-detail';
+import { SchoolDetailWatcher } from '../sagas/school-detail';
 
 export default function* rootSaga() {
     yield all([
@@ -53,7 +57,11 @@ export default function* rootSaga() {
         AdminAccountsWatcher(),
         UserControllersWatcher(),
         EmControllersWatcher(),
+        EmControllerDetailWatcher(),
         SchoolsWatcher(),
-        StudentsWatcher()
+        StudentsWatcher(),
+        JobAnnouncementsWatcher(),
+        JobAnnouncementDetailWatcher(),
+        SchoolDetailWatcher(),
     ])
 } 

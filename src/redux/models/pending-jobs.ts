@@ -1,6 +1,7 @@
 export interface IPendingJob {
     id?: string
     employer?: {
+        id: string,
         jobID?: string;
         employerName?: string;
         logoUrl?: string;
@@ -25,7 +26,7 @@ export interface IGenderData {
     id?: string,
     gender?: 'BOTH' | 'MALE' | 'FEMALE',
     quantity?: number,
-    applied?:number
+    applied?: number
 }
 
 export interface IShifts {

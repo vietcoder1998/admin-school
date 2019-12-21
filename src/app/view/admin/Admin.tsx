@@ -209,7 +209,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListJobNames: (body: any) => dispatch({
         type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES,
         body
@@ -235,7 +235,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     handleLoading: (loading: boolean) => dispatch({ type: REDUX.HANDLE_LOADING, loading })
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     loading: state.MutilBox.loading
 });
 

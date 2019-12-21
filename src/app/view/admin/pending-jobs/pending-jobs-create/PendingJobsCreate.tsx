@@ -546,7 +546,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
     };
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getPendingsJobDetail: (id) =>
         dispatch({ type: REDUX_SAGA.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL, id }),
     getListEmBranches: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter, id?: string) =>
@@ -555,7 +555,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, pageIndex, pageSize, body }),
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_job_names: state.JobNames.items,
     list_skills: state.Skills.items,
     list_em_branches: state.EmBranches.items,

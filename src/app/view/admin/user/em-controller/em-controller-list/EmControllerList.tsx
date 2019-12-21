@@ -1,29 +1,35 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip, Avatar } from 'antd';
 import './EmControllerList.scss';
 import { timeConverter } from '../../../../../../common/utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../../../../common/const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
 import { DELETE, PUT } from '../../../../../../common/const/method';
-import { USER_CONTROLLER } from '../../../../../../services/api/private.api';
+import { EM_CONTROLLER } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../common/const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
 import { IEmController, IEmControllerFilter } from '../../../../../../redux/models/em-controller';
 import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
 import { IRegion } from '../../../../../../redux/models/regions';
+import { IDrawerState } from '../../../../../../redux/models/mutil-box';
+import DrawerConfig from './../../../../layout/config/DrawerConfig';
+import EmInfo from '../../../../layout/em-info/EmInfo';
 
 interface IEmControllerListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
-    getListEmControllers: Function;
-    getAnnoucementDetail: Function;
+    location?: any;
+    getListEmControllers?: (pageIndex?: number, pageSize?: number, body?: IEmControllerFilter) => any;
+    getEmployerDetail?: (id?: string) => any;
+    handleDrawer?: (drawerState?: IDrawerState) => any;
 };
 
 interface IEmControllerListState {
     data_table?: Array<any>;
+    search?: any;
     pageIndex?: number;
     pageSize?: number;
     show_modal?: boolean;
@@ -62,35 +68,36 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     editToolAction = () => {
         let { id } = this.state;
         return <>
-            <Tooltip title='Xem hồ sơ nhà tuyển dụng' >
+            <Tooltip title='Xem hồ sơ ' >
                 <Icon
-                    style={{ padding: "5px 10px" }}
+                    className='test'
+                    style={{ padding: 5, margin: 2 }}
                     type={"search"}
+                    onClick={() => {
+                        this.props.handleDrawer({ open_drawer: true });
+                        setTimeout(() => {
+                            this.props.getEmployerDetail(id);
+                        }, 500);
+                    }}
                 />
             </Tooltip>
-            <Tooltip title='Xem danh sách chi nhánh' >
+            <Tooltip title='Xem chi nhánh' >
                 <Link to={routeLink.EM_BRANCHES + routePath.LIST + `/${id}`} target='_blank' >
                     <Icon
-                        style={{ padding: "5px 10px" }}
+                        className='test' style={{ padding: 5, margin: 2 }}
                         type={"container"}
                     />
                 </Link>
             </Tooltip>
-            <Tooltip title='Chứng thực nhà tuyển dụng' >
-                <Icon
-                    style={{ padding: "5px 10px" }}
-                    type={"safety-certificate"}
-                />
-            </Tooltip>
             <Popconfirm
                 placement="topRight"
-                title={"Xóa khỏi danh sách"}
+                title={"Xóa "}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
                 okType={'danger'}
                 okText="Xóa"
                 cancelText="Hủy"
             >
-                <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" />
+                <Icon className='test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
             </Popconfirm>
         </>
     };
@@ -143,7 +150,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
         },
     ];
 
-    onToggleModal = () => {
+    onToggleDrawer = () => {
         let { show_modal } = this.state;
         this.setState({ show_modal: !show_modal });
     };
@@ -158,7 +165,13 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     employerName: item.employerName ? item.employerName : '',
                     logoUrl: <Avatar size="large" shape="square" src={item.logoUrl} icon="shop" />,
-                    profileVerified: item.profileVerified ? 'true' : 'false',
+                    profileVerified:
+                        <Tooltip title={item.profileVerified ? 'Chứng thực' : 'Chưa chứng thực'} >
+                            <Icon
+                                style={{ color: item.profileVerified ? 'green' : 'red' }}
+                                type={"safety-certificate"}
+                            />
+                        </Tooltip>,
                     createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
                 });
             })
@@ -167,7 +180,9 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                 data_table,
                 loading_table: false,
             }
-        } return null;
+        }
+
+        return null;
     };
 
     async componentDidMount() {
@@ -191,16 +206,18 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     };
 
     createRequest = async (type?: string) => {
-        let { id, profileVerified_state } = this.state;
+        let { id } = this.state;
+        let { employer_detail } = this.props;
         let method = null;
-        let api = USER_CONTROLLER;
+        let api = EM_CONTROLLER;
+        await this.setState({loading: true})
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
                 break;
-            case TYPE.BAN:
+            case TYPE.CERTIFICATE:
                 method = PUT;
-                api = api + `/profileVerified/${profileVerified_state === 'true' ? 'false' : 'true'}`
+                api = api + `/${id}/profile/verified/${employer_detail.profileVerified ? 'false' : 'true'}`
                 break;
             default:
                 break;
@@ -216,9 +233,18 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             false,
         ).then(
             (res: any) => {
-                if (res) { this.searchEmControllers() }
+                if (res) {
+                    if (type !== TYPE.DELETE) {
+                        this.props.handleDrawer({ open_drawer: false });
+                    }
+                    setTimeout(() => {
+                        this.searchEmControllers()
+                    }, 500);
+                }
             }
-        )
+        ).finally(() => {
+            this.setState({loading: false})
+        })
     }
 
     onChangeFilter = (value?: any, type?: string) => {
@@ -253,14 +279,38 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
         let {
             data_table,
             loading_table,
+            loading
         } = this.state;
 
         let {
             totalItems,
-            list_regions
+            list_regions,
+            employer_detail
         } = this.props
         return (
-            <Fragment>
+            <>
+                <DrawerConfig width={'50vw'} title={"Thông tin nhà tuyển dụng"}>
+                    <EmInfo data={employer_detail} />
+                    <Button
+                        type={employer_detail.profileVerified ? "danger" : "primary"}
+                        icon={loading ? 'loading' : (employer_detail.profileVerified ? "dislike" : "like")}
+                        style={{ float: 'right' }}
+                        onClick={() => this.createRequest(TYPE.CERTIFICATE)}
+                    >
+                        {employer_detail.profileVerified ? "Hủy xác thực" : " Xác thực"}
+                    </Button>
+                    <Button
+                        icon={"left"}
+                        onClick={
+                            () => {
+                                this.props.handleDrawer({ open_drawer: false });
+                                this.props.history.push(routeLink.EM_CONTROLLER + routePath.LIST);
+                            }
+                        }
+                    >
+                        Thoát
+                    </Button>
+                </DrawerConfig>
                 <div className="common-content">
                     <h5>
                         Quản lý nhà tuyển dụng
@@ -345,20 +395,26 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                         />
                     </div>
                 </div>
-            </Fragment >
+            </ >
         )
     }
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListEmControllers: (pageIndex: number, pageSize: number, body?: IEmController) =>
         dispatch({ type: REDUX_SAGA.EM_CONTROLLER.GET_EM_CONTROLLER, pageIndex, pageSize, body }),
+    getEmployerDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.EM_CONTROLLER.GET_EM_CONTROLLER_DETAIL, id }),
+    handleDrawer: (drawerState?: IDrawerState) =>
+        dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_user_controller: state.EmControllers.items,
     list_regions: state.Regions.items,
+    employer_detail: state.EmployerDetail,
     totalItems: state.EmControllers.totalItems,
+    drawerState: state.MutilBox.drawerState
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -87,11 +87,11 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListTypeSchools: () => dispatch({type: REDUX_SAGA.TYPE_SCHOOLS.GET_TYPE_SCHOOLS})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({});
+const mapStateToProps = (state: any, ownProps?: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

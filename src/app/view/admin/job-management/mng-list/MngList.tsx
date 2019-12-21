@@ -32,6 +32,9 @@ let ImageRender = (props: any) => {
 interface IMngListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    location?: any;
+
+
     getListTypeManagement: Function;
     getListAnnouncements: Function;
     getAnnouncementDetail: Function;
@@ -57,6 +60,7 @@ interface IJobMmgtable {
 
 interface IMngListState {
     data_table?: Array<any>;
+       search?: any;
     pageIndex?: number;
     pageSize?: number;
     state?: string;
@@ -248,8 +252,9 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                             placement="topLeft"
                         >
                             <Icon
+                                className='test'
                                 type="search"
-                                style={{ padding: "5px 10px" }}
+                                style={{ padding: 5, margin: 2 }}
                                 onClick={async () => {
                                     await nextProps.handleDrawer();
                                     setTimeout(() => {
@@ -263,31 +268,39 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                             title={"Chi tiết bài viết(sửa)"}
                         >
                             <Link to={`/admin/job-management/fix/${item.id}`} target='_blank'>
-                                <Icon type="edit" style={{ padding: "5px 10px" }} theme="twoTone" />
+                                <Icon
+                                    className='test'
+                                    type="edit"
+                                    style={{ padding: 5, margin: 2 }}
+                                    theme="twoTone"
+                                />
                             </Link>
                         </Tooltip>
-
                         <Tooltip
                             title={!item.hidden ? "Ẩn bài đăng" : "Hiện bài đăng"}
                         >
-                            <Icon type={item.hidden ? "eye" : "eye-invisible"} style={{ padding: "5px 10px" }} onClick={async () =>
-                                await _requestToServer(
-                                    PUT,
-                                    ANNOUNCEMENT_DETAIL + `/${item.id}/hidden/${!item.hidden}`,
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    false,
-                                ).then(
-                                    (res: any) => {
-                                        if (res) {
-                                            message.success("Thành công", 3);
-                                            nextProps.getListAnnouncements(prevState.pageIndex, prevState.pageSize, prevState.body)
+                            <Icon
+                                className='test'
+                                type={item.hidden ? "eye" : "eye-invisible"}
+                                style={{ padding: 5, margin: 2 }}
+                                onClick={async () =>
+                                    await _requestToServer(
+                                        PUT,
+                                        ANNOUNCEMENT_DETAIL + `/${item.id}/hidden/${!item.hidden}`,
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        false,
+                                    ).then(
+                                        (res: any) => {
+                                            if (res) {
+                                                message.success("Thành công", 3);
+                                                nextProps.getListAnnouncements(prevState.pageIndex, prevState.pageSize, prevState.body)
+                                            }
                                         }
-                                    }
-                                )
-                            } />
+                                    )
+                                } />
                         </Tooltip>
                         <Popconfirm
                             title="Bạn chắc chắn muốn xóa bài đăng"
@@ -313,7 +326,16 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                             okText="Xóa"
                             cancelText="Hủy"
                         >
-                            <Icon key="delete" type="delete" style={{ padding: "5px 10px" }} theme="twoTone" twoToneColor="red" />
+                            <Icon
+                                className='test'
+                                key="delete"
+                                type="delete"
+                                style={{
+                                    padding: 5, margin: 2
+                                }}
+                                theme="twoTone"
+                                twoToneColor="red"
+                            />
                         </Popconfirm>
                     </>
                 );
@@ -767,7 +789,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
     }
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListTypeManagement: (data: any) => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, data }),
     getListAnnouncements: (pageIndex: number, pageSize: number, body: any) => dispatch({
         type: REDUX_SAGA.ANNOUNCEMENTS.GET_ANNOUNCEMENTS,
@@ -787,7 +809,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_annou_types: state.AnnouTypes.items,
     list_announcements: state.Announcements.items,
     annoucement_detail: state.AnnouncementDetail.data,

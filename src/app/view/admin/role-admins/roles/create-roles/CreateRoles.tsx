@@ -230,14 +230,14 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getRoleDetail: (rid: number) => dispatch({type: REDUX_SAGA.ROLES.GET_ROLE_DETAIL, rid}),
     getApiControllerRoles: (id: number) => dispatch({type: REDUX_SAGA.API_CONTROLLER_ROLES.GET_API_CONTROLLER_ROLES, id}),
     getListRoles: () => dispatch({type: REDUX_SAGA.ROLES.GET_ROLES}),
     getApiController: () => dispatch({type: REDUX_SAGA.ROLES.GET_ROLES}),
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     role_detail: state.RoleDetail.data,
     treeData: state.ApiController.treeData,
     api_controller_roles: state.ApiControllerRoles.data,

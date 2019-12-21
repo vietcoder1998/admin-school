@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input } from 'antd';
+import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip } from 'antd';
 import './UserControllerList.scss';
 import { timeConverter } from './../../../../../../common/utils/convertTime';
 import { IAppState } from './../../../../../../redux/store/reducer';
@@ -15,12 +15,14 @@ import { IUserController, IUserControllerFilter } from './../../../../../../redu
 interface IUserControllerListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    location?: any;
     getListUserControllers: Function;
     getAnnoucementDetail: Function;
 };
 
 interface IUserControllerListState {
     data_table?: Array<any>;
+    search?: any;
     pageIndex?: number;
     pageSize?: number;
     show_modal?: boolean;
@@ -68,7 +70,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 okText="Xóa"
                 cancelText="Hủy"
             >
-                <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" />
+                <Tooltip title='Xóa người dùng ' >
+                    <Icon className='test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
+                </Tooltip>
             </Popconfirm>
             <Popconfirm
                 placement="topRight"
@@ -78,12 +82,14 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 okText={body.banned ? "Hủy chặn" : "Chặn"}
                 cancelText="Hủy"
             >
-                <Icon
-                    style={{ padding: "5px 10px" }}
-                    type={body.banned ? "check-circle" : "stop"}
-                    theme={"twoTone"}
-                    twoToneColor={body.banned ? "blue" : "red"}
-                />
+                <Tooltip title='Chặn người dùng ' >
+                    <Icon
+                        className='test' style={{ padding: 5, margin: 2 }}
+                        type={body.banned ? "check-circle" : "stop"}
+                        theme={"twoTone"}
+                        twoToneColor={body.banned ? "blue" : "red"}
+                    />
+                </Tooltip>
             </Popconfirm>
         </>
     };
@@ -352,12 +358,12 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     }
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListUserControllers: (pageIndex: number, pageSize: number, body?: IUserController) =>
         dispatch({ type: REDUX_SAGA.USER_CONTROLLER.GET_USER_CONTROLLER, pageIndex, pageSize, body }),
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_user_controller: state.UserControllers.items,
     totalItems: state.UserControllers.totalItems,
 });

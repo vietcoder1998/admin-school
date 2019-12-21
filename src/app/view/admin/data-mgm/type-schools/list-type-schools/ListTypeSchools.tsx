@@ -209,7 +209,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListTypeSchools: (pageIndex: number, pageSize: number) => dispatch({
         type: REDUX_SAGA.TYPE_SCHOOLS.GET_TYPE_SCHOOLS,
         pageIndex,
@@ -217,7 +217,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_type_schools: state.TypeSchools.items,
     totalItems: state.TypeSchools.totalItems
 });

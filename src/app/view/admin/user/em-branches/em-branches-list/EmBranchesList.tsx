@@ -20,6 +20,9 @@ let { Option } = Select;
 interface IEmBranchesListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    location?: any;
+
+
     handleModal: Function;
     getListEmBranchs: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter, id?: string) => any;
     getTypeManagement: Function;
@@ -29,6 +32,7 @@ interface IEmBranchesListProps extends StateProps, DispatchProps {
 
 interface IEmBranchesListState {
     data_table?: Array<any>;
+       search?: any;
     pageIndex?: number;
     pageSize?: number;
     state?: string;
@@ -89,7 +93,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                 title="Xem chi tiết (sửa)"
             >
                 <Icon
-                    style={{ padding: "5px 10px" }}
+                    className = 'test' style={{ padding: 5, margin: 2 }}
                     type="edit"
                     theme="twoTone"
                     onClick={() =>
@@ -103,7 +107,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                 title="Xóa chi nhánh"
             >
                 <Icon
-                    style={{ padding: "5px 10px" }}
+                    className = 'test' style={{ padding: 5, margin: 2 }}
                     type="delete"
                     theme="twoTone"
                     twoToneColor="red"
@@ -489,7 +493,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
     }
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListEmBranchs: (pageIndex: number, pageSize: number, body: any, id?: string) =>
         dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES, pageIndex, pageSize, body, id }),
     handleModal: (modalState: IModalState) =>
@@ -499,7 +503,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         })
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_em_branches: state.EmBranches.items,
     totalItems: state.EmBranches.totalItems,
     list_regions: state.Regions.items,

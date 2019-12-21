@@ -131,11 +131,11 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListMajors: () => dispatch({type: REDUX_SAGA.MAJORS.GET_MAJORS})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_branches: state.Branches.items,
 });
 

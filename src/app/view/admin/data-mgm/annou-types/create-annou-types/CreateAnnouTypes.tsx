@@ -156,11 +156,11 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListAnnouTypes: () => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({});
+const mapStateToProps = (state: any, ownProps?: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

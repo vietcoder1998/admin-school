@@ -93,11 +93,25 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     EditContent = (
         <div>
-            <Icon key="delete" style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+            <Icon
+                className='test'
+                key="delete"
+                style={{ padding: 5, margin: 2 }}
+                type="delete"
+                theme="twoTone"
+                twoToneColor="red"
                 onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+            <Icon
+                className='test'
+                key="edit"
+                style={{ padding: 5, margin: 2 }}
+                type="edit"
+                theme="twoTone"
                 onClick={() => this.toggleModal(TYPE.EDIT)} />
-            <Icon type="unordered-list" style={{ padding: "5px 10px" }}
+            <Icon
+                className='test'
+                type="unordered-list"
+                style={{ padding: 5, margin: 2 }}
                 onClick={() => this.createListJobName()}
             />
         </div>
@@ -283,7 +297,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListMajors: (pageIndex: number, pageSize: number) => dispatch({
         type: REDUX_SAGA.MAJORS.GET_MAJORS,
         pageIndex,
@@ -291,7 +305,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_majors: state.Majors.items,
     list_branches: state.Branches.items,
     totalItems: state.Majors.totalItems

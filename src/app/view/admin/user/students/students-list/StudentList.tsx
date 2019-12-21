@@ -18,12 +18,16 @@ import { IRegion } from '../../../../../../redux/models/regions';
 interface IStudentsListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    location?: any;
+
+
     getListStudents: Function;
     getAnnoucementDetail: Function;
 };
 
 interface IStudentsListState {
     data_table?: Array<any>;
+       search?: any;
     pageIndex?: number;
     pageSize?: number;
     show_modal?: boolean;
@@ -49,7 +53,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             loading_table: true,
             educatedScale_state: null,
             body: {
-                shortName: null,
                 educatedScale: null,
                 regionID: null,
                 schoolTypeID: null,
@@ -67,21 +70,21 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         return <>
             <Tooltip title='Xem hồ sơ nhà tuyển dụng' >
                 <Icon
-                    style={{ padding: "5px 10px" }}
+                    className = 'test' style={{ padding: 5, margin: 2 }}
                     type={"search"}
                 />
             </Tooltip>
             <Tooltip title='Xem danh sách chi nhánh' >
                 <Link to={routeLink.EM_BRANCHES + routePath.LIST + `/${id}`} target='_blank' >
                     <Icon
-                        style={{ padding: "5px 10px" }}
+                        className = 'test' style={{ padding: 5, margin: 2 }}
                         type={"container"}
                     />
                 </Link>
             </Tooltip>
             <Tooltip title='Chứng thực nhà tuyển dụng' >
                 <Icon
-                    style={{ padding: "5px 10px" }}
+                    className = 'test' style={{ padding: 5, margin: 2 }}
                     type={"safety-certificate"}
                 />
             </Tooltip>
@@ -93,7 +96,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 okText="Xóa"
                 cancelText="Hủy"
             >
-                <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red" />
+                <Icon className = 'test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
             </Popconfirm>
         </>
     };
@@ -312,7 +315,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     }
 };
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListStudents: (pageIndex: number, pageSize: number, body?: IStudentsFilter) =>
         dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
 });

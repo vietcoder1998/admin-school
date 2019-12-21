@@ -87,11 +87,11 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListBranches: () => dispatch({type: REDUX_SAGA.BRANCHES.GET_BRANCHES})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({});
+const mapStateToProps = (state: any, ownProps?: any) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

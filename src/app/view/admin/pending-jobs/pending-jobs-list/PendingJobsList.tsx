@@ -1,9 +1,9 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import './PendingJobsList.scss';
 
 import { REDUX_SAGA, REDUX } from '../../../../../common/const/actions';
-import { Button, Table, Icon, Select, Row, Col, Modal, Input } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Modal, Input, Tooltip } from 'antd';
 import { timeConverter } from '../../../../../common/utils/convertTime';
 import { _requestToServer } from '../../../../../services/exec';
 import { POST } from '../../../../../common/const/method';
@@ -13,7 +13,9 @@ import { IptLetter } from '../../../layout/common/Common';
 import { IPendingJob } from '../../../../../redux/models/pending-jobs';
 import { IAppState } from '../../../../../redux/store/reducer';
 import JobDetail from '../../../layout/job-detail/JobDetail';
-import { IModalState } from '../../../../../redux/models/mutil-box';
+import { IModalState, IDrawerState } from '../../../../../redux/models/mutil-box';
+import DrawerConfig from '../../../layout/config/DrawerConfig';
+import EmInfo from '../../../layout/em-info/EmInfo';
 
 let { Option } = Select;
 const { TextArea } = Input;
@@ -45,13 +47,17 @@ const Label = (props: any) => {
 
 interface IPendingJobListProps extends StateProps, DispatchProps {
     match?: any,
+    history?: any,
     getPendingJobs: Function,
     getPendingJobDetail: (id?: string) => any;
     handleModal: (modalState?: IModalState) => any;
+    getEmployerDetail: (id?: string) => any;
+    handleDrawer: (drawerState?: IDrawerState) => any;
 }
 
 interface IPendingJobListState {
     data_table?: Array<any>;
+    search?: any;
     pageIndex?: number;
     pageSize?: number;
     state?: string;
@@ -66,6 +72,7 @@ interface IPendingJobListState {
     loading_table?: boolean;
     list_jobs?: Array<IPendingJob>
     job_id?: string;
+    id?: string;
 }
 
 class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobListState> {
@@ -84,6 +91,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             loading: false,
             loading_table: true,
             job_id: null,
+            id: null,
         }
     }
 
@@ -184,7 +192,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
 
-            nextProps.list_jobs.forEach((item: IPendingJob, index: any) => {
+            nextProps.list_jobs.forEach((item?: IPendingJob, index?: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -197,12 +205,38 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                     jobTitle: item.jobTitle,
                     employerBranchName: item.employerBranchName ? item.employerBranchName : "",
                     jobType: <Label type={item.jobType} value={item.jobType} />,
-                    operation: <Icon type="file-search" onClick={
-                        async () => {
-                            nextProps.handleModal({ open_modal: true });
-                            nextProps.getPendingJobDetail(item.id);
-                        }
-                    } />
+                    operation:
+                        <>
+                            <Tooltip title={'Xem chi tiết'}>
+                                <Icon
+                                    className='test'
+                                    type="file-search"
+                                    style={{ padding: 5, margin: 2 }}
+                                    onClick={
+                                        async () => {
+                                            nextProps.handleModal({ open_modal: true });
+                                            nextProps.getPendingJobDetail(item.id);
+                                        }
+                                    }
+                                />
+                            </Tooltip>
+                            <Tooltip title={'Xem NTD'}>
+                                <Icon
+                                    className='test'
+                                    type="home"
+                                    style={{ padding: 5, margin: 2 }}
+                                    onClick={
+                                        async () => {
+                                            nextProps.handleDrawer({ open_drawer: true });
+                                            setTimeout(() => {
+                                                nextProps.getEmployerDetail(item.employer.id);
+                                            }, 500);
+                                        }
+                                    }
+                                />
+                            </Tooltip>
+                        </>
+
                 });
             });
             return {
@@ -255,11 +289,39 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     };
 
     render() {
-        let { data_table, loading, message, loading_table, state, job_id } = this.state;
-        let { list_job_names, totalItems, job_detail, open_modal, list_job_skills } = this.props;
+        let {
+            data_table,
+            loading,
+            message,
+            loading_table,
+            state,
+            job_id
+        } = this.state;
+
+        let {
+            list_job_names,
+            totalItems,
+            job_detail,
+            open_modal,
+            list_job_skills,
+            employer_detail
+        } = this.props;
 
         return (
-            <Fragment>
+            <>
+                <DrawerConfig width={'50vw'} title={"Thông tin nhà tuyển dụng"}>
+                    <EmInfo data={employer_detail} />
+                    <Button
+                        icon={"left"}
+                        onClick={
+                            () => {
+                                this.props.handleDrawer({ open_drawer: false });
+                            }
+                        }
+                    >
+                        Thoát
+                    </Button>
+                </DrawerConfig>
                 <Modal
                     visible={open_modal}
                     title="CHI TIẾT CÔNG VIỆC"
@@ -305,7 +367,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 </Modal>
                 <div className="common-content">
                     <h5>
-                        Danh sách yêu cầu xét duyệt
+                        Danh sách yêu cầu xét duyệt {`(${totalItems})`}
                         <Button
                             icon="filter"
                             onClick={() => this.queryPendingJob()}
@@ -406,12 +468,12 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                         />
                     </div>
                 </div>
-            </Fragment>
+            </>
         )
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getPendingJobs: (body?: any) => dispatch({
         type: REDUX_SAGA.PENDING_JOBS.GET_PENDING_JOBS,
         body
@@ -421,16 +483,20 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
             type: REDUX_SAGA.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL,
             id
         }),
-
+    getEmployerDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.EM_CONTROLLER.GET_EM_CONTROLLER_DETAIL, id }),
     handleModal: (modalState?: IModalState) =>
         dispatch({ type: REDUX.HANDLE_MODAL, modalState }),
+    handleDrawer: (drawerState?: IDrawerState) =>
+        dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
 });
 
-const mapStateToProps = (state: IAppState, ownProps: any) => ({
+const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_jobs: state.PendingJobs.items,
     list_job_names: state.JobNames.items,
     list_job_skills: state.Skills.items,
     modalState: state.MutilBox.modalState,
+    employer_detail: state.EmployerDetail,
     job_detail: state.PendingJobDetail,
     open_modal: state.MutilBox.modalState.open_modal,
     totalItems: state.PendingJobs.totalItems,

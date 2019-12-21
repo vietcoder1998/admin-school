@@ -227,11 +227,11 @@ class CreateAdminAccounts extends PureComponent<CreateAdminAccountsProps, Create
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListRoles: () => dispatch({ type: REDUX_SAGA.ROLES.GET_ROLES })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_roles: state.Roles.items
 });
 

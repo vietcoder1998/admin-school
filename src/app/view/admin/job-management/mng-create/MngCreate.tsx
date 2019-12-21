@@ -40,6 +40,9 @@ interface IMngCreateState {
 interface IMngCreateProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
+    location?: any;
+
+
     getTypeManagements: Function;
     getAnnouncementDetail: Function;
 }
@@ -447,12 +450,12 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getTypeManagements: () => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES }),
     getAnnouncementDetail: (id: string) => dispatch({ type: REDUX_SAGA.ANNOUNCEMENT_DETAIL.GET_ANNOUNCEMENT_DETAIL, id }),
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_anno_type: state.AnnouTypes.items,
     announcement_detail: state.AnnouncementDetail.data
 });

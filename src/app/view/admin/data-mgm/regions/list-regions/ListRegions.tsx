@@ -72,9 +72,9 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 
     EditContent = (
         <div>
-            <Icon style={{ padding: "5px 10px" }} type="delete" theme="twoTone" twoToneColor="red"
+            <Icon className = 'test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red"
                 onClick={() => this.toggleModal(TYPE.DELETE)} />
-            <Icon key="edit" style={{ padding: "5px 10px" }} type="edit" theme="twoTone"
+            <Icon key="edit" className = 'test' style={{ padding: 5, margin: 2 }} type="edit" theme="twoTone"
                 onClick={() => this.toggleModal(TYPE.EDIT)} />
         </div>
     );
@@ -206,11 +206,11 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListRegions: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize })
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_regions: state.Regions.items,
     totalItems: state.Regions.totalItems
 });

@@ -204,11 +204,11 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListBranches: (pageIndex: number, pageSize: number) => dispatch({type: REDUX_SAGA.BRANCHES.GET_BRANCHES, pageIndex, pageSize})
 });
 
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: any, ownProps?: any) => ({
     list_branches: state.Branches.items,
     totalItems: state.Branches.totalItems
 });

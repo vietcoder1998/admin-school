@@ -8,6 +8,7 @@ export const routePath = {
     DETAIL: '/detail',
     DATA: '/data',
     USER: '/user',
+    APPLY: '/apply',
 
     PENDING_JOBS: '/pending-jobs',
     LANGUAGES: '/languages',
@@ -28,6 +29,7 @@ export const routePath = {
     EM_BRANCHES: '/em-branches',
     SCHOOLS: '/schools',
     STUDENTS: '/students',
+    JOB_ANNOUNCEMENTS: '/job-announcements',
 };
 
 export const routeLink = {
@@ -40,15 +42,15 @@ export const routeLink = {
     SKILLS: routePath.ADMIN + routePath.DATA + routePath.SKILLS,
     JOB_GROUPS: routePath.ADMIN + routePath.DATA + routePath.JOB_GROUPS,
     BRANCHES: routePath.ADMIN + routePath.DATA + routePath.BRANCHES,
-    ANNOU_TYPE: routePath.ADMIN + routePath.DATA + routePath.PENDING_JOBS,
+    ANNOU_TYPE: routePath.ADMIN + routePath.DATA + routePath.ANNOU_TYPE,
 
     // role
     ROLES_ADMIN: routePath.ADMIN + routePath.JOBS + routePath.ROLES,
     ADMIN_ACCOUNTS: routePath.ADMIN + routePath.ROLES + routePath.ADMIN_ACCOUNTS,
 
     // job management
-    PENDING_JOBS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
-    JOB_MANAGEMENTS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
+    PENDING_JOBS: routePath.ADMIN + routePath.PENDING_JOBS,
+    JOB_MANAGEMENTS: routePath.ADMIN + routePath.JOBS + routePath.JOB_ANNOUNCEMENTS ,
 
     // user management
     USER_CONTROLLER: routePath.ADMIN + routePath.USER + routePath.USER_CONTROLLER,
@@ -56,6 +58,8 @@ export const routeLink = {
     EM_BRANCHES: routePath.ADMIN + routePath.USER + routePath.EM_BRANCHES,
     SCHOOLS: routePath.ADMIN + routePath.USER + routePath.SCHOOLS,
     STUDENTS: routePath.ADMIN + routePath.USER + routePath.STUDENTS,
+
+    JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.PENDING_JOBS + routePath.JOB_ANNOUNCEMENTS,
 };
 
 export const breakCumb = [
@@ -67,9 +71,11 @@ export const breakCumb = [
     { label: "data", name: "Danh mục dữ liêu", icon: "database", url: "/data", disable: true },
     { label: "roles", name: "Quyền", icon: null, url: "/roles", disable: true },
     { label: "user", name: "Quản lý tài khoản", icon: null, url: "/user", disable: true },
+    { label: "pending-jobs", name: "Bài đăng đang chờ", icon: null, url: "/pending-jobs", disable: true },
 
-    { label: "job-management", name: "Quản lý bài viết", icon: "file-add", url: "/" },
-    { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: "clock-circle", url: routeLink.PENDING_JOBS },
+
+    { label: "job-management", name: "Quản lý bài viết", icon: null, url: "/" },
+    { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: null, url: routeLink.PENDING_JOBS },
     { label: "languages", name: "Ngôn ngữ", icon: null, url:routeLink.LANGUAGES + routePath.LIST },
     { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST  },
     { label: "type-schools", name: "Loại trường", icon: null, url: routeLink.TYPE_SCHOOLS + routePath.LIST  },
@@ -87,6 +93,7 @@ export const breakCumb = [
     { label: "em-branches", name: "Danh sách chi nhánh", icon: null, url: routeLink.EM_BRANCHES + routePath.LIST },
     { label: "schools", name: "Danh sách trường", icon: null, url: routeLink.SCHOOLS + routePath.LIST },
     { label: "students", name: "Danh sách học sinh", icon: null, url: routeLink.STUDENTS + routePath.LIST },
+    { label: "job-announcements", name: "Quản lí bài đăng", icon: null, url: routeLink.JOB_ANNOUNCEMENTS + routePath.LIST },
 ];
 
 export interface IBrk {
