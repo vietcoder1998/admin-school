@@ -3,12 +3,12 @@ import { Icon, Divider, Button, Input, DatePicker, Select, Tabs, message } from 
 import { connect } from 'react-redux';
 import './PendingJobsCreate.scss';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
-import { REDUX_SAGA } from '../../../../../common/const/actions';
-import { TYPE } from '../../../../../common/const/type';
+import { REDUX_SAGA } from '../../../../../const/actions';
+import { TYPE } from '../../../../../const/type';
 import { IAppState } from '../../../../../redux/store/reducer';
-import findIdWithValue from '../../../../../common/utils/findIdWithValue';
+import findIdWithValue from '../../../../../utils/findIdWithValue';
 import { _requestToServer } from '../../../../../services/exec';
-import { POST, PUT } from '../../../../../common/const/method';
+import { POST, PUT } from '../../../../../const/method';
 import { EM_BRANCHES_API } from '../../../../../services/api/private.api';
 import moment from 'moment';
 import { IShifts, IAnnoucementBody } from '../../../../../redux/models/pending-jobs';

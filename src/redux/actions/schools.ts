@@ -1,4 +1,4 @@
-import { REDUX } from '../../common/const/actions';
+import { REDUX } from '../../const/actions';
 import { ISchools } from '../models/schools';
 
 export const getListSchools = (data?: ISchools) => ({

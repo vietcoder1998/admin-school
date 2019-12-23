@@ -1,5 +1,5 @@
 import {IAnnouncements} from '../models/announcements';
-import {REDUX} from '../../common/const/actions';
+import {REDUX} from '../../const/actions';
 
 let initState: IAnnouncements = {
     items: [],

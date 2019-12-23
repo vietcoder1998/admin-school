@@ -3,21 +3,21 @@
 // import { connect } from 'react-redux';
 // import './JobAnnouncementsCreate.scss';
 // import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
-// import { REDUX_SAGA } from '../../../../../../common/const/actions';
-// import { TYPE } from '../../../../../../common/const/type';
+// import { REDUX_SAGA } from '../../../../../../const/actions';
+// import { TYPE } from '../../../../../../const/type';
 // import { IAppState } from '../../../../../../redux/store/reducer';
 // import { IJobName } from '../../../../../../redux/models/job-names';
 // import { IAnnoucementBody, IShift } from '../../../../../../redux/models/announcements';
 // import { ShiftContent, newShift } from '../../../../layout/annou-shift/AnnouShift';
 // import { IEmBranch } from '../../../../../../redux/models/em-branches';
-// import findIdWithValue from '../../../../../../common/utils/findIdWithValue';
+// import findIdWithValue from '../../../../../../utils/findIdWithValue';
 // import { _requestToServer } from '../../../../../../services/exec';
-// import { POST, PUT } from '../../../../../../common/const/method';
+// import { POST, PUT } from '../../../../../../const/method';
 // import { JOB_ANNOUNCEMENTS, PENDING_JOBS } from '../../../../../../services/api/private.api';
 // import { EMPLOYER_HOST } from '../../../../../../environment/dev';
 // import moment from 'moment';
 // import { NotUpdate, Required } from '../../../../layout/common/Common';
-// import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
+// import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 // const { TextArea } = Input;
 // const { Option } = Select;
@@ -182,7 +182,7 @@
 //                 job_announcement_detail
 //             }
 //         }
-//         return null
+//         return { loading_table: false }
 //     }
 
 //     onChangeValue = (event: any, param: string) => {

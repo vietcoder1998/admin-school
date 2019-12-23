@@ -1,6 +1,6 @@
 import {IApiController} from '../models/api-controller';
-import {REDUX} from '../../common/const/actions';
-import {renderTreeApi} from '../../common/utils/renderTreeApi';
+import {REDUX} from '../../const/actions';
+import {renderTreeApi} from '../../utils/renderTreeApi';
 
 let initState: IApiController = {
     data: [],

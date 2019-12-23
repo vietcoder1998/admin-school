@@ -1,5 +1,5 @@
 import {notification} from 'antd';
-import {GET, POST, PUT, DELETE} from '../common/const/method';
+import {GET, POST, PUT, DELETE} from '../const/method';
 import {_delete, _get, _post, _put} from './base-api';
 import Swal from 'sweetalert2';
 import {authHeaders} from "./auth";

@@ -1,12 +1,12 @@
 import React, {PureComponent, Fragment} from 'react'
 import {connect} from 'react-redux';
 import {Icon, Table, Button, Row, Col, Popover} from 'antd';
-import {REDUX_SAGA} from '../../../../../../common/const/actions';
+import {REDUX_SAGA} from '../../../../../../const/actions';
 import {ILanguages} from '../../../../../../redux/models/languages';
 import {_requestToServer} from '../../../../../../services/exec';
-import {POST, PUT, DELETE} from '../../../../../../common/const/method';
+import {POST, PUT, DELETE} from '../../../../../../const/method';
 import {LANGUAGES} from '../../../../../../services/api/private.api';
-import {TYPE} from '../../../../../../common/const/type';
+import {TYPE} from '../../../../../../const/type';
 import {AppModal} from "../../../../layout/modal-config/AppModal";
 import {InputTitle} from "../../../../layout/input-tittle/InputTitle";
 
@@ -65,7 +65,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                 loading_table: false
             }
         }
-        return null;
+        return { loading_table: false };
     }
 
     EditContent = (

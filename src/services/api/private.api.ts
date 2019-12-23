@@ -24,3 +24,5 @@ export const EM_CONTROLLER = "/api/admins/employers";
 export const SCHOOLS = "/api/admins/schools";
 export const STUDENTS = "/api/admins/students";
 export const JOB_ANNOUNCEMENTS = '/api/admins/employers/jobs';
+export const CANDIDATES = '/api/admins/candidates';
+

@@ -1,7 +1,7 @@
-import { REDUX } from '../../common/const/actions';
-import { ISchools } from '../models/schools';
+import { REDUX } from '../../const/actions';
+import { IStudent } from '../models/students';
 
-export const getListSchools = (data?: ISchools) => ({
-    type: REDUX.SCHOOLS.GET_SCHOOLS, 
+export const getListSchools = (data?: IStudent) => ({
+    type: REDUX.STUDENTS.GET_STUDENTS, 
     data
 });

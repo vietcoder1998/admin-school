@@ -1,9 +1,9 @@
-import { TYPE } from './../common/const/type';
-import { toUnixTime } from './../common/utils/toUnixTime';
+import { TYPE } from './../const/type';
+import { toUnixTime } from './../utils/toUnixTime';
 import { _requestToServer } from './exec';
 import { loginHeaders } from './auth';
 import { ADMIN_LOGIN, RFTK_LOGIN } from './api/public.api';
-import { POST } from './../common/const/method';
+import { POST } from './../const/method';
 import Cookies from 'universal-cookie';
 
 export function loginUser(data?: any, type?: string) {

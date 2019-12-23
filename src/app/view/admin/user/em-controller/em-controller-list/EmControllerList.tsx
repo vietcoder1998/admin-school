@@ -2,17 +2,17 @@ import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip, Avatar } from 'antd';
 import './EmControllerList.scss';
-import { timeConverter } from '../../../../../../common/utils/convertTime';
+import { timeConverter } from '../../../../../../utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
-import { REDUX_SAGA, REDUX } from '../../../../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
-import { DELETE, PUT } from '../../../../../../common/const/method';
+import { DELETE, PUT } from '../../../../../../const/method';
 import { EM_CONTROLLER } from '../../../../../../services/api/private.api';
-import { TYPE } from '../../../../../../common/const/type';
+import { TYPE } from '../../../../../../const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
 import { IEmController, IEmControllerFilter } from '../../../../../../redux/models/em-controller';
 import { Link } from 'react-router-dom';
-import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import { IRegion } from '../../../../../../redux/models/regions';
 import { IDrawerState } from '../../../../../../redux/models/mutil-box';
 import DrawerConfig from './../../../../layout/config/DrawerConfig';
@@ -182,7 +182,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             }
         }
 
-        return null;
+        return { loading_table: false };
     };
 
     async componentDidMount() {

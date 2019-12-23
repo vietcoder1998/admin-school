@@ -2,7 +2,7 @@ import React from 'react';
 import { Drawer } from 'antd';
 import { connect } from 'react-redux';
 import { IAppState } from '../../../../redux/store/reducer';
-import { REDUX } from '../../../../common/const/actions';
+import { REDUX } from '../../../../const/actions';
 
 interface IDrawerConfigProps extends StateProps, DispatchProps {
     open: boolean;

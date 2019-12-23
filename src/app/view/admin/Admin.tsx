@@ -4,7 +4,7 @@ import './Admin.scss';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
-import { REDUX_SAGA, REDUX } from '../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../const/actions';
 import { connect } from 'react-redux';
 
 import JobManagement from './job-management/JobManagement';
@@ -15,7 +15,7 @@ import PendingJobs from './pending-jobs/PendingJobs';
 import User from './user/User';
 
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
-import { breakCumb, IBrk } from '../../../common/const/break-cumb';
+import { breakCumb, IBrk } from '../../../const/break-cumb';
 import { IAppState } from '../../../redux/store/reducer';
 import ClearCache from 'react-clear-cache';
 
@@ -77,7 +77,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             }
         }
 
-        return null;
+        return { loading_table: false };
     }
 
     logOut = () => {

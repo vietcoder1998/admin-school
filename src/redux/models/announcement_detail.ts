@@ -11,4 +11,5 @@ export interface IAnnouncementDetail {
     title?: string;
     viewNumber?: number;
     loading?: boolean;
+    previewContent?: string;
 }

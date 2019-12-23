@@ -30,6 +30,8 @@ export const routePath = {
     SCHOOLS: '/schools',
     STUDENTS: '/students',
     JOB_ANNOUNCEMENTS: '/job-announcements',
+    CANDIDATES: '/candidates',
+
 };
 
 export const routeLink = {
@@ -58,6 +60,7 @@ export const routeLink = {
     EM_BRANCHES: routePath.ADMIN + routePath.USER + routePath.EM_BRANCHES,
     SCHOOLS: routePath.ADMIN + routePath.USER + routePath.SCHOOLS,
     STUDENTS: routePath.ADMIN + routePath.USER + routePath.STUDENTS,
+    CANDIDATES: routePath.ADMIN + routePath.USER + routePath.CANDIDATES,
 
     JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.PENDING_JOBS + routePath.JOB_ANNOUNCEMENTS,
 };
@@ -94,6 +97,7 @@ export const breakCumb = [
     { label: "schools", name: "Danh sách trường", icon: null, url: routeLink.SCHOOLS + routePath.LIST },
     { label: "students", name: "Danh sách học sinh", icon: null, url: routeLink.STUDENTS + routePath.LIST },
     { label: "job-announcements", name: "Quản lí bài đăng", icon: null, url: routeLink.JOB_ANNOUNCEMENTS + routePath.LIST },
+    { label: "candidates", name: "Hồ sơ ứng viên", icon: null, url: routeLink.CANDIDATES + routePath.LIST },
 ];
 
 export interface IBrk {

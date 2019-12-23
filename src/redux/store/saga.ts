@@ -29,6 +29,8 @@ import { EmControllerDetailWatcher } from '../sagas/em-controller-detail';
 import { JobAnnouncementsWatcher } from '../sagas/job-announcements';
 import { JobAnnouncementDetailWatcher } from '../sagas/job-announcement-detail';
 import { SchoolDetailWatcher } from '../sagas/school-detail';
+import { CandidateDetailWatcher } from '../sagas/candidates-detail';
+import { CandidatesWatcher } from '../sagas/candidates';
 
 export default function* rootSaga() {
     yield all([
@@ -63,5 +65,7 @@ export default function* rootSaga() {
         JobAnnouncementsWatcher(),
         JobAnnouncementDetailWatcher(),
         SchoolDetailWatcher(),
+        CandidateDetailWatcher(),
+        CandidatesWatcher(),
     ])
 } 

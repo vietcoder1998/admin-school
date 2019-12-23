@@ -1,9 +1,9 @@
-import { POST } from './../../common/const/method';
+import { POST } from './../../const/method';
 import { USER_CONTROLLER } from '../../services/api/private.api';
 import { IUserControllers } from '../models/user-controller';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
+import { REDUX_SAGA, REDUX } from '../../const/actions'
 
 function* getListUserControllersData(action: any) {
     let res = yield call(callUserControllers, action);

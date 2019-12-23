@@ -2,17 +2,17 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Divider, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-// import {REDUX_SAGA} from '../../../../../../common/const/actions';
+// import {REDUX_SAGA} from '../../../../../../const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
-import { POST, PUT } from '../../../../../../common/const/method';
+import { POST, PUT } from '../../../../../../const/method';
 import { API_CONTROLLER_ROLES, REGISTRATION_ADMINS } from '../../../../../../services/api/private.api';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
-import { TYPE } from '../../../../../../common/const/type';
+import { TYPE } from '../../../../../../const/type';
 // import { TreeSelect } from 'antd';
 import { IApiFunctions } from '../../../../../../redux/models/api-controller';
 import './CreateAdminAccounts.scss';
 import { IRole } from '../../../../../../redux/models/roles';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../../const/actions';
 
 // const { SHOW_PARENT } = TreeSelect;
 
@@ -72,7 +72,7 @@ class CreateAdminAccounts extends PureComponent<CreateAdminAccountsProps, Create
             }
         }
 
-        return null;
+        return { loading_table: false };
     }
 
     onChoseRoleID = (id: number) => {

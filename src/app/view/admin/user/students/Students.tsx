@@ -1,6 +1,6 @@
 import React from 'react';
 import ErrorBoundaryRoute from "../../../../../routes/ErrorBoundaryRoute";
-import StudentsList from './students-list/StudentList';
+import StudentsList from './students-list/StudentsList';
 const Switch = require("react-router-dom").Switch;
 
 interface StudentsProps{

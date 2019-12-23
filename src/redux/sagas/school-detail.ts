@@ -1,9 +1,9 @@
 import { SCHOOLS } from './../../services/api/private.api';
 import { ISchoolDetail } from '../models/school-detail';
-import { GET } from '../../common/const/method';
+import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
+import { REDUX_SAGA, REDUX } from '../../const/actions'
 
 function* getListSchoolDetailData(action: any) {
     let res = yield call(callSchoolDetail, action);

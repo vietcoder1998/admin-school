@@ -1,5 +1,5 @@
 import { IMutilBox } from './../models/mutil-box';
-import { REDUX } from './../../common/const/actions';
+import { REDUX } from '../../const/actions';
 
 let initState: IMutilBox = {
     drawerState: {

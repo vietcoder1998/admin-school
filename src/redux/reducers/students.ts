@@ -1,5 +1,5 @@
 import { IStudents } from '../models/students';
-import { REDUX } from '../../common/const/actions';
+import { REDUX } from '../../const/actions';
 
 let initState: IStudents = {
     items: [],
@@ -10,7 +10,7 @@ let initState: IStudents = {
 
 export const Students = (state = initState, action: any) => {
     switch (action.type) {
-        case REDUX.SCHOOLS.GET_SCHOOLS:
+        case REDUX.STUDENTS.GET_STUDENTS:
             return {
                 ...state,
                 items: action.data.items,

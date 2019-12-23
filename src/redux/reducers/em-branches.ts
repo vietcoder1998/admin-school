@@ -1,5 +1,5 @@
 import { IEmBranches } from '../models/em-branches';
-import { REDUX } from '../../common/const/actions';
+import { REDUX } from '../../const/actions';
 
 let initState: IEmBranches = {
     items: [],

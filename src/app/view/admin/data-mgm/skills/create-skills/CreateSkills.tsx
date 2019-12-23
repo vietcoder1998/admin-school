@@ -4,10 +4,10 @@ import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
 import {_requestToServer} from '../../../../../../services/exec';
 import {SKILLS} from '../../../../../../services/api/private.api';
-import {POST} from '../../../../../../common/const/method';
-import {REDUX_SAGA} from '../../../../../../common/const/actions';
+import {POST} from '../../../../../../const/method';
+import {REDUX_SAGA} from '../../../../../../const/actions';
 import {Link} from 'react-router-dom';
-import {TYPE} from '../../../../../../common/const/type';
+import {TYPE} from '../../../../../../const/type';
 
 interface CreateSkillsState {
     name?: string;

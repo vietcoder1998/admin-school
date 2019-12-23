@@ -1,15 +1,15 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IMajor } from '../../../../../../redux/models/majors';
 import { Link } from 'react-router-dom';
 import { IBranches } from '../../../../../../redux/models/branches';
 import { MAJORS } from '../../../../../../services/api/private.api';
-import { DELETE, PUT, GET } from '../../../../../../common/const/method';
+import { DELETE, PUT, GET } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
-import { TYPE } from '../../../../../../common/const/type';
+import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 
 
@@ -87,7 +87,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             }
         }
 
-        return null;
+        return { loading_table: false };
     };
 
 

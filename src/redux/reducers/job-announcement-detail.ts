@@ -1,4 +1,4 @@
-import { REDUX } from '../../common/const/actions';
+import { REDUX } from '../../const/actions';
 import { IJobAnnouncementDetail } from '../models/job-annoucement-detail';
 
 let initState: IJobAnnouncementDetail = {

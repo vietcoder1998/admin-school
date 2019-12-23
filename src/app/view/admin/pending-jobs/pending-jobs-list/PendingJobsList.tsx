@@ -2,13 +2,13 @@ import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import './PendingJobsList.scss';
 
-import { REDUX_SAGA, REDUX } from '../../../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
 import { Button, Table, Icon, Select, Row, Col, Modal, Input, Tooltip } from 'antd';
-import { timeConverter } from '../../../../../common/utils/convertTime';
+import { timeConverter } from '../../../../../utils/convertTime';
 import { _requestToServer } from '../../../../../services/exec';
-import { POST } from '../../../../../common/const/method';
+import { POST } from '../../../../../const/method';
 import { PENDING_JOBS } from '../../../../../services/api/private.api';
-import { TYPE } from '../../../../../common/const/type';
+import { TYPE } from '../../../../../const/type';
 import { IptLetter } from '../../../layout/common/Common';
 import { IPendingJob } from '../../../../../redux/models/pending-jobs';
 import { IAppState } from '../../../../../redux/store/reducer';
@@ -245,7 +245,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 loading_table: false
             }
         }
-        return null;
+        return { loading_table: false };
     }
 
 

@@ -3,7 +3,7 @@ import './PendingJobs.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import PendingJobsList from './pending-jobs-list/PendingJobsList';
 import PendingJobsCreate from './pending-jobs-create/PendingJobsCreate';
-import { routePath } from '../../../../common/const/break-cumb';
+import { routePath } from '../../../../const/break-cumb';
 import JobAnnouncementsList from './job-announcements-list/JobAnnouncementsList';
 const Switch = require("react-router-dom").Switch;
 

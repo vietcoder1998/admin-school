@@ -53,7 +53,7 @@ export class AppModal extends React.PureComponent<IAppModalProps> {
         let {okText, cancelText, title, visible, width} = this.props;
         let {loadingOk} = this.state;
         return (
-            <React.Fragment>
+            <>
                 <Modal title={title}
                        closable={false}
                        visible={visible}
@@ -87,7 +87,7 @@ export class AppModal extends React.PureComponent<IAppModalProps> {
                        ]}
                 >
                 </Modal>
-            </React.Fragment>
+            </>
         )
     };
 }

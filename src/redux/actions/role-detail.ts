@@ -1,4 +1,4 @@
-import {REDUX} from '../../common/const/actions';
+import {REDUX} from '../../const/actions';
 import {IRole} from '../models/roles';
 
 export const getRolesDetail = (data: IRole) => ({

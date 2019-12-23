@@ -2,15 +2,15 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
-import { TYPE } from '../../../../../../common/const/type';
-// import { REDUX_SAGA } from '../../../../../../common/const/actions';
-import { DELETE } from '../../../../../../common/const/method';
+import { TYPE } from '../../../../../../const/type';
+// import { REDUX_SAGA } from '../../../../../../const/actions';
+import { DELETE } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { ROLES } from '../../../../../../services/api/private.api';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IAppState } from '../../../../../../redux/store/reducer';
 import { IAdminAccount } from '../../../../../../redux/models/admin-accounts';
-import { timeConverter } from '../../../../../../common/utils/convertTime';
+import { timeConverter } from '../../../../../../utils/convertTime';
 
 interface IListAdminAccountsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -74,7 +74,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                 loading_table: false
             }
         }
-        return null;
+        return { loading_table: false };
     }
 
 

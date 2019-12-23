@@ -1,14 +1,14 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber } from 'antd';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../../const/actions';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
-import { PUT, DELETE } from '../../../../../../common/const/method';
+import { PUT, DELETE } from '../../../../../../const/method';
 import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
-import { TYPE } from '../../../../../../common/const/type';
+import { TYPE } from '../../../../../../const/type';
 import { IAnnouType } from '../../../../../../redux/models/annou-types';
 
 interface IListAnnouTypesProps extends StateProps, DispatchProps {
@@ -115,7 +115,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                 loading_table: false
             }
         }
-        return null;
+        return { loading_table: false };
     };
 
 

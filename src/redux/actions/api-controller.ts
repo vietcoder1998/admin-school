@@ -1,4 +1,4 @@
-import {REDUX} from '../../common/const/actions';
+import {REDUX} from '../../const/actions';
 import {IApiController} from '../models/api-controller';
 
 export const getListApiController = (data: IApiController) => ({

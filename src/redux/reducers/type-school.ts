@@ -1,5 +1,5 @@
 import {ITypeSchools} from '../models/type-schools';
-import {REDUX} from '../../common/const/actions';
+import {REDUX} from '../../const/actions';
 
 let initState: ITypeSchools = {
     items: [],

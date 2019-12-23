@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { REDUX_SAGA, REDUX } from '../../../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
 import { Button, Table, Icon, Select, Row, Col, DatePicker, Rate, Tabs, List, Avatar, Skeleton, Checkbox, Popconfirm, message, Tooltip, Drawer } from 'antd';
-import { timeConverter, momentToUnix } from '../../../../../common/utils/convertTime';
+import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
 import './MngList.scss';
-import { TYPE } from '../../../../../common/const/type';
+import { TYPE } from '../../../../../const/type';
 import { Link } from 'react-router-dom';
 import { IptLetter } from '../../../layout/common/Common';
 import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
 import { _requestToServer } from '../../../../../services/exec';
-import { DELETE, PUT } from '../../../../../common/const/method';
+import { DELETE, PUT } from '../../../../../const/method';
 import { ANNOUNCEMENT_DETAIL, ANNOU_COMMENTS } from '../../../../../services/api/private.api';
 import { IAnnouCommentsBody, IAnnouComment } from '../../../../../redux/models/annou-comments';
 import { IAppState } from '../../../../../redux/store/reducer';
@@ -21,10 +21,10 @@ const { TabPane } = Tabs;
 
 let ImageRender = (props: any) => {
     if (props.src && props.src !== "") {
-        return <img src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
+        return <Avatar shape={'square'} src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
     } else {
         return <div style={{ width: "60px", height: "60px", padding: "20px 0px" }}>
-            <Icon type="area-chart" />
+            <Icon type="file-image" style={{fontSize: 20}}/>
         </div>
     }
 };
@@ -33,8 +33,6 @@ interface IMngListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
     location?: any;
-
-
     getListTypeManagement: Function;
     getListAnnouncements: Function;
     getAnnouncementDetail: Function;
@@ -169,19 +167,24 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
             dataIndex: 'title',
             key: 'jobTitle',
         },
-
+        {
+            title: 'Nội dung rút gọn',
+            width: 300,
+            dataIndex: 'previewContent',
+            key: 'previewContent',
+        },
         {
             title: 'Người viết',
             dataIndex: 'admin',
             className: 'action',
             key: 'admin',
-            width: 110,
+            width: 150,
         },
         {
             title: 'Người sửa',
             dataIndex: 'modifyAdmin',
             key: 'modifyAdmin',
-            width: 110,
+            width: 150,
         },
 
         {
@@ -218,7 +221,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
             dataIndex: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 160,
+            width: 150,
         },
     ];
 
@@ -344,6 +347,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     title: item.title,
+                    previewContent: item.previewContent,
                     admin: item.admin ? (item.admin.firstName + " " + item.admin.lastName) : "",
                     modifyAdmin: item.modifyAdmin ? (item.modifyAdmin.firstName + " " + item.modifyAdmin.lastName) : "",
                     createdDate: timeConverter(item.createdDate, 1000),
@@ -360,7 +364,7 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                 loading_table: false,
             };
         }
-        return null;
+        return { loading_table: false };
     };
 
     getData = async () => {
@@ -767,8 +771,8 @@ class MngList extends PureComponent<IMngListProps, IMngListState> {
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1000 }}
-                            bordered
+                            scroll={{ x: 1450 }}
+                            bordered={true}
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
                             onChange={this.setPageIndex}

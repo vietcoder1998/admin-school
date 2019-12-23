@@ -29,6 +29,8 @@ import { JobNames } from '../reducers/job-names';
 import { AnnouTypes } from '../reducers/annou-types';
 import { Announcements } from '../reducers/announcements';
 import { AnnouncementDetail } from '../reducers/announcement-detail';
+import { Candidates } from '../reducers/candidates';
+import { CandidateDetail } from '../reducers/candidates-detail';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
@@ -62,7 +64,9 @@ const rootReducer = combineReducers({
     Students,
     JobAnnouncements,
     JobAnnouncementDetail,
-    SchoolsDetail
+    SchoolsDetail,
+    Candidates,
+    CandidateDetail,
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

@@ -1,10 +1,10 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { REDUX_SAGA, REDUX } from '../../../../../../common/const/actions';
+import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
 import { Button, Table, Icon, Select, Row, Col, Modal, Tooltip } from 'antd';
-import { timeConverter, momentToUnix } from '../../../../../../common/utils/convertTime';
+import { timeConverter, momentToUnix } from '../../../../../../utils/convertTime';
 import './EmBranchesList.scss';
-import { TYPE } from '../../../../../../common/const/type';
+import { TYPE } from '../../../../../../const/type';
 import { Link } from 'react-router-dom';
 import { IptLetterP } from '../../../../layout/common/Common';
 import { IAppState } from '../../../../../../redux/store/reducer';
@@ -12,17 +12,15 @@ import { IEmBranch, IEmBranchesFilter } from '../../../../../../redux/models/em-
 import { IRegion } from '../../../../../../redux/models/regions';
 import { IModalState } from '../../../../../../redux/models/mutil-box';
 import { _requestToServer } from '../../../../../../services/exec';
-import { DELETE } from '../../../../../../common/const/method';
+import { DELETE } from '../../../../../../const/method';
 import { EM_BRANCHES_API } from '../../../../../../services/api/private.api';
-import { routeLink, routePath } from '../../../../../../common/const/break-cumb';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 let { Option } = Select;
 
 interface IEmBranchesListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
     location?: any;
-
-
     handleModal: Function;
     getListEmBranchs: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter, id?: string) => any;
     getTypeManagement: Function;
@@ -259,7 +257,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                 data_table,
                 loading_table: false,
             }
-        } return null;
+        } return { loading_table: false };
     };
 
     async componentDidMount() {

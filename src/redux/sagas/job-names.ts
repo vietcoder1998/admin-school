@@ -1,9 +1,9 @@
 import { JOB_NAMES } from '../../services/api/private.api';
 import { IJobNames } from '../models/job-type';
-import { GET } from '../../common/const/method';
+import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
-import { REDUX_SAGA, REDUX } from '../../common/const/actions'
+import { REDUX_SAGA, REDUX } from '../../const/actions'
 
 function* getListJobNameData(action: any) {
     let res = yield call(callJobName, action);

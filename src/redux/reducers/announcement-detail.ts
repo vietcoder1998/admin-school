@@ -1,4 +1,4 @@
-import {REDUX} from '../../common/const/actions';
+import {REDUX} from '../../const/actions';
 import {IAnnouncementDetail} from '../models/announcement_detail';
 
 interface IInitState {

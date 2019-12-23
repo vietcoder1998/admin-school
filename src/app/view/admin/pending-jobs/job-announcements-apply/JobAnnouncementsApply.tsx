@@ -1,19 +1,19 @@
 // import React, { Component } from 'react'
 // import { Icon, Divider, Row, Col, Button, Tabs, message, Empty } from 'antd';
 // import { connect } from 'react-redux';
-// import { REDUX_SAGA } from '../../../../../common/const/actions';
-// import { TYPE } from '../../../../../common/const/type';
+// import { REDUX_SAGA } from '../../../../../const/actions';
+// import { TYPE } from '../../../../../const/type';
 // import { IAppState } from '../../../../../redux/store/reducer';
 // import {  IShift } from '../../../../../redux/models/announcements';
 // import { ShiftContent} from '../../../layout/annou-shift/AnnouShift';
 // import { IEmBranch } from '../../../../../redux/models/em-branches';
 // import { _requestToServer } from '../../../../../services/exec';
-// import { PUT } from '../../../../../common/const/method';
+// import { PUT } from '../../../../../const/method';
 // import { APPLY_JOB } from '../../../../../services/api/private.api';
 // import { EMPLOYER_HOST } from '../../../../../environment/dev';
 // import { IApplyJob } from '../../../../../redux/models/apply-job';
 // import { ApplyJobItem } from '../../../layout/job-apply/JobApplyItem';
-// import { routeLink, routePath } from '../../../../../common/const/break-cumb';
+// import { routeLink, routePath } from '../../../../../const/break-cumb';
 // import './JobAnnouncementsApply.scss';
 // import { IShiftDetail } from '../../../../../redux/models/job-annoucement-detail';
 // import Loading from '../../../layout/loading/Loading';
@@ -133,7 +133,7 @@
 //             }
 //         }
 
-//         return null
+//         return { loading_table: false }
 //     }
 
 //     searchShift = (id?: string, type?: string, default_id?: string) => {
@@ -290,7 +290,7 @@
 //                                                     return <ShiftContent key={index} id={item.id} shift={item} removeButton={false} disableChange={true} />
 //                                                 }
 
-//                                                 return null
+//                                                 return { loading_table: false }
 //                                             }
 //                                         ) : <Empty style={{ paddingTop: "5vh" }} />
 //                                     }

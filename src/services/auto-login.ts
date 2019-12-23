@@ -1,5 +1,5 @@
-import { TYPE } from './../common/const/type';
-import { toUnixTime } from './../common/utils/toUnixTime';
+import { TYPE } from './../const/type';
+import { toUnixTime } from './../utils/toUnixTime';
 import Cookies from 'universal-cookie';
 import { loginUser } from './login';
 

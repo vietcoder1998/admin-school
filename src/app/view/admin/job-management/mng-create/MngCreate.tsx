@@ -4,13 +4,13 @@ import './MngCreate.scss';
 import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
-import { REDUX_SAGA } from '../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../const/actions';
 import { Link } from 'react-router-dom';
 import { IAnnouncementDetail } from '../../../../../redux/models/announcement_detail';
-import { TYPE } from '../../../../../common/const/type';
+import { TYPE } from '../../../../../const/type';
 import { ICreateNewAnnoucement } from '../../../../../redux/models/announcements';
 import { _requestToServer } from '../../../../../services/exec';
-import { POST, PUT } from '../../../../../common/const/method';
+import { POST, PUT } from '../../../../../const/method';
 import { UPLOAD_IMAGE, ANNOUNCEMENT_DETAIL } from '../../../../../services/api/private.api';
 import { sendImageHeader } from '../../../../../services/auth';
 import { IAnnouType } from '../../../../../redux/models/annou-types';
@@ -25,6 +25,7 @@ interface IMngCreateState {
     hidden?: boolean;
     content?: string;
     value_annou?: string;
+    previewContent?: string;
     announcement_detail?: IAnnouncementDetail;
     type_cpn?: string;
     data?: ICreateNewAnnoucement;
@@ -41,8 +42,6 @@ interface IMngCreateProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
     location?: any;
-
-
     getTypeManagements: Function;
     getAnnouncementDetail: Function;
 }
@@ -63,6 +62,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             announcement_detail: {
                 id: "",
                 admin: {},
+                previewContent: null,
                 viewNumber: 0,
                 modifyAdmin: {},
                 announcementType: { id: 0, name: "", priority: 0 },
@@ -80,7 +80,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         }
     }
 
-    static getDerivedStateFromProps(nextProps: IMngCreateProps, prevState: IMngCreateState) {
+    static getDerivedStateFromProps(nextProps?: IMngCreateProps, prevState?: IMngCreateState) {
         if (nextProps.match.params.id && nextProps.match.params.id !== prevState.id) {
             return {
                 id: nextProps.match.params.id,
@@ -103,6 +103,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                 announcementTypeID: announcement_detail.announcementType.id,
                 value_annou: announcement_detail.announcementType.name,
                 imageUrl: announcement_detail.imageUrl,
+                previewContent: announcement_detail.previewContent
             }
         }
 
@@ -240,6 +241,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             hidden,
             content,
             type_cpn,
+            previewContent
         } = this.state;
 
         await this.setState({ loading_rq: true })
@@ -252,7 +254,6 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
         if (!imageUrl) {
             message.warning("Bài đăng chưa có ảnh đại diện", 2)
         }
-
 
         if (!announcementTypeID) {
             message.warning("Bài đăng chưa chọn loại bài viết", 2)
@@ -273,6 +274,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                     announcementTypeID,
                     hidden,
                     content: newContent,
+                    previewContent
                 }
             ).then((res: any) => {
                 if (res) {
@@ -296,7 +298,6 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
 
     }
 
-
     render() {
         let {
             title,
@@ -308,11 +309,12 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
             loading_content_img,
             value_annou,
             list_item,
-            loading_rq
+            loading_rq,
+            previewContent
         } = this.state;
 
         return (
-            <React.Fragment>
+            <>
                 <div className='common-content'>
                     <h5>
                         Tạo bài viết mới
@@ -327,6 +329,15 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                             widthLabel="200px"
                             widthInput="400px"
                             onChange={(event: any) => this.setState({ title: event })}
+                        />
+                        <InputTitle
+                            type={TYPE.TEXT_AREA}
+                            value={previewContent}
+                            title="Nhập mô tả ngắn gọn"
+                            placeholder="ex: nhỏ hơn 20 từ"
+                            widthLabel="200px"
+                            widthInput="400px"
+                            onChange={(event: any) => this.setState({ previewContent: event })}
                         />
                         <InputTitle
                             type={TYPE.SELECT}
@@ -445,7 +456,7 @@ class MngCreate extends PureComponent<IMngCreateProps, IMngCreateState> {
                         </Button>
                     </div>
                 </div>
-            </React.Fragment>
+            </>
         )
     }
 }

@@ -1,14 +1,14 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Button, Select, Divider } from 'antd';
-import { REDUX_SAGA } from '../../../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../../../const/actions';
 import { IJobName } from '../../../../../../../redux/models/job-type';
 import { Link } from 'react-router-dom';
 import { InputTitle } from '../../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../../services/exec';
 import { MAJORS } from '../../../../../../../services/api/private.api';
-import { PUT } from '../../../../../../../common/const/method';
-import { TYPE } from '../../../../../../../common/const/type';
+import { PUT } from '../../../../../../../const/method';
+import { TYPE } from '../../../../../../../const/type';
 import { IJobGroup } from '../../../../../../../redux/models/job-groups';
 
 const { Option } = Select;
@@ -100,7 +100,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                 id: nextProps.match.params.id
             }
         }
-        return null;
+        return { loading_table: false };
     }
 
     list_option = () => {

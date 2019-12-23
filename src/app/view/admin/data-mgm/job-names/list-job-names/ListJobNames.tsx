@@ -1,15 +1,15 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IJobName } from '../../../../../../redux/models/job-type';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../services/exec';
 import { JOB_NAMES } from '../../../../../../services/api/private.api';
-import { DELETE, PUT, GET } from '../../../../../../common/const/method';
-import { TYPE } from '../../../../../../common/const/type';
+import { DELETE, PUT, GET } from '../../../../../../const/method';
+import { TYPE } from '../../../../../../const/type';
 import { IJobGroup } from '../../../../../../redux/models/job-groups';
 import { IAppState } from '../../../../../../redux/store/reducer';
 
@@ -86,7 +86,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                 list_data,
             }
         }
-        return null;
+        return { loading_table: false };
     }
 
     toggleModal = (type?: string) => {

@@ -2,13 +2,13 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip } from 'antd';
 import './UserControllerList.scss';
-import { timeConverter } from './../../../../../../common/utils/convertTime';
+import { timeConverter } from './../../../../../../utils/convertTime';
 import { IAppState } from './../../../../../../redux/store/reducer';
-import { REDUX_SAGA } from './../../../../../../common/const/actions';
+import { REDUX_SAGA } from './../../../../../../const/actions';
 import { _requestToServer } from './../../../../../../services/exec';
-import { DELETE, PUT } from './../../../../../../common/const/method';
+import { DELETE, PUT } from './../../../../../../const/method';
 import { USER_CONTROLLER } from './../../../../../../services/api/private.api';
-import { TYPE } from './../../../../../../common/const/type';
+import { TYPE } from './../../../../../../const/type';
 import { IptLetterP } from './../../../../layout/common/Common';
 import { IUserController, IUserControllerFilter } from './../../../../../../redux/models/user-controller';
 
@@ -174,7 +174,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 data_table,
                 loading_table: false,
             }
-        } return null;
+        } return { loading_table: false };
     };
 
     async componentDidMount() {

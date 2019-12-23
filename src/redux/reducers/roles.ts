@@ -1,5 +1,5 @@
 import { IRoles } from '../models/roles';
-import { REDUX } from '../../common/const/actions';
+import { REDUX } from '../../const/actions';
 
 let initState: IRoles = {
     items: [],

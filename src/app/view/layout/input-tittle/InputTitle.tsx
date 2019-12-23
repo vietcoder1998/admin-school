@@ -1,7 +1,8 @@
 import { Input, Select, } from "antd";
 import React, { CSSProperties } from 'react';
-import { TYPE } from "../../../../common/const/type";
-import randomID from "../../../../common/utils/randomID";
+import { TYPE } from "../../../../const/type";
+import randomID from "../../../../utils/randomID";
+import TextArea from "antd/lib/input/TextArea";
 
 interface IInputitleProps {
     title?: string;
@@ -15,6 +16,7 @@ interface IInputitleProps {
     placeholder?: string;
     children?: any;
     style?: any;
+    rows?: number;
     widthSelect?: string;
     onChange?: Function;
     onSearch?: Function;
@@ -39,6 +41,15 @@ interface INewInput {
     onChange?: Function;
 }
 
+interface INewNewTextArea {
+    value?: string;
+    placeholder?: string;
+    defaultValue?: string;
+    widthInput?: string;
+    onChange?: Function;
+    rows?: number;
+}
+
 export const NewInput = (props: INewInput) => {
     let { defaultValue, value, placeholder, onChange, widthInput } = props;
 
@@ -49,6 +60,20 @@ export const NewInput = (props: INewInput) => {
             style={{ width: widthInput ? widthInput : "auto" }}
             value={value}
             onChange={event => onChange ? onChange(event.target.value) : undefined}
+            maxLength={220}
+        />)
+};
+
+export const NewTextArea = (props: INewNewTextArea) => {
+    let { defaultValue, value, placeholder, onChange, widthInput, rows } = props;
+    return (
+        <TextArea
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            style={{ width: widthInput ? widthInput : "auto" }}
+            value={value}
+            onChange={event => onChange ? onChange(event.target.value) : undefined}
+            rows={rows ? rows : 2}
             maxLength={220}
         />)
 };
@@ -110,6 +135,7 @@ export const InputTitle = (props: IInputitleProps) => {
         widthInput,
         widthSelect,
         onSearch,
+        rows,
     } = props;
     let ComponentReturn;
     const defaultStyle = {
@@ -123,6 +149,18 @@ export const InputTitle = (props: IInputitleProps) => {
                     defaultValue={defaultValue}
                     placeholder={placeholder}
                     onChange={onChange ? onChange : () => { }}
+                />);
+            break;
+
+        case TYPE.TEXT_AREA:
+            ComponentReturn = (
+                <NewTextArea
+                    widthInput={widthInput}
+                    value={value}
+                    defaultValue={defaultValue}
+                    placeholder={placeholder}
+                    onChange={onChange ? onChange : () => { }}
+                    rows={rows}
                 />);
             break;
 

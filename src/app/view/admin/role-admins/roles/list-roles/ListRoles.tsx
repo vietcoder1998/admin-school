@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
-import { TYPE } from '../../../../../../common/const/type';
-import { REDUX_SAGA } from '../../../../../../common/const/actions';
+import { TYPE } from '../../../../../../const/type';
+import { REDUX_SAGA } from '../../../../../../const/actions';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
-import { DELETE } from '../../../../../../common/const/method';
+import { DELETE } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { IRole } from '../../../../../../redux/models/roles';
 import { ROLES } from '../../../../../../services/api/private.api';
@@ -68,7 +68,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                 loading_table: false
             }
         }
-        return null;
+        return { loading_table: false };
     }
 
 

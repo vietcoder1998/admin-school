@@ -1,13 +1,13 @@
 import React from 'react';
 import { Icon, Avatar } from 'antd';
 import './JobDetail.scss'
-import { convertStringToArray } from '../../../../common/utils/convertStringToArray';
+import { convertStringToArray } from '../../../../utils/convertStringToArray';
 import { IptLetter, NotUpdate } from '../common/Common';
-import { weekDays } from '../../../../common/utils/day';
-import { timeConverter } from '../../../../common/utils/convertTime';
+import { weekDays } from '../../../../utils/day';
+import { timeConverter } from '../../../../utils/convertTime';
 import { IPendingJobDetail } from '../../../../redux/models/pending-job-detail';
 import { ISkill } from '../../../../redux/models/skills';
-import findIdWithValue from '../../../../common/utils/findIdWithValue';
+import findIdWithValue from '../../../../utils/findIdWithValue';
 import { IJobName } from '../../../../redux/models/job-type';
 
 interface IJobDetailProps {
@@ -134,7 +134,7 @@ export default function JobDetail(props: IJobDetailProps) {
                                             </label>)
                                         }
                                         else {
-                                            return null
+                                            return { loading_table: false }
                                         }
                                     })}
                                 </div>

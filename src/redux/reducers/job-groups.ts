@@ -1,5 +1,5 @@
 import {IJobGroups} from '../models/job-groups';
-import {REDUX} from '../../common/const/actions';
+import {REDUX} from '../../const/actions';
 
 let initState: IJobGroups = {
     items: [],

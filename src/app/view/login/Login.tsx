@@ -5,8 +5,8 @@ import './Login.scss';
 import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
 import { loginUser } from '../../../services/login';
-import { TYPE } from '../../../common/const/type';
-import { routeLink, routePath } from '../../../common/const/break-cumb';
+import { TYPE } from '../../../const/type';
+import { routeLink, routePath } from '../../../const/break-cumb';
 let cookies = new Cookies();
 
 interface ILoginState {

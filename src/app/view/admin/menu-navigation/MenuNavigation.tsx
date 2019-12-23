@@ -6,7 +6,7 @@ import logo from '../../../../assets/image/logo-white.png'
 import logoIcon from '../../../../assets/image/logo-icon-white.png'
 import { Link } from 'react-router-dom';
 import './MenuNavigation.scss';
-import { routePath, routeLink } from '../../../../common/const/break-cumb';
+import { routePath, routeLink } from '../../../../const/break-cumb';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -46,7 +46,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                 >
                     <Menu.Item key="16">
                         <Link to={routeLink.JOB_ANNOUNCEMENTS + routePath.LIST}>
-                            <Icon type="audit" />
+                            <Icon type="reconciliation" />
                             <span>Quản lý bài đăng</span>
                         </Link>
                     </Menu.Item>
@@ -176,8 +176,8 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     key="sub4"
                     title={
                         <span>
-                            <Icon type="property-safety" />
-                            <span>Quản lý tài khoản</span>
+                            <Icon type="security-scan" />
+                            <span>Tài khoản</span>
                         </span>
                     }
                 >
@@ -200,9 +200,15 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="19">
-                        <Link to={routeLink.EM_CONTROLLER + routePath.LIST}>
+                        <Link to={routeLink.STUDENTS + routePath.LIST}>
                             <Icon type="team" />
                             <span>Sinh viên</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="20">
+                        <Link to={routeLink.CANDIDATES + routePath.LIST}>
+                            <Icon type="idcard" />
+                            <span>Ứng viên</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>
