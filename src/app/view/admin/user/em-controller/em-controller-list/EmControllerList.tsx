@@ -65,7 +65,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
         };
     }
 
-    editToolAction = () => {
+    EditToolAction = () => {
         let { id } = this.state;
         return <>
             <Tooltip title='Xem hồ sơ ' >
@@ -105,7 +105,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     columns = [
         {
             title: '#',
-            width: 20,
+            width: 50,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
@@ -116,7 +116,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             dataIndex: 'logoUrl',
             className: 'action',
             key: 'logoUrl',
-            width: 60,
+            width: 50,
         },
         {
             title: 'Tên nhà tuyển dụng',
@@ -151,8 +151,8 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 200,
-            render: () => this.editToolAction()
+            width: 140,
+            render: () => this.EditToolAction()
         },
     ];
 
@@ -217,14 +217,17 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
         let { employer_detail } = this.props;
         let method = null;
         let api = EM_CONTROLLER;
-        await this.setState({loading: true})
+        let body = null
+        await this.setState({ loading: true })
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
+                body = [id]
                 break;
             case TYPE.CERTIFICATE:
                 method = PUT;
-                api = api + `/${id}/profile/verified/${employer_detail.profileVerified ? 'false' : 'true'}`
+                api = api + `/${id}/profile/verified/${employer_detail.profileVerified ? 'false' : 'true'}`;
+                body = undefined;
                 break;
             default:
                 break;
@@ -232,7 +235,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
         await _requestToServer(
             method,
             api,
-            [id],
+            body,
             undefined,
             undefined,
             undefined,
@@ -250,7 +253,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                 }
             }
         ).finally(() => {
-            this.setState({loading: false})
+            this.setState({ loading: false })
         })
     }
 
@@ -268,16 +271,6 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             default:
                 break;
         };
-        switch (value) {
-            case TYPE.TRUE:
-                value = true;
-                break;
-            case TYPE.FALSE:
-                value = false;
-                break;
-            default:
-                break;
-        }
         body[type] = value;
         this.setState({ body });
     }
@@ -320,7 +313,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                 </DrawerConfig>
                 <div className="common-content">
                     <h5>
-                        Quản lý nhà tuyển dụng
+                        Danh sách nhà tuyển dụng
                         <Button
                             icon="filter"
                             onClick={() => this.searchEmControllers()}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Avatar, Drawer, Slider, Tooltip } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Avatar, Drawer, Slider, Tooltip, Popconfirm } from 'antd';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { TYPE } from '../../../../../../const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
@@ -13,14 +13,17 @@ import { ISkill } from '../../../../../../redux/models/candidates-detail';
 import { ILanguage } from '../../../../../../redux/models/languages';
 import { IModalState } from '../../../../../../redux/models/mutil-box';
 import { IDrawerState } from 'antd/lib/drawer';
-import { routeLink, routePath } from '../../../../../../const/break-cumb';
+import { DELETE, PUT } from '../../../../../../const/method';
+import { CANDIDATES } from '../../../../../../services/api/private.api';
+import { _requestToServer } from '../../../../../../services/exec';
+import CandidatetInfo from '../../../../layout/candidate-info/CandidatetInfo';
 let { Option } = Select;
 
 let ImageRender = (props: any) => {
     if (props.src && props.src !== "") {
         return <Avatar shape="square" src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} icon="user" />
     } else {
-        return <div style={{ width: "60px", height: "60px", padding: "20px 0px" }}>
+        return <div style={{ width: 50, height: 50}}>
             <Icon type="file-image" style={{ fontSize: 20 }} />
         </div>
     }
@@ -29,11 +32,12 @@ let ImageRender = (props: any) => {
 interface ICandidatesListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
-    handleModal: Function;
-    getListCandidates: Function;
-    getTypeManagement: Function;
-    getAnnoucements: Function;
-    getAnnoucementDetail: Function;
+    handleModal?: Function;
+    getListCandidates?: Function;
+    getTypeManagement?: Function;
+    getAnnoucements?: Function;
+    getAnnoucementDetail?: Function;
+    getCandidateDetail?: (id: string) => any;
 };
 
 interface ICandidatesListState {
@@ -41,6 +45,7 @@ interface ICandidatesListState {
     pageIndex?: number;
     pageSize?: number;
     state?: string;
+    type_cpn?: string;
     employerID?: string;
     show_modal?: boolean;
     loading?: boolean;
@@ -86,9 +91,48 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                 languageIDs: [],
                 unlocked: null,
             },
+            type_cpn: null,
             open_drawer: false
         };
-    }
+    };
+
+    EditToolAction = () => {
+        let { id } = this.state;
+        return <>
+            <Tooltip title='Xem hồ sơ' >
+                <Icon
+                    className='test' style={{ padding: 5, margin: 2 }}
+                    type={"search"}
+                    onClick={() => {
+                        this.setState({
+                            open_drawer: true,
+                            type_cpn: TYPE.DETAIL
+                        });
+                        setTimeout(() => {
+                            this.props.getCandidateDetail(id);
+                        }, 300);
+                    }}
+                />
+            </Tooltip>
+            <Tooltip title='Chứng thực' >
+                <Icon
+                    className='test' style={{ padding: 5, margin: 2 }}
+                    type={"safety-certificate"}
+                    onClick={() => this.createRequest(TYPE.CERTIFICATE)}
+                />
+            </Tooltip>
+            <Popconfirm
+                placement="topRight"
+                title={"Xóa"}
+                onConfirm={() => this.createRequest(TYPE.DELETE)}
+                okType={'danger'}
+                okText="Xóa"
+                cancelText="Hủy"
+            >
+                <Icon className='test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
+            </Popconfirm>
+        </>
+    };
 
     columns = [
         {
@@ -106,31 +150,33 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             className: 'action',
             key: 'avatarUrl',
         },
-        {
-            title: 'Mở khóa',
-            dataIndex: 'unlocked',
-            key: 'unlocked',
-            className: "action",
-            width: 90,
-        },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'lookingForJob',
-            key: 'lookingForJob',
-            width: 90,
-        },
+
         {
             title: 'Họ và tên',
             dataIndex: 'name',
             className: 'action',
             key: 'name',
-            width: 100,
+            width: 200,
         },
         {
             title: 'Giới tính',
             dataIndex: 'gender',
             className: 'action',
             key: 'gender',
+            width: 100,
+        },
+        {
+            title: 'Tìm việc',
+            className: "action",
+            dataIndex: 'lookingForJob',
+            key: 'lookingForJob',
+            width: 100,
+        },
+        {
+            title: 'Xác thực',
+            dataIndex: 'profileVerified',
+            className: 'action',
+            key: 'profileVerified',
             width: 100,
         },
         {
@@ -151,14 +197,14 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             title: 'Địa chỉ',
             dataIndex: 'address',
             key: 'address',
-            width: 320,
+            width: 300,
         },
         {
             title: 'Tỉnh thành',
             dataIndex: 'region',
             className: 'action',
             key: 'region',
-            width: 100,
+            width: 150,
         },
         {
             title: 'Ngày sinh',
@@ -172,8 +218,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            dataIndex: 'operation',
-            width: 80,
+            render: () => this.EditToolAction(),
+            width: 140,
         },
     ];
 
@@ -188,49 +234,19 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
             nextProps.list_find_candidates.forEach((item: ICandidate, index: number) => {
-                let EditToolTip = (id?: string) => (
-                    <>
-                        <Tooltip placement="top" title={"Xem chi tiết"}>
-                            <a
-                                href={routeLink.CANDIDATES + routePath.DETAIL + `/${id}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Icon
-                                    className='test'
-                                    style={{ padding: "5px 5px", color: "blue" }}
-                                    type="search"
-                                />
-                            </a>
-                        </Tooltip>
-                    </>
-                );
-
-                const Lock = () => (
-                    <>
-                        <Tooltip placement="top" title={item.unlocked ? "Đã mở khóa" : "Chưa mở khóa"}>
-                            <Icon
-                                type={item.unlocked ? "unlock" : "lock"}
-                                style={{ padding: "5px 5px", color: item.unlocked ? "green" : "red" }}
-                            />
-                        </Tooltip>
-                    </>
-                );
-
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     avatarUrl: <ImageRender src={item.avatarUrl} alt="Ảnh đại diện" />,
                     name: (item.lastName ? item.lastName : "") + " " + (item.firstName ? item.firstName : ""),
                     gender: item.gender === TYPE.MALE ? "nam" : "nữ",
-                    email: item.email ? item.email: '',
-                    phone: item.phone ? item.phone: '',
-                    lookingForJob: item.lookingForJob ? "Đang tìm việc" : "Đã có việc",
+                    email: item.email ? item.email : '',
+                    phone: item.phone ? item.phone : '',
+                    lookingForJob: item.lookingForJob ? "Có" : "Đã có việc",
                     address: item.address ? item.address : "",
                     region: item.region ? item.region.name : "",
                     birthday: item.birthday === -1 ? "" : timeConverter(item.birthday, 1000),
-                    unlocked: Lock(),
-                    operation: EditToolTip(item.id)
+                    profileVerified: <Tooltip title={(item.profileVerified ? "Đã" : "Chưa") + " xác thực"}><Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red" }} />  </Tooltip>,
                 });
             })
             return {
@@ -298,7 +314,50 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             body,
             open_drawer: false
         })
-    }
+    };
+
+    createRequest = async (type?: string) => {
+        let { id } = this.state;
+        let { candidate_detail } = this.props;
+        let method = null;
+        let api = CANDIDATES;
+        let body = [id];
+
+        await this.setState({ loading: true });
+
+        switch (type) {
+            case TYPE.DELETE:
+                method = DELETE;
+                break;
+            case TYPE.CERTIFICATE:
+                method = PUT;
+                api = api + `/${id}/profile/verified/${candidate_detail.profileVerified ? 'false' : 'true'}`;
+                body = undefined;
+                break;
+            default:
+                break;
+        };
+
+        await _requestToServer(
+            method,
+            api,
+            body,
+            undefined,
+            undefined,
+            undefined,
+            true,
+            false,
+        ).then(
+            (res: any) => {
+                if (res) {
+                    this.searchCandidate();
+                }
+            }
+        ).finally(
+            () => this.setState({ open_drawer: false, loading: false })
+        )
+    };
+
 
     advancedFilter = () => {
         let { body } = this.state;
@@ -310,6 +369,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         let list_skill_options = list_skills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
         let list_language_options = list_languages.map((item: ILanguage, index: number) => (<Option key={index} value={item.name} children={item.name} />));
         let list_job_names_options = list_job_names.map((item: ILanguage, index: number) => (<Option key={index} value={item.name} children={item.name} />));
+        
         return <>
             <IptLetterP
                 value={"Năm sinh"}
@@ -439,11 +499,14 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             data_table,
             loading_table,
             open_drawer,
+            type_cpn,
+            loading
         } = this.state;
 
         let {
             totalItems,
             list_regions,
+            candidate_detail
         } = this.props;
 
         return (
@@ -456,11 +519,19 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     onClose={() => this.onCancelAdvancedFind()}
                     visible={open_drawer}
                 >
-                    {this.advancedFilter()}
+                    {
+                        type_cpn === TYPE.DETAIL ?
+                            <CandidatetInfo
+                                data={candidate_detail}
+                                onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
+                                loading={loading}
+                            /> :
+                            this.advancedFilter()
+                    }
                 </Drawer>
                 <div className="common-content">
                     <h5>
-                        Tìm kiếm ứng viên
+                        Danh sách ứng viên
                         <Button
                             onClick={() => this.searchCandidate()}
                             type="primary"
@@ -472,7 +543,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             children={"Tìm kiếm ứng viên"}
                         />
                         <Button
-                            onClick={() => this.setState({ open_drawer: true })}
+                            onClick={() => this.setState({ open_drawer: true , type_cpn: TYPE.SEARCH})}
                             type="primary"
                             style={{
                                 float: "right",
@@ -485,7 +556,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     <div className="table-operations">
                         <Row >
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái tìm việc"} />
+                                <IptLetterP value={"Tìm việc"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"
@@ -493,7 +564,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.lookingForJob)}
                                 >
                                     <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.TRUE}>Đang tìm việc</Option>
+                                    <Option value={TYPE.TRUE}>Có</Option>
                                     <Option value={TYPE.FALSE}>Đã có việc</Option>
                                 </Select>
                             </Col>
@@ -573,7 +644,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1400 }}
+                            scroll={{ x: 1690 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
@@ -583,7 +654,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     onClick: (event: any) => {
                                     }, // click row
                                     onMouseEnter: (event) => {
-                                        localStorage.setItem('id_candidate', record.key)
+                                        this.setState({ id: record.key });
                                     }, // mouse enter row
                                 };
                             }}
@@ -598,6 +669,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getListCandidates: (body: ICandidateFilter, pageIndex: number, pageSize: number) =>
         dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATES, body, pageIndex, pageSize }),
+    getCandidateDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id }),
     handleModal: (modalState: IModalState) =>
         dispatch({ type: REDUX.HANDLE_MODAL, modalState }),
     handleDrawer: (drawerState: IDrawerState) =>
@@ -610,6 +683,7 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_regions: state.Regions.items,
     list_skills: state.Skills.items,
     list_job_names: state.JobNames.items,
+    candidate_detail: state.CandidateDetail,
     list_languages: state.Languages.items,
 });
 

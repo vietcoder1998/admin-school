@@ -59,7 +59,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         };
     }
 
-    editToolAction = () => {
+    EditToolAction = () => {
         let { body } = this.state;
         return <>
             <Popconfirm
@@ -103,7 +103,6 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             className: 'action',
             fixed: 'left',
         },
-
         {
             title: 'Tên tài khoản',
             dataIndex: 'username',
@@ -138,14 +137,13 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             key: 'lastActive',
             width: 100,
         },
-
         {
             title: 'Thao tác',
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 200,
-            render: () => this.editToolAction()
+            width: 100,
+            render: () => this.EditToolAction()
         },
     ];
 
@@ -257,7 +255,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             <Fragment>
                 <div className="common-content">
                     <h5>
-                        Quản lý người dùng
+                        Danh sách người dùng
                         <Button
                             icon="filter"
                             onClick={() => this.searchUserControllers()}
@@ -338,7 +336,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1050 }}
+                            scroll={{ x: 850 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

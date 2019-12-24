@@ -85,7 +85,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
         };
     }
 
-    editToolAction = () => (
+    EditToolAction = () => (
         <>
             <Tooltip
                 title="Xem chi tiết (sửa)"
@@ -191,7 +191,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             fixed: 'right',
             className: 'action',
             width: 120,
-            render: () => this.editToolAction()
+            render: () => this.EditToolAction()
         },
     ];
 

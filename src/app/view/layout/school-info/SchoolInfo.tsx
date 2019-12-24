@@ -172,7 +172,6 @@ function SchoolInfo(props: ISchoolInfoProps) {
                             </Col>
                         </Row>
                     </TabPane>
-
                     <TabPane tab="Đào tạo (Sẽ cập nhật sớm)" key="3" disabled>
                         <Row>
                             <Col md={24} lg={14} xl={14} xxl={16}>

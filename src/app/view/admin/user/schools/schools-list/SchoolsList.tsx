@@ -84,7 +84,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         };
     }
 
-    editToolAction = () => {
+    EditToolAction = () => {
         let { id } = this.state;
         return <>
             <Tooltip title='Xem chi tiết trường ' >
@@ -146,7 +146,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             width: 250,
         },
         {
-            title: 'Số lượng học sinh',
+            title: 'Số lượng sinh viên',
             dataIndex: 'educatedScale',
             className: 'action',
             key: 'educatedScale',
@@ -172,7 +172,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             fixed: 'right',
             className: 'action',
             width: 100,
-            render: () => this.editToolAction()
+            render: () => this.EditToolAction()
         },
     ];
 
@@ -272,16 +272,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             default:
                 break;
         };
-        switch (value) {
-            case TYPE.TRUE:
-                value = true;
-                break;
-            case TYPE.FALSE:
-                value = false;
-                break;
-            default:
-                break;
-        }
+
         body[type] = value;
         this.setState({ body });
     }
@@ -316,7 +307,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                 </DrawerConfig>
                 <div className="common-content">
                     <h5>
-                        Quản lý nhà trường
+                        Danh sách nhà trường
                         <Button
                             icon="filter"
                             onClick={() => this.searchSchools()}

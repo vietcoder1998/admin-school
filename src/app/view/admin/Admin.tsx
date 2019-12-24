@@ -7,19 +7,19 @@ import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
 import { REDUX_SAGA, REDUX } from '../../../const/actions';
 import { connect } from 'react-redux';
 
-import JobManagement from './job-management/JobManagement';
-import DataMgm from './data-mgm/DataMgm';
+import Data from './data/Data';
 import clearStorage from '../../../services/clearStorage';
-import RoleAdmins from './role-admins/RoleAdmins';
+import RoleAdmins from './roles-admin/RoleAdmins';
 import PendingJobs from './pending-jobs/PendingJobs';
 import User from './user/User';
 
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
-import { breakCumb, IBrk } from '../../../const/break-cumb';
+import { breakCumb, IBrk, routePath } from '../../../const/break-cumb';
 import { IAppState } from '../../../redux/store/reducer';
 import ClearCache from 'react-clear-cache';
 
 import Loading from '../layout/loading/Loading';
+import Announcement from './announcement/Announcement';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -40,6 +40,7 @@ interface AdminProps extends StateProps, DispatchProps {
     getListSkills: Function;
     getListApiController: Function;
     getListRegions: Function;
+    getListRoles: Function;
     handleLoading: Function;
 }
 
@@ -61,10 +62,11 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListBranches();
         await this.props.getListApiController();
         await this.props.getListRegions();
+        await this.props.getListRoles();
         await this.props.getListSkills();
     }
 
-    static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.location.pathname !== prevState.pathname) {
             localStorage.setItem("last_url", nextProps.location.pathname);
             let list_breakcumb = nextProps.location.pathname.split("/");
@@ -179,7 +181,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     if (item_brk.label === item) {
                                         newBreakCump = (
                                             <Breadcrumb.Item key={index}>
-                                                {item_brk.icon ? <Icon type={item_brk.icon} /> : null}
+                                                {item_brk.icon ? <Icon type={item_brk.icon} style={{margin: 3}} /> : null}
                                                 {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
                                             </Breadcrumb.Item>
                                         )
@@ -193,11 +195,11 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             <Col sm={1} md={1} lg={2}></Col>
                             <Col sm={22} md={22} lg={20}>
                                 {!loading ? <Switch>
-                                    <ErrorBoundaryRoute path={`${match.url}/pending-jobs`} component={PendingJobs} />
-                                    <ErrorBoundaryRoute path={`${match.url}/job-management`} component={JobManagement} />
-                                    <ErrorBoundaryRoute path={`${match.url}/data`} component={DataMgm} />
-                                    <ErrorBoundaryRoute path={`${match.url}/role-admins`} component={RoleAdmins} />
-                                    <ErrorBoundaryRoute path={`${match.url}/user`} component={User} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.PENDING_JOBS}`} component={PendingJobs} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.ANNOUNCEMENT}`} component={Announcement} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.DATA}`} component={Data} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.ROLES}`} component={RoleAdmins} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.USER}`} component={User} />
                                 </Switch> : <Loading />}
                             </Col >
                             <Col sm={1} md={1} lg={2}></Col>
@@ -231,6 +233,9 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     }),
     getListRegions: () => dispatch({
         type: REDUX_SAGA.REGIONS.GET_REGIONS
+    }),
+    getListRoles: () => dispatch({
+        type: REDUX_SAGA.ROLES.GET_ROLES
     }),
     handleLoading: (loading: boolean) => dispatch({ type: REDUX.HANDLE_LOADING, loading })
 });

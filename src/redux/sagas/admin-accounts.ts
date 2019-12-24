@@ -7,8 +7,13 @@ import { ADMIN_ACCOUNTS } from '../../services/api/private.api';
 
 function* getListAdminAccountsData(action: any) {
     let res = yield call(callAdminAccounts, action);
-    let data: IAdminAccounts = res.data;
-    if (res.code === 200) {
+    let data: IAdminAccounts = {
+        items: [],
+        totalItems: 0,
+        pageIndex: 0,
+        pageSize: 0
+    };
+    if (res) {
         data = res.data
     }
     yield put({

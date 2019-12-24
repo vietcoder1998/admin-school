@@ -230,14 +230,14 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             dataIndex: 'hidden',
             className: 'action',
             key: 'hidden',
-            width: 120,
+            width: 100,
         },
         {
             title: 'Loại công việc',
             dataIndex: 'jobType',
             className: 'action',
             key: 'jobType',
-            width: 110,
+            width: 100,
         },
         {
             title: 'Ngày đăng',
@@ -552,7 +552,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     };
 
     createRequest = async () => {
-        let { 
+        let {
             // homePriority, 
             // searchPriority, 
             id
@@ -802,36 +802,26 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     <div className="common-content">
                         <h5>
                             Quản lý bài đăng
-                            <Tooltip title="Tìm kiếm" >
                                 <Button
-                                    onClick={() => this.searchJobAnnouncement()}
+                                onClick={() => this.searchJobAnnouncement()}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                    margin: "0px 10px",
+                                }}
+                                icon={loading_table ? "loading" : "search"}
+                                children="Tìm kiếm"
+                            />
+                            <Link to={routeLink.JOB_ANNOUNCEMENTS + routePath.CREATE} >
+                                <Button
                                     type="primary"
                                     style={{
                                         float: "right",
                                         margin: "0px 10px",
-                                        padding: "10px",
-                                        borderRadius: "50%",
-                                        height: "45px",
-                                        width: "45px"
                                     }}
-                                    icon={loading_table ? "loading" : "search"}
+                                    icon={"plus"}
+                                    children="Tạo bài đăng mới"
                                 />
-                            </Tooltip>
-                            <Link to={routeLink.JOB_ANNOUNCEMENTS + routePath.CREATE} >
-                                <Tooltip title="Tạo bài đăng mới" >
-                                    <Button
-                                        type="primary"
-                                        style={{
-                                            float: "right",
-                                            margin: "0px 10px",
-                                            padding: "10px",
-                                            borderRadius: "50%",
-                                            height: "45px",
-                                            width: "45px"
-                                        }}
-                                        icon={"plus"}
-                                    />
-                                </Tooltip>
                             </Link>
                         </h5>
                         <div className="table-operations">

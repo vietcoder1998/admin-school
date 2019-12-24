@@ -7,12 +7,10 @@ import { IAppState } from '../../../../../../redux/store/reducer';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
 import { DELETE, PUT } from '../../../../../../const/method';
-import { USER_CONTROLLER } from '../../../../../../services/api/private.api';
+import { STUDENTS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
 import { IStudent, IStudentsFilter } from '../../../../../../redux/models/students';
-import { Link } from 'react-router-dom';
-import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import { IRegion } from '../../../../../../redux/models/regions';
 import { ILanguage } from '../../../../../../redux/models/languages';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
@@ -93,42 +91,34 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         };
     }
 
-    editToolAction = () => {
+    EditToolAction = () => {
         let { id } = this.state;
         return <>
-            <Tooltip title='Xem hồ sơ sinh viên' >
+            <Tooltip title='Xem hồ sơ' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"search"}
                     onClick={() => {
                         this.setState({
-                            loading: true,
                             open_drawer: true,
                             type_cpn: TYPE.DETAIL
                         });
                         setTimeout(() => {
                             this.props.getStudentDetail(id);
-                        }, 250);
+                        }, 300);
                     }}
                 />
             </Tooltip>
-            <Tooltip title='Xem danh sách chi nhánh' >
-                <Link to={routeLink.EM_BRANCHES + routePath.LIST + `/${id}`} target='_blank' >
-                    <Icon
-                        className='test' style={{ padding: 5, margin: 2 }}
-                        type={"container"}
-                    />
-                </Link>
-            </Tooltip>
-            <Tooltip title='Chứng thực sinh viên' >
+            <Tooltip title='Chứng thực' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"safety-certificate"}
+                    onClick={() => this.createRequest(TYPE.CERTIFICATE)}
                 />
             </Tooltip>
             <Popconfirm
                 placement="topRight"
-                title={"Xóa khỏi danh sách"}
+                title={"Xóa"}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
                 okType={'danger'}
                 okText="Xóa"
@@ -150,10 +140,17 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         },
         {
             title: 'Ảnh',
-            width: 30,
+            width: 60,
             dataIndex: 'avatarUrl',
             className: 'action',
             key: 'avatarUrl',
+        },
+        {
+            title: 'Xác thực',
+            width: 80,
+            dataIndex: 'profileVerified',
+            className: 'action',
+            key: 'profileVerified',
         },
         {
             title: 'Họ và tên',
@@ -185,7 +182,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             title: 'Trường học',
             dataIndex: 'school',
             key: 'school',
-            width: 150,
+            width: 300,
         },
         {
             title: 'Ngày sinh',
@@ -195,19 +192,12 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             width: 100,
         },
         {
-            title: 'Xác thực',
-            dataIndex: 'profileVerified',
-            className: 'action',
-            key: 'profileVerified',
-            width: 100,
-        },
-        {
-            title: 'Trạng thái',
+            title: 'Tìm việc',
             dataIndex: 'lookingForJob',
+            className: 'action',
             key: 'lookingForJob',
-            width: 150,
+            width: 80,
         },
-
         {
             title: 'Địa chỉ',
             dataIndex: 'address',
@@ -219,7 +209,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             dataIndex: 'region',
             className: 'action',
             key: 'region',
-            width: 100,
+            width: 90,
         },
         {
             title: 'Ngành học',
@@ -241,8 +231,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            render: () => this.editToolAction(),
-            width: 100,
+            render: () => this.EditToolAction(),
+            width: 140,
         },
     ];
 
@@ -256,19 +246,17 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
             nextProps.list_students.forEach((item: IStudent, index: number) => {
-
-
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     avatarUrl: <ImageRender src={item.avatarUrl} alt="Ảnh đại diện" />,
                     name: (item.lastName ? item.lastName : "") + " " + (item.firstName ? item.firstName : ""),
                     gender: item.gender === TYPE.MALE ? 'Nam' : 'Nữ',
+                    profileVerified: <Tooltip title={(item.profileVerified ? "Đã" : "Chưa") + " xác thực"}><Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red" }} /></Tooltip>,
                     phone: item.phone ? item.phone : '',
-                    profileVerified: <Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red" }} />,
-                    lookingForJob: item.lookingForJob ? "Đang tìm việc" : "Đã có việc",
+                    lookingForJob: item.lookingForJob ? "Có" : "Đã có việc",
                     email: item.email ? item.email : '',
-                    school: item.school ? item.school : '',
+                    school: item.school ? item.school.name + `(${item.school.shortName})` : '',
                     address: item.address ? item.address : "",
                     region: item.region ? item.region.name : "",
                     major: item.major ? item.major.name : "",
@@ -319,24 +307,29 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     }
 
     createRequest = async (type?: string) => {
-        let { id, educatedScale_state } = this.state;
+        let { id } = this.state;
+        let { student_detail } = this.props;
         let method = null;
-        let api = USER_CONTROLLER;
+        let api = STUDENTS;
+        let body = [id];
+        await this.setState({ loading: true });
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
                 break;
-            case TYPE.BAN:
+            case TYPE.CERTIFICATE:
                 method = PUT;
-                api = api + `/educatedScale/${educatedScale_state === 'true' ? 'false' : 'true'}`
+                api = api + `/${id}/profile/verified/${student_detail.profileVerified ? 'false' : 'true'}`;
+                body = undefined;
                 break;
             default:
                 break;
-        }
+        };
+        
         await _requestToServer(
             method,
             api,
-            [id],
+            body,
             undefined,
             undefined,
             undefined,
@@ -344,8 +337,12 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             false,
         ).then(
             (res: any) => {
-                if (res) { this.searchStudents() }
+                if (res) {
+                    this.searchStudents()
+                }
             }
+        ).finally(
+            () => this.setState({ open_drawer: false, loading: false })
         )
     }
 
@@ -489,7 +486,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             data_table,
             loading_table,
             open_drawer,
-            type_cpn
+            type_cpn,
+            loading,
         } = this.state;
 
         let {
@@ -507,11 +505,19 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     onClose={() => this.onCancelAdvancedFind()}
                     visible={open_drawer}
                 >
-                    {type_cpn === TYPE.DETAIL ? <StudentInfo data={student_detail} />: this.advancedFilter()}
+                    {
+                        type_cpn === TYPE.DETAIL ?
+                            <StudentInfo
+                                data={student_detail}
+                                onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
+                                loading={loading}
+                            /> :
+                            this.advancedFilter()
+                    }
                 </Drawer>
                 <div className="common-content">
                     <h5>
-                        Tìm kiếm học sinh
+                        Danh sách sinh viên
                         <Button
                             onClick={() => this.searchStudents()}
                             type="primary"
@@ -520,7 +526,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                 margin: "0px 10px",
                             }}
                             icon={loading_table ? "loading" : "search"}
-                            children={"Tìm kiếm học sinh"}
+                            children={"Tìm kiếm sinh viên"}
                         />
                         <Button
                             onClick={
@@ -538,7 +544,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     <div className="table-operations">
                         <Row >
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái tìm việc"} />
+                                <IptLetterP value={"Tìm việc"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"
@@ -546,7 +552,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     onChange={(event: any) => this.onChangeFilter(event, TYPE.STUDENT_FILTER.lookingForJob)}
                                 >
                                     <Select.Option value={null}>Tất cả</Select.Option>
-                                    <Select.Option value={TYPE.TRUE}>Đang tìm việc</Select.Option>
+                                    <Select.Option value={TYPE.TRUE}>Có</Select.Option>
                                     <Select.Option value={TYPE.FALSE}>Đã có việc</Select.Option>
                                 </Select>
                             </Col>
@@ -625,7 +631,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1950 }}
+                            scroll={{ x: 2150 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

@@ -1,24 +1,26 @@
 import React from 'react'
-import { Icon, Avatar, Row, Col, Tabs, Card, Divider } from 'antd';
+import { Icon, Avatar, Row, Col, Tabs, Card, Divider, Button } from 'antd';
 import './StudentInfo.scss';
 // @ts-ignore
 import backGround from '../../../../assets/image/base-image.jpg';
 // @ts-ignore
 import avatar from '../../../../assets/image/test_avatar.jpg';
-import { NotUpdate, IptLetterP } from '../common/Common';
-import IStudentDetail, { ILanguageSkillStudent } from '../../../../redux/models/student-detail';
+import { NotUpdate, IptLetter } from '../common/Common';
+import IStudentDetail, { ILanguageSkillStudent, IExperienceStudent } from '../../../../redux/models/student-detail';
 import { ISkill } from '../../../../redux/models/candidates-detail';
+import { timeConverter } from '../../../../utils/convertTime';
 
 const { TabPane } = Tabs;
 const { Meta } = Card;
 
 interface IStudentInfoProps {
     data?: IStudentDetail,
+    loading?: boolean,
+    onClickButton?: () => any
 };
 
 function StudentInfo(props: IStudentInfoProps) {
-    let { data } = props;
-
+    let { data, loading } = props;
     // Error loading 
     let [onErrLogo, setErrLogo] = React.useState(false);
     let [onErrCover, setErrCover] = React.useState(false);
@@ -63,8 +65,17 @@ function StudentInfo(props: IStudentInfoProps) {
                     </div>
                     <div className={'name-student'}>
                         <div>
-                            { data ? (data.lastName + " " + data.firstName)  : <NotUpdate />}
+                            {data ? (data.lastName + " " + data.firstName) : <NotUpdate />}
                         </div>
+                        <Icon
+                            type="safety-certificate"
+                            theme="filled"
+                            style={{
+                                color:
+                                    data &&
+                                        data.profileVerified ? 'greenyellow' : 'red'
+                            }}
+                        />
                     </div>
                 </div>
             </div>
@@ -80,7 +91,7 @@ function StudentInfo(props: IStudentInfoProps) {
                                             <Icon type='home' />
                                         }
                                         title="Tên trường"
-                                        description={ data && data.school ? data.school.name  : <NotUpdate />}
+                                        description={data && data.school ? data.school.name : <NotUpdate />}
                                     />
                                 </Card>
                             </Col>
@@ -91,7 +102,7 @@ function StudentInfo(props: IStudentInfoProps) {
                                             <Icon type="schedule" />
                                         }
                                         title="Loại hình đào tạo"
-                                        description={ data && data.school && data.school.schoolType ? data.school.schoolType.name : <NotUpdate />}
+                                        description={data && data.school && data.school.schoolType ? data.school.schoolType.name : <NotUpdate />}
                                     />
                                 </Card>
                             </Col>
@@ -113,7 +124,7 @@ function StudentInfo(props: IStudentInfoProps) {
                                             <Icon type='global' />
                                         }
                                         title="Chuyên ngành"
-                                        description={ data && data.major ? data.major.name : <NotUpdate />}
+                                        description={data && data.major ? data.major.name : <NotUpdate />}
                                     />
                                 </Card>
                             </Col>
@@ -144,45 +155,51 @@ function StudentInfo(props: IStudentInfoProps) {
                     <TabPane tab="Thông tin chung" key="2">
                         <Row>
                             <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Card title="Kĩ năng" bordered={false}>
-                                    {data && data.skills ? data.skills.map((item?: ISkill, i?: number) => <div>
-                                        <div>{item.name}</div>
-                                    </div>) : <NotUpdate />}
-                                </Card>
-                            </Col>
-                            <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Card title="Trình độ ngoại ngữ" bordered={false}>
-                                    {data && data.languageSkills ? data.languageSkills.map((item?: ILanguageSkillStudent, i?: number) => <div>
-                                        <div>{item.language.name}</div>
-                                        <div>{item.level}</div>
-                                        <div>{item.certificate}</div>
-                                        <div>{item.score}</div>
-                                    </div>) : <NotUpdate />}
+                                    {data && data.languageSkills && data.languageSkills.length > 0 ? data.languageSkills.map((item?: ILanguageSkillStudent, i?: number) =>
+                                        <div key={i}>
+                                            <div><IptLetter value="Ngôn ngữ: " />{item.language.name}</div>
+                                            <div><IptLetter value="Trình độ: " />{item.level}</div>
+                                            <div><IptLetter value="Chứng chỉ: " />{item.certificate}</div>
+                                            <div><IptLetter value="Điểm số: " />{item.score}</div>
+                                            <Divider />
+                                        </div>) : <NotUpdate />}
                                 </Card>
                             </Col>
                             <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Card title="Kĩ năng" bordered={false}>
-                                    {data && data.experiences ? data.experiences.map((item?: ILanguageSkillStudent, i?: number) => <div>
-                                        <div>{item.language.name}</div>
-                                        <div>{item.level}</div>
-                                        <div>{item.certificate}</div>
-                                        <div>{item.score}</div>
-                                    </div>) : <NotUpdate />}
-                                </Card>
-                            </Col>
-                            {/* <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Card title="Đội ngũ giảng viên" bordered={false}>
-                                    {data && data.lecturersDesc ? data.lecturersDesc : <NotUpdate />}
+                                <Card title="Kinh nghiệm" bordered={false}>
+                                    {data && data.experiences && data.experiences.length > 0 ? data.experiences.map((item?: IExperienceStudent, i?: number) =>
+                                        <div key={i}>
+                                            <div><IptLetter value="Tên công việc: " /> {item.jobName}</div>
+                                            <div><IptLetter value="Công ti: " />{item.companyName}</div>
+                                            <div><IptLetter value="Ngày bắt đầu: " />{item.startedDate !== -1 ? timeConverter(item.startedDate, 1000) : <NotUpdate />}</div>
+                                            <div><IptLetter value="Ngày kết thúc: " />{item.finishedDate !== -1 ? timeConverter(item.finishedDate, 1000) : <NotUpdate />}</div>
+                                            <div><IptLetter value="Mô tả thêm: " />{item.description}</div>
+                                            <Divider />
+                                        </div>) : <NotUpdate />}
                                 </Card>
                             </Col>
                             <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Card title="Môi trường đào tạo" bordered={false}>
-                                    {data && data.achievementDesc ? data.achievementDesc : <NotUpdate />}
+                                <Card title="Yêu cầu khác" bordered={false}>
+                                    <div>
+                                        {data && data.skills && data.skills.length > 0 ? data.skills.map((item?: ISkill, i?: number) =>
+                                            <span className='item-more-info' key={i}>{item.name}</span>
+                                        ) : <NotUpdate />}
+                                    </div>
                                 </Card>
-                            </Col> */}
+                            </Col>
                         </Row>
                     </TabPane>
                 </Tabs>
+            </div>
+            <div className='bottom-info'>
+                <Button
+                    icon={loading ? 'loading' : (data && data.profileVerified ? "dislike" : "like")}
+                    type={data && data.profileVerified ? "danger" : "primary"}
+                    style={{ float: "right" }}
+                    children={data && data.profileVerified ? "Hủy xác thực" : "Xác thực"}
+                    onClick={props && props.onClickButton ? () => props.onClickButton() : undefined}
+                />
             </div>
         </div >
     )

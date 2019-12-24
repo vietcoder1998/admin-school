@@ -93,11 +93,10 @@ code {
 }
 
 .ant-table-body {
-  &:hover {
-    &::-webkit-scrollbar-thumb {
-      background: #555;
-    }
+  &::-webkit-scrollbar-thumb {
+    background: #555;
   }
+  
   /* width */
   &::-webkit-scrollbar {
     width: 12px;
@@ -662,4 +661,15 @@ thead {
   // [class*="col-"] {
   //   width: 100%;
   // }
+}
+
+.item-more-info {
+  background-color: #168ECD;
+  color: white;
+  padding: 10px 5px;
+  border-radius: 3px;
+  display: block;
+  margin: 5px;
+  height: auto;
+  max-width: 200px;
 }

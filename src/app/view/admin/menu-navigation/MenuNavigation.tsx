@@ -58,7 +58,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     </Menu.Item>
                     <Menu.Item key="15">
                         <Link to='/admin/pending-jobs/create'>
-                            <Icon type="file-search" />
+                            <Icon type="plus-square" />
                             <span>Đăng hộ</span>
                         </Link>
                     </Menu.Item>
@@ -73,15 +73,15 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     }
                 >
                     <Menu.Item key="0">
-                        <Link to='/admin/job-management/create'>
+                        <Link to={routeLink.ANNOUCEMENT + routePath.CREATE}>
                             <Icon type="file-add" />
-                            <span>Tạo bài viết mới</span>
+                            <span>Tạo mới</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="1">
-                        <Link to='/admin/job-management/list'>
-                            <Icon type="file-search" />
-                            <span>Quản lý bài viết</span>
+                        <Link to={routeLink.ANNOUCEMENT + routePath.LIST}>
+                            <Icon type="reconciliation" />
+                            <span>Danh sách </span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>
@@ -96,55 +96,55 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     }
                 >
                     <Menu.Item key="3">
-                        <Link to={'/admin/data/languages/list'}>
+                        <Link to={routeLink.LANGUAGES + routePath.LIST}>
                             <Icon type="message" />
                             <span>Ngôn ngữ</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="4">
-                        <Link to={'/admin/data/majors/list'}>
+                        <Link to={routeLink.MAJORS + routePath.LIST}>
                             <Icon type="contacts" />
                             <span>Chuyên ngành</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="5">
-                        <Link to={'/admin/data/regions/list'}>
+                        <Link to={routeLink.REGIONS + routePath.LIST}>
                             <Icon type="environment" />
                             <span>Tỉnh thành</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="6">
-                        <Link to={'/admin/data/job-names/list'}>
+                        <Link to={routeLink.JOB_NAMES + routePath.LIST}>
                             <Icon type="idcard" />
                             <span>Loại công việc</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="7">
-                        <Link to={'/admin/data/type-schools/list'}>
+                        <Link to={routeLink.TYPE_SCHOOLS + routePath.LIST}>
                             <Icon type="reconciliation" />
                             <span>Loại trường</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="8">
-                        <Link to={'/admin/data/skills/list'}>
+                        <Link to={routeLink.SKILLS + routePath.LIST}>
                             <Icon type="profile" />
                             <span>Kĩ năng</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="9">
-                        <Link to={'/admin/data/job-groups/list'}>
+                        <Link to={routeLink.JOB_GROUPS + routePath.LIST}>
                             <Icon type="team" />
                             <span>Nhóm công việc</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="10">
-                        <Link to={'/admin/data/branches/list'}>
+                        <Link to={routeLink.BRANCHES + routePath.LIST}>
                             <Icon type="apartment" />
                             <span>Nhóm ngành</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="11">
-                        <Link to={'/admin/data/annou-types/list'}>
+                        <Link to={routeLink.ANNOU_TYPE + routePath.LIST}>
                             <Icon type="container" />
                             <span>Nhóm bài viết</span>
                         </Link>
@@ -160,13 +160,13 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     }
                 >
                     <Menu.Item key="12">
-                        <Link to='/admin/role-admins/roles/list'>
+                        <Link to={routeLink.ROLES_ADMIN + routePath.LIST}>
                             <Icon type="user" />
                             <span>Phân quyền</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="13">
-                        <Link to='/admin/role-admins/admin-accounts/list'>
+                        <Link to={routeLink.ADMIN_ACCOUNTS + routePath.LIST}>
                             <Icon type="key" />
                             <span>Tài khoản admin</span>
                         </Link>

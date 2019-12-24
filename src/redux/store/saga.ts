@@ -33,6 +33,7 @@ import { JobAnnouncementDetailWatcher } from '../sagas/job-announcement-detail';
 import { SchoolDetailWatcher } from '../sagas/school-detail';
 import { CandidateDetailWatcher } from '../sagas/candidates-detail';
 import { CandidatesWatcher } from '../sagas/candidates';
+import { AdminAccountDetailWatcher } from '../sagas/admin-account-detail';
 
 export default function* rootSaga() {
     yield all([
@@ -69,6 +70,7 @@ export default function* rootSaga() {
         SchoolDetailWatcher(),
         CandidateDetailWatcher(),
         CandidatesWatcher(),
-        StudentDetailWatcher()
+        StudentDetailWatcher(),
+        AdminAccountDetailWatcher(),
     ])
 } 

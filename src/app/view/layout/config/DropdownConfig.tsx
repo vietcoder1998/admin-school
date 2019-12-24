@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from 'antd';
 import './DropdownConfig.scss';
+import randomID from '../../../../utils/randomID';
 
 export interface IDropdownConfigProps {
     children?: any;
@@ -34,7 +35,7 @@ export class OptionConfig extends React.PureComponent<IOp, IDropdownConfigState>
         } = this.props;
 
         return (
-            <div className="children-dropdown " onClick={() => this.toggle()}>
+            <div key={randomID(16)} className="children-dropdown " onClick={() => this.toggle()}>
                 <li>
                     {icon ? <Icon type={icon} /> : null}
                     <span id='df-op'>{label}</span>

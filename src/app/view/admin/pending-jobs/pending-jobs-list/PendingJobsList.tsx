@@ -98,7 +98,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     columns = [
         {
             title: '#',
-            width: 20,
+            width: 50,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
@@ -113,13 +113,13 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
         },
         {
             title: 'Tiêu đề',
-            width: 350,
+            width: 200,
             dataIndex: 'jobTitle',
             key: 'jobTitle',
         },
         {
             title: 'Công việc',
-            width: 180,
+            width: 150,
             dataIndex: 'jobName',
             className: 'action',
             key: 'jobName',
@@ -129,21 +129,21 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             dataIndex: 'state',
             className: 'action',
             key: 'state',
-            width: 140,
+            width: 150,
         },
         {
             title: 'Loại công việc',
             dataIndex: 'jobType',
             className: 'action',
             key: 'jobType',
-            width: 140,
+            width: 150,
         },
         {
             title: 'Ngày tạo',
             dataIndex: 'createdDate',
             className: 'action',
             key: 'createdDate',
-            width: 120,
+            width: 150,
         },
         {
             title: 'Tên chi nhánh',
@@ -154,15 +154,16 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
         {
             title: 'Địa chỉ',
             dataIndex: 'address',
-            key: '6'
+            key: 'address',
+            width: 300,
         },
         {
-            title: 'Hành động',
+            title: 'Thao tác',
             key: 'operation',
             dataIndex: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 75
+            width: 100
         },
     ];
 
@@ -455,7 +456,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 2000 }}
+                            scroll={{ x: 1650 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
