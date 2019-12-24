@@ -161,14 +161,14 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                 >
                     <Menu.Item key="12">
                         <Link to={routeLink.ROLES_ADMIN + routePath.LIST}>
-                            <Icon type="user" />
+                            <Icon type="audit" />
                             <span>Phân quyền</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="13">
                         <Link to={routeLink.ADMIN_ACCOUNTS + routePath.LIST}>
                             <Icon type="key" />
-                            <span>Tài khoản admin</span>
+                            <span>Danh sách</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>

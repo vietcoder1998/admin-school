@@ -14,7 +14,7 @@ import PendingJobs from './pending-jobs/PendingJobs';
 import User from './user/User';
 
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
-import { breakCumb, IBrk, routePath } from '../../../const/break-cumb';
+import { breakCumb, IBrk, routePath, routeLink } from '../../../const/break-cumb';
 import { IAppState } from '../../../redux/store/reducer';
 import ClearCache from 'react-clear-cache';
 
@@ -33,6 +33,7 @@ interface AdminState {
 
 interface AdminProps extends StateProps, DispatchProps {
     match: Readonly<any>;
+    history: any;
     getListJobNames: Function;
     getListTypeManagement: Function;
     getListJobGroups: Function;
@@ -149,14 +150,28 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                         style={{
                                             width: "30px",
                                             height: "30px",
-                                            border: "solid #fff 2px",
+                                            border: "solid #168ECD 2px",
                                             margin: "0px 5px"
                                         }}
+                                        src={localStorage.getItem('avatarUrl')}
                                     />
                                 }
                             >
-                                <OptionConfig icon="user" key="2" value="" label="Tài khoản" onClick={() => { }} />
-                                <OptionConfig icon="logout" key="1" value="" label="Đăng xuất" onClick={() => clearStorage()} />
+                                <OptionConfig
+                                    icon="user"
+                                    key="2"
+                                    value=""
+                                    label="Tài khoản"
+                                    onClick={
+                                        () => this.props.history.push(routeLink.ADMIN_ACCOUNTS + routePath.FIX + `/${localStorage.getItem('userID')}`)
+                                    }
+                                />
+                                <OptionConfig
+                                    icon="logout"
+                                    key="1" value=""
+                                    label="Đăng xuất"
+                                    onClick={() => clearStorage()}
+                                />
                             </DropdownConfig>
                         </div>
                     </Header>
@@ -181,7 +196,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     if (item_brk.label === item) {
                                         newBreakCump = (
                                             <Breadcrumb.Item key={index}>
-                                                {item_brk.icon ? <Icon type={item_brk.icon} style={{margin: 3}} /> : null}
+                                                {item_brk.icon ? <Icon type={item_brk.icon} style={{ margin: 3 }} /> : null}
                                                 {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
                                             </Breadcrumb.Item>
                                         )

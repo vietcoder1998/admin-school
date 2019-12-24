@@ -1,6 +1,5 @@
 import { GET } from './../../const/method';
 import { IAdminAccount } from './../models/admin-accounts';
-import { POST } from '../../const/method';
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'

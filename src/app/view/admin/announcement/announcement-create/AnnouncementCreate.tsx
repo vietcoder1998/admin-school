@@ -152,7 +152,6 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
         } else {
             await this.setState({ loading_content_img: true })
         }
-        await this.setState({});
         let formData = new FormData();
         formData.append("image", file);
         var imageUrl = "";

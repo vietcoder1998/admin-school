@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
@@ -133,7 +133,6 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
             key: 'email',
             width: 150,
             className: 'action',
-
         },
         {
             title: 'Họ',
@@ -207,7 +206,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
         let { data_table, loading_table } = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>
                         Danh sách admin
@@ -219,7 +218,6 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                                 float: "right",
                             }}
                         >
-
                             <Link to={routeLink.ADMIN_ACCOUNTS + routePath.CREATE}>
                                 <Icon type="plus" />
                                 Thêm admin mới
@@ -247,7 +245,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         }}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }

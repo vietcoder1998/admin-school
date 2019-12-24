@@ -1,12 +1,11 @@
-import React, { PureComponent, Component, } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
-import { Divider, Button, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { Divider, Button, Icon, Avatar } from 'antd';
 import './CreateAdminAccounts.scss';
 
 import { _requestToServer } from '../../../../../../services/exec';
 import { POST, PUT } from '../../../../../../const/method';
-import { API_CONTROLLER_ROLES, REGISTRATION_ADMINS } from '../../../../../../services/api/private.api';
+import { API_CONTROLLER_ROLES, REGISTRATION_ADMINS, ADMIN_ACCOUNTS } from '../../../../../../services/api/private.api';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { TYPE } from '../../../../../../const/type';
 import { IApiFunctions } from '../../../../../../redux/models/api-controller';
@@ -31,7 +30,11 @@ interface ICreateAdminAccountsState {
     list_roles?: Array<IRole>,
     roleID?: number,
     role_name?: string,
-    admin_account_detail?: IAdminAccount
+    admin_account_detail?: IAdminAccount,
+    loading_content_img?: boolean,
+    loading?: boolean,
+    avatarUrl?: string;
+    avatar?: any;
 }
 
 interface ICreateAdminAccountsProps extends StateProps, DispatchProps {
@@ -55,24 +58,30 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
             type: "",
             type_cpn: TYPE.CREATE,
             value: null,
-            list_value: [],
             roleID: null,
-            admin_account_detail: null
+            admin_account_detail: null,
+            loading: false,
+            loading_content_img: false,
+            avatar: null,
         }
     }
 
     static getDerivedStateFromProps(nextProps?: ICreateAdminAccountsProps, prevState?: ICreateAdminAccountsState) {
         if (nextProps.match.params.id && nextProps.match.params.id !== prevState.id) {
             nextProps.getAdminAccountDetail(nextProps.match.params.id);
+           
             return {
                 id: nextProps.match.params.id,
                 type_cpn: TYPE.FIX
             }
-        };
+        }
 
         if (nextProps.admin_account_detail && nextProps.admin_account_detail !== prevState.admin_account_detail) {
-            let { admin_account_detail, list_roles } = nextProps;
-            let map_roles = list_roles.filter((item?: IRole) => item.id === admin_account_detail.roleID);
+            let { admin_account_detail } = nextProps;
+
+            if (prevState.id === localStorage.getItem("userID")) {
+                localStorage.setItem("avatarUrl", nextProps.admin_account_detail.avatarUrl);
+            }
 
             return {
                 admin_account_detail,
@@ -81,7 +90,8 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                 lastName: admin_account_detail.lastName,
                 password: admin_account_detail.password,
                 contactEmail: admin_account_detail.email,
-                role_name: map_roles[0] && map_roles[0].name
+                role_name: admin_account_detail.role && admin_account_detail.role.name,
+                roleID: admin_account_detail.role && admin_account_detail.role.id
             }
         };
 
@@ -102,21 +112,36 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
 
     createNewData = async () => {
         let { username, type_cpn, id, password, lastName, firstName, contactEmail, roleID } = this.state;
-        if (username && password && lastName && firstName && contactEmail && roleID) {
+        let body = null;
+
+        if (type_cpn === TYPE.FIX) {
+            body = {
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
+                email: contactEmail.trim(),
+                roleID
+            }
+        } else {
+            body = {
+                username: username.trim(),
+                password: password.trim(),
+                lastName: lastName.trim(),
+                firstName: firstName.trim(),
+                contactEmail: contactEmail.trim(),
+                roleID,
+            }
+        }
+
+        if (username && lastName && firstName && contactEmail && roleID) {
             await _requestToServer(
                 type_cpn === TYPE.CREATE ? POST : PUT,
-                REGISTRATION_ADMINS + (type_cpn === TYPE.CREATE ? '' : `/${id}`),
-                {
-                    username: username.trim(),
-                    password: password.trim(),
-                    lastName: lastName.trim(),
-                    firstName: firstName.trim(),
-                    contactEmail: contactEmail.trim(),
-                    roleID,
-                }
+                (type_cpn === TYPE.CREATE ? REGISTRATION_ADMINS : ADMIN_ACCOUNTS)
+                + (type_cpn === TYPE.CREATE ? '' : `/${id}/profile`),
+                body
             ).then((res: any) => {
-                this.props.getListAdminAccounts();
-                this.props.history.push(routeLink.ADMIN_ACCOUNTS + routePath.LIST);
+                if (res) {
+                    this.props.history.push(routeLink.ADMIN_ACCOUNTS + routePath.LIST);
+                }
             });
         }
     };
@@ -149,6 +174,27 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
         this.setState({ value: map_arr });
     };
 
+    uploadFileToServer = (file?: Blob) => {
+        let {id} = this.state;
+        this.setState({ loading_content_img: true });
+        let formData = new FormData();
+        formData.append('avatar', file);
+        _requestToServer(
+            PUT,
+            ADMIN_ACCOUNTS + `/${id}/avatar`,
+            formData,
+        ).then(
+            (res: any) => {
+                if (res) {
+                    this.props.getAdminAccountDetail(id);
+                }
+            }
+        ).finally(
+            () => this.setState({loading_content_img: false})
+        )
+
+    };
+
     render() {
         let {
             username,
@@ -158,14 +204,17 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
             lastName,
             contactEmail,
             role_name,
-            roleID
+            roleID,
+            id,
+            admin_account_detail,
+            loading_content_img
         } = this.state;
 
         let {
             list_roles
         } = this.props;
 
-        let is_disable = username && password && lastName && firstName && contactEmail && roleID;
+        let is_disable = username && lastName && firstName && contactEmail && roleID;
         return (
             <>
                 <div>
@@ -173,6 +222,57 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         {type_cpn === TYPE.CREATE ? 'Thêm tài khoản admins mới' : 'Sửa tài khoản admins'}
                     </h5>
                     <Divider orientation="left">Chi tiết tài khoản admins</Divider>
+                    {
+                        type_cpn === TYPE.FIX ?
+                            <InputTitle
+                                title="Ảnh đại diện"
+                                placeholder="ex: không có dấu cách"
+                                widthInput="400px"
+                                value={username}
+                                style={{ padding: "10px 30px" }}
+                                children={
+                                    <div>
+                                        <div>
+                                            <Avatar
+                                                shape={'square'}
+                                                src={admin_account_detail && admin_account_detail.avatarUrl}
+                                                size={100}
+                                                alt='Ảnh'
+                                            />
+                                        </div>
+                                        <div>
+                                            <input
+                                                id="imgContent"
+                                                type="file"
+                                                style={{ display: 'none' }}
+                                                onChange={
+                                                    (event: any) => {
+                                                        this.uploadFileToServer(event.target.files[0])
+                                                    }
+                                                }
+                                            />
+                                            <label
+                                                className='upload-img-content'
+                                                htmlFor="imgContent"
+                                            >
+                                                {!loading_content_img ? <Icon type="upload" /> :
+                                                    <Icon type="loading" style={{ color: "blue" }} />}
+                                                Upload
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            /> : ''
+                    }
+                    <InputTitle
+                        type={TYPE.INPUT}
+                        title="Tên tài khoản admins"
+                        placeholder="ex: không có dấu cách"
+                        widthInput="400px"
+                        value={username}
+                        style={{ padding: "10px 30px" }}
+                        onChange={(event: any) => this.setState({ username: event })}
+                    />
                     <InputTitle
                         type={TYPE.INPUT}
                         title="Tên tài khoản admins"
@@ -183,33 +283,34 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         onChange={(event: any) => this.setState({ username: event })}
                     />
                     {
-                        type_cpn !== TYPE.FIX ? <InputTitle
-                            type={TYPE.INPUT}
-                            title="Mật khẩu"
-                            placeholder="yêu cầu: trên 6 kí tự"
-                            widthInput="400px"
-                            value={password}
-                            style={{ padding: "10px 30px" }}
-                            onChange={(event: any) => this.setState({ password: event })}
-                        /> : ''
+                        type_cpn !== TYPE.FIX ?
+                            <InputTitle
+                                type={TYPE.INPUT}
+                                title="Mật khẩu"
+                                placeholder="yêu cầu: trên 6 kí tự"
+                                widthInput="400px"
+                                value={password}
+                                style={{ padding: "10px 30px" }}
+                                onChange={(event: any) => this.setState({ password: event })}
+                            /> : ''
                     }
                     <InputTitle
                         type={TYPE.INPUT}
                         title="Họ (đệm)"
                         placeholder="ex: Trần Thanh"
                         widthInput="400px"
-                        value={firstName}
+                        value={lastName}
                         style={{ padding: "10px 30px" }}
-                        onChange={(event: any) => this.setState({ firstName: event })}
+                        onChange={(event: any) => this.setState({ lastName: event })}
                     />
                     <InputTitle
                         type={TYPE.INPUT}
                         title="Tên"
                         placeholder="ex: Tùng"
                         widthInput="400px"
-                        value={lastName}
+                        value={firstName}
                         style={{ padding: "10px 30px" }}
-                        onChange={(event: any) => this.setState({ lastName: event })}
+                        onChange={(event: any) => this.setState({ firstName: event })}
                     />
                     <InputTitle
                         type={TYPE.INPUT}
@@ -226,29 +327,73 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         placeholder="ex: Quản lý, Sinh viên, SUPER_ADMINS, .v.v."
                         widthInput="400px"
                         value={role_name}
-                        list_value={list_roles.map((item?: IRole) => ({label: item.name, value: item.id}))}
+                        list_value={list_roles.map((item?: IRole) => ({ label: item.name, value: item.id }))}
                         style={{ padding: "10px 30px" }}
                         onChange={
                             (event: any) => this.onChoseRoleID(event)
                         }
                     />
+                    {
+                        type_cpn === TYPE.FIX ?
+                            <>
+                                <Divider orientation="left">Đổi mật khẩu</Divider>
+                                <InputTitle
+                                    type={TYPE.INPUT}
+                                    title="Mật khẩu mới"
+                                    placeholder="yêu cầu: trên 6 kí tự"
+                                    widthInput="400px"
+                                    value={password}
+                                    style={{ padding: "10px 30px" }}
+                                    onChange={(event: any) => this.setState({ password: event })}
+                                />
+                            </>
+                            : ''
+                    }
                     <Button
                         type="primary"
-                        icon="plus"
+                        icon={type_cpn === TYPE.CREATE ? "plus" : "check"}
                         style={{ float: "right", margin: "10px 5px" }}
                         onClick={this.createNewData}
                         disabled={!is_disable}
                     >
                         {type_cpn === TYPE.CREATE ? " Tạo tài khoản admins mới" : "Sửa thông tin tài khoản admins"}
                     </Button>
+                    {
+                        type_cpn === TYPE.FIX ?
+                            <Button
+                                type="primary"
+                                icon="check"
+                                style={{ float: "right", margin: "10px 5px" }}
+                                onClick={() => {
+                                    _requestToServer(
+                                        PUT,
+                                        ADMIN_ACCOUNTS + `/${id}/password`,
+                                        {
+                                            newPassword: password
+                                        }
+                                    ).then(
+                                        (res: any) => {
+                                            if (res) {
+                                                this.props.history.push(routeLink.ADMIN_ACCOUNTS + routePath.LIST)
+                                            }
+                                        }
+                                    )
+                                }}
+                                disabled={!is_disable}
+                            >
+                                Đổi mật khẩu
+                            </Button>
+                            : ''
+                    }
                     <Button
                         type="danger"
-                        style={{ float: "right", margin: "10px 5px" }}
+                        icon="left"
+                        style={{ float: "left", margin: "10px 5px" }}
+                        onClick={
+                            () => this.props.history.push(routeLink.ADMIN_ACCOUNTS + routePath.LIST)
+                        }
                     >
-                        <Link to={routeLink.ADMIN_ACCOUNTS + routePath.LIST}>
-                            <Icon type="close" />
-                            Hủy
-                        </Link>
+                        Hủy
                     </Button>
                 </div>
             </>
