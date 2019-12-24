@@ -1,3 +1,4 @@
+import { StudentDetail } from './../reducers/student-detail';
 import { SchoolsDetail } from './../reducers/school-detail';
 import { JobAnnouncementDetail } from './../reducers/job-announcement-detail';
 import { JobAnnouncements } from './../reducers/job-announcements';
@@ -67,6 +68,7 @@ const rootReducer = combineReducers({
     SchoolsDetail,
     Candidates,
     CandidateDetail,
+    StudentDetail
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

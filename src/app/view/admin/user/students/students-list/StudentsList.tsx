@@ -17,6 +17,7 @@ import { IRegion } from '../../../../../../redux/models/regions';
 import { ILanguage } from '../../../../../../redux/models/languages';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
 import { ISkill } from '../../../../../../redux/models/skills';
+import StudentInfo from '../../../../layout/student-info/StudentInfo';
 
 interface IStudentsListProps extends StateProps, DispatchProps {
     match?: any;
@@ -24,6 +25,7 @@ interface IStudentsListProps extends StateProps, DispatchProps {
     location?: any;
     getListStudents: Function;
     getAnnoucementDetail: Function;
+    getStudentDetail: (id?: string) => any;
 };
 
 let ImageRender = (props: any) => {
@@ -31,7 +33,7 @@ let ImageRender = (props: any) => {
         return <Avatar shape={"square"} src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
     } else {
         return <div style={{ width: "60px", height: "60px", padding: "20px 0px" }}>
-            <Icon type="file-image" style={{fontSize: 20}}/>
+            <Icon type="file-image" style={{ fontSize: 20 }} />
         </div>
     }
 };
@@ -51,6 +53,7 @@ interface IStudentsListState {
     educatedScale_state?: string;
     open_drawer?: boolean;
     list_students?: Array<IStudent>;
+    type_cpn?: string
 };
 
 class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState> {
@@ -93,10 +96,20 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     editToolAction = () => {
         let { id } = this.state;
         return <>
-            <Tooltip title='Xem hồ sơ nhà tuyển dụng' >
+            <Tooltip title='Xem hồ sơ sinh viên' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"search"}
+                    onClick={() => {
+                        this.setState({
+                            loading: true,
+                            open_drawer: true,
+                            type_cpn: TYPE.DETAIL
+                        });
+                        setTimeout(() => {
+                            this.props.getStudentDetail(id);
+                        }, 250);
+                    }}
                 />
             </Tooltip>
             <Tooltip title='Xem danh sách chi nhánh' >
@@ -107,7 +120,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     />
                 </Link>
             </Tooltip>
-            <Tooltip title='Chứng thực nhà tuyển dụng' >
+            <Tooltip title='Chứng thực sinh viên' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"safety-certificate"}
@@ -228,7 +241,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             key: 'operation',
             fixed: 'right',
             className: 'action',
-            dataIndex: 'operation',
+            render: () => this.editToolAction(),
             width: 100,
         },
     ];
@@ -244,23 +257,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             let data_table = [];
             nextProps.list_students.forEach((item: IStudent, index: number) => {
 
-                let EditToolTip = (id?: string) => (
-                    <>
-                        <Tooltip placement="top" title={"Xem chi tiết"}>
-                            <a
-                                href={routeLink.STUDENTS + routePath.DETAIL + `/${id}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Icon
-                                    className='test'
-                                    style={{ padding: "5px 5px", color: "blue" }}
-                                    type="search"
-                                />
-                            </a>
-                        </Tooltip>
-                    </>
-                );
 
                 data_table.push({
                     key: item.id,
@@ -278,7 +274,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     major: item.major ? item.major.name : "",
                     birthday: item.birthday === -1 ? "" : timeConverter(item.birthday, 1000),
                     createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000),
-                    operation: EditToolTip(item.id)
                 });
             })
             return {
@@ -369,7 +364,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             default:
                 break;
         };
-     
+
         body[type] = value;
         this.setState({ body });
     }
@@ -440,7 +435,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     {list_skill_options}
                 </Select>
             </>
-
             <>
                 <IptLetterP value={"Loại ngôn ngữ"} />
                 <Select
@@ -478,7 +472,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                         float: "right"
                     }}
                     onClick={async () => {
-                        await this.setState({ open_drawer: false });
+                        await this.setState({ open_drawer: false, type_cpn: TYPE.DETAIL });
                         await setTimeout(() => {
                             // this.searchStudents();
                         }, 250);
@@ -495,11 +489,13 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             data_table,
             loading_table,
             open_drawer,
+            type_cpn
         } = this.state;
 
         let {
             totalItems,
-            list_regions
+            list_regions,
+            student_detail
         } = this.props
         return (
             <>
@@ -511,7 +507,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     onClose={() => this.onCancelAdvancedFind()}
                     visible={open_drawer}
                 >
-                    {this.advancedFilter()}
+                    {type_cpn === TYPE.DETAIL ? <StudentInfo data={student_detail} />: this.advancedFilter()}
                 </Drawer>
                 <div className="common-content">
                     <h5>
@@ -527,7 +523,9 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                             children={"Tìm kiếm học sinh"}
                         />
                         <Button
-                            onClick={() => this.setState({ open_drawer: true })}
+                            onClick={
+                                () => this.setState({ open_drawer: true, type_cpn: TYPE.SEARCH })
+                            }
                             type="primary"
                             style={{
                                 float: "right",
@@ -622,7 +620,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                 </Select>
                             </Col>
                         </Row>
-
                         <Table
                             // @ts-ignore
                             columns={this.columns}
@@ -638,7 +635,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     onClick: (event: any) => {
                                     }, // click row
                                     onMouseEnter: (event) => {
-                                        localStorage.setItem('id_candidate', record.key)
+                                        this.setState({ id: record.key })
                                     }, // mouse enter row
                                 };
                             }}
@@ -653,6 +650,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListStudents: (pageIndex: number, pageSize: number, body?: IStudentsFilter) =>
         dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENTS, pageIndex, pageSize, body }),
+    getStudentDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENT_DETAIl, id }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
@@ -662,6 +661,7 @@ const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_languages: state.Languages.items,
     list_job_names: state.JobNames.items,
     list_students: state.Students.items,
+    student_detail: state.StudentDetail,
     totalItems: state.Students.totalItems,
 });
 

@@ -42,6 +42,8 @@ export const TYPE = {
     MALE: "MALE",
     FEMALE: "FEMALE",
     BOTH: "BOTH",
+    SEARCH:"SEARCH",
+    DETAIL:"DETAIL",
 
     TRUE: "TRUE",
     FALSE: "FALSE",

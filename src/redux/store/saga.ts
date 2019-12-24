@@ -25,6 +25,8 @@ import { UserControllersWatcher } from '../sagas/user-controller';
 import { EmControllersWatcher } from '../sagas/em-controller';
 import { SchoolsWatcher } from '../sagas/schools';
 import { StudentsWatcher } from '../sagas/students';
+import { StudentDetailWatcher } from '../sagas/student-detail';
+
 import { EmControllerDetailWatcher } from '../sagas/em-controller-detail';
 import { JobAnnouncementsWatcher } from '../sagas/job-announcements';
 import { JobAnnouncementDetailWatcher } from '../sagas/job-announcement-detail';
@@ -67,5 +69,6 @@ export default function* rootSaga() {
         SchoolDetailWatcher(),
         CandidateDetailWatcher(),
         CandidatesWatcher(),
+        StudentDetailWatcher()
     ])
 } 

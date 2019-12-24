@@ -1,15 +1,15 @@
-import React, { PureComponent,  } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import {
     Button,
     Table,
     Icon,
     Popconfirm,
-    // Col, 
-    // Select, 
-    // Row, 
-    // Input, 
+    Col,
+    Row,
+    Input,
     Tooltip,
+    Select,
     //  Avatar 
 } from 'antd';
 import './SchoolsList.scss';
@@ -28,6 +28,9 @@ import { IRegion } from '../../../../../../redux/models/regions';
 import DrawerConfig from '../../../../layout/config/DrawerConfig';
 import { IDrawerState } from '../../../../../../redux/models/mutil-box';
 import SchoolInfo from '../../../../layout/school-info/SchoolInfo';
+import { IptLetterP } from '../../../../layout/common/Common';
+
+const { Option } = Select
 
 interface ISchoolsListProps extends StateProps, DispatchProps {
     match?: any;
@@ -205,7 +208,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     };
 
     async componentDidMount() {
-        await this.searchSchoolss();
+        await this.searchSchools();
     };
 
     handleId = (event) => {
@@ -216,10 +219,10 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        await this.searchSchoolss();
+        await this.searchSchools();
     };
 
-    searchSchoolss = async () => {
+    searchSchools = async () => {
         let { pageIndex, pageSize, body } = this.state;
         await this.props.getListSchools(pageIndex, pageSize, body);
     };
@@ -250,7 +253,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             false,
         ).then(
             (res: any) => {
-                if (res) { this.searchSchoolss() }
+                if (res) { this.searchSchools() }
             }
         )
     }
@@ -287,11 +290,13 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         let {
             data_table,
             loading_table,
+            body
         } = this.state;
 
         let {
             totalItems,
-            school_detail
+            school_detail,
+            list_regions,
         } = this.props
         return (
             <>
@@ -314,7 +319,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         Quản lý nhà trường
                         <Button
                             icon="filter"
-                            onClick={() => this.searchSchoolss()}
+                            onClick={() => this.searchSchools()}
                             type="primary"
                             style={{
                                 float: "right",
@@ -324,6 +329,81 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         </Button>
                     </h5>
                     <div className="table-operations">
+                        <Row >
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Tên rút gọn"} />
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={body.shortName}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.shortName)}
+                                    onPressEnter={(event: any) => this.searchSchools()}
+                                    suffix={
+                                        body.shortName &&
+                                            body.shortName.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.onChangeFilter(null, TYPE.SCHOOLS.shortName)
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+                            </Col>
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Email"} />
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={body.email}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.email)}
+                                    onPressEnter={(event: any) => this.searchSchools()}
+                                    suffix={
+                                        body.email &&
+                                            body.email.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.onChangeFilter(null, TYPE.SCHOOLS.email)
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+
+                            </Col>
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Tỉnh thành"} />
+                                <Select
+                                    showSearch
+                                    defaultValue="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.regionID)}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    {
+                                        list_regions && list_regions.length >= 1 ?
+                                            list_regions.map((item: IRegion, index: number) =>
+                                                <Option key={index} value={item.name}>{item.name}</Option>
+                                            ) : null
+                                    }
+                                </Select>
+                            </Col>
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Yêu cầu kết nối"} />
+                                <Select
+                                    showSearch
+                                    defaultValue="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.connected)}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={TYPE.TRUE}>Đã gửi </Option>
+                                    <Option value={TYPE.FALSE}>Chưa gửi</Option>
+                                </Select>
+                            </Col>
+                        </Row>
                         <Table
                             // @ts-ignore
                             columns={this.columns}
