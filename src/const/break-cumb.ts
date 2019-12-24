@@ -78,7 +78,7 @@ export const breakCumb = [
 
 
     { label: "job-management", name: "Quản lý bài viết", icon: null, url: "/" },
-    { label: "pending-jobs", name: "Xét duyệt bài đăng", icon: null, url: routeLink.PENDING_JOBS },
+    { label: "pending-jobs", name: "Xét duyệt ", icon: null, url: routeLink.PENDING_JOBS },
     { label: "languages", name: "Ngôn ngữ", icon: null, url:routeLink.LANGUAGES + routePath.LIST },
     { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST  },
     { label: "type-schools", name: "Loại trường", icon: null, url: routeLink.TYPE_SCHOOLS + routePath.LIST  },

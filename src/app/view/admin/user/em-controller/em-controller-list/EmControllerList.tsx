@@ -105,14 +105,14 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     columns = [
         {
             title: '#',
-            width: 50,
+            width: 20,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
             fixed: 'left',
         },
         {
-            title: 'Thư điện tử',
+            title: 'Logo',
             dataIndex: 'logoUrl',
             className: 'action',
             key: 'logoUrl',
@@ -125,9 +125,15 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             key: 'employerName',
             width: 240,
         },
-
         {
-            title: 'Chứng thực hồ sơ',
+            title: 'Email',
+            dataIndex: 'email',
+            className: 'action',
+            key: 'email',
+            width: 100,
+        },
+        {
+            title: 'Chứng thực',
             dataIndex: 'profileVerified',
             className: 'action',
             key: 'profileVerified',
@@ -138,7 +144,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             dataIndex: 'createdDate',
             className: 'action',
             key: 'createdDate',
-            width: 160,
+            width: 200,
         },
         {
             title: 'Thao tác',
@@ -164,6 +170,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     employerName: item.employerName ? item.employerName : '',
+                    email: item.email ? item.email : '',
                     logoUrl: <Avatar size="large" shape="square" src={item.logoUrl} icon="shop" />,
                     profileVerified:
                         <Tooltip title={item.profileVerified ? 'Chứng thực' : 'Chưa chứng thực'} >
@@ -380,7 +387,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 710 }}
+                            scroll={{ x: 1060 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

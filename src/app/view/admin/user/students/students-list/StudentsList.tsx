@@ -213,7 +213,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             dataIndex: 'major',
             className: 'action',
             key: 'major',
-            width: 150,
+            width: 200,
         },
 
         {
@@ -628,7 +628,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1900 }}
+                            scroll={{ x: 1950 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

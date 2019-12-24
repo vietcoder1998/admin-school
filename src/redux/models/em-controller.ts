@@ -4,6 +4,7 @@ export interface IEmController {
     logoUrl?: string,
     profileVerified?: number,
     createdDate?: number,
+    email?: string,
 }
 
 export interface IEmControllerFilter {

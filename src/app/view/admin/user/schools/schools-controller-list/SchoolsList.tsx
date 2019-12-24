@@ -122,7 +122,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             fixed: 'left',
         },
         {
-            title: 'Thư điện tử',
+            title: 'Tên rút gọn',
             dataIndex: 'shortName',
             className: 'action',
             key: 'shortName',
@@ -133,6 +133,13 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             dataIndex: 'name',
             className: 'action',
             key: 'name',
+            width: 250,
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            className: 'action',
+            key: 'email',
             width: 250,
         },
         {
@@ -180,6 +187,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name ? item.name : '',
+                    email: item.email ? item.email : '',
                     shortName: item.shortName ? item.shortName : '',
                     educatedScale: item.educatedScale === -1 ? '' : item.educatedScale,
                     region: item.region && item.region.name,
@@ -321,7 +329,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 800 }}
+                            scroll={{ x: 1100 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

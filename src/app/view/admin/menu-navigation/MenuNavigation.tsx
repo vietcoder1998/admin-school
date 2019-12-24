@@ -47,19 +47,19 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     <Menu.Item key="16">
                         <Link to={routeLink.JOB_ANNOUNCEMENTS + routePath.LIST}>
                             <Icon type="reconciliation" />
-                            <span>Quản lý bài đăng</span>
+                            <span>Danh sách</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="14">
                         <Link to='/admin/pending-jobs/list'>
                             <Icon type="audit" />
-                            <span>Xét duyệt bài đăng</span>
+                            <span>Xét duyệt</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="15">
                         <Link to='/admin/pending-jobs/create'>
                             <Icon type="file-search" />
-                            <span>Đăng hộ bài</span>
+                            <span>Đăng hộ</span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>
@@ -91,7 +91,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     title={
                         <span>
                             <Icon type="database" />
-                            <span>Danh mục dữ liệu</span>
+                            <span>Dữ liệu</span>
                         </span>
                     }
                 >

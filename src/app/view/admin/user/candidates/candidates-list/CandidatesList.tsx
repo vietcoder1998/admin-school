@@ -134,6 +134,20 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             width: 100,
         },
         {
+            title: 'Email',
+            dataIndex: 'email',
+            className: 'action',
+            key: 'email',
+            width: 200,
+        },
+        {
+            title: 'Số điện thoại',
+            dataIndex: 'phone',
+            className: 'action',
+            key: 'phone',
+            width: 200,
+        },
+        {
             title: 'Địa chỉ',
             dataIndex: 'address',
             key: 'address',
@@ -209,6 +223,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     avatarUrl: <ImageRender src={item.avatarUrl} alt="Ảnh đại diện" />,
                     name: (item.lastName ? item.lastName : "") + " " + (item.firstName ? item.firstName : ""),
                     gender: item.gender === TYPE.MALE ? "nam" : "nữ",
+                    email: item.email ? item.email: '',
+                    phone: item.phone ? item.phone: '',
                     lookingForJob: item.lookingForJob ? "Đang tìm việc" : "Đã có việc",
                     address: item.address ? item.address : "",
                     region: item.region ? item.region.name : "",
@@ -557,7 +573,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1000 }}
+                            scroll={{ x: 1400 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

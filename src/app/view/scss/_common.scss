@@ -41,6 +41,7 @@ code {
 .ant-breadcrumb {
   padding-bottom: 10px !important;
 }
+
 .all-content {
   background-color: whitesmoke;
   height: calc(100vh - 120px);
@@ -49,6 +50,7 @@ code {
 .ant-layout-sider-children {
   position: fixed;
   overflow: auto;
+  min-width: 200px;
 
   /* width */
   &::-webkit-scrollbar {
