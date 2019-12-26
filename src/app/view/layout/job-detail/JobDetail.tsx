@@ -18,18 +18,15 @@ interface IJobDetailProps {
 }
 
 export default function JobDetail(props: IJobDetailProps) {
-    let { job_detail, list_job_skills, job_id, list_job_names } = props;
+    let { job_detail, list_job_skills, list_job_names } = props;
     let [requireSkill, setRequireSkill] = React.useState([]);
-    let [id, setId] = React.useState(null)
-
-
     let list_des = job_detail && convertStringToArray(job_detail.data.description);
-
-    if (job_detail && job_detail.data && job_detail.data.requiredSkillIDs.length > 0 && job_id !== id) {
-        let requireSkill = findIdWithValue(list_job_skills, job_detail.data.requiredSkillIDs, "id", "name");
-        setRequireSkill(requireSkill);
-        setId(job_id)
-    }
+    React.useState(() => {
+        if (job_detail && job_detail.data && job_detail.data.requiredSkillIDs.length > 0) {
+            let requireSkill = findIdWithValue(list_job_skills, job_detail.data.requiredSkillIDs, "id", "name");
+            setRequireSkill(requireSkill);
+        }
+    })
 
     return (
         <div className='job-detail'>
@@ -129,13 +126,12 @@ export default function JobDetail(props: IJobDetailProps) {
                                             if (index === 6) {
                                                 day = 'CN'
                                             }
+
                                             return (<label key={index} className='time-span'>
                                                 {day}
                                             </label>)
                                         }
-                                        else {
-                                            return { loading_table: false }
-                                        }
+                                        return ''
                                     })}
                                 </div>
                             </div>)

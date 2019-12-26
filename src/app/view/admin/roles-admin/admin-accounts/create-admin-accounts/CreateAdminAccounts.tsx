@@ -38,8 +38,8 @@ interface ICreateAdminAccountsState {
 }
 
 interface ICreateAdminAccountsProps extends StateProps, DispatchProps {
-    match: Readonly<any>;
-    history: Readonly<any>;
+    match: any;
+    history: any;
     getListAdminAccounts?: Function;
     getListRoles?: Function;
     getAdminAccountDetail?: (id?: string) => any;
