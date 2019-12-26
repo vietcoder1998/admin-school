@@ -131,6 +131,17 @@ function EmployerInfo(props: IEmployerInfoProps) {
                                     />
                                 </Card>
                             </Col>
+                            <Col sm={24} md={12} lg={12} xl={12} xxl={8}>
+                                <Card bordered={false}>
+                                    <Meta
+                                        avatar={
+                                            <Icon type='environment' />
+                                        }
+                                        title="Mã số thuế"
+                                        description={props && props.data && props.data.taxCode ? props.data.taxCode : <NotUpdate />}
+                                    />
+                                </Card>
+                            </Col>
                             <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Card bordered={false}>
                                     <Meta

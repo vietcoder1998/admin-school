@@ -1,4 +1,4 @@
-import React, { PureComponent,  } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
@@ -61,6 +61,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     avatarUrl: <Avatar shape="square" src={item.avatarUrl} icon="user" style={{ width: 50, height: 50 }} />,
                     email: item.email,
+                    username: item.username,
                     lastName: item.lastName,
                     firstName: item.firstName,
                     createdDate: item.createdDate ? timeConverter(item.createdDate, 1000, "HH:mm DD/MM/YYYY") : "",
@@ -125,6 +126,13 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
             dataIndex: 'avatarUrl',
             key: 'avatarUrl',
             width: 60,
+            className: 'action',
+        },
+        {
+            title: 'Tên đăng nhập',
+            dataIndex: 'username',
+            key: 'username',
+            width: 150,
             className: 'action',
         },
         {
@@ -229,7 +237,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}
-                        scroll={{ x: 1000 }}
+                        scroll={{ x: 1150 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"

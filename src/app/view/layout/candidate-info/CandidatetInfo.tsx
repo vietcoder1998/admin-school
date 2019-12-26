@@ -102,7 +102,7 @@ function CandidateInfo(props: ICandidateInfoProps) {
                                             <Icon type='phone' />
                                         }
                                         title="Số điện thoại"
-                                        description={ data && data.phone ? data.phone : <NotUpdate />}
+                                        description={data && data.phone ? data.phone : <NotUpdate />}
                                     />
                                 </Card>
                             </Col>
@@ -113,7 +113,7 @@ function CandidateInfo(props: ICandidateInfoProps) {
                                             <Icon type='environment' />
                                         }
                                         title="Địa chỉ"
-                                        description={ data && data.address ? data.address : <NotUpdate />}
+                                        description={data && data.address ? data.address : <NotUpdate />}
                                     />
                                 </Card>
                             </Col>
@@ -124,7 +124,18 @@ function CandidateInfo(props: ICandidateInfoProps) {
                                             <Icon type='idcard' />
                                         }
                                         title="Số CMTND"
-                                        description={ data && data.identityCard ? data.identityCard : <NotUpdate />}
+                                        description={data && data.identityCard ? data.identityCard : <NotUpdate />}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Card bordered={false}>
+                                    <Meta
+                                        avatar={
+                                            <Icon type='home' />
+                                        }
+                                        title="Mô tả sơ lược"
+                                        description={props && props.data && props.data.description ? props.data.description : <NotUpdate />}
                                     />
                                 </Card>
                             </Col>
@@ -150,8 +161,8 @@ function CandidateInfo(props: ICandidateInfoProps) {
                                         <div key={i}>
                                             <div><IptLetter value="Tên trường: " />{item.school}</div>
                                             <div><IptLetter value="Ngành học: " />{item.branchOfLearning}</div>
-                                            <div><IptLetter value="Ngày bắt đầu: " />{item.startedDate !== -1 ? timeConverter(item.startedDate, 1000): <NotUpdate/>}</div>
-                                            <div><IptLetter value="Ngày kết thúc: " />{item.finishedDate !== -1 ? timeConverter(item.finishedDate, 1000): <NotUpdate/>}</div>
+                                            <div><IptLetter value="Ngày bắt đầu: " />{item.startedDate !== -1 ? timeConverter(item.startedDate, 1000) : <NotUpdate />}</div>
+                                            <div><IptLetter value="Ngày kết thúc: " />{item.finishedDate !== -1 ? timeConverter(item.finishedDate, 1000) : <NotUpdate />}</div>
                                             <div><IptLetter value="Mô tả thêm: " />{item.description}</div>
                                             <Divider />
                                         </div>) : <NotUpdate />}
@@ -162,9 +173,9 @@ function CandidateInfo(props: ICandidateInfoProps) {
                                     {data && data.experiences && data.experiences.length > 0 ? data.experiences.map((item?: IExperience, i?: number) =>
                                         <div key={i}>
                                             <div><IptLetter value="Tên công việc: " /> {item.jobName}</div>
-                                            <div><IptLetter value="Công ti: "/>{item.companyName}</div>
-                                            <div><IptLetter value="Ngày bắt đầu: " />{item.startedDate !== -1 ? timeConverter(item.startedDate, 1000): <NotUpdate/>}</div>
-                                            <div><IptLetter value="Ngày kết thúc: " />{item.finishedDate !== -1 ? timeConverter(item.finishedDate, 1000): <NotUpdate/>}</div>
+                                            <div><IptLetter value="Công ti: " />{item.companyName}</div>
+                                            <div><IptLetter value="Ngày bắt đầu: " />{item.startedDate !== -1 ? timeConverter(item.startedDate, 1000) : <NotUpdate />}</div>
+                                            <div><IptLetter value="Ngày kết thúc: " />{item.finishedDate !== -1 ? timeConverter(item.finishedDate, 1000) : <NotUpdate />}</div>
                                             <div><IptLetter value="Mô tả thêm: " />{item.description}</div>
                                             <Divider />
                                         </div>) : <NotUpdate />}
