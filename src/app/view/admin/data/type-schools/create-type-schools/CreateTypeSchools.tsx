@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
@@ -49,7 +49,7 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
     render() {
         let {name} = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm loại trường mới</h5>
                     <Divider orientation="left">Chi tiết loại trường</Divider>
@@ -82,7 +82,7 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
                     </Link>
 
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

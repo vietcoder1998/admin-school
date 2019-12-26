@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import './Announcement.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';
@@ -21,13 +21,13 @@ class Announcement extends PureComponent<AnnouncementProps, AnnouncementState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment >
+            < >
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={AnnouncementList} />
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={AnnouncementCreate} />
                     <ErrorBoundaryRoute exact path={`${path}/fix/:id`} component={AnnouncementCreate} />
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

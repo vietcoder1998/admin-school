@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Button, Select, Divider } from 'antd';
 import { REDUX_SAGA } from '../../../../../../../const/actions';
@@ -155,7 +155,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             list_name,
         } = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>
                         {localStorage.getItem("name_major")}
@@ -211,7 +211,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                     </InputTitle>
 
                 </div>
-            </Fragment>
+            </>
         )
     }
 }

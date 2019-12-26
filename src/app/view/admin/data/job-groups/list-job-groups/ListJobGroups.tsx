@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IJobGroup } from '../../../../../../redux/models/job-groups';
 import { Link } from 'react-router-dom';
@@ -159,7 +159,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { data_table, loading_table, openModal, name, type , pageIndex, pageSize} = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -203,7 +203,28 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                             </Link>
                         </Button>
                     </h5>
-
+                    <Row>
+                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={name}
+                                onChange={(event: any) => this.setState({ name: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListJobGroups(pageIndex, pageSize, name)}
+                                suffix={
+                                    name &&
+                                        name.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ name: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <Table
                         // @ts-ignore
                         columns={this.columns}
@@ -214,7 +235,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                         pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key }) })}
                     />
                 </div>
             </>
@@ -223,10 +244,11 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListJobGroups: (pageIndex: number, pageSize: number) => dispatch({
+    getListJobGroups: (pageIndex: number, pageSize: number, name?: string) => dispatch({
         type: REDUX_SAGA.JOB_GROUPS.GET_JOB_GROUPS,
         pageIndex,
-        pageSize
+        pageSize,
+        name,
     })
 });
 

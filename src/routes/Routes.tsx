@@ -1,4 +1,4 @@
-import React, { Suspense, Fragment, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import FallBack from './FallBack';
 
@@ -10,7 +10,7 @@ const NotFound = lazy(() => import('./../app/view/not-found/NotFound'));
 
 export default function Routes(props: any) {
     return (
-        <Fragment>
+        <>
             <Router>
                 <Suspense fallback={<FallBack />}>
                     <Route path={'/admin'} component={Admin} />
@@ -25,6 +25,6 @@ export default function Routes(props: any) {
                     <Route exact path='*' component={NotFound} /> :
                 </Suspense>
             </Router>
-        </Fragment>
+        </>
     );
 }

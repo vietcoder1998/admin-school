@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import CreateAnnouTypes from './create-annou-types/CreateAnnouTypes';
@@ -22,12 +22,12 @@ class Regions extends PureComponent<RegionsProps, RegionsState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateAnnouTypes}/>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListAnnouTypes}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

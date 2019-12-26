@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {Link} from 'react-router-dom';
@@ -143,7 +143,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
             }
         };
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>
                         {type_cpn === TYPE.CREATE ? 'Thêm quyền mới' : 'Sửa quyền'}
@@ -225,7 +225,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                         Về trang trước
                     </Link>
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, {  } from 'react'
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import CandidatesList from './candidates-list/CandidatesList';
 const Switch = require("react-router-dom").Switch;
@@ -11,10 +11,10 @@ interface ICandidatesProps {
 export default function Candidates(props: ICandidatesProps) {
     let { path } = props.match
     return (
-        <Fragment >
+        < >
             <Switch>
                 <ErrorBoundaryRoute path={`${path}/list`} component={CandidatesList} />
             </Switch>
-        </Fragment>
+        </>
     )
 }

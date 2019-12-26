@@ -1,6 +1,6 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IMajor } from '../../../../../../redux/models/majors';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     history: any;
-    getListMajors: Function;
+    getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => any;
 }
 
 interface ListMajorsState {
@@ -50,7 +50,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             branchID: undefined,
             type: TYPE.EDIT,
             openModal: false,
-            list_data: []
+            list_data: [],
+            name: undefined
         };
     };
 
@@ -226,10 +227,42 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     render() {
-        let { data_table, loading_table, type, openModal, list_data, name, branchName } = this.state;
+        let { data_table, loading_table, type, openModal, list_data, name, branchName , pageIndex, pageSize} = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
+                <ModalConfig
+                    namebtn1={"Hủy"}
+                    namebtn2={"Hoàn thành"}
+                    title="Thay đổi chuyên ngành"
+                    isOpen={openModal}
+                    handleOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
+                    toggleModal={this.toggleModal}
+                >
+                    {type === TYPE.EDIT ? (
+                        <>
+                            <InputTitle
+                                type={TYPE.INPUT}
+                                title="Sửa tên ngành "
+                                widthLabel="120px"
+                                placeholder="Thay đổi tên"
+                                value={name}
+                                widthInput={"250px"}
+                                style={{ padding: "10px 0px" }}
+                                onChange={(event: any) => this.setState({ name: event })}
+                            />
+                            <InputTitle
+                                type={TYPE.SELECT}
+                                title="Chọn chuyên ngành "
+                                placeholder="Chọn chuyên ngành "
+                                value={branchName}
+                                list_value={list_data}
+                                style={{ padding: "10px 0px" }}
+                                onChange={this.handleChoseMajor}
+                            />
+                        </>
+                    ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
+                </ModalConfig>
                 <div>
                     <h5>
                         Danh sách chuyên ngành
@@ -245,38 +278,28 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             </Link>
                         </Button>
                     </h5>
-                    <ModalConfig
-                        namebtn1={"Hủy"}
-                        namebtn2={"Hoàn thành"}
-                        title="Thay đổi chuyên ngành"
-                        isOpen={openModal}
-                        handleOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
-                        toggleModal={this.toggleModal}
-                    >
-                        {type === TYPE.EDIT ? (
-                            <Fragment>
-                                <InputTitle
-                                    type={TYPE.INPUT}
-                                    title="Sửa tên ngành "
-                                    widthLabel="120px"
-                                    placeholder="Thay đổi tên"
-                                    value={name}
-                                    widthInput={"250px"}
-                                    style={{ padding: "10px 0px" }}
-                                    onChange={(event: any) => this.setState({ name: event })}
-                                />
-                                <InputTitle
-                                    type={TYPE.SELECT}
-                                    title="Chọn chuyên ngành "
-                                    placeholder="Chọn chuyên ngành "
-                                    value={branchName}
-                                    list_value={list_data}
-                                    style={{ padding: "10px 0px" }}
-                                    onChange={this.handleChoseMajor}
-                                />
-                            </Fragment>
-                        ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
-                    </ModalConfig>
+                    <Row>
+                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={name}
+                                onChange={(event: any) => this.setState({ name: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, name)}
+                                suffix={
+                                    name &&
+                                        name.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ name: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <Table
                         // @ts-ignore
                         columns={this.columns}
@@ -289,22 +312,23 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         onChange={this.setPageIndex}
                         onRow={(event) => ({
                             onMouseEnter: () => {
-                                this.setState({ id: event.key, name: event.name, branchName: event.branchName });
+                                this.setState({ id: event.key, branchName: event.branchName });
                                 localStorage.setItem("name_major", event.name)
                             }
                         })}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     };
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListMajors: (pageIndex: number, pageSize: number) => dispatch({
+    getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => dispatch({
         type: REDUX_SAGA.MAJORS.GET_MAJORS,
         pageIndex,
-        pageSize
+        pageSize,
+        name
     })
 });
 

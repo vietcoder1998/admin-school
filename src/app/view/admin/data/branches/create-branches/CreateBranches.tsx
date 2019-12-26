@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
@@ -49,7 +49,7 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
     render() {
         let {name} = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm nhóm ngành mới</h5>
                     <Divider orientation="left">Chi tiết nhóm ngành</Divider>
@@ -82,7 +82,7 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
                     </Link>
 
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

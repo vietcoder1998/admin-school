@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
@@ -51,7 +51,7 @@ class CreateSkills extends PureComponent<CreateSkillsProps, CreateSkillsState> {
     render() {
         let {name} = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm kỹ năng mới</h5>
                     <Divider orientation="left">Chi tiết kỹ năng</Divider>
@@ -84,7 +84,7 @@ class CreateSkills extends PureComponent<CreateSkillsProps, CreateSkillsState> {
                     </Link>
 
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

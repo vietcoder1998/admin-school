@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import {connect} from 'react-redux';
 import ListAdminAccounts from './list-admin-accounts/ListAdminAccounts';
@@ -22,13 +22,13 @@ class AdminAccounts extends PureComponent<AdminAccountsProps, AdminAccountsState
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute path={`${path}${routePath.LIST}`} component={ListAdminAccounts}/>
                     <ErrorBoundaryRoute path={`${path}${routePath.FIX}/:id`} component={CreateAdminAccounts}/>
                     <ErrorBoundaryRoute path={`${path}${routePath.CREATE}`} component={CreateAdminAccounts}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

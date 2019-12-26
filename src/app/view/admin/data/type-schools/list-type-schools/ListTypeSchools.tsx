@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Icon, Table, Button} from 'antd';
 import {REDUX_SAGA} from '../../../../../../const/actions';
@@ -164,7 +164,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
         let {data_table, loading_table, openModal, name, type} = this.state;
         let {totalItems} = this.props;
         return (
-            <Fragment>
+            <>
                 <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa loại trường" : "Xóa loại trường"}
                     namebtn1="Hủy"
@@ -217,7 +217,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                         onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name})})}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }

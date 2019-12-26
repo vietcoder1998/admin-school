@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import './TypeSchools.scss';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import {connect} from 'react-redux';
@@ -23,12 +23,12 @@ class TypeSchools extends PureComponent<ITypeSchoolsProps, ITypeSchoolsState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateTypeSchools}/>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListTypeSchools}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

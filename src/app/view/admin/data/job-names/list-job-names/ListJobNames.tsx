@@ -1,6 +1,6 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Input, Row, Col } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IJobName } from '../../../../../../redux/models/job-type';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { IAppState } from '../../../../../../redux/store/reducer';
 
 interface IListJobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListJobNames: Function;
+    getListJobNames: (pageIndex?: number, pageSize?: number, name?: string) => any;
 }
 
 interface IListJobNamesState {
@@ -26,10 +26,10 @@ interface IListJobNamesState {
     pageIndex: number;
     pageSize: number;
     openModal?: boolean;
-    name?: string;
     jobGroupID?: number;
     id?: string;
     type?: string;
+    name?: string;
     jobGroupName?: string;
     list_data: Array<{ label: string, value: number }>
 }
@@ -50,7 +50,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             list_job_groups: [],
             jobGroupID: undefined,
             jobGroupName: undefined,
-            list_data: []
+            list_data: [],
         }
     }
 
@@ -214,10 +214,53 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     };
 
     render() {
-        let { data_table, loading_table, openModal, type, name, jobGroupName, list_data } = this.state;
+        let {
+            data_table,
+            loading_table,
+            openModal,
+            type,
+            name,
+            jobGroupName,
+            list_data,
+            pageIndex,
+            pageSize
+        } = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
+                <ModalConfig
+                    namebtn1={"Hủy"}
+                    namebtn2={"Hoàn thành"}
+                    title="Thay đổi công việc"
+                    isOpen={openModal}
+                    handleOk={() => type === TYPE.EDIT ? this.editJobNames() : this.removeJobNames()}
+                    handleClose={this.toggleModal}
+                    toggleModal={this.toggleModal}
+                >
+                    {type === TYPE.EDIT ? (
+                        <>
+                            <InputTitle
+                                type={TYPE.INPUT}
+                                title="Sửa tên công việc"
+                                widthLabel="120px"
+                                placeholder="Thay đổi tên"
+                                value={name}
+                                widthInput={"250px"}
+                                style={{ padding: "0px 20px" }}
+                                onChange={(event: any) => this.setState({ name: event })}
+                            />
+                            <InputTitle
+                                type={TYPE.SELECT}
+                                title="Chọn nhóm công việc"
+                                placeholder="Chọn nhóm công việc"
+                                list_value={list_data}
+                                value={jobGroupName}
+                                style={{ padding: "0px 20px" }}
+                                onChange={this.handleChoseJobGroup}
+                            />
+                        </>
+                    ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
+                </ModalConfig>
                 <div>
                     <h5>
                         Danh sách tên công việc
@@ -236,39 +279,28 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                             </Link>
                         </Button>
                     </h5>
-                    <ModalConfig
-                        namebtn1={"Hủy"}
-                        namebtn2={"Hoàn thành"}
-                        title="Thay đổi công việc"
-                        isOpen={openModal}
-                        handleOk={() => type === TYPE.EDIT ? this.editJobNames() : this.removeJobNames()}
-                        handleClose={this.toggleModal}
-                        toggleModal={this.toggleModal}
-                    >
-                        {type === TYPE.EDIT ? (
-                            <Fragment>
-                                <InputTitle
-                                    type={TYPE.INPUT}
-                                    title="Sửa tên công việc"
-                                    widthLabel="120px"
-                                    placeholder="Thay đổi tên"
-                                    value={name}
-                                    widthInput={"250px"}
-                                    style={{ padding: "0px 20px" }}
-                                    onChange={(event: any) => this.setState({ name: event })}
-                                />
-                                <InputTitle
-                                    type={TYPE.SELECT}
-                                    title="Chọn nhóm công việc"
-                                    placeholder="Chọn nhóm công việc"
-                                    list_value={list_data}
-                                    value={jobGroupName}
-                                    style={{ padding: "0px 20px" }}
-                                    onChange={this.handleChoseJobGroup}
-                                />
-                            </Fragment>
-                        ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
-                    </ModalConfig>
+                    <Row>
+                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={name}
+                                onChange={(event: any) => this.setState({ name: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListJobNames(pageIndex, pageSize, name)}
+                                suffix={
+                                    name &&
+                                        name.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ name: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <Table
                         // @ts-ignore
                         columns={this.columns}
@@ -282,14 +314,14 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                         onRow={(event: any) => ({ onClick: () => this.choseJobName(event) })}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListJobNames: (pageIndex: number, pageSize: number) => dispatch({
-        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize
+    getListJobNames: (pageIndex: number, pageSize: number, name?: string) => dispatch({
+        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize, name
     })
 });
 

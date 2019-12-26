@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
@@ -82,7 +82,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
     render() {
         let {name, list_data, jobGroupName} = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm công việc mới</h5>
                     <Divider orientation="left">Chi tiết công việc</Divider>
@@ -124,7 +124,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     </Link>
 
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

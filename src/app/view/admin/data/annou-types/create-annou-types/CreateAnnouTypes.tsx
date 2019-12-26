@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Divider, Button, Icon, Select, InputNumber } from 'antd';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
@@ -96,7 +96,7 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
     render() {
         let { name, targets } = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm nhóm bài viết  mới</h5>
                     <Divider orientation="left">Chi tiết nhóm bài viết </Divider>
@@ -151,7 +151,7 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
                         Hủy
                     </Link>
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import {connect} from 'react-redux';
 import ListRoles from './list-roles/ListRoles';
@@ -21,13 +21,13 @@ class Roles extends PureComponent<RolesProps, RolesState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute path={`${path}/list`} component={ListRoles}/>
                     <ErrorBoundaryRoute path={`${path}/${'fix'}/:id`} component={CreateRoles}/>
                     <ErrorBoundaryRoute path={`${path}/${'create'}`} component={CreateRoles}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

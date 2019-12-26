@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
@@ -239,7 +239,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
         let { data_table, loading_table, openModal, name, type, targets, priority } = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
                 <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa nhóm bài viết" : "Xóa nhóm bài viết"}
                     namebtn1="Hủy"
@@ -323,7 +323,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                         })}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }

@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import ListBranches from './list-branches/ListBranches';
@@ -22,12 +22,12 @@ class Branches extends PureComponent<BranchesProps, BranchesState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateBranches}/>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListBranches}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

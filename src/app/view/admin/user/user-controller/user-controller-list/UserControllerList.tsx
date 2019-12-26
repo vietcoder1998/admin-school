@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Icon, Popconfirm, Col, Select, Row, Input, Tooltip } from 'antd';
 import './UserControllerList.scss';
@@ -252,7 +252,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             totalItems,
         } = this.props
         return (
-            <Fragment>
+            <>
                 <div className="common-content">
                     <h5>
                         Danh sách người dùng
@@ -351,7 +351,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                         />
                     </div>
                 </div>
-            </Fragment>
+            </>
         )
     }
 };

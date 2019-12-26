@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -166,7 +166,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
         let { data_table, loading_table, openModal, name, type } = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
                 <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa quyền" : "Xóa quyền"}
                     namebtn1="Hủy"
@@ -227,7 +227,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                         }}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }

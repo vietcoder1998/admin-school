@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
@@ -49,7 +49,7 @@ class CreateRegions extends PureComponent<CreateRegionsProps, CreateRegionsState
     render() {
         let {name} = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm tỉnh thành mới</h5>
                     <Divider orientation="left">Chi tiết tỉnh thành</Divider>
@@ -81,7 +81,7 @@ class CreateRegions extends PureComponent<CreateRegionsProps, CreateRegionsState
                         Hủy
                     </Link>
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

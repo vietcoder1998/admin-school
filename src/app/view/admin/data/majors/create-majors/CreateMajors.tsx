@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Divider, Button, Icon} from 'antd';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
@@ -84,7 +84,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
     render() {
         let {name, list_data, branchID, branchName} = this.state;
         return (
-            <Fragment>
+            <>
                 <div>
                     <h5>Thêm chuyên ngành mới</h5>
                     <Divider orientation="left">Chi tiết chuyên ngành</Divider>
@@ -126,7 +126,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     </Link>
 
                 </Button>
-            </Fragment>
+            </>
         )
     }
 }

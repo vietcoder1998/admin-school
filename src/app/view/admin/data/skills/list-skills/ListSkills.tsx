@@ -1,15 +1,15 @@
-import React, {PureComponent, Fragment} from 'react'
-import {connect} from 'react-redux';
-import {Icon, Table, Button} from 'antd';
-import {REDUX_SAGA} from '../../../../../../const/actions';
-import {ISkills} from '../../../../../../redux/models/skills';
-import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
-import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
-import {_requestToServer} from '../../../../../../services/exec';
-import {PUT, DELETE} from '../../../../../../const/method';
-import {SKILLS} from '../../../../../../services/api/private.api';
-import {TYPE} from '../../../../../../const/type';
+import React, { PureComponent, } from 'react'
+import { connect } from 'react-redux';
+import { Icon, Table, Button, Row, Col, Input } from 'antd';
+import { REDUX_SAGA } from '../../../../../../const/actions';
+import { ISkills } from '../../../../../../redux/models/skills';
+import { Link } from 'react-router-dom';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { _requestToServer } from '../../../../../../services/exec';
+import { PUT, DELETE } from '../../../../../../const/method';
+import { SKILLS } from '../../../../../../services/api/private.api';
+import { TYPE } from '../../../../../../const/type';
 
 interface ListSkillsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -51,7 +51,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.list_skills !== prevState.list_skills) {
             let data_table: any = [];
-            let {pageIndex, pageSize} = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_skills.forEach((item: any, index: any) => {
                 data_table.push({
                     key: item.id,
@@ -73,7 +73,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     EditContent = (
         <>
             <Icon
-                className="test"                 key="edit"                 style={{ padding: 5 , margin: 2}}
+                className="test" key="edit" style={{ padding: 5, margin: 2 }}
                 type="edit"
                 theme="twoTone"
                 onClick={
@@ -82,7 +82,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             />
             <Icon
                 className="test"
-                style={{ padding: 5 , margin: 2}}
+                style={{ padding: 5, margin: 2 }}
                 type="delete"
                 theme="twoTone"
                 twoToneColor="red"
@@ -94,10 +94,10 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     );
 
     toggleModal = (type?: string) => {
-        let {openModal} = this.state;
-        this.setState({openModal: !openModal});
+        let { openModal } = this.state;
+        this.setState({ openModal: !openModal });
         if (type) {
-            this.setState({type})
+            this.setState({ type })
         }
     };
 
@@ -128,12 +128,12 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize});
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListSkills(event.current - 1, event.pageSize)
     };
 
     editSkills = async () => {
-        let {name, id} = this.state;
+        let { name, id } = this.state;
         if (name) {
             await _requestToServer(
                 PUT, SKILLS + `/${id}`,
@@ -150,7 +150,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     };
 
     removeSkills = async () => {
-        let {id} = this.state;
+        let { id } = this.state;
         await _requestToServer(
             DELETE, SKILLS,
             [id]
@@ -162,17 +162,17 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
 
     render() {
-        let {data_table, loading_table, openModal, name, type} = this.state;
-        let {totalItems} = this.props;
+        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize } = this.state;
+        let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
                 <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa kỹ năng" : "Xóa kỹ năng"}
                     namebtn1="Hủy"
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => {
-                        this.setState({openModal: !openModal})
+                        this.setState({ openModal: !openModal })
                     }}
                     handleOk={async () => type === TYPE.EDIT ? this.editSkills() : this.removeSkills()}
                     handleClose={async () => this.toggleModal()}
@@ -183,7 +183,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                             type={TYPE.INPUT}
                             value={name}
                             placeholder="Tên tỉnh"
-                            onChange={(event: any) => this.setState({name: event})}
+                            onChange={(event: any) => this.setState({ name: event })}
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa kỹ năng: {name}</div>
                     }
@@ -201,31 +201,53 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         >
 
                             <Link to='/admin/data/skills/create'>
-                                <Icon type="plus"/>
+                                <Icon type="plus" />
                                 Thêm kỹ năng mới
                             </Link>
                         </Button>
                     </h5>
+                    <Row>
+                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={name}
+                                onChange={(event: any) => this.setState({ name: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListSkills(pageIndex, pageSize, name)}
+                                suffix={
+                                    name &&
+                                        name.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ name: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <Table
                         // @ts-ignore
                         columns={this.columns}
                         loading={loading_table}
                         dataSource={data_table}
-                        scroll={{x: 800}}
+                        scroll={{ x: 800 }}
                         bordered
-                        pagination={{total: totalItems, showSizeChanger: true}}
+                        pagination={{ total: totalItems, showSizeChanger: true }}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name})})}
+                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListSkills: (pageIndex: number, pageSize: number) => dispatch({type: REDUX_SAGA.SKILLS.GET_SKILLS, pageIndex, pageSize})
+    getListSkills: (pageIndex: number, pageSize: number, name?: string) => dispatch({ type: REDUX_SAGA.SKILLS.GET_SKILLS, pageIndex, pageSize, name })
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({

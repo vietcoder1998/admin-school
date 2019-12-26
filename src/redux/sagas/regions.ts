@@ -42,7 +42,8 @@ function callRegions(action: any) {
             null,
             {
                 pageIndex: pageIndex ? pageIndex : 0,
-                pageSize: pageSize ? pageSize : 0
+                pageSize: pageSize ? pageSize : 0,
+                name: action.name
             },
             undefined, undefined, false, false
         )

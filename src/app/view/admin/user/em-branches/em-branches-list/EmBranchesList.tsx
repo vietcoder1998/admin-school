@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
 import { Button, Table, Icon, Select, Row, Col, Modal, Tooltip } from 'antd';
@@ -361,7 +361,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             modalState,
         } = this.props
         return (
-            <Fragment>
+            <>
                 <div className="common-content">
                     <Modal
                         visible={modalState.open_modal}
@@ -486,7 +486,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                         />
                     </div>
                 </div>
-            </Fragment>
+            </>
         )
     }
 };

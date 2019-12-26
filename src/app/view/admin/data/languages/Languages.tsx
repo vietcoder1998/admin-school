@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import CreateLanguages from './create-languages/CreateLanguages';
@@ -22,12 +22,12 @@ class Languages extends PureComponent<LanguagesProps, LanguagesState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateLanguages}/>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListLanguages}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

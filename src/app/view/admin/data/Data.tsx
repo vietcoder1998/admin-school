@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent,  } from 'react'
 import './Data.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';
@@ -29,7 +29,7 @@ class Data extends PureComponent<DataProps, DataState> {
     render() {
        let {path} = this.props.match;
         return (
-            <Fragment >
+            < >
                 <Switch>
                     <ErrorBoundaryRoute  path={`${path}/languages`} component={Languages} />
                     <ErrorBoundaryRoute  path={`${path}/regions`} component={Regions} />
@@ -41,7 +41,7 @@ class Data extends PureComponent<DataProps, DataState> {
                     <ErrorBoundaryRoute  path={`${path}/branches`} component={Branches} />
                     <ErrorBoundaryRoute  path={`${path}/annou-types`} component={AnnouTypes} />
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

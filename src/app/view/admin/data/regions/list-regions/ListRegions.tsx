@@ -1,6 +1,6 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { ILanguage } from '../../../../../../redux/models/languages';
 import { Link } from 'react-router-dom';
@@ -159,10 +159,10 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize } = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
                 <ModalConfig
                     title={type === TYPE.EDIT ? "Sửa tỉnh thành" : "Xóa tỉnh thành"}
                     namebtn1="Hủy"
@@ -202,6 +202,28 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             </Link>
                         </Button>
                     </h5>
+                    <Row>
+                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={name}
+                                onChange={(event: any) => this.setState({ name: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListRegions(pageIndex, pageSize, name)}
+                                suffix={
+                                    name &&
+                                        name.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ name: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <Table
                         // @ts-ignore
                         columns={this.columns}
@@ -215,13 +237,18 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                         onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
                     />
                 </div>
-            </Fragment>
+            </>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListRegions: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize })
+    getListRegions: (
+        pageIndex: number,
+        pageSize: number,
+        name?: string
+    ) =>
+        dispatch({ type: REDUX_SAGA.REGIONS.GET_REGIONS, pageIndex, pageSize, name })
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({

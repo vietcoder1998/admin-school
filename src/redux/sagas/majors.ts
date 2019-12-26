@@ -41,7 +41,8 @@ function callMajors(action: any) {
             undefined,
             {
                 pageIndex: pageIndex ? pageIndex : 0,
-                pageSize: pageSize ? pageSize : 10
+                pageSize: pageSize ? pageSize : 10,
+                name: action.name
             },
             undefined, undefined, false, false
         )

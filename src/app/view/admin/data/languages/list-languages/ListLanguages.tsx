@@ -1,6 +1,6 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Popover } from 'antd';
+import { Icon, Table, Button, Row, Col, Popover, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { ILanguages } from '../../../../../../redux/models/languages';
 import { _requestToServer } from '../../../../../../services/exec';
@@ -177,10 +177,10 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize } = this.state;
         let { totalItems } = this.props;
         return (
-            <Fragment>
+            <>
                 <AppModal
                     title={this.getModalTitle()}
                     visible={openModal}
@@ -242,6 +242,24 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                     <Row>
                         <Col span={6} />
                         <Col span={12}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={name}
+                                onChange={(event: any) => this.setState({ name: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListLanguages(pageIndex, pageSize, name)}
+                                suffix={
+                                    name &&
+                                        name.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ name: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
                             <Table
                                 // @ts-ignore
                                 columns={this.columns}
@@ -259,16 +277,17 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                         <Col span={6} />
                     </Row>
                 </div>
-            </Fragment>
+            </>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListLanguages: (pageIndex: number, pageSize: number) => dispatch({
+    getListLanguages: (pageIndex: number, pageSize: number, name?: string) => dispatch({
         type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES,
         pageIndex,
-        pageSize
+        pageSize,
+        name
     })
 });
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, {  } from 'react'
 import './PendingJobs.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import PendingJobsList from './pending-jobs-list/PendingJobsList';
@@ -17,13 +17,13 @@ interface IPendingJobsProps {
 function PendingJobs(props?: IPendingJobsProps) {
     let { path } = props.match;
     return (
-        <Fragment >
+        < >
             <Switch>
                 <ErrorBoundaryRoute exact path={`${path}/list`} component={PendingJobsList} />
                 <ErrorBoundaryRoute exact path={`${path}/create`} component={PendingJobsCreate} />
                 <ErrorBoundaryRoute exact path={`${path}${routePath.JOB_ANNOUNCEMENTS + routePath.LIST}`} component={JobAnnouncementsList} />
             </Switch>
-        </Fragment>
+        </>
     )
 }
 

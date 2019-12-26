@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../../routes/ErrorBoundaryRoute';
 import ListMajorJobNames from './list-major-job-names/ListMajorJobNames';
@@ -20,11 +20,11 @@ class ControlJobNames extends PureComponent<ControlJobNamesProps, ControlJobName
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListMajorJobNames}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }

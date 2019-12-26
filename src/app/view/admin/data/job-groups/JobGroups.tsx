@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
 import CreateJobGroups from './create-job-groups/CreateJobGroups';
@@ -22,12 +22,12 @@ class JobGroups extends PureComponent<JobGroupsProps, JobGroupsState> {
     render() {
         let {path} = this.props.match;
         return (
-            <Fragment>
+            <>
                 <Switch>
                     <ErrorBoundaryRoute exact path={`${path}/create`} component={CreateJobGroups}/>
                     <ErrorBoundaryRoute exact path={`${path}/list`} component={ListJobGroups}/>
                 </Switch>
-            </Fragment>
+            </>
         )
     }
 }
