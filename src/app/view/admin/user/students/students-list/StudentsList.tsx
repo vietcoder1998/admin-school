@@ -109,7 +109,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     }}
                 />
             </Tooltip>
-            <Tooltip title='Chứng thực' >
+            <Tooltip title='Xác thực' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"safety-certificate"}

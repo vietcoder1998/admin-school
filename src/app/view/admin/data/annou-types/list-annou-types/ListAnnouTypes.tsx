@@ -1,6 +1,6 @@
-import React, { PureComponent,  } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber } from 'antd';
+import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber, Row, Col } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
@@ -10,6 +10,8 @@ import { PUT, DELETE } from '../../../../../../const/method';
 import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { IAnnouType } from '../../../../../../redux/models/annou-types';
+import { IptLetterP } from '../../../../layout/common/Common';
+const { Option } = Select;
 
 interface IListAnnouTypesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -27,6 +29,7 @@ interface IListAnnouTypesState {
     id?: string;
     type?: string;
     targets?: Array<any>;
+    target?: string;
     priority?: number;
 }
 
@@ -44,6 +47,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             type: TYPE.EDIT,
             pageSize: 10,
             targets: [TYPE.ALL],
+            target: null,
             priority: 0,
         }
     };
@@ -197,8 +201,9 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     setPageIndex = async (event: any) => {
+        let { target } = this.state;
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        this.props.getListAnnouTypes(event.current - 1, event.pageSize)
+        await this.props.getListAnnouTypes(event.current - 1, event.pageSize, target)
     };
 
     editAnnouTypes = async () => {
@@ -236,7 +241,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, targets, priority } = this.state;
+        let { data_table, loading_table, openModal, name, type, target, priority, targets } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -308,6 +313,29 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             </Link>
                         </Button>
                     </h5>
+                    <Row>
+                        <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            <IptLetterP value={"Loại bài viết"} />
+                            <Select
+                                showSearch
+                                placeholder="Tất cả"
+                                defaultValue="Tất cả"
+                                optionFilterProp="children"
+                                style={{ width: "100%" }}
+                                value={target}
+                                onChange={(event: any) => {
+                                    this.setState({ target: event });
+                                }}
+                            >
+                                <Option value={null}>Tất cả</Option>
+                                <Option value={TYPE.EMPLOYER}>Nhà trường</Option>
+                                <Option value={TYPE.SCHOOL}>Nhà tuyển dụng</Option>
+                                <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
+                                <Option value={TYPE.PUBLIC}>Khách</Option>
+                                <Option value={TYPE.STUDENT}>Học sinh</Option>
+                            </Select>
+                        </Col>
+                    </Row>
                     <Table
                         // @ts-ignore
                         columns={this.columns}
@@ -329,7 +357,8 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListAnnouTypes: (pageIndex: number, pageSize: number) => dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, pageIndex, pageSize })
+    getListAnnouTypes: (pageIndex: number, pageSize: number, target?: string) =>
+        dispatch({ type: REDUX_SAGA.ANNOU_TYPES.GET_ANNOU_TYPES, pageIndex, pageSize, target })
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({

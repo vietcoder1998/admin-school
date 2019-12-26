@@ -114,7 +114,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     }}
                 />
             </Tooltip>
-            <Tooltip title='Chứng thực' >
+            <Tooltip title='Xác thực' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"safety-certificate"}

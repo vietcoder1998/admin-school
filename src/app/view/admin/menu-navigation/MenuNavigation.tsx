@@ -181,7 +181,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </span>
                     }
                 >
-                    <Menu.Item key="16">
+                    <Menu.Item key="22">
                         <Link to={routeLink.USER_CONTROLLER + routePath.LIST}>
                             <Icon type="user" />
                             <span>Người dùng</span>

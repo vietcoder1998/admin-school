@@ -119,6 +119,13 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             width: 50,
         },
         {
+            title: 'Xác thực',
+            dataIndex: 'profileVerified',
+            className: 'action',
+            key: 'profileVerified',
+            width: 100,
+        },
+        {
             title: 'Tên nhà tuyển dụng',
             dataIndex: 'employerName',
             className: 'action',
@@ -133,10 +140,10 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             width: 100,
         },
         {
-            title: 'Chứng thực',
-            dataIndex: 'profileVerified',
+            title: 'Số điện thoại',
+            dataIndex: 'phone',
             className: 'action',
-            key: 'profileVerified',
+            key: 'phone',
             width: 100,
         },
         {
@@ -171,9 +178,10 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     employerName: item.employerName ? item.employerName : '',
                     email: item.email ? item.email : '',
+                    phone: item.phone ? item.phone : '',
                     logoUrl: <Avatar size="large" shape="square" src={item.logoUrl} icon="shop" />,
                     profileVerified:
-                        <Tooltip title={item.profileVerified ? 'Chứng thực' : 'Chưa chứng thực'} >
+                        <Tooltip title={item.profileVerified ? 'Xác thực' : 'Chưa xác thực'} >
                             <Icon
                                 style={{ color: item.profileVerified ? 'green' : 'red' }}
                                 type={"safety-certificate"}
@@ -361,7 +369,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                             </Select>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                            <IptLetterP value={"Trạng thái chứng thực"} />
+                            <IptLetterP value={"Trạng thái xác thực"} />
                             <Select
                                 showSearch
                                 style={{ width: "100%" }}
@@ -369,8 +377,8 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                                 onChange={(event?: any) => this.onChangeFilter(event, TYPE.EM_CONTROLLER.profileVerified)}
                             >
                                 <Select.Option key="1" value={null}>Tất cả</Select.Option>
-                                <Select.Option key="2" value={TYPE.TRUE}>Đang chứng thực</Select.Option>
-                                <Select.Option key="3" value={TYPE.FALSE}>Không chứng thực</Select.Option>
+                                <Select.Option key="2" value={TYPE.TRUE}>Đang xác thực</Select.Option>
+                                <Select.Option key="3" value={TYPE.FALSE}>Không xác thực</Select.Option>
                             </Select>
                         </Col>
                     </Row>
@@ -380,7 +388,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1060 }}
+                            scroll={{ x: 1160 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
