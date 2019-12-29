@@ -801,8 +801,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     </DrawerConfig> */}
                     <div className="common-content">
                         <h5>
-                            Quản lý bài đăng
-                                <Button
+                            Quản lý bài đăng {`(${totalItems})`}
+                            <Button
                                 onClick={() => this.searchJobAnnouncement()}
                                 type="primary"
                                 style={{
