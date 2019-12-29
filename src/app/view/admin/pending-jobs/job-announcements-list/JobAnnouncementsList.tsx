@@ -387,7 +387,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     title: item.jobTitle,
-                    jobName: item.jobName.name ? item.jobName.name : "",
+                    jobName: item.jobName ? item.jobName.name : "",
                     jobType: item.jobType,
                     employerBranchName: item.employerBranchName ? item.employerBranchName : "",
                     createdDate: timeConverter(item.createdDate, 1000),
