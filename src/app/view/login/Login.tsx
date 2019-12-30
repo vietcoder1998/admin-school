@@ -43,7 +43,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
     componentDidMount() {
         let is_authen = localStorage.getItem("token") ? true : false;
         if (is_authen) {
-            window.location.href = routeLink.PENDING_JOBS + routePath.LIST;
+            window.location.href = routeLink.PENDING_JOBS + routePath.JOB_ANNOUNCEMENTS + routePath.LIST;
         } else {
             let state = this.props.match.path.replace("/", "");
             if (state) {
@@ -140,6 +140,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                                                     type={show_password ? "text" : "password"}
                                                     maxLength={160}
                                                     onChange={event => this.setState({ password: event.target.value })}
+                                                    onPressEnter={() => this.createRequest()}
                                                     suffix={
                                                         <Icon
                                                             type={show_password ? "eye-invisible" : "eye"}
