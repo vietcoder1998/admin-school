@@ -9,7 +9,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { ROLES } from '../../../../../../services/api/private.api';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IAppState } from '../../../../../../redux/store/reducer';
-import { IAdminAccount } from '../../../../../../redux/models/admin-accounts';
+import { IAdminAccount } from '../../../../../../models/admin-accounts';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 

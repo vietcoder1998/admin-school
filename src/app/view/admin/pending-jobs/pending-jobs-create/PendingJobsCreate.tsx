@@ -11,12 +11,12 @@ import { _requestToServer } from '../../../../../services/exec';
 import { POST, PUT } from '../../../../../const/method';
 import { EM_BRANCHES_API } from '../../../../../services/api/private.api';
 import moment from 'moment';
-import { IShifts, IAnnoucementBody } from '../../../../../redux/models/pending-jobs';
+import { IShifts, IAnnoucementBody } from '../../../../../models/pending-jobs';
 import ShiftContent, { newShift } from '../../../layout/annou-shift/AnnouShift';
-import { IJobName } from '../../../../../redux/models/job-type';
-import { IEmBranch, IEmBranchesFilter } from '../../../../../redux/models/em-branches';
-import { IEmployerFilter, IEmployer } from '../../../../../redux/models/employers';
-import { ISkill } from '../../../../../redux/models/skills';
+import { IJobName } from '../../../../../models/job-type';
+import { IEmBranch, IEmBranchesFilter } from '../../../../../models/em-branches';
+import { IEmployerFilter, IEmployer } from '../../../../../models/employers';
+import { ISkill } from '../../../../../models/skills';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -303,7 +303,6 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                 <h5>
                     Đăng bài hộ
                 </h5>
-
                 <Divider orientation="left" >Nội dung công việc</Divider>
                 <div className="announcements-create-content">
                     <InputTitle

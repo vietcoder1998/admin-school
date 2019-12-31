@@ -8,7 +8,7 @@ import {POST} from '../../../../../../const/method';
 import {REDUX_SAGA} from '../../../../../../const/actions';
 import {Link} from 'react-router-dom';
 import {TYPE} from '../../../../../../const/type';
-import {IJobGroup} from '../../../../../../redux/models/job-groups';
+import {IJobGroup} from '../../../../../../models/job-groups';
 
 interface CreateJobNamesState {
     name?: string;

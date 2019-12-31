@@ -8,7 +8,7 @@ import { REDUX_SAGA } from '../../../../../../const/actions';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { DELETE } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
-import { IRole } from '../../../../../../redux/models/roles';
+import { IRole } from '../../../../../../models/roles';
 import { ROLES } from '../../../../../../services/api/private.api';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 

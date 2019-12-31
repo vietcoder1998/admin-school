@@ -1,4 +1,4 @@
-import { IEmControllerDetail } from './../models/em-controller-detail';
+import { IEmControllerDetail } from '../../models/em-controller-detail';
 import { REDUX } from '../../const/actions';
 
 let initState: IEmControllerDetail = {

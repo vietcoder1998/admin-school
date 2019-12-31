@@ -2,7 +2,7 @@ import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
-import { ISkills } from '../../../../../../redux/models/skills';
+import { ISkills } from '../../../../../../models/skills';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
@@ -26,6 +26,7 @@ interface ListSkillsState {
     name?: string;
     id?: string;
     type?: string;
+    search?: string;
 }
 
 class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
@@ -41,6 +42,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             name: undefined,
             id: undefined,
             type: TYPE.EDIT,
+            search: undefined
         }
     }
 
@@ -162,7 +164,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
 
     render() {
-        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize } = this.state;
+        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -211,17 +213,17 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                             <Input
                                 placeholder="Tất cả"
                                 style={{ width: "100%" }}
-                                value={name}
-                                onChange={(event: any) => this.setState({ name: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListSkills(pageIndex, pageSize, name)}
+                                value={search}
+                                onChange={(event: any) => this.setState({ search: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListSkills(pageIndex, pageSize, search)}
                                 suffix={
-                                    name &&
-                                        name.length > 0 ?
+                                    search &&
+                                        search.length > 0 ?
                                         <Icon
                                             type={"close-circle"}
                                             theme={"filled"}
                                             onClick={
-                                                () => this.setState({ name: null })
+                                                () => this.setState({ search: null })
                                             }
                                         /> : <Icon type={"search"} />
                                 }

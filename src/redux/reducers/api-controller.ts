@@ -1,4 +1,4 @@
-import {IApiController} from '../models/api-controller';
+import {IApiController} from '../../models/api-controller';
 import {REDUX} from '../../const/actions';
 import {renderTreeApi} from '../../utils/renderTreeApi';
 

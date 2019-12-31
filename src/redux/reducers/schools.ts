@@ -1,4 +1,4 @@
-import { ISchools } from '../models/schools';
+import { ISchools } from '../../models/schools';
 import { REDUX } from '../../const/actions';
 
 let initState: ISchools = {

@@ -5,10 +5,10 @@ import { convertStringToArray } from '../../../../utils/convertStringToArray';
 import { IptLetter, NotUpdate } from '../common/Common';
 import { weekDays } from '../../../../utils/day';
 import { timeConverter } from '../../../../utils/convertTime';
-import { IPendingJobDetail } from '../../../../redux/models/pending-job-detail';
-import { ISkill } from '../../../../redux/models/skills';
+import { IPendingJobDetail } from '../../../../models/pending-job-detail';
+import { ISkill } from '../../../../models/skills';
 import findIdWithValue from '../../../../utils/findIdWithValue';
-import { IJobName } from '../../../../redux/models/job-type';
+import { IJobName } from '../../../../models/job-type';
 
 interface IJobDetailProps {
     job_detail?: IPendingJobDetail,

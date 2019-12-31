@@ -1,7 +1,7 @@
 import React from 'react';
 import { IptLetter, Timer } from '../common/Common';
 import { Icon, Avatar, Tooltip } from 'antd';
-import { IStudent } from '../../../../redux/models/students';
+import { IStudent } from '../../../../models/students';
 import './StudentItem.scss';
 import { TYPE } from '../../../../const/type';
 import { routeLink, routePath } from '../../../../const/break-cumb';

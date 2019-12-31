@@ -6,14 +6,14 @@ import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../const/actions';
 import { Link } from 'react-router-dom';
-import { IAnnouncementDetail } from '../../../../../redux/models/announcement_detail';
+import { IAnnouncementDetail } from '../../../../../models/announcement_detail';
 import { TYPE } from '../../../../../const/type';
-import { ICreateNewAnnoucement } from '../../../../../redux/models/announcements';
+import { ICreateNewAnnoucement } from '../../../../../models/announcements';
 import { _requestToServer } from '../../../../../services/exec';
 import { POST, PUT } from '../../../../../const/method';
 import { UPLOAD_IMAGE, ANNOUNCEMENT_DETAIL } from '../../../../../services/api/private.api';
 import { sendImageHeader } from '../../../../../services/auth';
-import { IAnnouType } from '../../../../../redux/models/annou-types';
+import { IAnnouType } from '../../../../../models/annou-types';
 
 interface IAnnouncementCreateState {
     title?: string;
@@ -186,8 +186,9 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
 
         image.src = text;
         image.style.width = '100%';
-        image.style.height = '100%';
-        image.style.maxHeight = '100%';
+        image.style.height = 'auto';
+        image.style.maxHeight = '1000px'
+        image.style.maxWidth = '1000px'
         image.style.margin = '0.5vw 0px';
 
         p.innerHTML = 'Chú thích ảnh';
@@ -196,7 +197,6 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
         p.style.textAlign = 'center';
 
         div.innerHTML = 'Nhập tiếp ...'
-
         try {
             let newWindow = document.getElementsByTagName('iframe')[0].contentWindow;
 

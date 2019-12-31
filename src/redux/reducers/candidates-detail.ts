@@ -1,4 +1,4 @@
-import { ICandidateDetail } from '../../redux/models/candidates-detail';
+import { ICandidateDetail } from '../../models/candidates-detail';
 import { REDUX } from '../../const/actions';
 
 let initState: ICandidateDetail = {

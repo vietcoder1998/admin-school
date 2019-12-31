@@ -1,4 +1,4 @@
-import {IJobNames} from '../models/job-type';
+import {IJobNames} from '../../models/job-type';
 import {REDUX} from '../../const/actions';
 
 let initState: IJobNames = {

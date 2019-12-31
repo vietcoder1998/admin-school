@@ -10,7 +10,7 @@ import { DELETE, PUT } from './../../../../../../const/method';
 import { USER_CONTROLLER } from './../../../../../../services/api/private.api';
 import { TYPE } from './../../../../../../const/type';
 import { IptLetterP } from './../../../../layout/common/Common';
-import { IUserController, IUserControllerFilter } from './../../../../../../redux/models/user-controller';
+import { IUserController, IUserControllerFilter } from './../../../../../../models/user-controller';
 
 interface IUserControllerListProps extends StateProps, DispatchProps {
     match?: any;

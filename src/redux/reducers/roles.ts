@@ -1,4 +1,4 @@
-import { IRoles } from '../models/roles';
+import { IRoles } from '../../models/roles';
 import { REDUX } from '../../const/actions';
 
 let initState: IRoles = {

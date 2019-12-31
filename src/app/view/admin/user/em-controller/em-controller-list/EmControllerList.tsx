@@ -10,11 +10,11 @@ import { DELETE, PUT } from '../../../../../../const/method';
 import { EM_CONTROLLER } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
-import { IEmController, IEmControllerFilter } from '../../../../../../redux/models/em-controller';
+import { IEmController, IEmControllerFilter } from '../../../../../../models/em-controller';
 import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
-import { IRegion } from '../../../../../../redux/models/regions';
-import { IDrawerState } from '../../../../../../redux/models/mutil-box';
+import { IRegion } from '../../../../../../models/regions';
+import { IDrawerState } from '../../../../../../models/mutil-box';
 import DrawerConfig from './../../../../layout/config/DrawerConfig';
 import EmInfo from '../../../../layout/em-info/EmInfo';
 

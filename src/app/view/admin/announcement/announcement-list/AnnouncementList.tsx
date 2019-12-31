@@ -11,10 +11,10 @@ import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
 import { _requestToServer } from '../../../../../services/exec';
 import { DELETE, PUT } from '../../../../../const/method';
 import { ANNOUNCEMENT_DETAIL, ANNOU_COMMENTS } from '../../../../../services/api/private.api';
-import { IAnnouCommentsBody, IAnnouComment } from '../../../../../redux/models/annou-comments';
+import { IAnnouCommentsBody, IAnnouComment } from '../../../../../models/annou-comments';
 import { IAppState } from '../../../../../redux/store/reducer';
 import Loading from '../../../layout/loading/Loading';
-import { IDrawerState } from '../../../../../redux/models/mutil-box';
+import { IDrawerState } from '../../../../../models/mutil-box';
 
 let { Option } = Select;
 const { TabPane } = Tabs;

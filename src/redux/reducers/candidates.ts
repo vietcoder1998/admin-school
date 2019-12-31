@@ -1,4 +1,4 @@
-import {ICandidates} from '../models/candidates';
+import {ICandidates} from '../../models/candidates';
 import {REDUX} from '../../const/actions';
 
 let initState: ICandidates = {

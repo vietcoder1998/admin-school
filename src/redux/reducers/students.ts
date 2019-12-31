@@ -1,4 +1,4 @@
-import { IStudents } from '../models/students';
+import { IStudents } from '../../models/students';
 import { REDUX } from '../../const/actions';
 
 let initState: IStudents = {

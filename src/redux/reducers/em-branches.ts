@@ -1,4 +1,4 @@
-import { IEmBranches } from '../models/em-branches';
+import { IEmBranches } from '../../models/em-branches';
 import { REDUX } from '../../const/actions';
 
 let initState: IEmBranches = {

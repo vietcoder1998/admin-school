@@ -2,7 +2,7 @@ import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
-import { ILanguage } from '../../../../../../redux/models/languages';
+import { ILanguage } from '../../../../../../models/languages';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
@@ -26,6 +26,7 @@ interface ListBranchesState {
     name?: string;
     id?: string;
     type?: string;
+    search?: string;
 };
 
 class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
@@ -41,6 +42,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
             name: "",
             id: "",
             type: TYPE.EDIT,
+            search: undefined
         }
     };
 
@@ -160,7 +162,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize } = this.state;
+        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return <>
             <ModalConfig
@@ -208,17 +210,17 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         <Input
                             placeholder="Tất cả"
                             style={{ width: "100%" }}
-                            value={name}
-                            onChange={(event: any) => this.setState({ name: event.target.value })}
-                            onPressEnter={(event: any) => this.props.getListBranches(pageIndex, pageSize, name)}
+                            value={search}
+                            onChange={(event: any) => this.setState({ search: event.target.value })}
+                            onPressEnter={(event: any) => this.props.getListBranches(pageIndex, pageSize, search)}
                             suffix={
-                                name &&
-                                    name.length > 0 ?
+                                search &&
+                                    search.length > 0 ?
                                     <Icon
                                         type={"close-circle"}
                                         theme={"filled"}
                                         onClick={
-                                            () => this.setState({ name: null })
+                                            () => this.setState({ search: null })
                                         }
                                     /> : <Icon type={"search"} />
                             }

@@ -1,4 +1,4 @@
-import { IRoleDetail } from '../models/role-detail';
+import { IRoleDetail } from '../../models/role-detail';
 import { REDUX } from '../../const/actions';
 
 let initState: IRoleDetail = {

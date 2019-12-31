@@ -21,12 +21,12 @@ import { DELETE, PUT } from '../../../../../../const/method';
 import { SCHOOLS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 // import { IptLetterP } from '../../../../layout/common/Common';
-import { ISchool, ISchoolsFilter } from '../../../../../../redux/models/schools';
+import { ISchool, ISchoolsFilter } from '../../../../../../models/schools';
 // import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
-import { IRegion } from '../../../../../../redux/models/regions';
+import { IRegion } from '../../../../../../models/regions';
 import DrawerConfig from '../../../../layout/config/DrawerConfig';
-import { IDrawerState } from '../../../../../../redux/models/mutil-box';
+import { IDrawerState } from '../../../../../../models/mutil-box';
 import SchoolInfo from '../../../../layout/school-info/SchoolInfo';
 import { IptLetterP } from '../../../../layout/common/Common';
 

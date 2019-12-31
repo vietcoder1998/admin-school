@@ -1,10 +1,12 @@
 export interface IEmController {
+    phone: any;
     id?: string,
     employerName?: string,
     logoUrl?: string,
     profileVerified?: number,
     createdDate?: number,
     email?: string,
+    phoner?: string,
 }
 
 export interface IEmControllerFilter {

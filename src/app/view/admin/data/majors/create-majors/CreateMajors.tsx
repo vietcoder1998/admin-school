@@ -8,7 +8,7 @@ import {POST} from '../../../../../../const/method';
 import {REDUX_SAGA} from '../../../../../../const/actions';
 import {Link} from 'react-router-dom';
 import {TYPE} from '../../../../../../const/type';
-import {IMajor} from '../../../../../../redux/models/majors';
+import {IMajor} from '../../../../../../models/majors';
 
 interface CreateMajorsState {
     name?: string;
@@ -100,8 +100,8 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                 />
                 <InputTitle
                     type={TYPE.SELECT}
-                    title="Chọn chuyên ngành"
-                    placeholder="Chọn chuyên ngành"
+                    title="Chọn nhóm ngành"
+                    placeholder="Chọn nhóm ngành"
                     value={branchName}
                     list_value={list_data}
                     style={{padding: "10px 0px"}}

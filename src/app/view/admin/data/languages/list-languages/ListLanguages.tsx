@@ -1,8 +1,8 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Popover, Input } from 'antd';
+import { Icon, Table, Button, Row, Col, Popover } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
-import { ILanguages } from '../../../../../../redux/models/languages';
+import { ILanguages } from '../../../../../../models/languages';
 import { _requestToServer } from '../../../../../../services/exec';
 import { POST, PUT, DELETE } from '../../../../../../const/method';
 import { LANGUAGES } from '../../../../../../services/api/private.api';
@@ -25,6 +25,7 @@ interface ListLanguagesState {
     name?: string;
     id?: string;
     type?: string;
+    search?: string;
 }
 
 class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState> {
@@ -40,6 +41,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             name: "",
             id: "",
             type: TYPE.EDIT,
+            search: undefined
         }
     }
 
@@ -177,7 +179,16 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize } = this.state;
+        let {
+            data_table,
+            loading_table,
+            openModal,
+            name,
+            type,
+            // pageIndex, 
+            // pageSize, 
+            // search 
+        } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -242,24 +253,6 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                     <Row>
                         <Col span={6} />
                         <Col span={12}>
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={name}
-                                onChange={(event: any) => this.setState({ name: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListLanguages(pageIndex, pageSize, name)}
-                                suffix={
-                                    name &&
-                                        name.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ name: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
-                            />
                             <Table
                                 // @ts-ignore
                                 columns={this.columns}

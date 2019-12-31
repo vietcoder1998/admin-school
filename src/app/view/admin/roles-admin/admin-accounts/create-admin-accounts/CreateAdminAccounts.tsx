@@ -8,12 +8,12 @@ import { POST, PUT } from '../../../../../../const/method';
 import { API_CONTROLLER_ROLES, REGISTRATION_ADMINS, ADMIN_ACCOUNTS } from '../../../../../../services/api/private.api';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { TYPE } from '../../../../../../const/type';
-import { IApiFunctions } from '../../../../../../redux/models/api-controller';
-import { IRole } from '../../../../../../redux/models/roles';
+import { IApiFunctions } from '../../../../../../models/api-controller';
+import { IRole } from '../../../../../../models/roles';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import { IAppState } from '../../../../../../redux/store/reducer';
-import { IAdminAccount } from '../../../../../../redux/models/admin-accounts';
+import { IAdminAccount } from '../../../../../../models/admin-accounts';
 
 interface ICreateAdminAccountsState {
     username?: string;

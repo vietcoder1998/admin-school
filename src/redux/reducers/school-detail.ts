@@ -1,4 +1,4 @@
-import { ISchoolDetail } from '../models/school-detail';
+import { ISchoolDetail } from '../../models/school-detail';
 import {REDUX} from '../../const/actions';
 
 let initState: ISchoolDetail = {};

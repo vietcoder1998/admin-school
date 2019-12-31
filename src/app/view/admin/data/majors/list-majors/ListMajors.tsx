@@ -2,9 +2,9 @@ import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
-import { IMajor } from '../../../../../../redux/models/majors';
+import { IMajor } from '../../../../../../models/majors';
 import { Link } from 'react-router-dom';
-import { IBranches } from '../../../../../../redux/models/branches';
+import { IBranches } from '../../../../../../models/branches';
 import { MAJORS } from '../../../../../../services/api/private.api';
 import { DELETE, PUT, GET } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
@@ -17,6 +17,7 @@ interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     history: any;
     getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => any;
+    getListBranches: (pageIndex?: number, pageSize?: number, name?: string) => any;
 }
 
 interface ListMajorsState {
@@ -26,13 +27,14 @@ interface ListMajorsState {
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
-    name?: string;
+    search?: string;
     id?: string;
     branchName?: string;
     branchID?: number;
     type: string;
     openModal: boolean;
     list_data: Array<{ label: string, value: number }>;
+    name?: string;
 }
 
 class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
@@ -51,7 +53,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             type: TYPE.EDIT,
             openModal: false,
             list_data: [],
-            name: undefined
+            search: undefined
         };
     };
 
@@ -177,7 +179,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             className: 'action',
 
         }, {
-            title: 'Nhóm ngành',
+            title: 'Thuộc nhóm ngành',
             dataIndex: 'branchName',
             key: 'branchName',
             width: 300,
@@ -227,7 +229,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     render() {
-        let { data_table, loading_table, type, openModal, list_data, name, branchName , pageIndex, pageSize} = this.state;
+        let { data_table, loading_table, type, openModal, list_data, name, branchName, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -256,8 +258,10 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 title="Chọn chuyên ngành "
                                 placeholder="Chọn chuyên ngành "
                                 value={branchName}
+                                widthSelect={'250px'}
                                 list_value={list_data}
                                 style={{ padding: "10px 0px" }}
+                                onSearch={(event: any) => this.props.getListBranches(0, 0, event)}
                                 onChange={this.handleChoseMajor}
                             />
                         </>
@@ -283,17 +287,17 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             <Input
                                 placeholder="Tất cả"
                                 style={{ width: "100%" }}
-                                value={name}
-                                onChange={(event: any) => this.setState({ name: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, name)}
+                                value={search}
+                                onChange={(event: any) => this.setState({ search: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, search)}
                                 suffix={
-                                    name &&
-                                        name.length > 0 ?
+                                    search &&
+                                        search.length > 0 ?
                                         <Icon
                                             type={"close-circle"}
                                             theme={"filled"}
                                             onClick={
-                                                () => this.setState({ name: null })
+                                                () => this.setState({ search: null })
                                             }
                                         /> : <Icon type={"search"} />
                                 }
@@ -312,8 +316,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         onChange={this.setPageIndex}
                         onRow={(event) => ({
                             onMouseEnter: () => {
-                                this.setState({ id: event.key, branchName: event.branchName });
-                                localStorage.setItem("name_major", event.name)
+                                this.setState({ id: event.key, branchName: event.branchName , name: event.name});
                             }
                         })}
                     />
@@ -326,6 +329,12 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => dispatch({
         type: REDUX_SAGA.MAJORS.GET_MAJORS,
+        pageIndex,
+        pageSize,
+        name
+    }),
+    getListBranches: (pageIndex?: number, pageSize?: number, name?: string) => dispatch({
+        type: REDUX_SAGA.BRANCHES.GET_BRANCHES,
         pageIndex,
         pageSize,
         name

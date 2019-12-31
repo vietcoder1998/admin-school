@@ -4,18 +4,18 @@
 // import { REDUX_SAGA } from '../../../../../const/actions';
 // import { TYPE } from '../../../../../const/type';
 // import { IAppState } from '../../../../../redux/store/reducer';
-// import {  IShift } from '../../../../../redux/models/announcements';
+// import {  IShift } from '../../../../../models/announcements';
 // import { ShiftContent} from '../../../layout/annou-shift/AnnouShift';
-// import { IEmBranch } from '../../../../../redux/models/em-branches';
+// import { IEmBranch } from '../../../../../models/em-branches';
 // import { _requestToServer } from '../../../../../services/exec';
 // import { PUT } from '../../../../../const/method';
 // import { APPLY_JOB } from '../../../../../services/api/private.api';
 // import { EMPLOYER_HOST } from '../../../../../environment/dev';
-// import { IApplyJob } from '../../../../../redux/models/apply-job';
+// import { IApplyJob } from '../../../../../models/apply-job';
 // import { ApplyJobItem } from '../../../layout/job-apply/JobApplyItem';
 // import { routeLink, routePath } from '../../../../../const/break-cumb';
 // import './JobAnnouncementsApply.scss';
-// import { IShiftDetail } from '../../../../../redux/models/job-annoucement-detail';
+// import { IShiftDetail } from '../../../../../models/job-annoucement-detail';
 // import Loading from '../../../layout/loading/Loading';
 
 // const { TabPane } = Tabs;

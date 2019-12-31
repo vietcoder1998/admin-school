@@ -1,4 +1,4 @@
-import { IRegions } from '../models/regions';
+import { IRegions } from '../../models/regions';
 import { REDUX } from '../../const/actions';
 
 let initState: IRegions = {

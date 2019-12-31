@@ -1,4 +1,4 @@
-import {ILanguages} from '../models/languages';
+import {ILanguages} from '../../models/languages';
 import {REDUX} from '../../const/actions';
 
 let initState: ILanguages = {

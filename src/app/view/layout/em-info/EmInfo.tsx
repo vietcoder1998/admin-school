@@ -6,7 +6,7 @@ import backGround from '../../../../assets/image/base-image.jpg';
 // @ts-ignore
 import avatar from '../../../../assets/image/test_avatar.jpg';
 import { NotUpdate, IptLetterP } from '../common/Common';
-import { IEmControllerDetail } from '../../../../redux/models/em-controller-detail';
+import { IEmControllerDetail } from '../../../../models/em-controller-detail';
 
 const { TabPane } = Tabs;
 const { Meta } = Card;

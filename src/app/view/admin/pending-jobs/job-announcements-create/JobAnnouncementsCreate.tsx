@@ -6,10 +6,10 @@
 // import { REDUX_SAGA } from '../../../../../../const/actions';
 // import { TYPE } from '../../../../../../const/type';
 // import { IAppState } from '../../../../../../redux/store/reducer';
-// import { IJobName } from '../../../../../../redux/models/job-names';
-// import { IAnnoucementBody, IShift } from '../../../../../../redux/models/announcements';
+// import { IJobName } from '../../../../../../models/job-names';
+// import { IAnnoucementBody, IShift } from '../../../../../../models/announcements';
 // import { ShiftContent, newShift } from '../../../../layout/annou-shift/AnnouShift';
-// import { IEmBranch } from '../../../../../../redux/models/em-branches';
+// import { IEmBranch } from '../../../../../../models/em-branches';
 // import findIdWithValue from '../../../../../../utils/findIdWithValue';
 // import { _requestToServer } from '../../../../../../services/exec';
 // import { POST, PUT } from '../../../../../../const/method';

@@ -2,7 +2,7 @@ import React, {PureComponent, } from 'react'
 import {connect} from 'react-redux';
 import {Icon, Table, Button} from 'antd';
 import {REDUX_SAGA} from '../../../../../../const/actions';
-import {ITypeSchool} from '../../../../../../redux/models/type-schools';
+import {ITypeSchool} from '../../../../../../models/type-schools';
 import {Link} from 'react-router-dom';
 import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
 import {InputTitle} from '../../../../layout/input-tittle/InputTitle';

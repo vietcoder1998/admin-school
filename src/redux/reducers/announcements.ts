@@ -1,4 +1,4 @@
-import {IAnnouncements} from '../models/announcements';
+import {IAnnouncements} from '../../models/announcements';
 import {REDUX} from '../../const/actions';
 
 let initState: IAnnouncements = {

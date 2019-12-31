@@ -6,7 +6,7 @@ import backGround from '../../../../assets/image/base-image.jpg';
 // @ts-ignore
 import avatar from '../../../../assets/image/test_avatar.jpg';
 import { NotUpdate, IptLetterP } from '../common/Common';
-import { ISchoolDetail } from '../../../../redux/models/school-detail';
+import { ISchoolDetail } from '../../../../models/school-detail';
 
 const { TabPane } = Tabs;
 const { Meta } = Card;

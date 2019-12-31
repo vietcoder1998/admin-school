@@ -1,5 +1,5 @@
 import { REDUX } from '../../const/actions';
-import IStudentDetail from '../models/student-detail';
+import IStudentDetail from '../../models/student-detail';
 
 let initState: IStudentDetail = {
 };

@@ -1,4 +1,4 @@
-import { IRegion } from '../../redux/models/regions';
+import { IRegion } from './../models/regions';
 
 export interface ISkill {
     id?: number;

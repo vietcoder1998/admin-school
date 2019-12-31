@@ -10,7 +10,7 @@ import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
 import {TYPE} from '../../../../../../const/type';
 import {TreeSelect} from 'antd';
 import {ITreeParent, renderTreeApi} from '../../../../../../utils/renderTreeApi';
-import {IApiFunctions} from '../../../../../../redux/models/api-controller';
+import {IApiFunctions} from '../../../../../../models/api-controller';
 import './CreateRoles.scss';
 
 const {SHOW_PARENT} = TreeSelect;

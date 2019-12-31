@@ -1,4 +1,4 @@
-import {IUserControllers} from '../models/user-controller';
+import {IUserControllers} from '../../models/user-controller';
 import {REDUX} from '../../const/actions';
 
 let initState: IUserControllers = {

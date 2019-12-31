@@ -2,14 +2,14 @@ import React, { PureComponent,  } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Button, Select, Divider } from 'antd';
 import { REDUX_SAGA } from '../../../../../../../const/actions';
-import { IJobName } from '../../../../../../../redux/models/job-type';
+import { IJobName } from '../../../../../../../models/job-type';
 import { Link } from 'react-router-dom';
 import { InputTitle } from '../../../../../layout/input-tittle/InputTitle';
 import { _requestToServer } from '../../../../../../../services/exec';
 import { MAJORS } from '../../../../../../../services/api/private.api';
 import { PUT } from '../../../../../../../const/method';
 import { TYPE } from '../../../../../../../const/type';
-import { IJobGroup } from '../../../../../../../redux/models/job-groups';
+import { IJobGroup } from '../../../../../../../models/job-groups';
 
 const { Option } = Select;
 

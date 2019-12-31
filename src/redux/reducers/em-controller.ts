@@ -1,4 +1,4 @@
-import {IEmControllers} from '../models/em-controller';
+import {IEmControllers} from '../../models/em-controller';
 import {REDUX} from '../../const/actions';
 
 let initState: IEmControllers = {

@@ -2,7 +2,7 @@ import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Input, Row, Col } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
-import { IJobName } from '../../../../../../redux/models/job-type';
+import { IJobName } from '../../../../../../models/job-type';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
@@ -10,12 +10,13 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { JOB_NAMES } from '../../../../../../services/api/private.api';
 import { DELETE, PUT, GET } from '../../../../../../const/method';
 import { TYPE } from '../../../../../../const/type';
-import { IJobGroup } from '../../../../../../redux/models/job-groups';
+import { IJobGroup } from '../../../../../../models/job-groups';
 import { IAppState } from '../../../../../../redux/store/reducer';
 
 interface IListJobNamesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     getListJobNames: (pageIndex?: number, pageSize?: number, name?: string) => any;
+    getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => any;
 }
 
 interface IListJobNamesState {
@@ -31,7 +32,8 @@ interface IListJobNamesState {
     type?: string;
     name?: string;
     jobGroupName?: string;
-    list_data: Array<{ label: string, value: number }>
+    list_data: Array<{ label: string, value: number }>;
+    search?: string;
 }
 
 class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState> {
@@ -223,7 +225,8 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             jobGroupName,
             list_data,
             pageIndex,
-            pageSize
+            pageSize,
+            search,
         } = this.state;
         let { totalItems } = this.props;
         return (
@@ -246,7 +249,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                 placeholder="Thay đổi tên"
                                 value={name}
                                 widthInput={"250px"}
-                                style={{ padding: "0px 20px" }}
+                                style={{ padding: "10px 20px" }}
                                 onChange={(event: any) => this.setState({ name: event })}
                             />
                             <InputTitle
@@ -255,7 +258,9 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                 placeholder="Chọn nhóm công việc"
                                 list_value={list_data}
                                 value={jobGroupName}
-                                style={{ padding: "0px 20px" }}
+                                style={{ padding: "10px 20px" }}
+                                widthSelect={'250px'}
+                                onSearch={(event?: any) => this.props.getListMajors(0, 0, event)}
                                 onChange={this.handleChoseJobGroup}
                             />
                         </>
@@ -263,7 +268,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                 </ModalConfig>
                 <div>
                     <h5>
-                        Danh sách tên công việc
+                        Danh sách loại công việc
                         <Button
                             onClick={() => {
                             }}
@@ -284,17 +289,17 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                             <Input
                                 placeholder="Tất cả"
                                 style={{ width: "100%" }}
-                                value={name}
-                                onChange={(event: any) => this.setState({ name: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListJobNames(pageIndex, pageSize, name)}
+                                value={search}
+                                onChange={(event: any) => this.setState({ search: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListJobNames(pageIndex, pageSize, search)}
                                 suffix={
-                                    name &&
-                                        name.length > 0 ?
+                                    search &&
+                                        search.length > 0 ?
                                         <Icon
                                             type={"close-circle"}
                                             theme={"filled"}
                                             onClick={
-                                                () => this.setState({ name: null })
+                                                () => this.setState({ search: null })
                                             }
                                         /> : <Icon type={"search"} />
                                 }
@@ -322,6 +327,9 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListJobNames: (pageIndex: number, pageSize: number, name?: string) => dispatch({
         type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize, name
+    }),
+    getListMajors: (pageIndex: number, pageSize: number, name?: string) => dispatch({
+        type: REDUX_SAGA.MAJORS.GET_MAJORS, pageIndex, pageSize, name
     })
 });
 

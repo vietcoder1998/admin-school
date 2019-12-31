@@ -1,4 +1,4 @@
-import { IAdminAccounts} from '../models/admin-accounts';
+import { IAdminAccounts} from '../../models/admin-accounts';
 import { REDUX } from '../../const/actions';
 
 let initState: IAdminAccounts= {

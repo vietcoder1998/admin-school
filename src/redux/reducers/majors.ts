@@ -1,4 +1,4 @@
-import { IMajors } from '../models/majors';
+import { IMajors } from '../../models/majors';
 import { REDUX } from '../../const/actions';
 
 let initState: IMajors = {

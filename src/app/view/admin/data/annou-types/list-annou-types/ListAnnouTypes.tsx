@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber, Row, Col } from 'antd';
+import { Icon, Table, Button, Select, Popconfirm, Tooltip, InputNumber, Row, Col, Input } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
@@ -9,7 +9,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../const/method';
 import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
-import { IAnnouType } from '../../../../../../redux/models/annou-types';
+import { IAnnouType } from '../../../../../../models/annou-types';
 import { IptLetterP } from '../../../../layout/common/Common';
 const { Option } = Select;
 
@@ -31,6 +31,7 @@ interface IListAnnouTypesState {
     targets?: Array<any>;
     target?: string;
     priority?: number;
+    search?: string;
 }
 
 class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypesState> {
@@ -49,6 +50,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             targets: [TYPE.ALL],
             target: null,
             priority: 0,
+            search: undefined
         }
     };
 
@@ -241,7 +243,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, target, priority, targets } = this.state;
+        let { data_table, loading_table, openModal, name, type, target, priority, targets, search, pageIndex, pageSize } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -258,12 +260,12 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                 >
 
                     <InputTitle
-                        title="Sửa tên nhóm bài viết"
+                        title="Tên nhóm bài viết"
                         type={TYPE.INPUT}
                         value={name}
                         placeholder="Tên nhóm bài viết"
                         onChange={(event: any) => this.setState({ name: event })}
-                        widthInput="250px"
+                        widthInput='100%'
                     />
                     <InputTitle
                         title="Chọn tên công việc"
@@ -282,7 +284,6 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                     </InputTitle>
                     <InputTitle
                         title="Chọn độ ưu tiên"
-                        widthLabel="100px"
                         style={{ padding: "10px 30px" }}
                     >
                         <InputNumber
@@ -290,6 +291,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             max={1000000}
                             defaultValue={0}
                             value={priority}
+                            style={{width: '100%'}}
                             onChange={
                                 (priority: number) => this.setState({ priority })
                             }
@@ -334,6 +336,27 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                                 <Option value={TYPE.PUBLIC}>Khách</Option>
                                 <Option value={TYPE.STUDENT}>Học sinh</Option>
                             </Select>
+                        </Col>
+                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <IptLetterP value={"Tìm kiếm"} />
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={search}
+                                onChange={(event: any) => this.setState({ search: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListAnnouTypes(pageIndex, pageSize, search)}
+                                suffix={
+                                    search &&
+                                        search.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ search: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
                         </Col>
                     </Row>
                     <Table

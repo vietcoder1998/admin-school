@@ -6,8 +6,8 @@ import backGround from '../../../../assets/image/base-image.jpg';
 // @ts-ignore
 import avatar from '../../../../assets/image/test_avatar.jpg';
 import { NotUpdate, IptLetter } from '../common/Common';
-import IStudentDetail, { ILanguageSkillStudent, IExperienceStudent } from '../../../../redux/models/student-detail';
-import { ISkill } from '../../../../redux/models/candidates-detail';
+import IStudentDetail, { ILanguageSkillStudent, IExperienceStudent } from '../../../../models/student-detail';
+import { ISkill } from '../../../../models/candidates-detail';
 import { timeConverter } from '../../../../utils/convertTime';
 
 const { TabPane } = Tabs;

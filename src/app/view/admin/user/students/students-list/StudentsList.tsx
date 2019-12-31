@@ -10,11 +10,11 @@ import { DELETE, PUT } from '../../../../../../const/method';
 import { STUDENTS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
-import { IStudent, IStudentsFilter } from '../../../../../../redux/models/students';
-import { IRegion } from '../../../../../../redux/models/regions';
-import { ILanguage } from '../../../../../../redux/models/languages';
+import { IStudent, IStudentsFilter } from '../../../../../../models/students';
+import { IRegion } from '../../../../../../models/regions';
+import { ILanguage } from '../../../../../../models/languages';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
-import { ISkill } from '../../../../../../redux/models/skills';
+import { ISkill } from '../../../../../../models/skills';
 import StudentInfo from '../../../../layout/student-info/StudentInfo';
 
 interface IStudentsListProps extends StateProps, DispatchProps {
