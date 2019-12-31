@@ -15,6 +15,7 @@ import { IAnnouCommentsBody, IAnnouComment } from '../../../../../models/annou-c
 import { IAppState } from '../../../../../redux/store/reducer';
 import Loading from '../../../layout/loading/Loading';
 import { IDrawerState } from '../../../../../models/mutil-box';
+import { routeLink, routePath } from '../../../../../const/break-cumb';
 
 let { Option } = Select;
 const { TabPane } = Tabs;
@@ -254,7 +255,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                         <Tooltip
                             title={"Chi tiết bài viết(sửa)"}
                         >
-                            <Link to={`/admin/job-management/fix/${item.id}`} target='_blank'>
+                            <Link to={routeLink.ANNOUCEMENT + routePath.FIX + `/${item.id}`} target='_blank'>
                                 <Icon
                                     className='test'
                                     type="edit"

@@ -249,7 +249,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                 placeholder="Thay đổi tên"
                                 value={name}
                                 widthInput={"250px"}
-                                style={{ padding: "10px 20px" }}
+                                style={{padding: 10}}
                                 onChange={(event: any) => this.setState({ name: event })}
                             />
                             <InputTitle

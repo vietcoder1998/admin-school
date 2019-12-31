@@ -197,7 +197,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    jobName: item.jobName.name,
+                    jobName: item.jobName && item.jobName.name,
                     state: <Label type={item.state} value={item.state} />,
                     address: item.address ? item.address : "",
                     employerName: item.employer.employerName ? item.employer.employerName : "",
