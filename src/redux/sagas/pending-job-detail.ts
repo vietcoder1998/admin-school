@@ -1,4 +1,4 @@
-import { IPendingJobDetail } from '../models/pending-job-detail';
+import { IPendingJobDetail } from './../../models/pending-job-detail';
 import { GET } from '../../const/method';
 import { PENDING_JOBS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';

@@ -1,5 +1,5 @@
 import { POST } from './../../const/method';
-import { IAnnouComments } from '../models/annou-comments';
+import { IAnnouComments } from './../../models/annou-comments';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'

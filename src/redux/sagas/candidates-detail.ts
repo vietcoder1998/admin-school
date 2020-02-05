@@ -1,4 +1,4 @@
-import { ICandidateDetail } from '../models/candidates-detail';
+import { ICandidateDetail } from './../../models/candidates-detail';
 import { GET } from '../../const/method';
 import { CANDIDATES } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';

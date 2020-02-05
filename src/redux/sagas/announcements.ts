@@ -1,4 +1,4 @@
-import { IAnnouncements } from '../models/announcements';
+import { IAnnouncements } from './../../models/announcements';
 import { POST } from '../../const/method';
 import { ANNOUNCEMENTS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';

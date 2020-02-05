@@ -1,4 +1,4 @@
-import {IEmployers} from '../models/employers';
+import {IEmployers} from './../../models/employers';
 import {REDUX} from '../../const/actions';
 
 export const getListEmployers = (data?: IEmployers) => ({

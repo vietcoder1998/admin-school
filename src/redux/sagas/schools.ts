@@ -1,5 +1,5 @@
 import { SCHOOLS } from './../../services/api/private.api';
-import { ISchools } from '../models/schools';
+import { ISchools } from './../../models/schools';
 import { POST } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

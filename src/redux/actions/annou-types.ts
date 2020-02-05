@@ -1,4 +1,4 @@
-import {IAnnouTypes} from '../models/annou-types';
+import {IAnnouTypes} from './../../models/annou-types';
 import {REDUX} from '../../const/actions';
 
 export const getListAnnouTypes = (data: IAnnouTypes) => ({

@@ -1,5 +1,5 @@
 import { MAJORS } from './../../services/api/private.api';
-import { IMajorJobNames } from '../models/major-job-names';
+import { IMajorJobNames } from './../../models/major-job-names';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

@@ -1,13 +1,14 @@
-import { BRANCHES } from '../../services/api/private.api';
-import { IBranches } from './../../models/branches';
+import { POST } from './../../const/method';
+import { APPLY_JOB } from '../../services/api/private.api';
+import { IApplyJobs } from './../../models/apply-jobs';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
 
-function* getListBranchesData(action: any) {
-    let res = yield call(callBranches, action);
-    let data: IBranches = {
+function* getListApplyJobsData(action: any) {
+    let res = yield call(callApplyJobs, action);
+    let data: IApplyJobs = {
         items: [],
         pageIndex: 0,
         pageSize: 0,
@@ -19,22 +20,23 @@ function* getListBranchesData(action: any) {
     }
 
     yield put({
-        type: REDUX.BRANCHES.GET_BRANCHES,
+        type: REDUX.APPLY_JOB.GET_APPLY_JOB,
         data
     });
 }
 
-function callBranches(action: any) {
+function callApplyJobs(action: any) {
     try {
         return _requestToServer(
-            GET, BRANCHES,
-            null,
+            POST, APPLY_JOB ,
+            {
+                jobID: action.id ? action.id : null
+            },
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,
                 pageSize: action.pageSize ? action.pageSize : 0,
-                name: action.name
             },
-            undefined, undefined, false, false
+            undefined, undefined, undefined, false
         )
     } catch (e) {
         throw e
@@ -42,9 +44,9 @@ function callBranches(action: any) {
 
 }
 
-export function* BranchesWatcher() {
+export function* ApplyJobsWatcher() {
     yield takeEvery(
-        REDUX_SAGA.BRANCHES.GET_BRANCHES,
-        getListBranchesData
+        REDUX_SAGA.APPLY_JOB.GET_APPLY_JOB,
+        getListApplyJobsData
     )
 }

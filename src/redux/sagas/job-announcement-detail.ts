@@ -1,4 +1,4 @@
-import { IJobAnnouncementDetail } from '../models/job-annoucement-detail';
+import { IJobAnnouncementDetail } from './../../models/job-annoucement-detail';
 import { GET } from '../../const/method';
 import { JOB_ANNOUNCEMENTS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';

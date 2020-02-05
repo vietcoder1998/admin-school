@@ -1,5 +1,5 @@
 import { TYPE_SCHOOLS } from '../../services/api/private.api';
-import { ITypeSchools } from '../models/type-schools';
+import { ITypeSchools } from './../../models/type-schools';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

@@ -1,4 +1,4 @@
-import {IBranches} from '../models/branches';
+import {IBranches} from '../../models/branches';
 import {REDUX} from '../../const/actions';
 
 export const getListBranches = (data: IBranches) => ({

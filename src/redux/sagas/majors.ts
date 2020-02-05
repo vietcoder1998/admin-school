@@ -1,5 +1,5 @@
 import { MAJORS } from '../../services/api/private.api';
-import { IMajors } from '../models/majors';
+import { IMajors } from './../../models/majors';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

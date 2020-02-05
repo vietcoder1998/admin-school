@@ -1,5 +1,5 @@
 import { SKILLS } from '../../services/api/private.api';
-import { ISkills } from '../models/skills';
+import { ISkills } from './../../models/skills';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

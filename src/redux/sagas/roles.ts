@@ -1,5 +1,5 @@
 import { ROLES } from '../../services/api/private.api';
-import { IRoles } from '../models/roles';
+import { IRoles } from './../../models/roles';
 import { GET } from '../../const/method';
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

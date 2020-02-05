@@ -1,7 +1,7 @@
 import { GET } from './../../const/method';
 // import { POST } from '../../const/method';
 import { EM_CONTROLLER } from '../../services/api/private.api';
-import { IEmControllerDetail } from '../models/em-controller-detail';
+import { IEmControllerDetail } from './../../models/em-controller-detail';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'

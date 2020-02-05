@@ -1,5 +1,5 @@
-import { IEmBranchesFilter } from './../models/em-branches';
-import { IEmBranches } from '../models/em-branches';
+import { IEmBranchesFilter } from './../../models/em-branches';
+import { IEmBranches } from './../../models/em-branches';
 import { POST } from '../../const/method';
 import { EM_BRANCHES_API } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';

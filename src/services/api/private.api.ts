@@ -25,4 +25,5 @@ export const SCHOOLS = "/api/admins/schools";
 export const STUDENTS = "/api/admins/students";
 export const JOB_ANNOUNCEMENTS = '/api/admins/employers/jobs';
 export const CANDIDATES = '/api/admins/candidates';
-
+export const APPLY_JOB = '/api/admins/employers/jobs/apply/query';
+export const APPLY_CAN = '/api/admins/employers/jobs';

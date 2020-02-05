@@ -1,4 +1,4 @@
-import { IJobAnnouncements } from '../models/job-announcements';
+import { IJobAnnouncements } from './../../models/job-announcements';
 import { REDUX } from '../../const/actions';
 
 export const getAnnoucements = (data?: IJobAnnouncements) => ({

@@ -34,6 +34,8 @@ import { SchoolDetailWatcher } from '../sagas/school-detail';
 import { CandidateDetailWatcher } from '../sagas/candidates-detail';
 import { CandidatesWatcher } from '../sagas/candidates';
 import { AdminAccountDetailWatcher } from '../sagas/admin-account-detail';
+import { ApplyJobsWatcher } from '../sagas/apply-jobs';
+import { ApplyCansWatcher } from '../sagas/apply-cans';
 
 export default function* rootSaga() {
     yield all([
@@ -72,5 +74,7 @@ export default function* rootSaga() {
         CandidatesWatcher(),
         StudentDetailWatcher(),
         AdminAccountDetailWatcher(),
+        ApplyJobsWatcher(),
+        ApplyCansWatcher()
     ])
 } 

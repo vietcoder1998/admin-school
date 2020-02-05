@@ -3,7 +3,7 @@ import { STUDENTS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
-import IStudentDetail from '../models/student-detail';
+import IStudentDetail from './../../models/student-detail';
 
 function* getStudentDetailData(action: any) {
     let res = yield call(callStudents, action);

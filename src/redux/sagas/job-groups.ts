@@ -1,5 +1,5 @@
 import { JOB_GROUPS } from '../../services/api/private.api';
-import { IJobGroups } from '../models/job-groups';
+import { IJobGroups } from './../../models/job-groups';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

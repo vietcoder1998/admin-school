@@ -1,5 +1,5 @@
 import { REGIONS } from '../../services/api/private.api';
-import { IRegions } from '../models/regions';
+import { IRegions } from './../../models/regions';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

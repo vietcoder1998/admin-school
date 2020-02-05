@@ -1,4 +1,4 @@
-import { IAdminAccounts } from '../models/admin-accounts';
+import { IAdminAccounts } from './../../models/admin-accounts';
 import { POST } from '../../const/method';
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

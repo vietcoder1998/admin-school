@@ -1,5 +1,5 @@
 import { API_CONTROLLER } from '../../services/api/private.api';
-import { IApiController } from '../models/api-controller';
+import { IApiController } from './../../models/api-controller';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';

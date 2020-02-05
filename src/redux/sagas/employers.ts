@@ -1,5 +1,5 @@
 import { POST } from './../../const/method';
-import { IEmployers } from '../models/employers';
+import { IEmployers } from './../../models/employers';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'

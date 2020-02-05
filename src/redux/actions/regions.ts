@@ -1,4 +1,4 @@
-import {IRegions} from '../models/regions';
+import {IRegions} from './../../models/regions';
 import {REDUX} from '../../const/actions';
 
 export const getRegions = (data: IRegions) => ({
