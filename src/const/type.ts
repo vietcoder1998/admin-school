@@ -42,8 +42,8 @@ export const TYPE = {
     MALE: "MALE",
     FEMALE: "FEMALE",
     BOTH: "BOTH",
-    SEARCH:"SEARCH",
-    DETAIL:"DETAIL",
+    SEARCH: "SEARCH",
+    DETAIL: "DETAIL",
 
     TRUE: "TRUE",
     FALSE: "FALSE",
@@ -62,12 +62,14 @@ export const TYPE = {
         taxCode: "taxCode",
         regionID: "regionID",
         profileVerified: "profileVerified",
-        ids: "ids"
+        ids: "ids",
+        username: "username"
     },
 
     EM_BRANCHES: {
         headquarters: "headquarters",
-        regionID: "regionID"
+        regionID: "regionID",
+        username: "username"
     },
 
     SCHOOLS: {
@@ -79,7 +81,8 @@ export const TYPE = {
         email: "email",
         employerID: "employerID",
         connected: "connected",
-        createdDate: "createdDate"
+        createdDate: "createdDate",
+        username: "username"
     },
 
     JOB_FILTER: {
@@ -100,7 +103,7 @@ export const TYPE = {
         jobShiftFilter: "jobShiftFilter",
         jobLocationFilter: "jobLocationFilter"
     },
-    
+
     STUDENT_FILTER: {
         gender: "gender",
         birthYearStart: "birthYearStart",
@@ -114,6 +117,7 @@ export const TYPE = {
         languageIDs: "languageIDs",
         unlocked: "unlocked",
         ids: "ids",
+        username: "username"
     },
 
     CANDIDATES_FILTER: {
@@ -129,5 +133,6 @@ export const TYPE = {
         languageIDs: "languageIDs",
         unlocked: "unlocked",
         ids: "ids",
+        username: "username"
     },
 };

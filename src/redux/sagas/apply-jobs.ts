@@ -1,7 +1,6 @@
 import { POST } from './../../const/method';
 import { APPLY_JOB } from '../../services/api/private.api';
 import { IApplyJobs } from './../../models/apply-jobs';
-import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'

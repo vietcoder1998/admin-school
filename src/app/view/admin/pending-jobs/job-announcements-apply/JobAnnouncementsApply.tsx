@@ -333,7 +333,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     if (item) {
                                                         return <ShiftContent key={index} id={item.id} shifts={item} removeButton={false} disableChange={true} />
                                                     } else {
-                                                        return
+                                                        return ''
                                                     }
                                                 }
                                             ) : <Empty style={{ paddingTop: "5vh" }} />

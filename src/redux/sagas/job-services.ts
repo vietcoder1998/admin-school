@@ -1,4 +1,4 @@
-import { NORMAL_SERVICE, HOME_INDAY_SERVICE, HOME_TOP_SERVICE, UN_LOCK_PROFILE_SERVICE, SEARCH_HIGH_LIGHT_SERVICE, EM_CONTROLLER } from './../../services/api/private.api';
+import { EM_CONTROLLER } from './../../services/api/private.api';
 import { IJobServices } from './../../models/job-services';
 import { GET } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Avatar, Drawer, Slider, Tooltip, Popconfirm } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Avatar, Drawer, Slider, Tooltip, Popconfirm, Input } from 'antd';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { TYPE } from '../../../../../../const/type';
 import { IptLetterP } from '../../../../layout/common/Common';
@@ -23,7 +23,7 @@ let ImageRender = (props: any) => {
     if (props.src && props.src !== "") {
         return <Avatar shape="square" src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} icon="user" />
     } else {
-        return <div style={{ width: 50, height: 50}}>
+        return <div style={{ width: 50, height: 50 }}>
             <Icon type="file-image" style={{ fontSize: 20 }} />
         </div>
     }
@@ -283,7 +283,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         this.setState({ open_drawer: false })
     };
 
-    onChangeType = (event: any, param?: string) => {
+    onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
         let { list_regions } = this.props;
         let value: any = event;
@@ -369,7 +369,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         let list_skill_options = list_skills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
         let list_language_options = list_languages.map((item: ILanguage, index: number) => (<Option key={index} value={item.name} children={item.name} />));
         let list_job_names_options = list_job_names.map((item: ILanguage, index: number) => (<Option key={index} value={item.name} children={item.name} />));
-        
+
         return <>
             <IptLetterP
                 value={"Năm sinh"}
@@ -543,7 +543,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             children={"Tìm kiếm ứng viên"}
                         />
                         <Button
-                            onClick={() => this.setState({ open_drawer: true , type_cpn: TYPE.SEARCH})}
+                            onClick={() => this.setState({ open_drawer: true, type_cpn: TYPE.SEARCH })}
                             type="primary"
                             style={{
                                 float: "right",
@@ -556,12 +556,21 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     <div className="table-operations">
                         <Row >
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Tên tài khoản"} />
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.CANDIDATES_FILTER.username)}
+                                    onPressEnter={(event: any) => this.searchCandidate()}
+                                />
+                            </Col>
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Tìm việc"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.lookingForJob)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.CANDIDATES_FILTER.lookingForJob)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Có</Option>
@@ -574,7 +583,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.gender)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.CANDIDATES_FILTER.gender)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.MALE}>Nam </Option>
@@ -587,7 +596,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.regionID)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.CANDIDATES_FILTER.regionID)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
@@ -604,7 +613,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.completeProfile)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.CANDIDATES_FILTER.completeProfile)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Hoàn thiện </Option>
@@ -617,7 +626,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.profileVerified)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.CANDIDATES_FILTER.profileVerified)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Đã xác minh </Option>
@@ -630,7 +639,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.CANDIDATES_FILTER.unlocked)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.CANDIDATES_FILTER.unlocked)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Đã mở khóa </Option>

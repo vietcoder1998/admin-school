@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, message, Drawer, Radio, Input } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
 import './JobAnnouncementsList.scss';
 import { TYPE } from '../../../../../const/type';
@@ -14,7 +14,7 @@ import { IEmBranch } from '../../../../../models/em-branches';
 import DrawerConfig from '../../../layout/config/DrawerConfig';
 import { IJobAnnouncementDetail } from '../../../../../models/job-annoucement-detail';
 import { _requestToServer } from '../../../../../services/exec';
-import { DELETE, PUT, POST } from '../../../../../const/method';
+import { DELETE, POST } from '../../../../../const/method';
 import {
     JOB_ANNOUNCEMENTS,
     EM_CONTROLLER

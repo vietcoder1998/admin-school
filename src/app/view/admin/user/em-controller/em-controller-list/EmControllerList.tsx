@@ -335,6 +335,23 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                     </h5>
                     <Row>
                         <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                            <IptLetterP value={"Tên tài khoản"}  >
+                                <Input
+                                    placeholder='ex: daipham.uet@gmail.com'
+                                    onChange={
+                                        (event: any) => this.onChangeFilter(event.target.value, TYPE.EM_CONTROLLER.username)
+                                    }
+                                    onKeyDown={
+                                        (event: any) => {
+                                            if (event.keyCode === 13) {
+                                                this.searchEmControllers()
+                                            }
+                                        }
+                                    }
+                                />
+                            </IptLetterP>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
                             <IptLetterP value={"Tên nhà tuyển dụng"}  >
                                 <Input
                                     placeholder='ex: works'

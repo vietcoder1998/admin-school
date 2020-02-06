@@ -281,7 +281,6 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         let {
             data_table,
             loading_table,
-            body
         } = this.state;
 
         let {
@@ -322,24 +321,21 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                     <div className="table-operations">
                         <Row >
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Tên tài khoản"} />
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.username)}
+                                    onPressEnter={(event: any) => this.searchSchools()}
+                                />
+                            </Col>
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Tên rút gọn"} />
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
-                                    value={body.shortName}
                                     onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.shortName)}
                                     onPressEnter={(event: any) => this.searchSchools()}
-                                    suffix={
-                                        body.shortName &&
-                                            body.shortName.length > 0 ?
-                                            <Icon
-                                                type={"close-circle"}
-                                                theme={"filled"}
-                                                onClick={
-                                                    () => this.onChangeFilter(null, TYPE.SCHOOLS.shortName)
-                                                }
-                                            /> : <Icon type={"search"} />
-                                    }
                                 />
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
@@ -347,20 +343,8 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
-                                    value={body.email}
                                     onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.email)}
                                     onPressEnter={(event: any) => this.searchSchools()}
-                                    suffix={
-                                        body.email &&
-                                            body.email.length > 0 ?
-                                            <Icon
-                                                type={"close-circle"}
-                                                theme={"filled"}
-                                                onClick={
-                                                    () => this.onChangeFilter(null, TYPE.SCHOOLS.email)
-                                                }
-                                            /> : <Icon type={"search"} />
-                                    }
                                 />
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >

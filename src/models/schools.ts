@@ -1,5 +1,6 @@
 export interface ISchoolsFilter {
     name?: string,
+    username?: string,
     shortName?: string,
     educatedScale?: number,
     regionID?: number,

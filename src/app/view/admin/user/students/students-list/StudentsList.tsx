@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Button, Table, Icon, Popconfirm, Col, Select, Row, Tooltip, Avatar, Drawer, Slider } from 'antd';
+import { Button, Table, Icon, Popconfirm, Col, Select, Row, Tooltip, Avatar, Drawer, Slider, Input } from 'antd';
 import './StudentsList';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
@@ -325,7 +325,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             default:
                 break;
         };
-        
+
         await _requestToServer(
             method,
             api,
@@ -543,6 +543,15 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     </h5>
                     <div className="table-operations">
                         <Row >
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Tên tài khoản"} />
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.STUDENT_FILTER.username)}
+                                    onPressEnter={(event: any) => this.searchStudents()}
+                                />
+                            </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Tìm việc"} />
                                 <Select
