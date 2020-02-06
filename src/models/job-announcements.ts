@@ -57,6 +57,7 @@ export interface IJobAnnouncements {
 export interface IJobAnnouncementsFilter {
     expired?: boolean;
     hidden?: boolean;
+    employerID?: string;
     jobType: null | undefined | string;
     homePriority?: string;
     homeExpired?: boolean;

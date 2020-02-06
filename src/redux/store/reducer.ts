@@ -1,3 +1,4 @@
+import { JobServices } from './../reducers/job-services';
 import { ApplyCans } from './../reducers/apply-cans';
 import { ApplyJobs } from './../reducers/apply-jobs';
 import { AdminAccountDetail } from './../reducers/admin-account-detail';
@@ -74,7 +75,8 @@ const rootReducer = combineReducers({
     StudentDetail,
     AdminAccountDetail,
     ApplyJobs,
-    ApplyCans
+    ApplyCans,
+    JobServices
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

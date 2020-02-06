@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Icon, Divider, Row, Col, Button, Tabs, message, Empty } from 'antd';
+import { Icon, Divider, Row, Col, Button, Tabs, message, Empty, Drawer } from 'antd';
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../const/actions';
 import { TYPE } from '../../../../../const/type';
 import { IAppState } from '../../../../../redux/store/reducer';
-import { IShift } from '../../../../../models/announcements';
 import ShiftContent from '../../../layout/annou-shift/AnnouShift';
 import { IEmBranch } from '../../../../../models/em-branches';
 import { _requestToServer } from '../../../../../services/exec';
@@ -17,6 +16,8 @@ import './JobAnnouncementsApply.scss';
 import { IShiftDetail } from '../../../../../models/job-annoucement-detail';
 import Loading from '../../../layout/loading/Loading';
 import { IApplyCan } from '../../../../../models/apply-cans';
+import { IShifts } from '../../../../../models/pending-jobs';
+import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
 
 const { TabPane } = Tabs;
 
@@ -40,6 +41,7 @@ interface IJobAnnouncementsApplyState {
     list_rejected?: Array<IApplyJob>;
     list_shifts?: Array<IShiftDetail>;
     l_btn?: boolean;
+    open_drawer?: boolean;
     default_id?: string;
 };
 
@@ -49,6 +51,7 @@ interface IJobAnnouncementsApplyProps extends StateProps, DispatchProps {
     location: any;
     getApplyCans: Function;
     getListEmBranches: Function;
+    getCandidateDetail: Function;
 };
 
 
@@ -71,7 +74,8 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             list_rejected: [],
             list_shifts: [],
             default_id: null,
-            l_btn: false
+            l_btn: false,
+            open_drawer: false,
         };
     };
 
@@ -137,13 +141,14 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
     }
 
     searchShift = (id?: string, type?: string, default_id?: string) => {
+        console.log(id, type, default_id);
         let { list_apply_cans } = this.state;
         this.setState({ loading: true })
         let list_shifts = [];
         setTimeout(() => {
             if (id) {
                 list_apply_cans.forEach((item: IApplyCan) => {
-                    if (id === item.candidate.id) {
+                    if (item.candidate && default_id === item.candidate.id) {
                         list_shifts = item.appliedShifts;
                     }
                 });
@@ -174,6 +179,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
     }
 
     render() {
+        let { candidate_detail } = this.props;
         let {
             state,
             list_rejected,
@@ -182,7 +188,8 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             list_shifts,
             loading,
             default_id,
-            l_btn
+            l_btn,
+            open_drawer
         } = this.state;
 
         return (
@@ -191,6 +198,22 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                     Danh sách ứng viên công việc
                 </h5>
                 <Divider orientation="left" >Danh sách yêu cầu</Divider>
+                <Drawer
+                    title="Tìm kiếm nâng cao"
+                    placement="right"
+                    width={"60vw"}
+                    closable={true}
+                    onClose={() => this.setState({ open_drawer: false })}
+                    visible={open_drawer}
+                >
+                    {
+                        <CandidatetInfo
+                            data={candidate_detail}
+                            onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
+                            loading={loading}
+                        />
+                    }
+                </Drawer>
                 <div className="announcements-Apply-content">
                     <Row>
                         <Col xs={24} md={10} lg={12} xl={10} xxl={12}>
@@ -209,7 +232,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                 >
                                     <div className="content-apply">
                                         {
-                                            list_pending.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_pending.map((item: IApplyJob, index: number) =>
+                                            list_pending.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_pending.map((item: IApplyCan, index: number) =>
                                                 <ApplyJobItem
                                                     key={index}
                                                     type="PENDING"
@@ -221,6 +244,14 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     onClick={
                                                         (event: string) => this.searchShift(event, TYPE.PENDING, item.candidate.id)
                                                     }
+                                                    onView={
+                                                        () =>{
+                                                            this.setState({open_drawer: true});
+                                                            setTimeout(() => {
+                                                                this.props.getCandidateDetail(item.candidate.id)
+                                                            }, 500);
+                                                        }
+                                                    }
                                                 />
                                             ))
                                         }
@@ -229,7 +260,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                 <TabPane tab={`Chấp nhận`} key={TYPE.ACCEPTED} disabled={list_accepted.length === 0}>
                                     <div className="content-apply">
                                         {
-                                            list_accepted.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_accepted.map((item: IApplyJob, index: number) =>
+                                            list_accepted.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_accepted.map((item: IApplyCan, index: number) =>
                                                 <ApplyJobItem
                                                     key={index}
                                                     type={"ACCEPTED"}
@@ -240,6 +271,14 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     onClick={
                                                         (event: string) => this.searchShift(event, TYPE.ACCEPTED, item.candidate.id)
                                                     }
+                                                    onView={
+                                                        () =>{
+                                                            this.setState({open_drawer: true});
+                                                            setTimeout(() => {
+                                                                this.props.getCandidateDetail(item.candidate.id)
+                                                            }, 500);
+                                                        }
+                                                    }
                                                 />
                                             ))
                                         }
@@ -249,7 +288,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                     <div className="content-apply">
                                         {
                                             list_rejected.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : list_rejected.map(
-                                                (item: IApplyJob, index: number) =>
+                                                (item: IApplyCan, index: number) =>
                                                     <ApplyJobItem
                                                         type="REJECTED"
                                                         key={index}
@@ -259,6 +298,14 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                         onChangeType={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                         onClick={
                                                             (event: string) => this.searchShift(event, TYPE.REJECTED, item.candidate.id)
+                                                        }
+                                                        onView={
+                                                            () =>{
+                                                                this.setState({open_drawer: true});
+                                                                setTimeout(() => {
+                                                                    this.props.getCandidateDetail(item.candidate.id)
+                                                                }, 500);
+                                                            }
                                                         }
                                                     />
                                             )
@@ -282,12 +329,12 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                         list_shifts &&
                                             list_shifts.length > 0 ?
                                             list_shifts.map(
-                                                (item: IShift, index: number) => {
+                                                (item: IShifts, index: number) => {
                                                     if (item) {
-                                                        return <ShiftContent key={index} id={item.id} shift={item} removeButton={false} disableChange={true} />
+                                                        return <ShiftContent key={index} id={item.id} shifts={item} removeButton={false} disableChange={true} />
+                                                    } else {
+                                                        return
                                                     }
-
-                                                    return { loading_table: false }
                                                 }
                                             ) : <Empty style={{ paddingTop: "5vh" }} />
                                     }
@@ -318,13 +365,15 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getApplyCans: (id?: string) => dispatch({ type: REDUX_SAGA.APPLY_CAN.GET_APPLY_CAN, id }),
     getListEmBranches: () => dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES }),
+    getCandidateDetail: (id?: string) => dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id })
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_job_names: state.JobNames.items,
     list_skills: state.Skills.items,
     list_em_branches: state.EmBranches.items,
-    list_apply_cans: state.ApplyCans.items
+    list_apply_cans: state.ApplyCans.items,
+    candidate_detail: state.CandidateDetail
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

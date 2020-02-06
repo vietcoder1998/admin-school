@@ -3,6 +3,7 @@ export interface IEmployer {
     employerName?: string;
     logoUrl?: string;
     profileVerified?: boolean;
+    email?: string
 }
 
 export interface IEmployers {

@@ -2,27 +2,26 @@ import React from 'react';
 import { Row, Col, Button, Avatar, Tooltip, Rate } from 'antd';
 import { NotUpdate } from '../common/Common';
 import { TYPE } from '../../../../const/type';
-import { IApplyJob } from '../../../../models/apply-job';
-import { Link } from 'react-router-dom';
-import { routeLink, routePath } from '../../../../const/break-cumb';
+import { IApplyCan } from '../../../../models/apply-cans';
 import { timeConverter } from '../../../../utils/convertTime';
 import './JobApplyItem.scss';
 
-interface IApplyJobItem {
+interface IApplyCanItem {
     key?: any;
     id?: any;
     index?: number;
     removeButton?: boolean;
-    data?: IApplyJob;
+    data?: IApplyCan;
     id_default?: boolean;
     l_btn?: boolean;
     type?: 'PENDING' | 'ACCEPTED' | 'REJECTED';
     onChangeType?: Function;
     onClick?: Function;
+    onView?: Function;
     removeApplyJob?: Function;
 }
 
-export function ApplyJobItem(props: IApplyJobItem) {
+export function ApplyJobItem(props: IApplyCanItem) {
     let { data } = props;
     return (
         <div
@@ -65,7 +64,7 @@ export function ApplyJobItem(props: IApplyJobItem) {
                                 <Avatar style={{ width: "4vw", height: "4vw", margin: "0.2vw" }} shape="square" src={data.candidate.avatarUrl} alt="anh" icon="user" />
                             </div>
                             <div style={{ margin: "0px 15px" }}>
-                                <p style={{marginBottom: 5}}>
+                                <p style={{ marginBottom: 5 }}>
                                     {data ? data.candidate.lastName + " " + data.candidate.firstName : <NotUpdate />}
                                     {data && data.candidate.gender && data.candidate.gender === TYPE.MALE ? " (Nam)" : " (Nữ)"}
                                 </p>
@@ -76,8 +75,8 @@ export function ApplyJobItem(props: IApplyJobItem) {
                                 >
                                     {data && timeConverter(data.appliedDate, 1000, "HH:mm DD-MM-YY")}
                                 </span>
-                                <p style={{marginBottom: 5}}>
-                                    Lời nhắn: 
+                                <p style={{ marginBottom: 5 }}>
+                                    Lời nhắn:
                                 </p>
                                 <div className="test" style={{ fontStyle: "italic", padding: '5px 10px', width: '100%' }}>
                                     {data ? data.message : <NotUpdate msg="Không có" />}
@@ -86,7 +85,7 @@ export function ApplyJobItem(props: IApplyJobItem) {
                         </div>
                     </Col>
                     <Col md={24} lg={24} xl={24}>
-                        
+
                     </Col>
                     <Col md={24} lg={24} xl={24}>
                         <ul >
@@ -104,20 +103,20 @@ export function ApplyJobItem(props: IApplyJobItem) {
                 </Row>
             </div>
             <div>
-                <Link to={routeLink.FIND_CANDIDATES + routePath.DETAIL + `/${props.id}`} target="_blank">
-                    <Tooltip title="Xem hồ sơ">
-                        <Button
-                            type={"primary"}
-                            icon={'eye'}
-                            style={{
-                                float: "left",
-                                padding: "6px 8px",
-                                margin: "10px 10px",
-                                height: "auto",
-                                borderRadius: "50%",
-                            }} />
-                    </Tooltip>
-                </Link>
+                <Tooltip title="Xem hồ sơ">
+                    <Button
+                        type={"primary"}
+                        icon={'eye'}
+                        style={{
+                            float: "left",
+                            padding: "6px 8px",
+                            margin: "10px 10px",
+                            height: "auto",
+                            borderRadius: "50%",
+                        }}
+                        onClick={() => props.onView()}
+                    />
+                </Tooltip>
                 <Tooltip title='Chấp nhận'>
                     <Button
                         type={"primary"}

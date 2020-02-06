@@ -22,6 +22,8 @@ function PendingJobs(props?: IPendingJobsProps) {
             <Switch>
                 <ErrorBoundaryRoute exact path={`${path}/list`} component={PendingJobsList} />
                 <ErrorBoundaryRoute exact path={`${path}/create`} component={PendingJobsCreate} />
+                <ErrorBoundaryRoute exact path={`${path}/fix/:id`} component={PendingJobsCreate} />
+                <ErrorBoundaryRoute exact path={`${path}/copy/:id`} component={PendingJobsCreate} />
                 <ErrorBoundaryRoute exact path={`${path + routePath.JOB_ANNOUNCEMENTS + routePath.APPLY}/:id`} component={JobAnnouncementsApply} />
                 <ErrorBoundaryRoute exact path={`${path + routePath.JOB_ANNOUNCEMENTS + routePath.LIST}`} component={JobAnnouncementsList} />
             </Switch>

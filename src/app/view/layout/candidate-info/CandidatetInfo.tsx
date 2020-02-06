@@ -41,7 +41,7 @@ function CandidateInfo(props: ICandidateInfoProps) {
                     >
                         <Avatar
                             // @ts-ignore
-                            src={!onErrLogo && data && data.logoUrl ? data.logoUrl : avatar}
+                            src={!onErrLogo && data && data.avatarUrl ? data.avatarUrl : avatar}
                             style={{
                                 height: "8vw",
                                 width: "8vw",

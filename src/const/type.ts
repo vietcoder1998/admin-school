@@ -86,6 +86,7 @@ export const TYPE = {
         expired: "expired",
         hidden: "hidden",
         jobType: "jobType",
+        employerID: "employerID",
         homePriority: "homePriority",
         homeExpired: "homeExpired",
         searchPriority: "searchPriority",

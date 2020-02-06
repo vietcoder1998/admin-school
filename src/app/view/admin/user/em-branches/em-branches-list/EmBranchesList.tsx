@@ -13,7 +13,7 @@ import { IRegion } from '../../../../../../models/regions';
 import { IModalState } from '../../../../../../models/mutil-box';
 import { _requestToServer } from '../../../../../../services/exec';
 import { DELETE } from '../../../../../../const/method';
-import { EM_BRANCHES_API } from '../../../../../../services/api/private.api';
+import { EM_CONTROLLER } from '../../../../../../services/api/private.api';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 let { Option } = Select;
 
@@ -327,7 +327,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             case TYPE.DELETE:
                 await _requestToServer(
                     DELETE,
-                    EM_BRANCHES_API,
+                    EM_CONTROLLER,
                     [localStorage.getItem('id_em_branches')],
                     undefined,
                     undefined,

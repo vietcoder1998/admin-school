@@ -1,7 +1,7 @@
 import { IEmBranchesFilter } from './../../models/em-branches';
 import { IEmBranches } from './../../models/em-branches';
 import { POST } from '../../const/method';
-import { EM_BRANCHES_API } from '../../services/api/private.api';
+import { EM_CONTROLLER } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
@@ -40,7 +40,7 @@ function callEmBranches(action: any) {
         if (action.id) {
             return _requestToServer(
                 POST,
-                EM_BRANCHES_API + `/${action.id}/employerBranchs/query`,
+                EM_CONTROLLER + `/${action.id}/employerBranchs/query`,
                 body,
                 {
                     pageIndex: action.pageIndex ? action.pageIndex : 0,

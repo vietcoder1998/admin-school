@@ -9,7 +9,7 @@ import { IAppState } from '../../../../../redux/store/reducer';
 import findIdWithValue from '../../../../../utils/findIdWithValue';
 import { _requestToServer } from '../../../../../services/exec';
 import { POST, PUT } from '../../../../../const/method';
-import { EM_BRANCHES_API } from '../../../../../services/api/private.api';
+import { EM_CONTROLLER } from '../../../../../services/api/private.api';
 import moment from 'moment';
 import { IShifts, IAnnoucementBody } from '../../../../../models/pending-jobs';
 import ShiftContent, { newShift } from '../../../layout/annou-shift/AnnouShift';
@@ -199,7 +199,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
 
             await _requestToServer(
                 METHOD,
-                EM_BRANCHES_API + `/${employer.id}/jobs`,
+                EM_CONTROLLER + `/${employer.id}/jobs`,
                 newBody,
                 null,
                 undefined,
