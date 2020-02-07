@@ -6,7 +6,6 @@ import LoginImage from '../../../assets/image/login-image.jpg';
 import Cookies from 'universal-cookie';
 import { loginUser } from '../../../services/login';
 import { TYPE } from '../../../const/type';
-import { routeLink, routePath } from '../../../const/break-cumb';
 let cookies = new Cookies();
 
 interface ILoginState {
@@ -43,7 +42,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
     componentDidMount() {
         let is_authen = localStorage.getItem("token") ? true : false;
         if (is_authen) {
-            window.location.href = routeLink.PENDING_JOBS + routePath.JOB_ANNOUNCEMENTS + routePath.LIST;
+            window.location.href = '/admin/pending-jobs/list';
         } else {
             let state = this.props.match.path.replace("/", "");
             if (state) {

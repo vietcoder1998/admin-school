@@ -273,15 +273,6 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         style={{ padding: "10px 30px" }}
                         onChange={(event: any) => this.setState({ username: event })}
                     />
-                    <InputTitle
-                        type={TYPE.INPUT}
-                        title="Tên tài khoản admins"
-                        placeholder="ex: không có dấu cách"
-                        widthInput="400px"
-                        value={username}
-                        style={{ padding: "10px 30px" }}
-                        onChange={(event: any) => this.setState({ username: event })}
-                    />
                     {
                         type_cpn !== TYPE.FIX ?
                             <InputTitle

@@ -183,7 +183,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                         type="danger"
                         style={{float: "right", margin: "10px 5px"}}
                     >
-                        <Link to='/admin/role-admins/roles/list'>
+                        <Link to='/admin/role/role-admins/list'>
                             <Icon type="close"/>
                             Hủy
                         </Link>
@@ -220,7 +220,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                     style={{float: "left", margin: "10px 5px"}}
                     size='large'
                 >
-                    <Link to='/admin/role-admins/roles/list'>
+                    <Link to='/admin/role/role-admins/list'>
                         <Icon type="left"/>
                         Về trang trước
                     </Link>

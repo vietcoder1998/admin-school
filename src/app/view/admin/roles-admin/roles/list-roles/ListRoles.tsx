@@ -200,7 +200,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                                 float: "right",
                             }}
                         >
-                            <Link to='/admin/role-admins/roles/create'>
+                            <Link to='/admin/role/role-admins/create'>
                                 <Icon type="plus" />
                                 Thêm quyền mới
                             </Link>
