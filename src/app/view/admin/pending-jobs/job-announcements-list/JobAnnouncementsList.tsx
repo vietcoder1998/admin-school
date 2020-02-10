@@ -245,6 +245,13 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             width: 100,
         },
         {
+            title: 'Địa chỉ',
+            dataIndex: 'address',
+            className: 'action',
+            key: 'address',
+            width: 200,
+        },
+        {
             title: 'Ngày đăng',
             dataIndex: 'createdDate',
             className: 'action',
@@ -379,6 +386,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     acceptedApplied: viewCount(item.id, item.acceptedApplied, "#1687f2", TYPE.ACCEPTED, "user-add"),
                     rejectedApplied: viewCount(item.id, item.rejectedApplied, "red", TYPE.REJECTED, "user-delete"),
                     pendingApplied: viewCount(item.id, item.pendingApplied, "orange", TYPE.PENDING, "user"),
+                    address: item.address ? item.address : "",
                     hidden: `${!item.hidden ? "Hiện" : "Ẩn"}, ${!item.expired ? "Còn hạn" : "Hết hạn"}`,
                     priority:
                         <>
@@ -983,7 +991,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 columns={this.columns}
                                 loading={loading_table}
                                 dataSource={data_table}
-                                scroll={{ x: 1800 }}
+                                scroll={{ x: 2000 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}
                                 size="middle"
