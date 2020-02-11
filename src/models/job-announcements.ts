@@ -44,7 +44,9 @@ export interface IJobAnnouncement {
         searchExpired?: boolean;
         searchExpiration?: number;
         searchTimeLeft?: string
-    }
+    },
+    employerBranchEmail?: string,
+    employerBranchPhone?: string,
 }
 
 export interface IJobAnnouncements {

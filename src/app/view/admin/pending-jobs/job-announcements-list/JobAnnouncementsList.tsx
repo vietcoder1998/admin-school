@@ -258,6 +258,20 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             width: 200,
         },
         {
+            title: 'Email',
+            dataIndex: 'employerBranchEmail',
+            className: 'action',
+            key: 'employerBranchEmail',
+            width: 100,
+        },
+        {
+            title: 'SDT',
+            dataIndex: 'employerBranchPhone',
+            className: 'action',
+            key: 'employerBranchPhone',
+            width: 1000,
+        },
+        {
             title: 'Ngày đăng',
             dataIndex: 'createdDate',
             className: 'action',
@@ -388,6 +402,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     jobType: item.jobType,
                     employerBranchName: item.employerBranchName ? item.employerBranchName : "",
                     employerName: item.employerName ? item.employerName : "",
+                    employerBranchPhone: item.employerBranchPhone ? item.employerBranchPhone : "",
+                    employerBranchEmail: item.employerBranchEmail ? item.employerBranchEmail : "",
                     createdDate: timeConverter(item.createdDate, 1000),
                     expirationDate: timeConverter(item.expirationDate, 1000),
                     acceptedApplied: viewCount(item.id, item.acceptedApplied, "#1687f2", TYPE.ACCEPTED, "user-add"),
@@ -998,7 +1014,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 columns={this.columns}
                                 loading={loading_table}
                                 dataSource={data_table}
-                                scroll={{ x: 2200 }}
+                                scroll={{ x: 2400 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}
                                 size="middle"
