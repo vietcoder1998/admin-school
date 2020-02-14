@@ -214,6 +214,13 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             width: 100,
         },
         {
+            title: 'Ngày tạo',
+            dataIndex: 'createdDate',
+            className: 'action',
+            key: 'createdDate',
+            width: 100,
+        },
+        {
             title: 'Thao tác',
             key: 'operation',
             fixed: 'right',
@@ -246,6 +253,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     address: item.address ? item.address : "",
                     region: item.region ? item.region.name : "",
                     birthday: item.birthday === -1 ? "" : timeConverter(item.birthday, 1000),
+                    createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000),
                     profileVerified: <Tooltip title={(item.profileVerified ? "Đã" : "Chưa") + " xác thực"}><Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red" }} />  </Tooltip>,
                 });
             })
@@ -653,7 +661,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1690 }}
+                            scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

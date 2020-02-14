@@ -24,12 +24,14 @@ import { IDrawerState } from 'antd/lib/drawer';
 import { routeLink, routePath } from '../../../../../const/break-cumb';
 import { IEmController } from '../../../../../models/em-controller';
 import { IEmployer } from '../../../../../models/employers';
+import JobDetail from '../../../layout/job-detail/JobDetail';
+import JobSuitableCandidate from '../../../layout/job-suitable-candidate/JobSuitableCandidate';
 
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Đang chờ', 'Từ chối', 'Chấp nhận'];
 
-const viewCount = (id?: string | number, count?: string | number, color?: "red" | "#1687f2" | "orange", state?: string, icon?: "user" | "user-delete" | "user-add") => (
+const viewCount = (id?: string | number, count?: string | number, color?: "red" | "#1687f2" | "orange", state?: string, icon?: "user" | "user-delete" | "user-add" | "eye") => (
     <div
         className="n-candidate"
         style={{
@@ -90,6 +92,7 @@ interface IJobAnnouncementsListProps extends StateProps, DispatchProps {
     getJobAnnouncementDetail: (id?: string) => any;
     getListJobService: (id?: string) => any;
     getListEmployer: (body?: any, pageIndex?: number, pageSize?: number) => any;
+    getListJobSuitableCandidate: (jid?: any, pageIndex?: number, pageSize?: number) => any;
     handleDrawer: Function;
     handleModal: Function;
 };
@@ -126,8 +129,8 @@ interface IJobAnnouncementsListState {
     job_announcement_detail: IJobAnnouncementDetail;
     type_modal: string;
     eid?: string;
+    opjd?: boolean;
 };
-
 
 class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJobAnnouncementsListState> {
     constructor(props) {
@@ -168,7 +171,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 jobShiftFilter: null,
                 jobLocationFilter: null
             },
-
+            opjd: false,
             un_checkbox: false,
             list_check: [],
             homePriority: null,
@@ -269,7 +272,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             dataIndex: 'employerBranchPhone',
             className: 'action',
             key: 'employerBranchPhone',
-            width: 1000,
+            width: 100,
         },
         {
             title: 'Ngày đăng',
@@ -299,6 +302,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             fixed: 'right',
             className: 'action',
             dataIndex: 'operation',
+            render: (item) => this.EditToolTip(item.id, item.employerID),
             width: 100,
         }
     ];
@@ -330,6 +334,54 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         },
     ];
 
+    EditToolTip = (id?: string, eid?: string) => {
+        return (
+            <>
+                <Tooltip placement="topRight" title={"Kích hoạt gói dịch vụ"}>
+                    <Icon
+                        className='test'
+                        type="dollar"
+                        style={{ padding: "5px 5px", color: "orange", margin: 2 }}
+                        onClick={async () => {
+                            await this.props.handleDrawer();
+                            await setTimeout(() => {
+                                this.props.getJobAnnouncementDetail(id);
+                                this.props.getListJobService(eid)
+                            }, 250);
+
+                        }} />
+                </Tooltip>
+                <Tooltip placement="top" title={"Xem chi tiết(sửa)"}>
+                    <Icon
+                        className='test'
+                        style={{ padding: "5px 5px", margin: 2 }}
+                        type="eye"
+                        theme="twoTone"
+                        twoToneColor="green"
+                        onClick={async () => {
+                            await setTimeout(() => {
+                                this.props.getJobAnnouncementDetail(id);
+                                this.props.getListJobSuitableCandidate(id);
+                                this.setState({ opjd: true })
+                            }, 250);
+
+                        }}
+                    />
+                </Tooltip>
+                <Tooltip placement="topRight" title={"Xóa bài đăng"}>
+                    <Icon
+                        className='test'
+                        style={{ padding: "5px 5px", margin: 2 }}
+                        type="delete"
+                        theme="twoTone"
+                        twoToneColor="red"
+                        onClick={() => this.props.handleModal({ msg: "Bạn muốn xóa bài đăng này", type_modal: TYPE.DELETE })}
+                    />
+                </Tooltip>
+            </>
+        )
+    }
+
     onToggleModal = () => {
         let { show_modal } = this.state;
         this.setState({ show_modal: !show_modal });
@@ -342,55 +394,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         ) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            let EditToolTip = (hidden?: boolean, id?: string, eid?: string) => (
-                <>
-                    <Tooltip placement="topRight" title={"Kích hoạt gói dịch vụ"}>
-                        <Icon
-                            className='test'
-                            type="dollar"
-                            style={{ padding: "5px 5px", color: "orange", margin: 2 }}
-                            onClick={async () => {
-                                await nextProps.handleDrawer();
-                                await setTimeout(() => {
-                                    nextProps.getJobAnnouncementDetail(id);
-                                    nextProps.getListJobService(eid)
-                                }, 250);
-
-                            }} />
-                    </Tooltip>
-                    <Tooltip placement="top" title={"Xem chi tiết(sửa)"}>
-                        <Link to={routeLink.PENDING_JOBS + routePath.FIX + `/${id}`} target="_blank">
-                            <Icon
-                                className='test'
-                                style={{ padding: "5px 5px", margin: 2 }}
-                                type="edit"
-                                theme="twoTone"
-                                twoToneColor="green"
-                            />
-                        </Link>
-                    </Tooltip>
-                    <Tooltip placement="top" title={"Đăng bài tương tự"}>
-                        <Link to={routeLink.PENDING_JOBS + routePath.COPY + `/${id}`} target="_blank">
-                            <Icon
-                                className='test'
-                                style={{ padding: "5px 5px", margin: 2 }}
-                                type="copy"
-                                theme="twoTone"
-                            />
-                        </Link>
-                    </Tooltip>
-                    <Tooltip placement="topRight" title={"Xóa bài đăng"}>
-                        <Icon
-                            className='test'
-                            style={{ padding: "5px 5px", margin: 2 }}
-                            type="delete"
-                            theme="twoTone"
-                            twoToneColor="red"
-                            onClick={() => nextProps.handleModal({ msg: "Bạn muốn xóa bài đăng này", type_modal: TYPE.DELETE })}
-                        />
-                    </Tooltip>
-                </>
-            )
 
             nextProps.list_job_announcements.forEach((item: IJobAnnouncement, index: number) => {
                 data_table.push({
@@ -416,7 +419,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                             <ViewPriority priority={item.priority.homePriority} timeLeft={item.priority.homeTimeLeft} />
                             <ViewPriority priority={item.priority.searchPriority} timeLeft={item.priority.searchTimeLeft} />
                         </>,
-                    operation: EditToolTip(item.hidden, item.id, item.employerID)
+                    operation: item
                 });
             })
 
@@ -519,7 +522,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         let { list_employer_branches, list_employer } = this.props;
         let value: any = event;
 
-        console.log(event);
         switch (param) {
             case TYPE.JOB_FILTER.jobNameIDs:
                 value = [value];
@@ -533,7 +535,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             case TYPE.JOB_FILTER.employerID:
                 if (value) {
                     let data = list_employer.filter((item: IEmployer, index: number) => { return item.employerName === event });
-                    console.log(data);
                     if (data.length > 0) {
                         value = data[0].id
                     }
@@ -653,7 +654,12 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             default:
                 break;
         };
-    }
+    };
+
+    handleMdJobDetail = () => {
+        let { opjd } = this.state;
+        this.setState({ opjd: !opjd });
+    };
 
     requeryData = async () => {
         let { id, eid } = this.state;
@@ -676,6 +682,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             searchExpired,
             body,
             loading,
+            opjd
         } = this.state;
 
         let {
@@ -685,7 +692,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             list_employer_branches,
             list_job_service,
             list_employer,
-            modalState
+            modalState,
+            job_detail,
+            job_suitable_candidates
         } = this.props;
 
         let homeExpiration = job_announcement_detail.priority.homeExpiration;
@@ -728,6 +737,43 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     ]}
                     children={modalState.msg}
                 />
+
+                <Modal
+                    visible={opjd}
+                    title={"Chi tiết công việc"}
+                    destroyOnClose={true}
+                    onOk={this.createRequest}
+                    width={1000}
+                    onCancel={() => {
+                        this.setState({ opjd: false, loading: false });
+                    }}
+                    footer={[
+                        <Button
+                            key="cancel"
+                            children="Hủy"
+                            onClick={() => {
+                                this.setState({
+                                    opjd: false,
+                                });
+                            }}
+                        />
+                    ]}
+                >
+                    <Row>
+                        <Col span={16}>
+                            <JobDetail job_detail={job_detail} />
+                        </Col>
+                        <Col span={8}>
+                            <h6> Danh sách ứng viên thích hợp</h6>
+                            <JobSuitableCandidate
+                                job_suitable_candidates={job_suitable_candidates.items}
+                                pageIndex={job_suitable_candidates.pageIndex}
+                                pageSize={job_suitable_candidates.pageSize}
+                                totalItems={job_suitable_candidates.totalItems}
+                            />
+                        </Col>
+                    </Row>
+                </ Modal>
                 <>
                     <DrawerConfig
                         title={"Kích hoạt gói dịch vụ tuyển dụng"}
@@ -1047,8 +1093,13 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX.HANDLE_MODAL, modalState }),
     getJobAnnouncementDetail: (id?: string) =>
         dispatch({ type: REDUX_SAGA.JOB_ANNOUNCEMENT_DETAIL.GET_JOB_ANNOUNCEMENT_DETAIL, id }),
-    getListJobService: (id?: string) => dispatch({ type: REDUX_SAGA.JOB_SERVICE.GET_JOB_SERVICE, id }),
-    getListEmployer: (body?: string, pageIndex?: number, pageSize?: number) => dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, body, pageIndex, pageSize })
+    getListJobService: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.JOB_SERVICE.GET_JOB_SERVICE, id }),
+    getListEmployer: (body?: string, pageIndex?: number, pageSize?: number) =>
+        dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, body, pageIndex, pageSize }),
+    getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) =>
+        dispatch({ type: REDUX_SAGA.JOB_SUITABLE_CANDIDATE.GET_JOB_SUITABLE_CANDIDATE, jid, pageIndex, pageSize }),
+
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
@@ -1060,7 +1111,9 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     job_announcement_detail: state.JobAnnouncementDetail,
     modalState: state.MutilBox.modalState,
     drawerState: state.MutilBox.drawerState,
-    totalItems: state.JobAnnouncements.totalItems
+    totalItems: state.JobAnnouncements.totalItems,
+    job_detail: state.JobAnnouncementDetail,
+    job_suitable_candidates: state.JobSuitableCandidates
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

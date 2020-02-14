@@ -37,6 +37,7 @@ import { AdminAccountDetailWatcher } from '../sagas/admin-account-detail';
 import { ApplyJobsWatcher } from '../sagas/apply-jobs';
 import { ApplyCansWatcher } from '../sagas/apply-cans';
 import { JobServiceWatcher } from '../sagas/job-services';
+import { JobSuitableCandidatesWatcher } from '../sagas/job-suitable-candidate';
 
 
 export default function* rootSaga() {
@@ -78,6 +79,7 @@ export default function* rootSaga() {
         AdminAccountDetailWatcher(),
         ApplyJobsWatcher(),
         ApplyCansWatcher(),
-        JobServiceWatcher()
+        JobServiceWatcher(),
+        JobSuitableCandidatesWatcher()
     ])
 } 

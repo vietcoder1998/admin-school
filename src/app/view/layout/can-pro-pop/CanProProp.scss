@@ -1,0 +1,36 @@
+.cpp-ct {
+  width: 400px;
+  position: relative;
+  .cpp-bg {
+    height: 120px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      margin-top: -20%;
+    }
+  }
+
+  .cpp-av {
+    position: absolute;
+    color: white;
+    left: 10px;
+    display: inline-flex;
+  }
+
+  .cpp-if {
+    min-height: 60px;
+    padding: 10px 10px 10px 100px;
+    font-size: 12;
+  }
+
+  .cpp-ct-ft {
+    display: block;
+    height: 40px;
+    padding: 7.5px 5px;
+    background-color: whitesmoke;
+  }
+}
+
+.ant-popover-inner-content {
+  padding: 0px;
+}
