@@ -1,4 +1,4 @@
-import { IShifts } from './pending-job';
+import { IShiftDetail } from './job-annoucement-detail';
 export interface IPendingJobDetail {
     employer?: {
         employerName?: string,
@@ -14,7 +14,7 @@ export interface IPendingJobDetail {
         jobTitle?: string,
         jobType?: string,
         requiredSkillIDs?: [],
-        shifts?: Array<IShifts>,
+        shifts?: Array<IShiftDetail>,
     },
     id?: string,
     jobID?: string,

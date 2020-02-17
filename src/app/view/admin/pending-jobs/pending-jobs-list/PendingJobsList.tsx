@@ -296,7 +296,6 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             message,
             loading_table,
             state,
-            job_id
         } = this.state;
 
         let {
@@ -304,7 +303,6 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             totalItems,
             job_detail,
             open_modal,
-            list_job_skills,
             employer_detail
         } = this.props;
 
@@ -328,6 +326,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                     title="CHI TIẾT CÔNG VIỆC"
                     onCancel={() => this.props.handleModal({ open_modal: false })}
                     destroyOnClose={true}
+                    width={'50vw'}
                     style={{ top: "5vh" }}
                     footer={[
                         <TextArea
@@ -360,10 +359,17 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                     ]}
                 >
                     <JobDetail
-                        job_detail={job_detail}
-                        list_job_skills={list_job_skills}
-                        job_id={job_id}
-                        list_job_names={list_job_names}
+                        jobDetail={{
+                            jobName: job_detail.jobName && job_detail.jobName.name,
+                            jobTitle: job_detail.data.jobTitle,
+                            employerName: job_detail.employer.employerName,
+                            employerUrl: job_detail.employer.logoUrl,
+                            expriratedDate: job_detail.data.expirationDate,
+                            shifts: job_detail.data.shifts,
+                            description: job_detail.data.description,
+                            jobType: job_detail.data.jobType,
+                            createdDate: job_detail.createdDate,
+                        }}
                     />
                 </Modal>
                 <div className="common-content">

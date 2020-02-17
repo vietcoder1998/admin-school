@@ -8,22 +8,23 @@ import { timeConverter } from '../../../../utils/convertTime';
 import { ISkill } from '../../../../models/skills';
 import findIdWithValue from '../../../../utils/findIdWithValue';
 import { IJobName } from '../../../../models/job-type';
-import { IJobAnnouncementDetail } from '../../../../models/job-annoucement-detail';
+import IJobDetail from '../../../../models/job-detail';
 
 interface IJobDetailProps {
-    job_detail?: IJobAnnouncementDetail,
     list_job_skills?: Array<ISkill>,
     job_id?: string,
     list_job_names?: Array<IJobName>
+    jobDetail?: IJobDetail;
 }
 
 export default function JobDetail(props: IJobDetailProps) {
-    let { job_detail, list_job_skills, list_job_names } = props;
+    let { list_job_skills, jobDetail } = props;
     let [requireSkill, setRequireSkill] = React.useState([]);
-    let list_des = job_detail && convertStringToArray(job_detail.description);
+    let list_des = jobDetail && convertStringToArray(jobDetail.description);
+
     React.useState(() => {
-        if (job_detail && job_detail.requiredSkills && job_detail.requiredSkills.length > 0) {
-            let requireSkill = findIdWithValue(list_job_skills, job_detail.requiredSkills, "id", "name");
+        if (jobDetail && jobDetail.requiredSkills && jobDetail.requiredSkills.length > 0) {
+            let requireSkill = findIdWithValue(list_job_skills, jobDetail.requiredSkills, "id", "name");
             setRequireSkill(requireSkill);
         }
     });
@@ -32,24 +33,25 @@ export default function JobDetail(props: IJobDetailProps) {
         <div className='job-detail'>
             <div className='detail-job b_b'>
                 <h6>CHI TIẾT</h6>
-                <Avatar src={job_detail && job_detail.employerLogoUrl} icon="user"
+                <Avatar src={jobDetail && jobDetail.employerUrl} icon="user"
                     style={{ width: "60px", height: "60px", margin: "20px 0px" }} />
                 <ul>
                     <li className='d_j_t'>
                         <IptLetter value={"Tiêu đề:"} />
-
-                        <label> {job_detail && job_detail.jobTitle ? job_detail.jobTitle : "Không có"}
+                        <label>
+                            {jobDetail && jobDetail.jobTitle ? jobDetail.jobTitle : "Không có"}
                         </label>
                     </li>
                     <li className='d_j_t'>
                         <IptLetter value={"Tên công việc: "} />
-                        <label> {job_detail && job_detail.jobName ? findIdWithValue(list_job_names, job_detail.jobName.id, "id", "name")
-                            : "Không có"}
+                        <label>
+                            {jobDetail && jobDetail.jobName ? jobDetail.jobName : "Không có"}
                         </label>
                     </li>
                     <li className='d_j_t'>
                         <IptLetter value={"Tên nhà tuyển dụng: "} />
-                        <label> {job_detail && job_detail.employerName ? job_detail.employerName : "Không có"}
+                        <label>
+                            {jobDetail && jobDetail.employerName ? jobDetail.employerName : "Không có"}
                         </label>
                     </li>
                 </ul>
@@ -60,12 +62,11 @@ export default function JobDetail(props: IJobDetailProps) {
                     <li className='d_j_t'>
                         <Icon type="solution" style={{ color: 'blue' }} />
                         <IptLetter value={"Loại công việc:"} />
-
                         <label>
                             {
-                                job_detail &&
-                                    job_detail.jobType ?
-                                    job_detail.jobType
+                                jobDetail &&
+                                    jobDetail.jobType ?
+                                    jobDetail.jobType
                                     : <NotUpdate />
                             }
                         </label>
@@ -73,13 +74,13 @@ export default function JobDetail(props: IJobDetailProps) {
                     <li className='d_j_t'>
                         <Icon type="calendar" style={{ color: 'green' }} />
                         <IptLetter value={"Ngày đăng: "} />
-                        <label> {job_detail && timeConverter(job_detail.createdDate, 1000)}
+                        <label> {jobDetail && timeConverter(jobDetail.createdDate, 1000)}
                         </label>
                     </li>
                     <li className='d_j_t'>
                         <Icon type="calendar" style={{ color: 'red' }} />
                         <IptLetter value={"Ngày hết hạn: "} />
-                        <label> {job_detail && timeConverter(job_detail.expirationDate, 1000)}
+                        <label> {jobDetail && timeConverter(jobDetail.expriratedDate, 1000)}
                         </label>
                     </li>
                 </ul>
@@ -102,9 +103,9 @@ export default function JobDetail(props: IJobDetailProps) {
                 <h6>CA LÀM VIỆC</h6>
                 <div>
                     {
-                        job_detail &&
-                        job_detail.shifts &&
-                        job_detail.shifts.map((item: any, index: number) => {
+                        jobDetail &&
+                        jobDetail.shifts &&
+                        jobDetail.shifts.map((item: any, index: number) => {
                             let maxSalary = '' + item.maxSalary && item.maxSalary === 0 ? '' : ('-' + item.maxSalary);
                             return (<div key={index} className='time-content b_b'>
                                 <p>
@@ -143,9 +144,9 @@ export default function JobDetail(props: IJobDetailProps) {
             <div className='skills-job-detail '>
                 <h6>KỸ NĂNG CÔNG VIỆC</h6>
                 <div>
-                    {job_detail &&
-                        job_detail.requiredSkills &&
-                        job_detail.requiredSkills.length > 0 &&
+                    {jobDetail &&
+                        jobDetail.requiredSkills &&
+                        jobDetail.requiredSkills.length > 0 &&
                         requireSkill &&
                         requireSkill.length > 0 ?
                         requireSkill.map(

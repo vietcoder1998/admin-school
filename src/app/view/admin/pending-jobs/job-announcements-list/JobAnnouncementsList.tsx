@@ -761,7 +761,18 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 >
                     <Row>
                         <Col span={16}>
-                            <JobDetail job_detail={job_detail} />
+                            <JobDetail
+                                jobDetail={{
+                                    jobName: job_detail.jobName.name,
+                                    jobTitle: job_detail.jobTitle,
+                                    employerName: job_detail.employerName,
+                                    employerUrl: job_detail.employerLogoUrl,
+                                    expriratedDate: job_detail.expirationDate,
+                                    jobType: job_detail.jobType,
+                                    shifts: job_detail.shifts,
+                                    description: job_detail.description
+                                }}
+                            />
                         </Col>
                         <Col span={8}>
                             <h6> Danh sách ứng viên thích hợp</h6>

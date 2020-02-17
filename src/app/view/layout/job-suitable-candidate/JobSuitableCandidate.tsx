@@ -11,7 +11,7 @@ interface IProps {
     job_suitable_candidates?: Array<IJobSuitableCandidate>,
     pageIndex?: number;
     pageSize?: number;
-    totalsItems?: number;
+    totalItems?: number;
 }
 
 export default function JobSuitableCandidate(props?: IProps) {
@@ -23,7 +23,7 @@ export default function JobSuitableCandidate(props?: IProps) {
                     job_suitable_candidates &&
                         job_suitable_candidates.length > 0 ?
                         job_suitable_candidates.map((item?: IJobSuitableCandidate) => (
-                            <li className='test' style={{ padding: 5, margin: 2 }}>
+                            <li className='test' style={{ padding: '5px 10px', margin: 2 }}>
                                 <Avatar src={item.avatarUrl} />
                                 <CanProProp data={item}>
                                     {item.lastName + " " + item.firstName}
@@ -34,7 +34,7 @@ export default function JobSuitableCandidate(props?: IProps) {
                         <Empty description={"Không có ứng viên nào phù hợp"} />
                 }
             </ul>
-            <Pagination pageSize={props.pageSize} total={props.totalsItems} />
+            <Pagination pageSize={props.pageSize} total={props.totalItems} />
         </>
     )
 }
