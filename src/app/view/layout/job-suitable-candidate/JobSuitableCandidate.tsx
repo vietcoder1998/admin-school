@@ -12,6 +12,7 @@ interface IProps {
     pageIndex?: number;
     pageSize?: number;
     totalItems?: number;
+    onGetCanDetail?: (id?: string) => any;
 }
 
 export default function JobSuitableCandidate(props?: IProps) {
@@ -23,7 +24,7 @@ export default function JobSuitableCandidate(props?: IProps) {
                     job_suitable_candidates &&
                         job_suitable_candidates.length > 0 ?
                         job_suitable_candidates.map((item?: IJobSuitableCandidate) => (
-                            <li className='test' style={{ padding: '5px 10px', margin: 2 }}>
+                            <li className='test' style={{ padding: '5px 10px', margin: 2 }} onClick={()=>props.onGetCanDetail(item.id)}>
                                 <Avatar src={item.avatarUrl} />
                                 <CanProProp data={item}>
                                     {item.lastName + " " + item.firstName}

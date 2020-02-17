@@ -161,16 +161,16 @@ function EmployerInfo(props: IEmployerInfoProps) {
                                 <Col xs={24} md={12} lg={12} xl={12} xxl={24} >
                                     <div className="ic-ct-img">
                                         <IptLetterP value={"Mặt trước giấy phép"} />
-                                        <Skeleton avatar loading={data.identityCardBackImageUrl ? false : true} >
-                                            <img className='ic' src={data.identityCardFrontImageUrl} alt='front description' />
+                                        <Skeleton avatar loading={data ? false : true} >
+                                            <img className='ic' src={data && data.identityCardFrontImageUrl} alt='front description' />
                                         </Skeleton>
                                     </div>
                                 </Col>
                                 <Col xs={24} md={12} lg={12} xl={12} xxl={24} >
                                     <div className="ic-ct-img">
                                         <IptLetterP value={"Ảnh văn phòng sau"} />
-                                        <Skeleton avatar loading={data.identityCardBackImageUrl ? false : true} >
-                                            <img className='ic' src={data.identityCardBackImageUrl} alt='front description' />
+                                        <Skeleton avatar loading={data ? false : true} >
+                                            <img className='ic' src={data && data.identityCardBackImageUrl} alt='front description' />
                                         </Skeleton>
                                     </div>
                                 </Col>

@@ -26,6 +26,7 @@ import { IEmController } from '../../../../../models/em-controller';
 import { IEmployer } from '../../../../../models/employers';
 import JobDetail from '../../../layout/job-detail/JobDetail';
 import JobSuitableCandidate from '../../../layout/job-suitable-candidate/JobSuitableCandidate';
+import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
 
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
@@ -95,6 +96,7 @@ interface IJobAnnouncementsListProps extends StateProps, DispatchProps {
     getListJobSuitableCandidate: (jid?: any, pageIndex?: number, pageSize?: number) => any;
     handleDrawer: Function;
     handleModal: Function;
+    getCanDetail?: Function;
 };
 
 interface IJobAnnouncementsListState {
@@ -694,7 +696,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             list_employer,
             modalState,
             job_detail,
-            job_suitable_candidates
+            job_suitable_candidates,
+            can_detail
         } = this.props;
 
         let homeExpiration = job_announcement_detail.priority.homeExpiration;
@@ -743,7 +746,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     title={"Chi tiết công việc"}
                     destroyOnClose={true}
                     onOk={this.createRequest}
-                    width={1000}
+                    width={'90vw'}
                     onCancel={() => {
                         this.setState({ opjd: false, loading: false });
                     }}
@@ -760,7 +763,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     ]}
                 >
                     <Row>
-                        <Col span={16}>
+                        <Col span={10}>
                             <JobDetail
                                 jobDetail={{
                                     jobName: job_detail.jobName.name,
@@ -774,14 +777,18 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 }}
                             />
                         </Col>
-                        <Col span={8}>
-                            <h6> Danh sách ứng viên thích hợp</h6>
+                        <Col span={4}>
+                            <h6>ỨNG VIÊN THÍCH HỢP</h6>
                             <JobSuitableCandidate
                                 job_suitable_candidates={job_suitable_candidates.items}
                                 pageIndex={job_suitable_candidates.pageIndex}
                                 pageSize={job_suitable_candidates.pageSize}
                                 totalItems={job_suitable_candidates.totalItems}
+                                onGetCanDetail={(id) => this.props.getCanDetail(id)}
                             />
+                        </Col>
+                        <Col span={10}>
+                            <CandidatetInfo data={can_detail} />
                         </Col>
                     </Row>
                 </ Modal>
@@ -1106,6 +1113,8 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX_SAGA.JOB_ANNOUNCEMENT_DETAIL.GET_JOB_ANNOUNCEMENT_DETAIL, id }),
     getListJobService: (id?: string) =>
         dispatch({ type: REDUX_SAGA.JOB_SERVICE.GET_JOB_SERVICE, id }),
+    getCanDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id }),
     getListEmployer: (body?: string, pageIndex?: number, pageSize?: number) =>
         dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, body, pageIndex, pageSize }),
     getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) =>
@@ -1119,6 +1128,7 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_employer_branches: state.EmBranches.items,
     list_job_service: state.JobServices,
     list_employer: state.Employers.items,
+    can_detail: state.CandidateDetail,
     job_announcement_detail: state.JobAnnouncementDetail,
     modalState: state.MutilBox.modalState,
     drawerState: state.MutilBox.drawerState,
