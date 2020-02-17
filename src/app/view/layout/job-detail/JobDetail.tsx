@@ -22,11 +22,11 @@ export default function JobDetail(props: IJobDetailProps) {
     let [requireSkill, setRequireSkill] = React.useState([]);
     let list_des = job_detail && convertStringToArray(job_detail.description);
     React.useState(() => {
-        if (job_detail && job_detail.requiredSkills.length > 0) {
+        if (job_detail && job_detail.requiredSkills && job_detail.requiredSkills.length > 0) {
             let requireSkill = findIdWithValue(list_job_skills, job_detail.requiredSkills, "id", "name");
             setRequireSkill(requireSkill);
         }
-    })
+    });
 
     return (
         <div className='job-detail'>

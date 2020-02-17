@@ -4,7 +4,7 @@ import './CandidateInfo.scss';
 // @ts-ignore
 import backGround from '../../../../assets/image/base-image.jpg';
 // @ts-ignore
-import avatar from '../../../../assets/image/test_avatar.jpg';
+import avatar from '../../../../assets/image/avatar_placeholder.png';
 import { NotUpdate, IptLetter } from '../common/Common';
 import { ICandidateDetail, IEducation, IExperience } from '../../../../models/candidates-detail';
 import { ISkill } from '../../../../models/candidates-detail';

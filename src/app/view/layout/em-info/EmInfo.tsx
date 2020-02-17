@@ -4,7 +4,7 @@ import './EmInfo.scss';
 // @ts-ignore
 import backGround from '../../../../assets/image/base-image.jpg';
 // @ts-ignore
-import avatar from '../../../../assets/image/test_avatar.jpg';
+import avatar from '../../../../assets/image/avatar_placeholder.png';
 import { NotUpdate, IptLetterP } from '../common/Common';
 import { IEmControllerDetail } from '../../../../models/em-controller-detail';
 
