@@ -15,6 +15,7 @@ interface ICanProPop {
     id?: string;
     background?: string;
     handleUnlocked?: () => any;
+    disabled?: boolean;
 };
 
 export default function CanProPop(props?: ICanProPop): JSX.Element {
@@ -73,16 +74,19 @@ export default function CanProPop(props?: ICanProPop): JSX.Element {
                     <Icon type={data && data.unlocked ? 'unlock' : 'lock'} theme={'filled'} style={{ color: data && data.unlocked ? 'green' : '' }} />
                     {data && data.unlocked ? 'Đã mở khóa' : 'Chưa mở khóa'}
                 </Button>
-                <Link to={routeLink.FIND_CANDIDATES + routePath.DETAIL + `/${id}`} target='_blank'>
-                    <Button
-                        size={'small'}
-                        className='test'
-                        style={{ float: 'right', marginRight: 5 }}
-                    >
-                        <Icon type={'search'} />
-                        Xem chi tiết
+                {
+                    !props.disabled ? <Link to={routeLink.FIND_CANDIDATES + routePath.DETAIL + `/${id}`} target='_blank'>
+                        <Button
+                            size={'small'}
+                            className='test'
+                            style={{ float: 'right', marginRight: 5 }}
+                        >
+                            <Icon type={'search'} />
+                            Xem chi tiết
                     </Button>
-                </Link>
+                    </Link> : ''
+                }
+
             </div>
         </div>
     )
@@ -95,9 +99,12 @@ export default function CanProPop(props?: ICanProPop): JSX.Element {
             placement={'topLeft'}
         >
             <div className='link-to' style={{ color: "#168ecd" }}>
-                <Link to={routeLink.FIND_CANDIDATES + routePath.DETAIL + `/${id}`} target='_blank'>
-                    {children}
-                </Link>
+                {
+                    !props.disabled ? <Link to={routeLink.FIND_CANDIDATES + routePath.DETAIL + `/${id}`} target='_blank'>
+                        {children}
+                    </Link> :  children 
+                }
+
             </div>
         </Popover>
     )

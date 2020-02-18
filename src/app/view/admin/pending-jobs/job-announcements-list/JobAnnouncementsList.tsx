@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio, Empty } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
 import './JobAnnouncementsList.scss';
 import { TYPE } from '../../../../../const/type';
@@ -93,7 +93,7 @@ interface IJobAnnouncementsListProps extends StateProps, DispatchProps {
     getJobAnnouncementDetail: (id?: string) => any;
     getListJobService: (id?: string) => any;
     getListEmployer: (body?: any, pageIndex?: number, pageSize?: number) => any;
-    getListJobSuitableCandidate: (jid?: any, pageIndex?: number, pageSize?: number) => any;
+    getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) => any;
     handleDrawer: Function;
     handleModal: Function;
     getCanDetail?: Function;
@@ -132,6 +132,7 @@ interface IJobAnnouncementsListState {
     type_modal: string;
     eid?: string;
     opjd?: boolean;
+    jid?: string;
 };
 
 class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJobAnnouncementsListState> {
@@ -182,7 +183,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             searchExpired: false,
             job_announcement_detail: null,
             type_modal: null,
-            eid: null
+            eid: null,
+            jid: null,
         };
     }
 
@@ -348,7 +350,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                             await this.props.handleDrawer();
                             await setTimeout(() => {
                                 this.props.getJobAnnouncementDetail(id);
-                                this.props.getListJobService(eid)
+                                this.props.getListJobService(eid);
                             }, 250);
 
                         }} />
@@ -364,7 +366,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                             await setTimeout(() => {
                                 this.props.getJobAnnouncementDetail(id);
                                 this.props.getListJobSuitableCandidate(id);
-                                this.setState({ opjd: true })
+                                this.setState({ opjd: true, jid: id })
                             }, 250);
 
                         }}
@@ -684,7 +686,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             searchExpired,
             body,
             loading,
-            opjd
+            opjd,
+            jid
         } = this.state;
 
         let {
@@ -785,10 +788,14 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 pageSize={job_suitable_candidates.pageSize}
                                 totalItems={job_suitable_candidates.totalItems}
                                 onGetCanDetail={(id) => this.props.getCanDetail(id)}
+                                onGetListJobSuitableCandidate={(pageIndex, pageSize) => this.props.getListJobSuitableCandidate(jid, pageIndex, pageSize)}
                             />
                         </Col>
                         <Col span={10}>
-                            <CandidatetInfo data={can_detail} />
+                            {
+                                job_suitable_candidates.items.length > 0 ? <CandidatetInfo data={can_detail} /> : <Empty />
+                            }
+
                         </Col>
                     </Row>
                 </ Modal>
