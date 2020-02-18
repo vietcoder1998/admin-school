@@ -28,14 +28,14 @@ export default function JobSuitableCandidate(props?: IProps) {
                         job_suitable_candidates.map((item?: IJobSuitableCandidate) => (
                             <li
                                 className='test'
-                                style={{ 
-                                    padding: '5px 10px', 
+                                style={{
+                                    padding: '5px 10px',
                                     margin: 2,
                                     backgroundColor: 'white',
                                 }}
                                 onClick={() => props.onGetCanDetail(item.id)}
                             >
-                                <Avatar src={item.avatarUrl} style={{marginBottom: 10}} />
+                                <Avatar src={item.avatarUrl} style={{ marginBottom: 10 }} />
                                 <CanProProp data={item} disabled={true}>
                                     {item.lastName + " " + item.firstName}
                                 </CanProProp>
@@ -45,7 +45,7 @@ export default function JobSuitableCandidate(props?: IProps) {
                         <Empty description={"Không có ứng viên nào phù hợp"} />
                 }
             </ul>
-            <Pagination pageSize={props.pageSize} total={props.totalItems} onChange={(page, pageSize) => props.onGetListJobSuitableCandidate(page, pageSize)} />
+            <Pagination pageSize={props.pageSize} total={props.totalItems} onChange={(page, pageSize) => props.onGetListJobSuitableCandidate(page - 1, pageSize)} />
         </>
     )
 }
