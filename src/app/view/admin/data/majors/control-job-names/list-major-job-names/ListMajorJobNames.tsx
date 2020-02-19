@@ -1,4 +1,4 @@
-import React, { PureComponent,  } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Button, Select, Divider } from 'antd';
 import { REDUX_SAGA } from '../../../../../../../const/actions';
@@ -48,7 +48,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             loading_table: false,
             data_table: [],
             pageIndex: 0,
-            pageSize: 10,
+            pageSize: 0,
             openModal: false,
             id: null,
             name: undefined,
@@ -64,7 +64,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     }
 
     componentDidMount() {
-        this.props.getListMajorJobNames(0, 10, this.props.match.params.id);
+        this.props.getListMajorJobNames(0, 0, this.props.match.params.id);
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
@@ -94,7 +94,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
         }
 
         if (nextProps.match.params.id !== undefined && nextProps.match.params.id !== prevState.id) {
-            nextProps.getListMajorJobNames(0, 10, nextProps.match.params.id);
+            nextProps.getListMajorJobNames(0, 0, nextProps.match.params.id);
             nextProps.getListJobNames(0, 0);
             return {
                 id: nextProps.match.params.id
@@ -117,6 +117,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     };
 
     onChangeData = async (event?: any) => {
+        console.log(event);
         await this.setState({ list_name: event })
         await this.handleChangeListId(event);
     }
@@ -128,7 +129,8 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
         await list_name.forEach((item: string) => {
             list_job_names.forEach((element: IJobName) => {
                 if (element.name === item) {
-                    list_id.push(element.id)
+                    list_id.push(element.id);
+                    console.log(list_id);
                 }
             });
 
@@ -138,7 +140,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     }
 
     onSearchJob = (name: string | null) => {
-        this.props.getListJobNames(0, 10, name);
+        this.props.getListJobNames(0, 0, name);
     };
 
     createNewData = async () => {
@@ -147,7 +149,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
         await _requestToServer(
             PUT, MAJORS + `/${id}/jobNames`, list_id
         )
-        await this.props.getListMajorJobNames(0, 10, id);
+        await this.props.getListMajorJobNames(0, 0, id);
     }
 
     render() {
@@ -162,7 +164,9 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                         <Button
                             onClick={async () => {
                                 await this.createNewData();
-                                await this.props.history.push('/admin/data/majors/list');
+                                setTimeout(() => {
+                                    this.props.history.push('/admin/data/majors/list');
+                                }, 300);
                             }}
                             style={{
                                 float: "right",

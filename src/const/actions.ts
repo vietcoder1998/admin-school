@@ -29,15 +29,12 @@ export const REDUX = {
     ANNOUNCEMENT_DETAIL: {
         GET_ANNOUNCEMENT_DETAIL: "GET_ANNOUNCEMENT_DETAIL"
     },
-
     TYPE_SCHOOLS: {
         GET_TYPE_SCHOOLS: "GET_TYPE_SCHOOLS",
     },
-
     LANGUAGES: {
         GET_LANGUAGES: "GET_LANGUAGES"
     },
-
     REGIONS: {
         GET_REGIONS: "GET_REGIONS"
     },
@@ -45,7 +42,6 @@ export const REDUX = {
     SKILLS: {
         GET_SKILLS: "GET_SKILLS"
     },
-
     MAJORS: {
         GET_MAJORS: "GET_MAJORS"
     },
