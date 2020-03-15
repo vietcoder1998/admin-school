@@ -1,7 +1,7 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Icon, Popconfirm, Col, Select, Row, Tooltip, Avatar, Drawer, Slider, Input } from 'antd';
-import './StudentsList';
+import './StudentsList.scss';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
 import { REDUX_SAGA } from '../../../../../../const/actions';
@@ -16,6 +16,7 @@ import { ILanguage } from '../../../../../../models/languages';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
 import { ISkill } from '../../../../../../models/skills';
 import StudentInfo from '../../../../layout/student-info/StudentInfo';
+import StuInsertExels from './StuInsertExels';
 
 interface IStudentsListProps extends StateProps, DispatchProps {
     match?: any;
@@ -51,7 +52,8 @@ interface IStudentsListState {
     educatedScale_state?: string;
     open_drawer?: boolean;
     list_students?: Array<IStudent>;
-    type_cpn?: string
+    type_cpn?: string;
+    openImport?: boolean;
 };
 
 class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState> {
@@ -87,7 +89,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 createdDate: null,
             },
             open_drawer: false,
-
+            openImport: false,
         };
     }
 
@@ -366,6 +368,11 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         this.setState({ body });
     }
 
+    handleVisible = () => {
+        let { openImport } = this.state;
+        this.setState({ openImport: !openImport })
+    }
+
     advancedFilter = () => {
         let { body } = this.state;
 
@@ -477,6 +484,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 >
                     Tìm kiếm
             </Button>
+
             </div>
         </>
     }
@@ -488,6 +496,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             open_drawer,
             type_cpn,
             loading,
+            openImport,
         } = this.state;
 
         let {
@@ -515,9 +524,21 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                             this.advancedFilter()
                     }
                 </Drawer>
+                <StuInsertExels openImport={openImport} handleImport={() => this.handleVisible()} />
                 <div className="common-content">
                     <h5>
                         Danh sách sinh viên
+                        <Button
+                            icon="upload"
+                            onClick={() => this.handleVisible()}
+                            type="primary"
+                            style={{
+                                float: "right",
+                                marginRight: 5
+                            }}
+                        >
+                            Import
+                        </Button>
                         <Button
                             onClick={() => this.searchStudents()}
                             type="primary"

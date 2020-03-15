@@ -66,11 +66,13 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.list_majors.forEach((item: any, index: number) => {
+                console.log(item);
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
-                    branchName: item.branch ? item.branch.name : "Khác"
+                    branchName: item.branch ? item.branch.name : "Khác",
+                    branchID: item.branch ? item.branch.id : null,
                 });
             });
 
@@ -208,7 +210,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                 PUT, MAJORS + `/${id}`,
                 {
                     name: name.trim(),
-                    branchID
+                    branchID: branchID
                 }
             ).then((res: any) => {
                 this.props.getListMajors(0);
@@ -316,7 +318,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         onChange={this.setPageIndex}
                         onRow={(event) => ({
                             onMouseEnter: () => {
-                                this.setState({ id: event.key, branchName: event.branchName , name: event.name});
+                                this.setState({ id: event.key, branchName: event.branchName , name: event.name, branchID: event.branchID});
                             }
                         })}
                     />

@@ -70,7 +70,7 @@ class CreateSkills extends PureComponent<CreateSkillsProps, CreateSkillsState> {
                     icon="plus"
                     style={{float: "right", margin: "10px 5px"}}
                     onClick={this.createNewData}
-                    disabled={name? true : false}
+                    disabled={name? false : true}
                 >
                     Tạo kỹ năng mới
                 </Button>

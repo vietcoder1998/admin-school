@@ -26,6 +26,7 @@ interface ListTypeSchoolsState {
     name?: string;
     id?: string;
     type?: string;
+    priority?: number;
 }
 
 class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchoolsState> {
@@ -41,6 +42,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             name: "",
             id: "",
             type: TYPE.EDIT,
+            priority: null,
         }
     }
 
@@ -57,6 +59,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
+                    priority: item.priority,
                 });
             });
 
@@ -73,7 +76,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     EditContent = (
         <>
             <Icon
-                className="test"                 key="edit"                 style={{ padding: 5 , margin: 2}}
+                className="test" key="edit" style={{ padding: 5 , margin: 2}}
                 type="edit"
                 theme="twoTone"
                 onClick={
@@ -133,12 +136,13 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     };
 
     editTypeSchools = async () => {
-        let {name, id} = this.state;
+        let {name, id, priority} = this.state;
         if (name) {
             await _requestToServer(
                 PUT, TYPE_SCHOOLS + `/${id}`,
                 {
-                    name: name.trim()
+                    name: name.trim(),
+                    priority: priority
                 }
             ).then((res: any) => {
                 this.props.getListTypeSchools();
@@ -214,7 +218,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                         pagination={{total: totalItems, showSizeChanger: true}}
                         size="middle"
                         onChange={this.setPageIndex}
-                        onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name})})}
+                        onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name, priority: event.priority})})}
                     />
                 </div>
             </>

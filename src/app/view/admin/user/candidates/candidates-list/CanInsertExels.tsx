@@ -1,12 +1,11 @@
 import React, { PureComponent, } from 'react'
 import { Modal, InputNumber, Row, Col } from 'antd';
-import './EmControllerList.scss';
 
 import { _requestToServer } from '../../../../../../services/exec';
 import { POST } from '../../../../../../const/method';
 
-import { IMPORT_EM } from './../../../../../../services/api/private.api';
-import IImportCan from './../../../../../../models/import-can';
+import { IMPORT_CAN } from '../../../../../../services/api/private.api';
+import IImportCan from '../../../../../../models/import-can';
 import { IptLetterP } from '../../../../layout/common/Common';
 
 interface IProps {
@@ -23,7 +22,7 @@ interface IState {
     },
 };
 
-class EmInsertExels extends PureComponent<IProps, IState> {
+class CanInsertExels extends PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,8 +47,7 @@ class EmInsertExels extends PureComponent<IProps, IState> {
         let { file, params } = this.state;
         let data = new FormData();
         data.append('file', file);
-
-        let res = await _requestToServer(POST, IMPORT_EM, data, params, undefined, undefined, true, false);
+        let res = await _requestToServer(POST, IMPORT_CAN, data, params, undefined, undefined, true, false);
         console.log(res.data);
         this.setState({ arrMsg: res.data[0] });
     }
@@ -129,4 +127,4 @@ class EmInsertExels extends PureComponent<IProps, IState> {
 };
 
 
-export default EmInsertExels;
+export default CanInsertExels;

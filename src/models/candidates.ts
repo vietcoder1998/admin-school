@@ -26,6 +26,7 @@ export interface ICandidate {
         id?: number,
         name?: string
     },
+    createdDate?: number;
     address?: string,
     lat?: number,
     lon?: number,

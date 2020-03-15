@@ -32,4 +32,6 @@ export const HOME_INDAY_SERVICE = '';
 export const SEARCH_HIGH_LIGHT_SERVICE = '';
 export const UN_LOCK_PROFILE_SERVICE = '';
 export const JOB_SERVICE = '/api/admins/';
-export const IMPORT_CAN = '/api/admins/data/import/excel/employers'
+export const IMPORT_EM = '/api/admins/data/import/excel/employers';
+export const IMPORT_CAN = '/api/admins/data/import/excel/candidates';
+export const IMPORT_STU = '/api/admins/data/import/excel/students';

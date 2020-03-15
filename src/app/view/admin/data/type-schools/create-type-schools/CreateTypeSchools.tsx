@@ -76,7 +76,7 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
                     type="danger"
                     style={{float: "right", margin: "10px 5px"}}
                 >
-                    <Link to='/admin/data/languages/list'>
+                    <Link to='/admin/data/type-schools/list'>
                         <Icon type="close"/>
                         Hủy
                     </Link>

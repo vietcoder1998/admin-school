@@ -9,6 +9,7 @@ import { LANGUAGES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { AppModal } from "../../../../layout/modal-config/AppModal";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
+import { Link } from 'react-router-dom';
 
 interface ListLanguagesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -238,14 +239,13 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                         </Col>
                         <Col span={1}>
                             <Popover content="Thêm mới" trigger="hover">
-                                <Button
-                                    onClick={() => this.toggleModal(true, TYPE.CREATE)}
-                                    shape="circle"
-                                    type="primary"
-                                    icon="plus"
-                                >
-                                    {/*<Link to='/admin/data/skills/create'/>*/}
-                                </Button>
+                                <Link to='/admin/data/languages/create'>
+                                    <Button
+                                        shape="circle"
+                                        type="primary"
+                                        icon="plus"
+                                    />
+                                </Link>
                             </Popover>
                         </Col>
                         <Col span={6} />

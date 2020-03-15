@@ -17,6 +17,7 @@ import { DELETE, PUT } from '../../../../../../const/method';
 import { CANDIDATES } from '../../../../../../services/api/private.api';
 import { _requestToServer } from '../../../../../../services/exec';
 import CandidatetInfo from '../../../../layout/candidate-info/CandidatetInfo';
+import CanInsertExels from './CanInsertExels';
 let { Option } = Select;
 
 let ImageRender = (props: any) => {
@@ -60,6 +61,7 @@ interface ICandidatesListState {
     body?: ICandidateFilter;
     open_drawer: boolean;
     type_view?: string;
+    openImport?: boolean;
 };
 
 class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesListState> {
@@ -92,7 +94,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                 unlocked: null,
             },
             type_cpn: null,
-            open_drawer: false
+            open_drawer: false,
+            openImport: false,
         };
     };
 
@@ -502,13 +505,19 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         </>
     }
 
+    handleVisible = () => {
+        let { openImport } = this.state;
+        this.setState({ openImport: !openImport })
+    }
+
     render() {
         let {
             data_table,
             loading_table,
             open_drawer,
             type_cpn,
-            loading
+            loading,
+            openImport
         } = this.state;
 
         let {
@@ -537,9 +546,21 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             this.advancedFilter()
                     }
                 </Drawer>
+                <CanInsertExels openImport={openImport} handleImport={() => this.handleVisible()} />
                 <div className="common-content">
                     <h5>
                         Danh sách ứng viên
+                        <Button
+                            icon="upload"
+                            onClick={() => this.handleVisible()}
+                            type="primary"
+                            style={{
+                                float: "right",
+                                marginRight: 5
+                            }}
+                        >
+                            Import
+                        </Button>
                         <Button
                             onClick={() => this.searchCandidate()}
                             type="primary"
