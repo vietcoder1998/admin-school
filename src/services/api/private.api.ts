@@ -31,4 +31,5 @@ export const NORMAL_SERVICE = '';
 export const HOME_INDAY_SERVICE = '';
 export const SEARCH_HIGH_LIGHT_SERVICE = '';
 export const UN_LOCK_PROFILE_SERVICE = '';
-export const JOB_SERVICE = '/pai/admins/'
+export const JOB_SERVICE = '/api/admins/';
+export const IMPORT_CAN = '/api/admins/data/import/excel/employers'

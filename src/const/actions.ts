@@ -119,6 +119,10 @@ export const REDUX = {
         GET_CANDIDATES: "GET_CANDIDATES",
         GET_CANDIDATE_DETAIL: "GET_CANDIDATE_DETAIL",
     },
+    IMPORT:  {
+        POST_IMPORT_CAN: "POST_IMPORT_CAN",
+        POST_IMPORT_EM: "POST_IMPORT_EM",
+    }
 };
 
 export const REDUX_SAGA = {
@@ -229,4 +233,8 @@ export const REDUX_SAGA = {
         GET_CANDIDATES: "GET_CANDIDATES_DATA",
         GET_CANDIDATE_DETAIL: "GET_CANDIDATE_DETAIL_DATA",
     },
+    IMPORT:  {
+        POST_IMPORT_CAN: "POST_IMPORT_CAN_DATA",
+        POST_IMPORT_EM: "POST_IMPORT_EM_DATA",
+    }
 };

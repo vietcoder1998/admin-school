@@ -32,7 +32,7 @@ function callBranches(action: any) {
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,
                 pageSize: action.pageSize ? action.pageSize : 0,
-                name: action.name
+                name: action.name ?action.name: undefined
             },
             undefined, undefined, false, false
         )

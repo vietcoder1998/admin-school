@@ -17,6 +17,8 @@ import { IRegion } from '../../../../../../models/regions';
 import { IDrawerState } from '../../../../../../models/mutil-box';
 import DrawerConfig from './../../../../layout/config/DrawerConfig';
 import EmInfo from '../../../../layout/em-info/EmInfo';
+import IImportCan from '../../../../../../models/import-can';
+import EmInsertExels from './EmInsertExels';
 
 interface IEmControllerListProps extends StateProps, DispatchProps {
     match?: any;
@@ -25,6 +27,7 @@ interface IEmControllerListProps extends StateProps, DispatchProps {
     getListEmControllers?: (pageIndex?: number, pageSize?: number, body?: IEmControllerFilter) => any;
     getEmployerDetail?: (id?: string) => any;
     handleDrawer?: (drawerState?: IDrawerState) => any;
+    importFile?: (params?: IImportCan) => any;
 };
 
 interface IEmControllerListState {
@@ -40,6 +43,7 @@ interface IEmControllerListState {
     body?: IEmControllerFilter;
     list_user_controller?: Array<IEmController>;
     profileVerified_state?: string;
+    openImport?: boolean;
 };
 
 class EmControllerList extends PureComponent<IEmControllerListProps, IEmControllerListState> {
@@ -61,7 +65,8 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                 profileVerified: null,
                 ids: []
             },
-            list_user_controller: []
+            list_user_controller: [],
+            openImport: false,
         };
     }
 
@@ -283,17 +288,23 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
         this.setState({ body });
     }
 
+    handleVisible = () => {
+        let { openImport } = this.state;
+        this.setState({openImport: !openImport})
+    }
+
     render() {
         let {
             data_table,
             loading_table,
-            loading
+            loading,
+            openImport
         } = this.state;
 
         let {
             totalItems,
             list_regions,
-            employer_detail
+            employer_detail,
         } = this.props
         return (
             <>
@@ -319,6 +330,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                         Thoát
                     </Button>
                 </DrawerConfig>
+                <EmInsertExels openImport={openImport} handleImport={() => this.handleVisible()} />
                 <div className="common-content">
                     <h5>
                         Danh sách nhà tuyển dụng
@@ -331,6 +343,17 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                             }}
                         >
                             Tìm kiếm
+                        </Button>
+                        <Button
+                            icon="upload"
+                            onClick={() => this.handleVisible()}
+                            type="primary"
+                            style={{
+                                float: "right",
+                                marginRight: 5
+                            }}
+                        >
+                            Import
                         </Button>
                     </h5>
                     <Row>
@@ -432,6 +455,8 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
         dispatch({ type: REDUX_SAGA.EM_CONTROLLER.GET_EM_CONTROLLER_DETAIL, id }),
     handleDrawer: (drawerState?: IDrawerState) =>
         dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
+    importFile: (params?: IImportCan) =>
+        dispatch({ type: REDUX.IMPORT.POST_IMPORT_EM })
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
