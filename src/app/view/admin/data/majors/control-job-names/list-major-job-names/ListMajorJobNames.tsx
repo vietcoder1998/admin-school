@@ -117,7 +117,6 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     };
 
     onChangeData = async (event?: any) => {
-        console.log(event);
         await this.setState({ list_name: event })
         await this.handleChangeListId(event);
     }

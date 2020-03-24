@@ -68,7 +68,7 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
                     icon="plus"
                     style={{float: "right", margin: "10px 5px"}}
                     onClick={this.createNewData}
-                    disabled={name ? true : false}
+                    disabled={name ? false : true}
                 >
                     Tạo loại trường mới
                 </Button>

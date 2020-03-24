@@ -1,13 +1,12 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Popover } from 'antd';
+import { Icon, Table, Button, Row, Col, Popover, Modal, Popconfirm } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { ILanguages } from '../../../../../../models/languages';
 import { _requestToServer } from '../../../../../../services/exec';
 import { POST, PUT, DELETE } from '../../../../../../const/method';
 import { LANGUAGES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
-import { AppModal } from "../../../../layout/modal-config/AppModal";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 import { Link } from 'react-router-dom';
 
@@ -81,14 +80,23 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                 theme="twoTone"
                 onClick={() => this.toggleModal(true, TYPE.EDIT)}
             />
-            <Icon
-                className="test"
-                style={{ padding: 5, margin: 2 }}
-                type="delete"
-                theme="twoTone"
-                twoToneColor="red"
-                onClick={() => this.toggleModal(true, TYPE.DELETE)}
+            <Popconfirm
+                trigger="click"
+                title="Bạn muốn xóa ngôn ngữ ngày"
+                onConfirm={() => this.removeLanguages()}
+                okType="danger"
+                okText="Xóa"
+                children={
+                    <Icon
+                        className="test"
+                        style={{ padding: 5, margin: 2 }}
+                        type="delete"
+                        theme="twoTone"
+                        twoToneColor="red"
+                    />
+                }
             />
+
         </>
     );
 
@@ -171,7 +179,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         }
     };
 
-    toggleModal = (visible: boolean, type?: string) => {
+    toggleModal = (visible?: boolean, type?: string) => {
         let { openModal } = this.state;
         this.setState({
             openModal: !openModal,
@@ -193,32 +201,30 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
         let { totalItems } = this.props;
         return (
             <>
-                <AppModal
+                <Modal
                     title={this.getModalTitle()}
                     visible={openModal}
-                    changeVisible={(visible: boolean) => {
-                        this.toggleModal(visible);
-                    }}
                     width={500}
                     onOk={() => {
                         if (type === TYPE.CREATE) {
                             this.addLanguage();
                         } else if (type === TYPE.EDIT) {
                             this.editLanguage();
+                            this.toggleModal();
                         }
                     }}
                     onCancel={() => {
-
+                        this.setState({ openModal: false })
                     }}
                 >
                     <InputTitle
                         title="Tên ngôn ngữ*"
                         type={TYPE.INPUT}
                         value={name}
-                        placeholder="Tên ngôn ngữ"
+                        placeholder="Tên ngôn ngữ "
                         onChange={(event: any) => this.setState({ name: event })}
                         widthInput="500px" />
-                </AppModal>
+                </Modal>
                 <div>
                     <Row gutter={10}>
                         <Col span={6} />
@@ -226,7 +232,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                             <h4>Danh sách ngôn ngữ</h4>
                         </Col>
                         <Col span={1}>
-                            <Popover content="Xóa đã chọn" trigger="hover">
+                            <Popover content="Xóa đã chọn" trigger="click">
                                 <Button
                                     onClick={() => {
                                     }}

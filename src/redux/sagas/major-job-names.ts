@@ -32,7 +32,7 @@ function callMajorJobNames(action: any) {
         }
         return _requestToServer(
             GET, MAJORS + `/${id}/jobNames`,
-            null,
+            undefined,
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,
                 pageSize: action.pageSize ? action.pageSize : 0
