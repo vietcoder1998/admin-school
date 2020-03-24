@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Input } from 'antd';
+import { Icon, Table, Button, Row, Col, Input, Modal } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IMajor } from '../../../../../../models/majors';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { IBranches } from '../../../../../../models/branches';
 import { MAJORS } from '../../../../../../services/api/private.api';
 import { DELETE, PUT, GET } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
-import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 
@@ -235,13 +234,14 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         let { totalItems } = this.props;
         return (
             <>
-                <ModalConfig
-                    namebtn1={"Hủy"}
-                    namebtn2={"Hoàn thành"}
+                <Modal
+                    cancelText={"Hủy"}
+                    okText={"Hoàn thành"}
                     title="Thay đổi chuyên ngành"
-                    isOpen={openModal}
-                    handleOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
-                    toggleModal={this.toggleModal}
+                    visible={openModal}
+                    onOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
+                    onCancel={()=>this.toggleModal()}
+                    destroyOnClose={true}
                 >
                     {type === TYPE.EDIT ? (
                         <>
@@ -268,7 +268,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             />
                         </>
                     ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
-                </ModalConfig>
+                </Modal>
                 <div>
                     <h5>
                         Danh sách chuyên ngành
