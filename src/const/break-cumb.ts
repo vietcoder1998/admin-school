@@ -31,6 +31,7 @@ export const routePath = {
     JOB_ANNOUNCEMENTS: '/job-announcements',
     ANNOUNCEMENT: '/announcements',
     CANDIDATES: '/candidates',
+    PARTNER: '/partner',
 };
 
 export const routeLink = {
@@ -60,6 +61,7 @@ export const routeLink = {
     SCHOOLS: routePath.ADMIN + routePath.USER + routePath.SCHOOLS,
     STUDENTS: routePath.ADMIN + routePath.USER + routePath.STUDENTS,
     CANDIDATES: routePath.ADMIN + routePath.USER + routePath.CANDIDATES,
+    PARTNER: routePath.ADMIN + routePath.USER + routePath.PARTNER,
     // Job Annoucement
     JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.PENDING_JOBS + routePath.JOB_ANNOUNCEMENTS,
 };
@@ -97,6 +99,7 @@ export const breakCumb = [
     { label: "students", name: "Danh sách sinh viên", icon: null, url: routeLink.STUDENTS + routePath.LIST },
     { label: "job-announcements", name: "Quản lí bài đăng", icon: null, url: routeLink.JOB_ANNOUNCEMENTS + routePath.LIST },
     { label: "candidates", name: "Hồ sơ ứng viên", icon: null, url: routeLink.CANDIDATES + routePath.LIST },
+    { label: "partner", name: "Cộng tác viên", icon: null, url: routeLink.PARTNER + routePath.LIST },
     // Role
     { label: "role-admins", name: "Phân quyền", icon: null, url: routeLink.ROLES_ADMIN + routePath.LIST },
     { label: "admin-accounts", name: "Tài khoản admin", icon: null, url: routeLink.ADMIN_ACCOUNTS + routePath.LIST },

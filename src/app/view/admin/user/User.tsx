@@ -7,6 +7,7 @@ import EmBranches from './em-branches/EmBranches';
 import Schools from './schools/Schools';
 import Students from './students/Students';
 import Candidates from './candidates/Candidates';
+import Partner from './partner/Partner';
 
 const Switch = require("react-router-dom").Switch;
 
@@ -27,6 +28,7 @@ export default function User(props?: IUserProps) {
                 <ErrorBoundaryRoute path={`${path}${routePath.STUDENTS}`} component={Students} />
                 <ErrorBoundaryRoute path={`${path}${routePath.SCHOOLS}`} component={Schools} />
                 <ErrorBoundaryRoute path={`${path}${routePath.CANDIDATES}`} component={Candidates} />
+                <ErrorBoundaryRoute path={`${path}${routePath.PARTNER}`} component={Partner} />
             </Switch>
         </>
     )
