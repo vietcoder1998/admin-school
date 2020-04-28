@@ -42,7 +42,11 @@ const Label = (props: any) => {
             value = "Thực tập sinh";
             break;
     }
-    return <label className={props.type.toLowerCase()}>{value}</label>
+
+    if (props.type) {
+        return <label className={props.type.toLowerCase()}>{value}</label>
+    }
+    return 
 };
 
 interface IPendingJobListProps extends StateProps, DispatchProps {
