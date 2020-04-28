@@ -16,13 +16,13 @@ export default function Routes(props: any) {
                     <Route path={'/admin'} component={Admin} />
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
-                    <Route exact path='/login' component={Login} /> :
+                    <Route exact path='/login' component={Login} /> 
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
-                    <Route exact path='/' component={Login} /> :
+                    <Route exact path='/' component={Login} /> 
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
-                    <Route exact path='*' component={NotFound} /> :
+                    <Route exact path='*' component={NotFound} /> 
                 </Suspense>
             </Router>
         </>

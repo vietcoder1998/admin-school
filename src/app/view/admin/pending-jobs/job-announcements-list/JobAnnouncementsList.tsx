@@ -930,7 +930,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         showSearch
                                         defaultValue="Tất cả"
                                         style={{ width: "100%" }}
-                                        removeIcon={true}
                                         onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.employerID)}
                                         onSearch={(event) => { this.props.getListEmployer({ employerName: event }, 0, 10) }}
                                     >

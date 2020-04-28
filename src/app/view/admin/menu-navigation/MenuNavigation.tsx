@@ -213,7 +213,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     </Menu.Item>
                     <Menu.Item key="21">
                         <Link to={routeLink.PARTNER + routePath.LIST}>
-                            <Icon type="idcard" />
+                            <Icon type="usergroup-add" />
                             <span>Cộng tác viên</span>
                         </Link>
                     </Menu.Item>

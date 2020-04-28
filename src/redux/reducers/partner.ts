@@ -10,7 +10,7 @@ let initState: IPartners = {
 
 export const Partners = (state = initState, action: any) => {
     switch (action.type) {
-        case REDUX.SCHOOLS.GET_SCHOOLS:
+        case REDUX.PARTNER.GET_LIST_PARTNER:
             return {
                 ...state,
                 items: action.data.items,

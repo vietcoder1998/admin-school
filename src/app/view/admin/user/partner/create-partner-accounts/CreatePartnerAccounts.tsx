@@ -116,7 +116,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
             await _requestToServer(
                 type_cpn === TYPE.CREATE ? POST : PUT,
                 (type_cpn === TYPE.CREATE ? PARTNER : PARTNER)
-                + (type_cpn === TYPE.CREATE ? '' : `/${id}/profile`),
+                + (type_cpn === TYPE.CREATE ? '/registration/email' : `/${id}/profile`),
                 body
             ).then((res: any) => {
                 if (res) {

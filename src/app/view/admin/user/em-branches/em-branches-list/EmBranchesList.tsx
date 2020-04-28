@@ -282,9 +282,9 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
 
     onChangeType = (event: any, param?: string) => {
         let { body } = this.state;
-        let { list_regions } = this.props;
+        let { listRegions } = this.props;
         let value: any = event;
-        list_regions.forEach((item: IRegion) => { if (item.name === event) { value = item.id } })
+        listRegions.forEach((item: IRegion) => { if (item.name === event) { value = item.id } })
         switch (event) {
             case TYPE.TRUE:
                 value = true;
@@ -357,7 +357,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
 
         let {
             totalItems,
-            list_regions,
+            listRegions,
             modalState,
         } = this.props
         return (
@@ -456,8 +456,8 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
-                                        list_regions && list_regions.length >= 1 ?
-                                            list_regions.map((item: IRegion, index: number) =>
+                                        listRegions && listRegions.length >= 1 ?
+                                            listRegions.map((item: IRegion, index: number) =>
                                                 <Option key={index} value={item.name}>{item.name}</Option>
                                             ) : null
                                     }
@@ -504,7 +504,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_em_branches: state.EmBranches.items,
     totalItems: state.EmBranches.totalItems,
-    list_regions: state.Regions.items,
+    listRegions: state.Regions.items,
     modalState: state.MutilBox.modalState
 });
 

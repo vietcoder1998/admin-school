@@ -350,8 +350,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
 
     onChangeFilter = (value?: any, type?: string) => {
         let { body } = this.state;
-        let { list_regions } = this.props;
-        list_regions.forEach((item: IRegion) => { if (item.name === value) { value = item.id } });
+        let { listRegions } = this.props;
+        listRegions.forEach((item: IRegion) => { if (item.name === value) { value = item.id } });
 
         switch (value) {
             case TYPE.TRUE:
@@ -501,7 +501,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
 
         let {
             totalItems,
-            list_regions,
+            listRegions,
             student_detail
         } = this.props
         return (
@@ -609,8 +609,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                 >
                                     <Select.Option value={null}>Tất cả</Select.Option>
                                     {
-                                        list_regions && list_regions.length >= 1 ?
-                                            list_regions.map((item: IRegion, index: number) =>
+                                        listRegions && listRegions.length >= 1 ?
+                                            listRegions.map((item: IRegion, index: number) =>
                                                 <Select.Option key={index} value={item.name}>{item.name}</Select.Option>
                                             ) : null
                                     }
@@ -692,7 +692,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_schools: state.Students.items,
-    list_regions: state.Regions.items,
+    listRegions: state.Regions.items,
     list_skills: state.Skills.items,
     list_languages: state.Languages.items,
     list_job_names: state.JobNames.items,

@@ -10,25 +10,24 @@ import {
     Input,
     Tooltip,
     Select,
-    //  Avatar 
+    Avatar
 } from 'antd';
 import './PartnerList.scss';
-// import { timeConverter } from '../../../../../../utils/convertTime';
+import { timeConverter } from '../../../../../../utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
 import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
 import { DELETE, PUT } from '../../../../../../const/method';
-import { SCHOOLS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 // import { IptLetterP } from '../../../../layout/common/Common';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import { IRegion } from '../../../../../../models/regions';
 // import DrawerConfig from '../../../../layout/config/DrawerConfig';
 import { IDrawerState } from '../../../../../../models/mutil-box';
-// import SchoolInfo from '../../../../layout/partner-info/SchoolInfo';
 import { IptLetterP } from '../../../../layout/common/Common';
-import { Link } from 'react-router-dom';
+import { IPartner, IPartnersFilter } from '../../../../../../models/partner';
+import { PARTNER } from '../../../../../../services/api/private.api';
 
 const { Option } = Select
 
@@ -37,7 +36,7 @@ interface IPartnerListProps extends StateProps, DispatchProps {
     history?: any;
     location?: any;
     handleDrawer?: (drawerState?: IDrawerState) => any;
-    getSchoolDetail?: (id?: string) => any;
+    getPartnerDetail?: (id?: string) => any;
     getListPartner: Function;
     getAnnoucementDetail: Function;
 };
@@ -52,8 +51,8 @@ interface IPartnerListState {
     value_type?: string;
     id?: string;
     loading_table?: boolean;
-    body?: any;
-    list_partners?: Array<any>;
+    body?: IPartnersFilter;
+    listPartners?: Array<any>;
     educatedScale_state?: string;
 };
 
@@ -70,24 +69,18 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
             loading_table: true,
             educatedScale_state: null,
             body: {
-                name: null,
-                shortName: null,
-                educatedScale: null,
+                username: null,
                 regionID: null,
-                partnerTypeID: null,
                 email: null,
-                employerID: null,
-                connected: null,
-                createdDate: null
+                createdDate: null,
             },
-            list_partners: []
+            listPartners: []
         };
     }
 
     EditToolAction = () => {
-        let { id } = this.state;
         return <>
-            <Tooltip title='Xem chi tiết trường ' >
+            {/* <Tooltip title='Xem chi partner' >
                 <Icon
                     className='test'
                     style={{ padding: 5, margin: 2 }}
@@ -95,18 +88,19 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                     onClick={() => {
                         this.props.handleDrawer({ open_drawer: true });
                         setTimeout(() => {
-                            this.props.getSchoolDetail(id);
+                            this.props.getPartnerDetail(id);
                         }, 500);
                     }}
                 />
-            </Tooltip>
+            </Tooltip> */}
             <Popconfirm
                 placement="topRight"
-                title={"Xóa "}
+                title={"Xóa ứng viên"}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
                 okType={'danger'}
                 okText="Xóa"
                 cancelText="Hủy"
+                style={{ padding: "10px 5px" }}
             >
                 <Tooltip title='Xóa trường ' >
                     <Icon className='test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
@@ -125,18 +119,25 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
             fixed: 'left',
         },
         {
-            title: 'Tên rút gọn',
-            dataIndex: 'shortName',
+            title: 'Ảnh đại diện',
+            dataIndex: 'avatarUrl',
             className: 'action',
-            key: 'shortName',
+            key: 'avatarUrl',
             width: 100,
         },
         {
-            title: 'Tên nhà trường',
+            title: 'Họ và tên',
             dataIndex: 'name',
             className: 'action',
             key: 'name',
-            width: 250,
+            width: 150,
+        },
+        {
+            title: 'Giới tính',
+            dataIndex: 'gender',
+            className: 'action',
+            key: 'gender',
+            width: 100,
         },
         {
             title: 'Email',
@@ -146,11 +147,18 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
             width: 250,
         },
         {
-            title: 'Số lượng sinh viên',
-            dataIndex: 'educatedScale',
+            title: 'Số điện thoại',
+            dataIndex: 'phone',
             className: 'action',
-            key: 'educatedScale',
+            key: 'phone',
             width: 150,
+        },
+        {
+            title: 'Địa chỉ',
+            dataIndex: 'address',
+            className: 'action',
+            key: 'address',
+            width: 250,
         },
         {
             title: 'Tỉnh thành',
@@ -182,23 +190,25 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     };
 
     static getDerivedStateFromProps(nextProps?: IPartnerListProps, prevState?: IPartnerListState) {
-        if (nextProps.list_partners && nextProps.list_partners !== prevState.list_partners) {
-            // let { pageIndex, pageSize } = prevState;
+        if (nextProps.listPartners && nextProps.listPartners !== prevState.listPartners) {
+            let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            // nextProps.list_partners.forEach((item: any, index: number) => {
-            //     data_table.push({
-            //         key: item.id,
-            //         index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-            //         name: item.name ? item.name : '',
-            //         email: item.email ? item.email : '',
-            //         shortName: item.shortName ? item.shortName : '',
-            //         educatedScale: item.educatedScale === -1 ? '' : item.educatedScale,
-            //         region: item.region && item.region.name,
-            //         createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
-            //     });
-            // })
+            nextProps.listPartners.forEach((item: IPartner, index: number) => {
+                data_table.push({
+                    key: item.id,
+                    index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
+                    name: (item.firstName ? item.firstName : ' ') + " " + (item.lastName ? item.lastName : ''),
+                    avatarUrl: <Avatar shape={"square"} size={50} src={item.avatarUrl} />,
+                    email: item.email ? item.email : '',
+                    phone: item.phone ? item.phone : '',
+                    address: item.address ? item.address : '',
+                    gender: item.gender === "MALE" ? "Nam" : "Nữ",
+                    region: item.region ? item.region.name : "",
+                    createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
+                });
+            })
             return {
-                list_partners: nextProps.list_partners,
+                listPartners: nextProps.listPartners,
                 data_table,
                 loading_table: false,
             }
@@ -230,7 +240,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     createRequest = async (type?: string) => {
         let { id, educatedScale_state } = this.state;
         let method = null;
-        let api = SCHOOLS;
+        let api = PARTNER;
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
@@ -260,8 +270,12 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
 
     onChangeFilter = (value?: any, type?: string) => {
         let { body } = this.state;
-        let { list_regions } = this.props;
-        list_regions.forEach((item: IRegion) => { if (item.name === value) { value = item.id } });
+        let { listRegions } = this.props;
+
+        listRegions.forEach((item: IRegion) => {
+            if (item.name === value) { value = item.id }
+        });
+
         switch (value) {
             case TYPE.TRUE:
                 value = true;
@@ -284,8 +298,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
         } = this.state;
 
         let {
-            // totalItems,
-            list_regions,
+            listRegions,
         } = this.props
         return (
             <>
@@ -304,14 +317,14 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                         </Button>
                         <Link to={routeLink.PARTNER + routePath.CREATE}>
                             <Button
-                                icon="key"
+                                icon="plus"
                                 type="primary"
                                 style={{
                                     float: "right",
                                     margin: '0px 5px'
                                 }}
                             >
-                                tạo mới
+                                Tạo mới
                         </Button>
                         </Link>
 
@@ -323,16 +336,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.username)}
-                                    onPressEnter={(event: any) => this.searchPartner()}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tên rút gọn"} />
-                                <Input
-                                    placeholder="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.shortName)}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.PARTNER_FILTER.username)}
                                     onPressEnter={(event: any) => this.searchPartner()}
                                 />
                             </Col>
@@ -341,7 +345,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.email)}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.PARTNER_FILTER.email)}
                                     onPressEnter={(event: any) => this.searchPartner()}
                                 />
                             </Col>
@@ -351,28 +355,15 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.regionID)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.PARTNER_FILTER.regionID)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
-                                        list_regions && list_regions.length >= 1 ?
-                                            list_regions.map((item: IRegion, index: number) =>
+                                        listRegions && listRegions.length >= 1 ?
+                                            listRegions.map((item: IRegion, index: number) =>
                                                 <Option key={index} value={item.name}>{item.name}</Option>
                                             ) : null
                                     }
-                                </Select>
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Yêu cầu kết nối"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.connected)}
-                                >
-                                    <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.TRUE}>Đã gửi </Option>
-                                    <Option value={TYPE.FALSE}>Chưa gửi</Option>
                                 </Select>
                             </Col>
                         </Row>
@@ -381,7 +372,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1100 }}
+                            scroll={{ x: 1400 }}
                             bordered
                             pagination={{ total: 0, showSizeChanger: true }}
                             size="middle"
@@ -402,17 +393,17 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
 };
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListPartner: (pageIndex: number, pageSize: number) =>
-        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize }),
-    getSchoolDetail: (id?: string) =>
-        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOL_DETAIL, id }),
+    getListPartner: (pageIndex: number, pageSize: number, body?: IPartnersFilter) =>
+        dispatch({ type: REDUX_SAGA.PARTNER.GET_LIST_PARTNER, pageIndex, pageSize, body }),
+    getPartnerDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.PARTNER.GET_PARTNER_DETAIL, id }),
     handleDrawer: (drawerState?: IDrawerState) =>
         dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_partners: state.Partners,
-    list_regions: state.Regions.items,
+    listPartners: state.Partners.items,
+    listRegions: state.Regions.items,
     totalItems: state.Partners,
 });
 

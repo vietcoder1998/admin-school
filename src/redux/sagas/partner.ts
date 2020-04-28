@@ -1,4 +1,4 @@
-import { SCHOOLS } from '../../services/api/private.api';
+import { PARTNER } from './../../services/api/private.api';
 import { IPartners } from '../../models/partner';
 import { POST } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
@@ -19,7 +19,7 @@ function* getListPartnersData(action: any) {
     }
 
     yield put({
-        type: REDUX.SCHOOLS.GET_SCHOOLS,
+        type: REDUX.PARTNER.GET_LIST_PARTNER,
         data
     });
 }
@@ -28,7 +28,7 @@ function callPartners(action: any) {
     try {
         if (action.body) {
             return _requestToServer(
-                POST, SCHOOLS + '/query',
+                POST, PARTNER + '/query',
                 action.body ? action.body : undefined,
                 {
                     pageIndex: action.pageIndex ? action.pageIndex : 0,
@@ -44,7 +44,7 @@ function callPartners(action: any) {
 
 export function* PartnersWatcher() {
     yield takeEvery(
-        REDUX_SAGA.SCHOOLS.GET_SCHOOLS,
+        REDUX_SAGA.PARTNER.GET_LIST_PARTNER,
         getListPartnersData
     )
 }

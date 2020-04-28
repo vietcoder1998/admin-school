@@ -1,13 +1,14 @@
 @import '../scss/common';
 .login {
-    padding: calc(50vh - 250px) 10px;
+    padding: calc(50vh - 240px) 10px;
     height: 100vh;
     background-image: url('../../../assets/image/login-image.jpg');
     font-family: $font_base;
+    
     .r-p-content {
-        background-color: white;
-        padding: 30px 10%;
-        height: 500px;
+        background-color: rgba(255, 255, 255, 0.673);
+        padding: 30px 5%;
+        height: 450px;
         p{
             font-weight: 500;
             font-size: 0.9rem;

@@ -39,6 +39,7 @@ import { ApplyCansWatcher } from '../sagas/apply-cans';
 import { JobServiceWatcher } from '../sagas/job-services';
 import { JobSuitableCandidatesWatcher } from '../sagas/job-suitable-candidate';
 import { PartnersWatcher } from '../sagas/partner';
+import { PartnerDetailWatcher } from '../sagas/partner-detail';
 
 
 export default function* rootSaga() {
@@ -82,6 +83,7 @@ export default function* rootSaga() {
         ApplyCansWatcher(),
         JobServiceWatcher(),
         JobSuitableCandidatesWatcher(),
-        PartnersWatcher()
+        PartnersWatcher(),
+        PartnerDetailWatcher(),
     ])
 } 

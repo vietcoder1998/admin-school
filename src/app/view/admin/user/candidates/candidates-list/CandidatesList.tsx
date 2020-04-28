@@ -296,9 +296,9 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
 
     onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
-        let { list_regions } = this.props;
+        let { listRegions } = this.props;
         let value: any = event;
-        list_regions.forEach((item: IRegion) => { if (item.name === event) { value = item.id } });
+        listRegions.forEach((item: IRegion) => { if (item.name === event) { value = item.id } });
         switch (event) {
             case TYPE.TRUE:
                 value = true;
@@ -522,7 +522,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
 
         let {
             totalItems,
-            list_regions,
+            listRegions,
             candidate_detail
         } = this.props;
 
@@ -629,8 +629,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
-                                        list_regions && list_regions.length >= 1 ?
-                                            list_regions.map((item: IRegion, index: number) =>
+                                        listRegions && listRegions.length >= 1 ?
+                                            listRegions.map((item: IRegion, index: number) =>
                                                 <Option key={index} value={item.name}>{item.name}</Option>
                                             ) : null
                                     }
@@ -718,7 +718,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_find_candidates: state.Candidates.items,
     totalItems: state.Candidates.totalItems,
-    list_regions: state.Regions.items,
+    listRegions: state.Regions.items,
     list_skills: state.Skills.items,
     list_job_names: state.JobNames.items,
     candidate_detail: state.CandidateDetail,
