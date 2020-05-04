@@ -150,11 +150,12 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             title: 'Tiêu đề',
             width: 200,
             dataIndex: 'title',
-            key: 'jobTitle',
+            className: "action",
+            key: 'title',
         },
         {
             title: 'Nội dung rút gọn',
-            width: 300,
+            width: 400,
             dataIndex: 'previewContent',
             key: 'previewContent',
         },
@@ -206,7 +207,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             dataIndex: 'operation',
             fixed: 'right',
             className: 'action',
-            width: 150,
+            width: 100,
         },
     ];
 
@@ -293,6 +294,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                         <Popconfirm
                             title="Bạn chắc chắn muốn xóa bài đăng"
                             placement="topRight"
+                            okType={"danger"}
                             onConfirm={async () => {
                                 await _requestToServer(
                                     DELETE,
@@ -682,7 +684,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                                 margin: "0px 5px"
                             }}
                         >
-                            <Link to='/admin/job-management/create'>
+                            <Link to={routeLink.ANNOUCEMENT + routePath.CREATE}>
                                 <Icon type="plus" />
                                 Tạo bài viết mới
                             </Link>

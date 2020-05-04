@@ -10,6 +10,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../const/method';
 import { JOB_GROUPS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 interface ListJobGroupsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -108,16 +109,17 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     columns = [
         {
             title: '#',
-            width: 60,
+            width: 50,
             dataIndex: 'index',
             key: 'index',
+            fixed: 'left',
             className: 'action',
         },
         {
             title: 'Tên nhóm công việc',
             dataIndex: 'name',
             key: 'name',
-            width: 640,
+            width: 200,
             className: 'action',
 
         },
@@ -126,7 +128,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -161,7 +163,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type , pageIndex, pageSize, search } = this.state;
+        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -187,59 +189,63 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                         />) : <div>Bạn chắc chắn sẽ xóa nhóm công việc : {name}</div>
                     }
                 </ModalConfig>
-                <div>
-                    <h5>
-                        Danh sách nhóm công việc
+                <Row>
+                    <Col md={2} lg={5} xl={6} xxl={8} />
+                    <Col md={20} lg={14} xl={12} xxl={8}>
+                        <h5>
+                            Danh sách nhóm công việc
                         <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
+                                onClick={() => {
+                                }}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                }}
+                            >
 
-                            <Link to='/admin/data/job-groups/create'>
-                                <Icon type="plus" />
-                                Thêm nhóm công việc mới
+                                <Link to={routeLink.JOB_GROUPS + routePath.CREATE}>
+                                    <Icon type="plus" />
+                                Thêm mới
                             </Link>
-                        </Button>
-                    </h5>
-                    <Row>
-                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={search}
-                                onChange={(event: any) => this.setState({ search: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListJobGroups(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 800 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
-                    />
-                </div>
+                            </Button>
+                        </h5>
+                        <Row>
+                            <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={search}
+                                    onChange={(event: any) => this.setState({ search: event.target.value })}
+                                    onPressEnter={(event: any) => this.props.getListJobGroups(pageIndex, pageSize, search)}
+                                    suffix={
+                                        search &&
+                                            search.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.setState({ search: null })
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        <Table
+                            // @ts-ignore
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table}
+                            scroll={{ x: 350 }}
+                            bordered
+                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                        />
+                    </Col>
+                    <Col md={2} lg={5} xl={6} xxl={8} />
+                </Row>
             </>
         )
     }

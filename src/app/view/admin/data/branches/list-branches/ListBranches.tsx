@@ -10,6 +10,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../const/method';
 import { BRANCHES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 interface ListBranchesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -111,13 +112,14 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
             width: 50,
             dataIndex: 'index',
             key: 'index',
-            className: 'action'
+            className: 'action',
+            fixed: 'left'
         },
         {
             title: 'Nhóm ngành',
             dataIndex: 'name',
             key: 'name',
-            width: 550,
+            width: 250,
             className: 'action'
         },
         {
@@ -187,59 +189,63 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                     />) : <div>Bạn chắc chắn sẽ xóa nhóm ngành : {name}</div>
                 }
             </ModalConfig>
-            <div>
-                <h5>
-                    Danh sách nhóm ngành
-                    <Button
-                        onClick={() => {
-                        }}
-                        type="primary"
-                        style={{
-                            float: "right",
-                        }}
-                    >
+            <Row>
+                <Col md={2} lg={5} xl={6} xxl={8} />
+                <Col md={20} lg={14} xl={12} xxl={8}>
+                    <h5>
+                        Danh sách nhóm ngành
+                        <Button
+                            onClick={() => {
+                            }}
+                            type="primary"
+                            style={{
+                                float: "right",
+                            }}
+                        >
 
-                        <Link to='/admin/data/branches/create'>
-                            <Icon type="plus" />
-                            Thêm nhóm ngành mới
+                            <Link to={routeLink.BRANCHES + routePath.CREATE}>
+                                <Icon type="plus" />
+                            Thêm mới
                         </Link>
-                    </Button>
-                </h5>
-                <Row>
-                    <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                        <Input
-                            placeholder="Tất cả"
-                            style={{ width: "100%" }}
-                            value={search}
-                            onChange={(event: any) => this.setState({ search: event.target.value })}
-                            onPressEnter={(event: any) => this.props.getListBranches(pageIndex, pageSize, search)}
-                            suffix={
-                                search &&
-                                    search.length > 0 ?
-                                    <Icon
-                                        type={"close-circle"}
-                                        theme={"filled"}
-                                        onClick={
-                                            () => this.setState({ search: null })
-                                        }
-                                    /> : <Icon type={"search"} />
-                            }
-                        />
-                    </Col>
-                </Row>
-                <Table
-                    // @ts-ignore
-                    columns={this.columns}
-                    loading={loading_table}
-                    dataSource={data_table}
-                    scroll={{ x: 700 }}
-                    bordered
-                    pagination={{ total: totalItems, showSizeChanger: true }}
-                    size="middle"
-                    onChange={this.setPageIndex}
-                    onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
-                />
-            </div>
+                        </Button>
+                    </h5>
+                    <Row>
+                        <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Input
+                                placeholder="Tất cả"
+                                style={{ width: "100%" }}
+                                value={search}
+                                onChange={(event: any) => this.setState({ search: event.target.value })}
+                                onPressEnter={(event: any) => this.props.getListBranches(pageIndex, pageSize, search)}
+                                suffix={
+                                    search &&
+                                        search.length > 0 ?
+                                        <Icon
+                                            type={"close-circle"}
+                                            theme={"filled"}
+                                            onClick={
+                                                () => this.setState({ search: null })
+                                            }
+                                        /> : <Icon type={"search"} />
+                                }
+                            />
+                        </Col>
+                    </Row>
+                    <Table
+                        // @ts-ignore
+                        columns={this.columns}
+                        loading={loading_table}
+                        dataSource={data_table}
+                        scroll={{ x: 400 }}
+                        bordered
+                        pagination={{ total: totalItems, showSizeChanger: true }}
+                        size="middle"
+                        onChange={this.setPageIndex}
+                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                    />
+                </Col>
+                <Col md={2} lg={5} xl={6} xxl={8} />
+            </Row>
         </>
     }
 }

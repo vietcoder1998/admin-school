@@ -151,7 +151,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                             width: "30px",
                                             height: "30px",
                                             border: "solid #168ECD 2px",
-                                            margin: "0px 5px"
+                                            margin: "-28px 5px 0"
                                         }}
                                         src={localStorage.getItem('avatarUrl')}
                                     />

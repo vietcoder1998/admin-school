@@ -199,9 +199,10 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         },
         {
             title: 'Tiêu đề',
-            width: 200,
+            width: 100,
             dataIndex: 'title',
-            key: 'jobTitle',
+            className: 'action',
+            key: 'title',
         },
 
         {
@@ -307,7 +308,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             className: 'action',
             dataIndex: 'operation',
             render: (item) => this.EditToolTip(item.id, item.employerID),
-            width: 100,
+            width: 120,
         }
     ];
 
@@ -406,7 +407,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     title: item.jobTitle,
                     jobName: item.jobName ? item.jobName.name : "",
-                    jobType: item.jobType,
+                    jobType: item.jobType ,
                     employerBranchName: item.employerBranchName ? item.employerBranchName : "",
                     employerName: item.employerName ? item.employerName : "",
                     employerBranchPhone: item.employerBranchPhone ? item.employerBranchPhone : "",

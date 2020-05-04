@@ -14,6 +14,7 @@ import { POST, PUT } from '../../../../../const/method';
 import { UPLOAD_IMAGE, ANNOUNCEMENT_DETAIL } from '../../../../../services/api/private.api';
 import { sendImageHeader } from '../../../../../services/auth';
 import { IAnnouType } from '../../../../../models/annou-types';
+import { routeLink, routePath } from '../../../../../const/break-cumb';
 
 interface IAnnouncementCreateState {
     title?: string;
@@ -448,7 +449,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
                                 float: "right"
                             }}
                         >
-                            <Link to='/admin/job-management/list'>
+                            <Link to={routeLink.ANNOUCEMENT + routePath.LIST}>
                                 <Icon type="close" />
                                 {type_cpn === TYPE.CREATE ? "Hủy bài" : "Hủy sửa"}
                             </Link>

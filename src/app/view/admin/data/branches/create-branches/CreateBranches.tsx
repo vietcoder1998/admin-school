@@ -80,7 +80,6 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
                         <Icon type="close"/>
                         Hủy
                     </Link>
-
                 </Button>
             </>
         )

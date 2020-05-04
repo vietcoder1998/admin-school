@@ -128,13 +128,13 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             dataIndex: 'index',
             key: 'index',
             className: 'action',
-            fixed: false,
+            fixed: 'left',
         },
         {
             title: 'Loại công việc',
             dataIndex: 'name',
             key: 'name',
-            width: 325,
+            width: 250,
             className: 'action',
             fixed: false,
         },
@@ -142,7 +142,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             title: 'Thuộc nhóm công việc',
             dataIndex: 'jobGroupName',
             key: 'jobGroupName',
-            width: 325,
+            width: 250,
             className: 'action',
             fixed: false,
         },
@@ -151,7 +151,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -249,7 +249,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                 placeholder="Thay đổi tên"
                                 value={name}
                                 widthInput={"250px"}
-                                style={{padding: 10}}
+                                style={{ padding: 10 }}
                                 onChange={(event: any) => this.setState({ name: event })}
                             />
                             <InputTitle
@@ -266,59 +266,65 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                         </>
                     ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
                 </ModalConfig>
-                <div>
-                    <h5>
-                        Danh sách loại công việc
+                <Row>
+                    <Col md={0} lg={0} xl={1} xxl={4} />
+                    <Col md={24} lg={24} xl={22} xxl={16} >
+                        <h5>
+                            Danh sách loại công việc
                         <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
+                                onClick={() => {
+                                }}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                }}
+                            >
 
-                            <Link to='/admin/data/job-names/create'>
-                                <Icon type="plus" />
-                                Thêm loại công việc mới
+                                <Link to='/admin/data/job-names/create'>
+                                    <Icon type="plus" />
+                                Thêm mới
                             </Link>
-                        </Button>
-                    </h5>
-                    <Row>
-                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={search}
-                                onChange={(event: any) => this.setState({ search: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListJobNames(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 800 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event: any) => ({ onClick: () => this.choseJobName(event) })}
-                    />
-                </div>
+                            </Button>
+                        </h5>
+                        <Row>
+                            <Col sm={12} md={8} lg={8} xl={8} xxl={8}>
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={search}
+                                    onChange={(event: any) => this.setState({ search: event.target.value })}
+                                    onPressEnter={(event: any) => this.props.getListJobNames(pageIndex, pageSize, search)}
+                                    suffix={
+                                        search &&
+                                            search.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.setState({ search: null })
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        <Table
+                            // @ts-ignore
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table}
+                            scroll={{ x: 650 }}
+                            bordered
+                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRow={(event: any) => ({ onClick: () => this.choseJobName(event) })}
+                        />
+                    </Col>
+
+                    <Col md={2} lg={0} xl={1} xxl={4} />
+                </Row>
+
             </>
         )
     }

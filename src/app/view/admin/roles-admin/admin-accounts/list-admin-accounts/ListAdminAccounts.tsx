@@ -184,7 +184,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
             key: 'operation',
             className: 'action',
             width: 80,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent(),
         },
     ];
@@ -228,7 +228,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         >
                             <Link to={routeLink.ADMIN_ACCOUNTS + routePath.CREATE}>
                                 <Icon type="plus" />
-                                Thêm admin mới
+                                Thêm mới
                             </Link>
                         </Button>
                     </h5>

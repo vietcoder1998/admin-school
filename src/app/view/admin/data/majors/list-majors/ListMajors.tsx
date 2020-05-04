@@ -10,6 +10,7 @@ import { DELETE, PUT, GET } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
 import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 
 interface ListMajorsProps extends StateProps, DispatchProps {
@@ -169,6 +170,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             title: '#',
             width: 50,
             dataIndex: 'index',
+            fixed: 'left',
             key: 'index',
             className: 'action',
         },
@@ -176,14 +178,14 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             title: 'Tên chuyên ngành',
             dataIndex: 'name',
             key: 'name',
-            width: 300,
+            width: 200,
             className: 'action',
 
         }, {
             title: 'Thuộc nhóm ngành',
             dataIndex: 'branchName',
             key: 'branchName',
-            width: 300,
+            width: 200,
             className: 'action',
 
         },
@@ -192,7 +194,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             key: 'operation',
             className: 'action',
             width: 150,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -240,7 +242,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     title="Thay đổi chuyên ngành"
                     visible={openModal}
                     onOk={() => type === TYPE.EDIT ? this.editMajor() : this.removeMajor()}
-                    onCancel={()=>this.toggleModal()}
+                    onCancel={() => this.toggleModal()}
                     destroyOnClose={true}
                 >
                     {type === TYPE.EDIT ? (
@@ -270,58 +272,66 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     ) : <div>Bạn chắc chắn muốn xóa chuyên ngành này: {name}</div>}
                 </Modal>
                 <div>
-                    <h5>
-                        Danh sách chuyên ngành
-                        <Button
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
-                            <Link to='/admin/data/majors/create'>
-                                <Icon type="plus" />
-                                Thêm chuyên ngành mới
-                            </Link>
-                        </Button>
-                    </h5>
+
+
                     <Row>
-                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={search}
-                                onChange={(event: any) => this.setState({ search: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
+                        <Col md={2} lg={0} xl={3} xxl={6} />
+                        <Col md={20} lg={24} xl={18} xxl={12}>
+                            <h5>
+                                Danh sách chuyên ngành
+                                <Button
+                                    type="primary"
+                                    style={{
+                                        float: "right",
+                                    }}
+                                >
+                                    <Link to={routeLink.MAJORS + routePath.CREATE}>
+                                        <Icon type="plus" />
+                                         Thêm mới
+                                    </Link>
+                                </Button>
+                            </h5>
+                            <Row>
+                                <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                    <Input
+                                        placeholder="Tất cả"
+                                        style={{ width: "100%" }}
+                                        value={search}
+                                        onChange={(event: any) => this.setState({ search: event.target.value })}
+                                        onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, search)}
+                                        suffix={
+                                            search &&
+                                                search.length > 0 ?
+                                                <Icon
+                                                    type={"close-circle"}
+                                                    theme={"filled"}
+                                                    onClick={
+                                                        () => this.setState({ search: null })
+                                                    }
+                                                /> : <Icon type={"search"} />
+                                        }
+                                    />
+                                </Col>
+                            </Row>
+                            <Table
+                                // @ts-ignore
+                                columns={this.columns}
+                                loading={loading_table}
+                                dataSource={data_table}
+                                scroll={{ x: 600 }}
+                                bordered
+                                pagination={{ total: totalItems, showSizeChanger: true }}
+                                size="middle"
+                                onChange={this.setPageIndex}
+                                onRow={(event) => ({
+                                    onMouseEnter: () => {
+                                        this.setState({ id: event.key, branchName: event.branchName, name: event.name, branchID: event.branchID });
+                                    }
+                                })}
                             />
                         </Col>
+                        <Col md={2} lg={0} xl={3} xxl={6} />
                     </Row>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 800 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({
-                            onMouseEnter: () => {
-                                this.setState({ id: event.key, branchName: event.branchName , name: event.name, branchID: event.branchID});
-                            }
-                        })}
-                    />
                 </div>
             </>
         )

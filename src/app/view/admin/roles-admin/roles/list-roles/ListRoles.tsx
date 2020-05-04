@@ -1,6 +1,6 @@
-import React, { PureComponent,  } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button } from 'antd';
+import { Icon, Table, Button, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
 import { TYPE } from '../../../../../../const/type';
@@ -136,7 +136,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -190,43 +190,50 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                     }
                 </ModalConfig>
                 <div>
-                    <h5>
-                        Danh sách quyền
-                        <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
-                            <Link to='/admin/role/role-admins/create'>
-                                <Icon type="plus" />
-                                Thêm quyền mới
-                            </Link>
-                        </Button>
-                    </h5>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 700 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(record, rowIndex) => {
-                            return {
-                                onClick: event => {
-                                }, // click row
-                                onMouseEnter: (event) => {
-                                    localStorage.setItem('id_role', record.key)
-                                }, // mouse enter row
-                            };
-                        }}
-                    />
+
                 </div>
+                <Row>
+                    <Col md={2} lg={0} xl={1} xxl={4} />
+                    <Col md={20} lg={24} xl={22} xxl={16}>
+                        <h5>
+                            Danh sách quyền
+                             <Button
+                                onClick={() => {
+                                }}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                }}
+                            >
+                                <Link to={routeLink.ROLES_ADMIN + routePath.CREATE}>
+                                    <Icon type="plus" />
+                                 Thêm mới
+                                </Link>
+                            </Button>
+                        </h5>
+                        <Table
+                            // @ts-ignore
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table}
+                            scroll={{ x: 700 }}
+                            bordered
+                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRow={(record, rowIndex) => {
+                                return {
+                                    onClick: event => {
+                                    }, // click row
+                                    onMouseEnter: (event) => {
+                                        localStorage.setItem('id_role', record.key)
+                                    }, // mouse enter row
+                                };
+                            }}
+                        />
+                    </Col>
+                    <Col md={2} lg={0} xl={1} xxl={4} />
+                </Row>
             </>
         )
     }

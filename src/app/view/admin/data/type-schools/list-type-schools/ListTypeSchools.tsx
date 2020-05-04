@@ -1,15 +1,16 @@
-import React, {PureComponent, } from 'react'
-import {connect} from 'react-redux';
-import {Icon, Table, Button} from 'antd';
-import {REDUX_SAGA} from '../../../../../../const/actions';
-import {ITypeSchool} from '../../../../../../models/type-schools';
-import {Link} from 'react-router-dom';
-import {ModalConfig} from '../../../../layout/modal-config/ModalConfig';
-import {InputTitle} from '../../../../layout/input-tittle/InputTitle';
-import {_requestToServer} from '../../../../../../services/exec';
-import {PUT, DELETE} from '../../../../../../const/method';
-import {TYPE_SCHOOLS} from '../../../../../../services/api/private.api';
-import {TYPE} from '../../../../../../const/type';
+import React, { PureComponent, } from 'react'
+import { connect } from 'react-redux';
+import { Icon, Table, Button, Row, Col } from 'antd';
+import { REDUX_SAGA } from '../../../../../../const/actions';
+import { ITypeSchool } from '../../../../../../models/type-schools';
+import { Link } from 'react-router-dom';
+import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
+import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
+import { _requestToServer } from '../../../../../../services/exec';
+import { PUT, DELETE } from '../../../../../../const/method';
+import { TYPE_SCHOOLS } from '../../../../../../services/api/private.api';
+import { TYPE } from '../../../../../../const/type';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 interface ListTypeSchoolsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -53,7 +54,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.list_type_schools !== prevState.list_type_schools) {
             let data_table: any = [];
-            let {pageIndex, pageSize} = prevState;
+            let { pageIndex, pageSize } = prevState;
             nextProps.list_type_schools.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
@@ -76,7 +77,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     EditContent = (
         <>
             <Icon
-                className="test" key="edit" style={{ padding: 5 , margin: 2}}
+                className="test" key="edit" style={{ padding: 5, margin: 2 }}
                 type="edit"
                 theme="twoTone"
                 onClick={
@@ -85,7 +86,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             />
             <Icon
                 className="test"
-                style={{ padding: 5 , margin: 2}}
+                style={{ padding: 5, margin: 2 }}
                 type="delete"
                 theme="twoTone"
                 twoToneColor="red"
@@ -97,10 +98,10 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     );
 
     toggleModal = (type?: string) => {
-        let {openModal} = this.state;
-        this.setState({openModal: !openModal});
+        let { openModal } = this.state;
+        this.setState({ openModal: !openModal });
         if (type) {
-            this.setState({type})
+            this.setState({ type })
         }
     };
 
@@ -110,13 +111,14 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             width: 50,
             dataIndex: 'index',
             key: 'index',
+            fixed: 'left',
             className: 'action',
         },
         {
             title: 'Tên loại trường',
             dataIndex: 'name',
             key: 'name',
-            width: 550,
+            width: 250,
             className: 'action',
 
         },
@@ -125,18 +127,18 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize});
+        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
         this.props.getListTypeSchools(event.current - 1, event.pageSize)
     };
 
     editTypeSchools = async () => {
-        let {name, id, priority} = this.state;
+        let { name, id, priority } = this.state;
         if (name) {
             await _requestToServer(
                 PUT, TYPE_SCHOOLS + `/${id}`,
@@ -152,7 +154,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     };
 
     removeTypeSchools = async () => {
-        let {id} = this.state;
+        let { id } = this.state;
         await _requestToServer(
             DELETE, TYPE_SCHOOLS,
             [id]
@@ -165,8 +167,8 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     };
 
     render() {
-        let {data_table, loading_table, openModal, name, type} = this.state;
-        let {totalItems} = this.props;
+        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { totalItems } = this.props;
         return (
             <>
                 <ModalConfig
@@ -175,7 +177,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                     namebtn2={type === TYPE.EDIT ? "Cập nhật" : "Xóa"}
                     isOpen={openModal}
                     toggleModal={() => {
-                        this.setState({openModal: !openModal})
+                        this.setState({ openModal: !openModal })
                     }}
                     handleOk={async () => type === TYPE.EDIT ? this.editTypeSchools() : this.removeTypeSchools()}
                     handleClose={async () => this.toggleModal()}
@@ -186,40 +188,47 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                             type={TYPE.INPUT}
                             value={name}
                             placeholder="Tên loại trường"
-                            onChange={(event: any) => this.setState({name: event})}
+                            onChange={(event: any) => this.setState({ name: event })}
                             widthInput="250px"
                         />) : <div>Bạn chắc chắn sẽ xóa loại trường: {name}</div>
                     }
                 </ModalConfig>
                 <div>
-                    <h5>
-                        Danh sách loại trường
-                        <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
-                            <Link to='/admin/data/type-schools/create'>
-                                <Icon type="plus"/>
-                                Thêm loại trường mới
+
+                    <Row>
+                        <Col md={2} lg={5} xl={6} xxl={8} />
+                        <Col md={20} lg={14} xl={12} xxl={8}>
+                            <h5>
+                                Danh sách loại trường
+                                <Button
+                                    onClick={() => {
+                                    }}
+                                    type="primary"
+                                    style={{
+                                        float: "right",
+                                    }}
+                                >
+                                    <Link to={routeLink.TYPE_SCHOOLS + routePath.CREATE}>
+                                        <Icon type="plus" />
+                                Thêm mới
                             </Link>
-                        </Button>
-                    </h5>
-                      <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{x: 700}}
-                        bordered
-                        pagination={{total: totalItems, showSizeChanger: true}}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({onClick: () => this.setState({id: event.key, name: event.name, priority: event.priority})})}
-                    />
+                                </Button>
+                            </h5>
+                            <Table
+                                // @ts-ignore
+                                columns={this.columns}
+                                loading={loading_table}
+                                dataSource={data_table}
+                                scroll={{ x: 350 }}
+                                bordered
+                                pagination={{ total: totalItems, showSizeChanger: true }}
+                                size="middle"
+                                onChange={this.setPageIndex}
+                                onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name, priority: event.priority }) })}
+                            />
+                        </Col>
+                        <Col md={2} lg={5} xl={6} xxl={8} />
+                    </Row>
                 </div>
             </>
         )

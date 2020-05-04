@@ -1,40 +1,55 @@
 .dropdown-config {
-  border: solid rgb(209, 209, 209) 1px;
+  min-width: 140px;
+  border: solid rgba(209, 209, 209, 0.612) 1px;
   background-color: white;
   min-height: 40px;
   position: absolute;
-  right: 0px;
+  right: 3px;
   border-radius: 5px;
-  padding: 5px 0px;
+  padding: 5px;
+  top: 65px;
 
   li {
     list-style-type: none;
     line-height: 30px;
+    color: black!important;
   }
 
   .children-dropdown {
-    padding: 5px 10px;
+    padding: 5px 3px;
+    border-radius: 5px;
     transition: 0.25s;
-    cursor: pointer;
 
+    cursor: pointer;
     svg {
       margin: 0px 5px 5px;
     }
 
     &:hover {
-      background-color: #1890ff;
+      background-color: #6868682a;
       color: white;
     }
   }
 }
 
 .tg-dr-cf-main {
+  margin-top: 16px;
+  height: 38px;
   width: 100px;
+  cursor: pointer;
+  transition: 0.25s;
+  border-radius: 18px;
+  background-color: rgba(109, 109, 109, 0.149);;
+
+  &:hover {
+    background-color: rgba(102, 102, 102, 0.442);
+  }
 }
 
 .d-tg {
   width: 100%;
   position: absolute;
+  top: 0;
   height: 100%;
 }
 

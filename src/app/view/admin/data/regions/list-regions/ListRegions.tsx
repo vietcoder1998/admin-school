@@ -10,6 +10,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../const/method';
 import { REGIONS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 interface ListRegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -109,13 +110,14 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             width: 50,
             dataIndex: 'index',
             key: 'index',
+            fixed: 'left',
             className: 'action',
         },
         {
             title: 'Tên tỉnh thành',
             dataIndex: 'name',
             key: 'name',
-            width: 550,
+            width: 250,
             className: 'action',
 
         },
@@ -124,7 +126,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -187,58 +189,62 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                         />) : <div>Bạn chắc chắn sẽ xóa tỉnh : {name}</div>
                     }
                 </ModalConfig>
-                <div>
-                    <h5>
-                        Danh sách tỉnh thành
+                <Row>
+                    <Col md={2} lg={5} xl={6} xxl={8} />
+                    <Col md={20} lg={14} xl={12} xxl={8}>
+                        <h5>
+                            Danh sách tỉnh thành
                         <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
-                            <Link to='/admin/data/regions/create'>
-                                <Icon type="plus" />
-                                Thêm tỉnh thành mới
+                                onClick={() => {
+                                }}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                }}
+                            >
+                                <Link to={routeLink.REGIONS + routePath.CREATE}>
+                                    <Icon type="plus" />
+                                Thêm mới
                             </Link>
-                        </Button>
-                    </h5>
-                    <Row>
-                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={search}
-                                onChange={(event: any) => this.setState({ search: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListRegions(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 700 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
-                    />
-                </div>
+                            </Button>
+                        </h5>
+                        <Row>
+                            <Col sm={12} md={16} lg={16} xl={16} xxl={16}>
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={search}
+                                    onChange={(event: any) => this.setState({ search: event.target.value })}
+                                    onPressEnter={(event: any) => this.props.getListRegions(pageIndex, pageSize, search)}
+                                    suffix={
+                                        search &&
+                                            search.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.setState({ search: null })
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        <Table
+                            // @ts-ignore
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table}
+                            scroll={{ x: 350 }}
+                            bordered
+                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                        />
+                    </Col>
+                    <Col md={2} lg={5} xl={6} xxl={8} />
+                </Row>
             </>
         )
     }

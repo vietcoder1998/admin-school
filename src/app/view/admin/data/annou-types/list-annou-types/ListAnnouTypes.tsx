@@ -11,6 +11,7 @@ import { ANNOU_TYPES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { IAnnouType } from '../../../../../../models/annou-types';
 import { IptLetterP } from '../../../../layout/common/Common';
+import { routePath, routeLink } from '../../../../../../const/break-cumb';
 const { Option } = Select;
 
 interface IListAnnouTypesProps extends StateProps, DispatchProps {
@@ -64,7 +65,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             width: 50,
             dataIndex: 'index',
             key: 'index',
-            fixed: "left",
+            fixed: 'left',
             className: 'action',
         },
         {
@@ -96,7 +97,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -181,6 +182,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                 icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                 okText="Xóa"
                 cancelText="Hủy"
+                okType={"danger"}
                 onConfirm={() => this.removeAnnouTypes()}
             >
                 <Icon
@@ -291,89 +293,93 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             max={1000000}
                             defaultValue={0}
                             value={priority}
-                            style={{width: '100%'}}
+                            style={{ width: '100%' }}
                             onChange={
                                 (priority: number) => this.setState({ priority })
                             }
                         />
                     </InputTitle>
                 </ModalConfig>
-                <div>
-                    <h5>
-                        Danh sách nhóm bài viết
-                        <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
-                            <Link to='/admin/data/annou-types/create'>
-                                <Icon type="plus" />
-                                Thêm nhóm bài viết mới
-                            </Link>
-                        </Button>
-                    </h5>
-                    <Row>
-                        <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                            <IptLetterP value={"Loại bài viết"} />
-                            <Select
-                                showSearch
-                                placeholder="Tất cả"
-                                defaultValue="Tất cả"
-                                optionFilterProp="children"
-                                style={{ width: "100%" }}
-                                value={target}
-                                onChange={(event: any) => {
-                                    this.setState({ target: event });
+                <Row>
+                    <Col md={2} lg={0} xl={1} xxl={4} />
+                    <Col md={20} lg={24} xl={22} xxl={16}>
+                        <h5>
+                            Danh sách nhóm bài viết
+                                <Button
+                                onClick={() => {
+                                }}
+                                type="primary"
+                                style={{
+                                    float: "right",
                                 }}
                             >
-                                <Option value={null}>Tất cả</Option>
-                                <Option value={TYPE.EMPLOYER}>Nhà trường</Option>
-                                <Option value={TYPE.SCHOOL}>Nhà tuyển dụng</Option>
-                                <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
-                                <Option value={TYPE.PUBLIC}>Khách</Option>
-                                <Option value={TYPE.STUDENT}>Học sinh</Option>
-                            </Select>
-                        </Col>
-                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <IptLetterP value={"Tìm kiếm"} />
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={search}
-                                onChange={(event: any) => this.setState({ search: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListAnnouTypes(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 700 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({
-                            onClick: () => this.setState({ id: event.key, name: event.name, targets: event.targets, priority: event.priority }),
-                        })}
-                    />
-                </div>
+                                <Link to={routeLink.ANNOU_TYPE + routePath.CREATE}>
+                                    <Icon type="plus" />
+                                Thêm mới
+                                </Link>
+                            </Button>
+                        </h5>
+                        <Row>
+                            <Col xs={24} sm={8} md={8} lg={8} xl={8} xxl={8} >
+                                <IptLetterP value={"Loại bài viết"} />
+                                <Select
+                                    showSearch
+                                    placeholder="Tất cả"
+                                    defaultValue="Tất cả"
+                                    optionFilterProp="children"
+                                    style={{ width: "100%" }}
+                                    value={target}
+                                    onChange={(event: any) => {
+                                        this.setState({ target: event });
+                                    }}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={TYPE.EMPLOYER}>Nhà trường</Option>
+                                    <Option value={TYPE.SCHOOL}>Nhà tuyển dụng</Option>
+                                    <Option value={TYPE.CANDIDATE}>Ứng viên</Option>
+                                    <Option value={TYPE.PUBLIC}>Khách</Option>
+                                    <Option value={TYPE.STUDENT}>Học sinh</Option>
+                                </Select>
+                            </Col>
+                            <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                <IptLetterP value={"Tìm kiếm"} />
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={search}
+                                    onChange={(event: any) => this.setState({ search: event.target.value })}
+                                    onPressEnter={(event: any) => this.props.getListAnnouTypes(pageIndex, pageSize, search)}
+                                    suffix={
+                                        search &&
+                                            search.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.setState({ search: null })
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        <Table
+                            // @ts-ignore
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table}
+                            scroll={{ x: 700 }}
+                            bordered
+                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRow={(event) => ({
+                                onClick: () => this.setState({ id: event.key, name: event.name, targets: event.targets, priority: event.priority }),
+                            })}
+                        />
+                    </Col>
+                    <Col md={2} lg={0} xl={1} xxl={4} />
+                </Row>
             </>
         )
     }

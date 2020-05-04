@@ -10,6 +10,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../../const/method';
 import { SKILLS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
+import { routeLink, routePath } from '../../../../../../const/break-cumb';
 
 interface ListSkillsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -106,16 +107,17 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     columns = [
         {
             title: '#',
-            width: 60,
+            width: 50,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
+            fixed: 'left',
         },
         {
             title: 'Tên kỹ năng',
             dataIndex: 'name',
             key: 'name',
-            width: 640,
+            width: 250,
             className: 'action',
 
         },
@@ -124,7 +126,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             key: 'operation',
             className: 'action',
             width: 100,
-            fixed: "right",
+            fixed: 'right',
             render: () => this.EditContent,
         },
     ];
@@ -190,74 +192,78 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         />) : <div>Bạn chắc chắn sẽ xóa kỹ năng: {name}</div>
                     }
                 </ModalConfig>
-                <div>
-                    <h5>
-                        Danh sách kỹ năng
+                <Row>
+                    <Col sm={12} md={8} lg={5} xl={6} xxl={8} />
+                    <Col sm={12} md={8} lg={14} xl={12} xxl={8}>
+                        <h5>
+                            Danh sách kỹ năng
                         <Button
-                            onClick={() => {
-                            }}
-                            type="primary"
-                            style={{
-                                float: "right",
-                            }}
-                        >
+                                onClick={() => {
+                                }}
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                }}
+                            >
 
-                            <Link to='/admin/data/skills/create'>
-                                <Icon type="plus" />
-                                Thêm kỹ năng mới
+                                <Link to={routeLink.SKILLS + routePath.CREATE}>
+                                    <Icon type="plus" />
+                                Thêm mới
                             </Link>
-                        </Button>
-                    </h5>
-                    <Row>
-                        <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <Input
-                                placeholder="Tất cả"
-                                style={{ width: "100%" }}
-                                value={search}
-                                onChange={(event: any) => this.setState({ search: event.target.value })}
-                                onPressEnter={(event: any) => this.props.getListSkills(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    <Table
-                        // @ts-ignore
-                        columns={this.columns}
-                        loading={loading_table}
-                        dataSource={data_table}
-                        scroll={{ x: 800 }}
-                        bordered
-                        pagination={{ total: totalItems, showSizeChanger: true }}
-                        size="middle"
-                        onChange={this.setPageIndex}
-                        onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
-                    />
-                </div>
+                            </Button>
+                        </h5>
+                        <Row>
+                            <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Input
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={search}
+                                    onChange={(event: any) => this.setState({ search: event.target.value })}
+                                    onPressEnter={(event: any) => this.props.getListSkills(pageIndex, pageSize, search)}
+                                    suffix={
+                                        search &&
+                                            search.length > 0 ?
+                                            <Icon
+                                                type={"close-circle"}
+                                                theme={"filled"}
+                                                onClick={
+                                                    () => this.setState({ search: null })
+                                                }
+                                            /> : <Icon type={"search"} />
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        <Table
+                            // @ts-ignore
+                            columns={this.columns}
+                            loading={loading_table}
+                            dataSource={data_table}
+                            scroll={{ x: 400 }}
+                            bordered
+                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            size="middle"
+                            onChange={this.setPageIndex}
+                            onRow={(event) => ({ onClick: () => this.setState({ id: event.key, name: event.name }) })}
+                        />
+                    </Col >
+                    <Col sm={12} md={8} lg={5} xl={6} xxl={8}/>
+                </Row >
             </>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListSkills: (pageIndex: number, pageSize: number, name?: string) => dispatch({ type: REDUX_SAGA.SKILLS.GET_SKILLS, pageIndex, pageSize, name })
+                    getListSkills: (pageIndex: number, pageSize: number, name?: string) => dispatch({type: REDUX_SAGA.SKILLS.GET_SKILLS, pageIndex, pageSize, name })
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_skills: state.Skills.items,
+                    list_skills: state.Skills.items,
     totalItems: state.Skills.totalItems
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
+                type DispatchProps = typeof mapDispatchToProps;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListSkills)

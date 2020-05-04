@@ -1,4 +1,4 @@
-import { all } from 'redux-saga/effects';
+import { all, spawn } from 'redux-saga/effects';
 import { PendingJobsWatcher } from '../sagas/pending-jobs';
 import { JobNameWatcher } from '../sagas/job-names';
 import { AnnouTypesWatcher } from '../sagas/annou-types';
@@ -43,47 +43,55 @@ import { PartnerDetailWatcher } from '../sagas/partner-detail';
 
 
 export default function* rootSaga() {
-    yield all([
-        PendingJobsWatcher(),
-        JobNameWatcher(),
-        AnnouTypesWatcher(),
-        AnnouncementsWatcher(),
-        AnnouncementDetailWatcher(),
-        TypeSchoolsWatcher(),
-        RegionsWatcher(),
-        SkillsWatcher(),
-        LanguagesWatcher(),
-        MajorsWatcher(),
-        JobGroupsWatcher(),
-        BranchesWatcher(),
-        RolesWatcher(),
-        ApiControllerWatcher(),
-        RoleDetailWatcher(),
-        ApiControllerRolesWatcher(),
-        AdminAccountsWatcher(),
-        MajorJobNamesWatcher(),
-        AnnouCommentsWatcher(),
-        PendingJobDetailWatcher(),
-        EmBranchesWatcher(),
-        EmployersWatcher(),
-        AdminAccountsWatcher(),
-        UserControllersWatcher(),
-        EmControllersWatcher(),
-        EmControllerDetailWatcher(),
-        SchoolsWatcher(),
-        StudentsWatcher(),
-        JobAnnouncementsWatcher(),
-        JobAnnouncementDetailWatcher(),
-        SchoolDetailWatcher(),
-        CandidateDetailWatcher(),
-        CandidatesWatcher(),
-        StudentDetailWatcher(),
-        AdminAccountDetailWatcher(),
-        ApplyJobsWatcher(),
-        ApplyCansWatcher(),
-        JobServiceWatcher(),
-        JobSuitableCandidatesWatcher(),
-        PartnersWatcher(),
-        PartnerDetailWatcher(),
-    ])
+    const sagas = [
+        PendingJobsWatcher,
+        JobNameWatcher,
+        AnnouTypesWatcher,
+        AnnouncementsWatcher,
+        AnnouncementDetailWatcher,
+        TypeSchoolsWatcher,
+        RegionsWatcher,
+        SkillsWatcher,
+        LanguagesWatcher,
+        MajorsWatcher,
+        JobGroupsWatcher,
+        BranchesWatcher,
+        RolesWatcher,
+        ApiControllerWatcher,
+        RoleDetailWatcher,
+        ApiControllerRolesWatcher,
+        AdminAccountsWatcher,
+        MajorJobNamesWatcher,
+        AnnouCommentsWatcher,
+        PendingJobDetailWatcher,
+        EmBranchesWatcher,
+        EmployersWatcher,
+        AdminAccountsWatcher,
+        UserControllersWatcher,
+        EmControllersWatcher,
+        EmControllerDetailWatcher,
+        SchoolsWatcher,
+        StudentsWatcher,
+        JobAnnouncementsWatcher,
+        JobAnnouncementDetailWatcher,
+        SchoolDetailWatcher,
+        CandidateDetailWatcher,
+        CandidatesWatcher,
+        StudentDetailWatcher,
+        AdminAccountDetailWatcher,
+        ApplyJobsWatcher,
+        ApplyCansWatcher,
+        JobServiceWatcher,
+        JobSuitableCandidatesWatcher,
+        PartnersWatcher,
+        PartnerDetailWatcher,
+    ];
+
+    try {
+        yield all(
+            sagas.map(function* (saga) { yield spawn(saga) })
+        )
+    } catch (err) {
+        throw err;
+    }
 } 
