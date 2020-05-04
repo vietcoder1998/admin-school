@@ -122,6 +122,10 @@ export const REDUX = {
     IMPORT:  {
         POST_IMPORT_CAN: "POST_IMPORT_CAN",
         POST_IMPORT_EM: "POST_IMPORT_EM",
+    },
+    PARTNER:  {
+        GET_LIST_PARTNER: "GET_LIST_PARTNER",
+        GET_PARTNER_DETAIL: "GET_PARTNER_DETAIL"
     }
 };
 
@@ -236,5 +240,9 @@ export const REDUX_SAGA = {
     IMPORT:  {
         POST_IMPORT_CAN: "POST_IMPORT_CAN_DATA",
         POST_IMPORT_EM: "POST_IMPORT_EM_DATA",
+    },
+    PARTNER:  {
+        GET_LIST_PARTNER: "GET_LIST_PARTNER_DATA",
+        GET_PARTNER_DETAIL: "GET_PARTNER_DETAIL_DATA"
     }
 };

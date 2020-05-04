@@ -10,39 +10,38 @@ import {
     Input,
     Tooltip,
     Select,
-    //  Avatar 
+    Avatar
 } from 'antd';
-import './SchoolsList.scss';
+import './PartnerList.scss';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
 import { REDUX_SAGA, REDUX } from '../../../../../../const/actions';
 import { _requestToServer } from '../../../../../../services/exec';
 import { DELETE, PUT } from '../../../../../../const/method';
-import { SCHOOLS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 // import { IptLetterP } from '../../../../layout/common/Common';
-import { ISchool, ISchoolsFilter } from '../../../../../../models/schools';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import { IRegion } from '../../../../../../models/regions';
-import DrawerConfig from '../../../../layout/config/DrawerConfig';
+// import DrawerConfig from '../../../../layout/config/DrawerConfig';
 import { IDrawerState } from '../../../../../../models/mutil-box';
-import SchoolInfo from '../../../../layout/school-info/SchoolInfo';
 import { IptLetterP } from '../../../../layout/common/Common';
+import { IPartner, IPartnersFilter } from '../../../../../../models/partner';
+import { PARTNER } from '../../../../../../services/api/private.api';
 
 const { Option } = Select
 
-interface ISchoolsListProps extends StateProps, DispatchProps {
+interface IPartnerListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
     location?: any;
     handleDrawer?: (drawerState?: IDrawerState) => any;
-    getSchoolDetail?: (id?: string) => any;
-    getListSchools: Function;
+    getPartnerDetail?: (id?: string) => any;
+    getListPartner: Function;
     getAnnoucementDetail: Function;
 };
 
-interface ISchoolsListState {
+interface IPartnerListState {
     data_table?: Array<any>;
     search?: any;
     pageIndex?: number;
@@ -52,12 +51,12 @@ interface ISchoolsListState {
     value_type?: string;
     id?: string;
     loading_table?: boolean;
-    body?: ISchoolsFilter;
-    list_schools?: Array<ISchool>;
+    body?: IPartnersFilter;
+    listPartners?: Array<any>;
     educatedScale_state?: string;
 };
 
-class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
+class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -70,24 +69,18 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             loading_table: true,
             educatedScale_state: null,
             body: {
-                name: null,
-                shortName: null,
-                educatedScale: null,
+                username: null,
                 regionID: null,
-                schoolTypeID: null,
                 email: null,
-                employerID: null,
-                connected: null,
-                createdDate: null
+                createdDate: null,
             },
-            list_schools: []
+            listPartners: []
         };
     }
 
     EditToolAction = () => {
-        let { id } = this.state;
         return <>
-            <Tooltip title='Xem chi tiết trường ' >
+            {/* <Tooltip title='Xem chi partner' >
                 <Icon
                     className='test'
                     style={{ padding: 5, margin: 2 }}
@@ -95,18 +88,19 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                     onClick={() => {
                         this.props.handleDrawer({ open_drawer: true });
                         setTimeout(() => {
-                            this.props.getSchoolDetail(id);
+                            this.props.getPartnerDetail(id);
                         }, 500);
                     }}
                 />
-            </Tooltip>
+            </Tooltip> */}
             <Popconfirm
                 placement="topRight"
-                title={"Xóa "}
+                title={"Xóa ứng viên"}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
                 okType={'danger'}
                 okText="Xóa"
                 cancelText="Hủy"
+                style={{ padding: "10px 5px" }}
             >
                 <Tooltip title='Xóa trường ' >
                     <Icon className='test' style={{ padding: 5, margin: 2 }} type="delete" theme="twoTone" twoToneColor="red" />
@@ -125,18 +119,25 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             fixed: 'left',
         },
         {
-            title: 'Tên rút gọn',
-            dataIndex: 'shortName',
+            title: 'Ảnh đại diện',
+            dataIndex: 'avatarUrl',
             className: 'action',
-            key: 'shortName',
+            key: 'avatarUrl',
             width: 100,
         },
         {
-            title: 'Tên nhà trường',
+            title: 'Họ và tên',
             dataIndex: 'name',
             className: 'action',
             key: 'name',
-            width: 250,
+            width: 150,
+        },
+        {
+            title: 'Giới tính',
+            dataIndex: 'gender',
+            className: 'action',
+            key: 'gender',
+            width: 100,
         },
         {
             title: 'Email',
@@ -146,11 +147,18 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             width: 250,
         },
         {
-            title: 'Số lượng sinh viên',
-            dataIndex: 'educatedScale',
+            title: 'Số điện thoại',
+            dataIndex: 'phone',
             className: 'action',
-            key: 'educatedScale',
+            key: 'phone',
             width: 150,
+        },
+        {
+            title: 'Địa chỉ',
+            dataIndex: 'address',
+            className: 'action',
+            key: 'address',
+            width: 250,
         },
         {
             title: 'Tỉnh thành',
@@ -181,24 +189,26 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         this.setState({ show_modal: !show_modal });
     };
 
-    static getDerivedStateFromProps(nextProps?: ISchoolsListProps, prevState?: ISchoolsListState) {
-        if (nextProps.list_schools && nextProps.list_schools !== prevState.list_schools) {
+    static getDerivedStateFromProps(nextProps?: IPartnerListProps, prevState?: IPartnerListState) {
+        if (nextProps.listPartners && nextProps.listPartners !== prevState.listPartners) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            nextProps.list_schools.forEach((item: ISchool, index: number) => {
+            nextProps.listPartners.forEach((item: IPartner, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    name: item.name ? item.name : '',
+                    name: (item.firstName ? item.firstName : ' ') + " " + (item.lastName ? item.lastName : ''),
+                    avatarUrl: <Avatar shape={"square"} size={50} src={item.avatarUrl} />,
                     email: item.email ? item.email : '',
-                    shortName: item.shortName ? item.shortName : '',
-                    educatedScale: item.educatedScale === -1 ? '' : item.educatedScale,
-                    region: item.region && item.region.name,
+                    phone: item.phone ? item.phone : '',
+                    address: item.address ? item.address : '',
+                    gender: item.gender === "MALE" ? "Nam" : "Nữ",
+                    region: item.region ? item.region.name : "",
                     createdDate: item.createdDate !== -1 ? timeConverter(item.createdDate, 1000) : '',
                 });
             })
             return {
-                list_schools: nextProps.list_schools,
+                listPartners: nextProps.listPartners,
                 data_table,
                 loading_table: false,
             }
@@ -208,7 +218,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     };
 
     async componentDidMount() {
-        await this.searchSchools();
+        await this.searchPartner();
     };
 
     handleId = (event) => {
@@ -219,18 +229,18 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
-        await this.searchSchools();
+        await this.searchPartner();
     };
 
-    searchSchools = async () => {
+    searchPartner = async () => {
         let { pageIndex, pageSize, body } = this.state;
-        await this.props.getListSchools(pageIndex, pageSize, body);
+        await this.props.getListPartner(pageIndex, pageSize, body);
     };
 
     createRequest = async (type?: string) => {
         let { id, educatedScale_state } = this.state;
         let method = null;
-        let api = SCHOOLS;
+        let api = PARTNER;
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
@@ -253,7 +263,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             false,
         ).then(
             (res: any) => {
-                if (res) { this.searchSchools() }
+                if (res) { this.searchPartner() }
             }
         )
     }
@@ -261,7 +271,11 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     onChangeFilter = (value?: any, type?: string) => {
         let { body } = this.state;
         let { listRegions } = this.props;
-        listRegions.forEach((item: IRegion) => { if (item.name === value) { value = item.id } });
+
+        listRegions.forEach((item: IRegion) => {
+            if (item.name === value) { value = item.id }
+        });
+
         switch (value) {
             case TYPE.TRUE:
                 value = true;
@@ -284,32 +298,16 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         } = this.state;
 
         let {
-            totalItems,
-            school_detail,
             listRegions,
         } = this.props
         return (
             <>
-                <DrawerConfig width={'50vw'} title={"Thông tin Nhà trường"}>
-                    <SchoolInfo data={school_detail} />
-                    <Button
-                        icon={"left"}
-                        onClick={
-                            () => {
-                                this.props.handleDrawer({ open_drawer: false });
-                                this.props.history.push(routeLink.EM_CONTROLLER + routePath.LIST);
-                            }
-                        }
-                    >
-                        Thoát
-                    </Button>
-                </DrawerConfig>
                 <div className="common-content">
                     <h5>
-                        Danh sách nhà trường
+                        Danh sách cộng tác viên
                         <Button
                             icon="filter"
-                            onClick={() => this.searchSchools()}
+                            onClick={() => this.searchPartner()}
                             type="primary"
                             style={{
                                 float: "right",
@@ -317,6 +315,19 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         >
                             Tìm kiếm
                         </Button>
+                        <Link to={routeLink.PARTNER + routePath.CREATE}>
+                            <Button
+                                icon="plus"
+                                type="primary"
+                                style={{
+                                    float: "right",
+                                    margin: '0px 5px'
+                                }}
+                            >
+                                Tạo mới
+                        </Button>
+                        </Link>
+
                     </h5>
                     <div className="table-operations">
                         <Row >
@@ -325,17 +336,8 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.username)}
-                                    onPressEnter={(event: any) => this.searchSchools()}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tên rút gọn"} />
-                                <Input
-                                    placeholder="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.shortName)}
-                                    onPressEnter={(event: any) => this.searchSchools()}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.PARTNER_FILTER.username)}
+                                    onPressEnter={(event: any) => this.searchPartner()}
                                 />
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
@@ -343,8 +345,8 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.SCHOOLS.email)}
-                                    onPressEnter={(event: any) => this.searchSchools()}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.PARTNER_FILTER.email)}
+                                    onPressEnter={(event: any) => this.searchPartner()}
                                 />
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
@@ -353,7 +355,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.regionID)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.PARTNER_FILTER.regionID)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
@@ -364,28 +366,15 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Yêu cầu kết nối"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.SCHOOLS.connected)}
-                                >
-                                    <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.TRUE}>Đã gửi </Option>
-                                    <Option value={TYPE.FALSE}>Chưa gửi</Option>
-                                </Select>
-                            </Col>
                         </Row>
                         <Table
                             // @ts-ignore
                             columns={this.columns}
                             loading={loading_table}
                             dataSource={data_table}
-                            scroll={{ x: 1100 }}
+                            scroll={{ x: 1400 }}
                             bordered
-                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            pagination={{ total: 0, showSizeChanger: true }}
                             size="middle"
                             onChange={this.setPageIndex}
                             onRow={(record: any, rowIndex: any) => {
@@ -404,22 +393,21 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 };
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListSchools: (pageIndex: number, pageSize: number, body?: ISchoolsFilter) =>
-        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
-    getSchoolDetail: (id?: string) =>
-        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOL_DETAIL, id }),
+    getListPartner: (pageIndex: number, pageSize: number, body?: IPartnersFilter) =>
+        dispatch({ type: REDUX_SAGA.PARTNER.GET_LIST_PARTNER, pageIndex, pageSize, body }),
+    getPartnerDetail: (id?: string) =>
+        dispatch({ type: REDUX_SAGA.PARTNER.GET_PARTNER_DETAIL, id }),
     handleDrawer: (drawerState?: IDrawerState) =>
         dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_schools: state.Schools.items,
+    listPartners: state.Partners.items,
     listRegions: state.Regions.items,
-    school_detail: state.SchoolsDetail,
-    totalItems: state.Schools.totalItems,
+    totalItems: state.Partners,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(SchoolsList);
+export default connect(mapStateToProps, mapDispatchToProps)(PartnerList);

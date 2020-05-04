@@ -1,5 +1,5 @@
+import { IAdminAccount } from './../../models/admin-accounts-detail';
 import { GET } from './../../const/method';
-import { IAdminAccount } from './../models/admin-accounts';
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
@@ -7,7 +7,7 @@ import { ADMIN_ACCOUNTS } from '../../services/api/private.api';
 
 function* getAdminAccountDetailData(action: any) {
     let res = yield call(callAdminAccountDetail, action);
-    let data: IAdminAccount = null;
+    let data: IAdminAccount = {};
     if (res.code === 200) {
         data = res.data
     }

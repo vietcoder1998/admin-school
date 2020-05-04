@@ -135,4 +135,14 @@ export const TYPE = {
         ids: "ids",
         username: "username"
     },
+
+    PARTNER_FILTER: {
+        gender: "gender",
+        createdDate: "createdDate",
+        regionID: "regionID",
+        email: "email",
+        unlocked: "unlocked",
+        ids: "ids",
+        username: "username"
+    }
 };

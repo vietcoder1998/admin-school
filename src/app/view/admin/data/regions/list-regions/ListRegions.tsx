@@ -17,7 +17,7 @@ interface ListRegionsProps extends StateProps, DispatchProps {
 }
 
 interface ListRegionsState {
-    list_regions: Array<ILanguage>,
+    listRegions: Array<ILanguage>,
     loading_table: boolean;
     data_table: Array<any>;
     pageIndex: number;
@@ -33,7 +33,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            list_regions: [],
+            listRegions: [],
             loading_table: true,
             data_table: [],
             pageIndex: 0,
@@ -51,10 +51,10 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.list_regions !== prevState.list_regions) {
+        if (nextProps.listRegions !== prevState.listRegions) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_regions.forEach((item: any, index: number) => {
+            nextProps.listRegions.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -63,7 +63,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             });
 
             return {
-                list_regions: nextProps.list_regions,
+                listRegions: nextProps.listRegions,
                 data_table,
                 loading_table: false
             }
@@ -254,7 +254,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_regions: state.Regions.items,
+    listRegions: state.Regions.items,
     totalItems: state.Regions.totalItems
 });
 

@@ -1,19 +1,22 @@
-import React, {  } from 'react'
-import ErrorBoundaryRoute from '../../../../../routes/ErrorBoundaryRoute';
-import CandidatesList from './candidates-list/PartnerList';
+import React from 'react';
+import ErrorBoundaryRoute from "../../../../../routes/ErrorBoundaryRoute";
+import PartnerList from './partner-list/PartnerList';
+import CreatePartnerAccounts from './create-partner-accounts/CreatePartnerAccounts';
 const Switch = require("react-router-dom").Switch;
 
-interface ICandidatesProps {
+interface PartnerProps{
     match: Readonly<any>;
-    getTypeManagement: Function;
+    getListJobNames: Function;
 }
 
-export default function Candidates(props: ICandidatesProps) {
-    let { path } = props.match
+
+export default function Partner(props?: PartnerProps) {
+    let { path } = props.match;
     return (
-        < >
+        <>
             <Switch>
-                <ErrorBoundaryRoute path={`${path}/list`} component={CandidatesList} />
+                <ErrorBoundaryRoute path={`${path}/list`} component={PartnerList} />
+                <ErrorBoundaryRoute path={`${path}/create`} component={CreatePartnerAccounts} />
             </Switch>
         </>
     )

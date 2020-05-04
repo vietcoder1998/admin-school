@@ -36,3 +36,5 @@ export const IMPORT_EM = '/api/admins/data/import/excel/employers';
 export const IMPORT_CAN = '/api/admins/data/import/excel/candidates';
 export const IMPORT_STU = '/api/admins/data/import/excel/students';
 export const MAJORS_JOB_NAMES = "/api/majors/jobNames/query";
+export const PARTNER = "/api/admins/partners";
+
