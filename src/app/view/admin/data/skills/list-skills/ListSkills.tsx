@@ -18,8 +18,8 @@ interface ListSkillsProps extends StateProps, DispatchProps {
 }
 
 interface ListSkillsState {
-    list_skills: Array<ISkills>,
-    loading_table: boolean;
+    listSkills: Array<ISkills>,
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -34,8 +34,8 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            list_skills: [],
-            loading_table: true,
+            listSkills: [],
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -52,10 +52,10 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.list_skills !== prevState.list_skills) {
+        if (nextProps.listSkills !== prevState.listSkills) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_skills.forEach((item: any, index: any) => {
+            nextProps.listSkills.forEach((item: any, index: any) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -64,12 +64,12 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             });
 
             return {
-                list_skills: nextProps.list_skills,
+                listSkills: nextProps.listSkills,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
 
@@ -132,7 +132,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListSkills(event.current - 1, event.pageSize)
     };
 
@@ -166,7 +166,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
 
     render() {
-        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { data_table, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -237,7 +237,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 400 }}
                             bordered
@@ -259,7 +259,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-                    list_skills: state.Skills.items,
+                    listSkills: state.Skills.items,
     totalItems: state.Skills.totalItems
 });
 

@@ -13,7 +13,7 @@ import IJobDetail from '../../../../models/job-detail';
 interface IJobDetailProps {
     list_job_skills?: Array<ISkill>,
     job_id?: string,
-    list_job_names?: Array<IJobName>
+    listJobNames?: Array<IJobName>
     jobDetail?: IJobDetail;
 }
 

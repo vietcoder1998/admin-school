@@ -44,7 +44,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                 list_data,
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     createNewData = async () => {
@@ -112,7 +112,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     onClick={this.createNewData}
                     disabled={!name || !jobGroupName}
                 >
-                    Tạo công việc mới
+                    Tạo  mới
                 </Button>
                 <Button
                     type="danger"

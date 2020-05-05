@@ -73,7 +73,7 @@ interface IPendingJobListState {
     loading?: boolean;
     pendingJob?: any;
     message?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     list_jobs?: Array<IPendingJob>
     job_id?: string;
     id?: string;
@@ -93,7 +93,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             jobId: undefined,
             show_job: false,
             loading: false,
-            loading_table: true,
+            loadingTable: true,
             job_id: null,
             id: null,
         }
@@ -188,7 +188,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.queryPendingJob();
     };
 
@@ -232,7 +232,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                                     style={{ padding: 5, margin: 2 }}
                                     onClick={
                                         async () => {
-                                            nextProps.handleDrawer({ open_drawer: true });
+                                            nextProps.handleDrawer({ openDrawer: true });
                                             setTimeout(() => {
                                                 nextProps.getEmployerDetail(item.employer.id);
                                             }, 500);
@@ -247,10 +247,10 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             return {
                 list_jobs: nextProps.list_jobs,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
 
@@ -298,12 +298,12 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             data_table,
             loading,
             message,
-            loading_table,
+            loadingTable,
             state,
         } = this.state;
 
         let {
-            list_job_names,
+            listJobNames,
             totalItems,
             job_detail,
             open_modal,
@@ -318,7 +318,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                         icon={"left"}
                         onClick={
                             () => {
-                                this.props.handleDrawer({ open_drawer: false });
+                                this.props.handleDrawer({ openDrawer: false });
                             }
                         }
                     >
@@ -387,7 +387,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                                 float: "right",
                             }}
                         >
-                            Tìm kiếm
+                            Lọc
                         </Button>
                     </h5>
                     <div>
@@ -453,8 +453,8 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                                     >
                                         <Option key={1} value={undefined}>Tất cả</Option>
                                         {
-                                            list_job_names &&
-                                            list_job_names.map((item: any, index: number) =>
+                                            listJobNames &&
+                                            listJobNames.map((item: any, index: number) =>
                                                 <Option key={index + 1} value={item.id}>{item.name}</Option>)
                                         }
                                     </Select>
@@ -464,7 +464,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 1650 }}
                             bordered
@@ -504,7 +504,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     list_jobs: state.PendingJobs.items,
-    list_job_names: state.JobNames.items,
+    listJobNames: state.JobNames.items,
     list_job_skills: state.Skills.items,
     modalState: state.MutilBox.modalState,
     employer_detail: state.EmployerDetail,

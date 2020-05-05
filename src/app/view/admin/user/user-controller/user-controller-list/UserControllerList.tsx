@@ -25,11 +25,11 @@ interface IUserControllerListState {
     search?: any;
     pageIndex?: number;
     pageSize?: number;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
-    value_type?: string;
+    valueType?: string;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body?: IUserControllerFilter;
     list_user_controller?: Array<IUserController>;
     banned_state?: string;
@@ -42,10 +42,10 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
-            show_modal: false,
+            showModal: false,
             loading: false,
             id: null,
-            loading_table: true,
+            loadingTable: true,
             banned_state: null,
             body: {
                 username: null,
@@ -148,8 +148,8 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     ];
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps?: IUserControllerListProps, prevState?: IUserControllerListState) {
@@ -170,9 +170,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             return {
                 list_user_controller: nextProps.list_user_controller,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
-        } return { loading_table: false };
+        } return { loadingTable: false };
     };
 
     async componentDidMount() {
@@ -186,7 +186,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchUserControllers();
     };
 
@@ -245,7 +245,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
         } = this.state;
 
         let {
@@ -264,7 +264,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                                 float: "right",
                             }}
                         >
-                            Tìm kiếm
+                            Lọc
                         </Button>
                     </h5>
                     <Row>
@@ -334,7 +334,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 850 }}
                             bordered

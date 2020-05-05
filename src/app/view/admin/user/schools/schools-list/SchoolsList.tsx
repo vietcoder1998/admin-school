@@ -47,14 +47,14 @@ interface ISchoolsListState {
     search?: any;
     pageIndex?: number;
     pageSize?: number;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
-    value_type?: string;
+    valueType?: string;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body?: ISchoolsFilter;
-    list_schools?: Array<ISchool>;
-    educatedScale_state?: string;
+    listSchools?: Array<ISchool>;
+    educatedScaleState?: string;
 };
 
 class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
@@ -64,11 +64,11 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
-            show_modal: false,
+            showModal: false,
             loading: false,
             id: null,
-            loading_table: true,
-            educatedScale_state: null,
+            loadingTable: true,
+            educatedScaleState: null,
             body: {
                 name: null,
                 shortName: null,
@@ -80,7 +80,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                 connected: null,
                 createdDate: null
             },
-            list_schools: []
+            listSchools: []
         };
     }
 
@@ -93,7 +93,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                     style={{ padding: 5, margin: 2 }}
                     type={"search"}
                     onClick={() => {
-                        this.props.handleDrawer({ open_drawer: true });
+                        this.props.handleDrawer({ openDrawer: true });
                         setTimeout(() => {
                             this.props.getSchoolDetail(id);
                         }, 500);
@@ -177,15 +177,15 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     ];
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps?: ISchoolsListProps, prevState?: ISchoolsListState) {
-        if (nextProps.list_schools && nextProps.list_schools !== prevState.list_schools) {
+        if (nextProps.listSchools && nextProps.listSchools !== prevState.listSchools) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            nextProps.list_schools.forEach((item: ISchool, index: number) => {
+            nextProps.listSchools.forEach((item: ISchool, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -198,13 +198,13 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                 });
             })
             return {
-                list_schools: nextProps.list_schools,
+                listSchools: nextProps.listSchools,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     };
 
     async componentDidMount() {
@@ -218,7 +218,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchSchools();
     };
 
@@ -228,7 +228,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     };
 
     createRequest = async (type?: string) => {
-        let { id, educatedScale_state } = this.state;
+        let { id, educatedScaleState } = this.state;
         let method = null;
         let api = SCHOOLS;
         switch (type) {
@@ -237,7 +237,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                 break;
             case TYPE.BAN:
                 method = PUT;
-                api = api + `/educatedScale/${educatedScale_state === 'true' ? 'false' : 'true'}`
+                api = api + `/educatedScale/${educatedScaleState === 'true' ? 'false' : 'true'}`
                 break;
             default:
                 break;
@@ -280,7 +280,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
         } = this.state;
 
         let {
@@ -296,7 +296,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         icon={"left"}
                         onClick={
                             () => {
-                                this.props.handleDrawer({ open_drawer: false });
+                                this.props.handleDrawer({ openDrawer: false });
                                 this.props.history.push(routeLink.EM_CONTROLLER + routePath.LIST);
                             }
                         }
@@ -315,7 +315,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                                 float: "right",
                             }}
                         >
-                            Tìm kiếm
+                            Lọc
                         </Button>
                     </h5>
                     <div className="table-operations">
@@ -381,7 +381,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 1100 }}
                             bordered
@@ -413,7 +413,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_schools: state.Schools.items,
+    listSchools: state.Schools.items,
     listRegions: state.Regions.items,
     school_detail: state.SchoolsDetail,
     totalItems: state.Schools.totalItems,

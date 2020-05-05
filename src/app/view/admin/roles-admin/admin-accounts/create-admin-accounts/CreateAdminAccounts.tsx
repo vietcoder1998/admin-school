@@ -23,7 +23,7 @@ interface ICreateAdminAccountsState {
     contactEmail?: string;
     type?: string;
     id?: string;
-    type_cpn?: string;
+    typeCpn?: string;
     role_detail?: any;
     value?: any;
     api_controller?: Array<IApiFunctions>;
@@ -56,7 +56,7 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
             lastName: null,
             contactEmail: null,
             type: "",
-            type_cpn: TYPE.CREATE,
+            typeCpn: TYPE.CREATE,
             value: null,
             roleID: null,
             admin_account_detail: null,
@@ -72,7 +72,7 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
            
             return {
                 id: nextProps.match.params.id,
-                type_cpn: TYPE.FIX
+                typeCpn: TYPE.FIX
             }
         }
 
@@ -111,10 +111,10 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
     }
 
     createNewData = async () => {
-        let { username, type_cpn, id, password, lastName, firstName, contactEmail, roleID } = this.state;
+        let { username, typeCpn, id, password, lastName, firstName, contactEmail, roleID } = this.state;
         let body = null;
 
-        if (type_cpn === TYPE.FIX) {
+        if (typeCpn === TYPE.FIX) {
             body = {
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
@@ -134,9 +134,9 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
 
         if (username && lastName && firstName && contactEmail && roleID) {
             await _requestToServer(
-                type_cpn === TYPE.CREATE ? POST : PUT,
-                (type_cpn === TYPE.CREATE ? REGISTRATION_ADMINS : ADMIN_ACCOUNTS)
-                + (type_cpn === TYPE.CREATE ? '' : `/${id}/profile`),
+                typeCpn === TYPE.CREATE ? POST : PUT,
+                (typeCpn === TYPE.CREATE ? REGISTRATION_ADMINS : ADMIN_ACCOUNTS)
+                + (typeCpn === TYPE.CREATE ? '' : `/${id}/profile`),
                 body
             ).then((res: any) => {
                 if (res) {
@@ -198,7 +198,7 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
     render() {
         let {
             username,
-            type_cpn,
+            typeCpn,
             password,
             firstName,
             lastName,
@@ -219,11 +219,11 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
             <>
                 <div>
                     <h5>
-                        {type_cpn === TYPE.CREATE ? 'Thêm tài khoản admins mới' : 'Sửa tài khoản admins'}
+                        {typeCpn === TYPE.CREATE ? 'Thêm tài khoản admins mới' : 'Sửa tài khoản admins'}
                     </h5>
                     <Divider orientation="left">Chi tiết tài khoản admins</Divider>
                     {
-                        type_cpn === TYPE.FIX ?
+                        typeCpn === TYPE.FIX ?
                             <InputTitle
                                 title="Ảnh đại diện"
                                 placeholder="ex: không có dấu cách"
@@ -274,7 +274,7 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         onChange={(event: any) => this.setState({ username: event })}
                     />
                     {
-                        type_cpn !== TYPE.FIX ?
+                        typeCpn !== TYPE.FIX ?
                             <InputTitle
                                 type={TYPE.INPUT}
                                 title="Mật khẩu"
@@ -325,7 +325,7 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         }
                     />
                     {
-                        type_cpn === TYPE.FIX ?
+                        typeCpn === TYPE.FIX ?
                             <>
                                 <Divider orientation="left">Đổi mật khẩu</Divider>
                                 <InputTitle
@@ -342,15 +342,15 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                     }
                     <Button
                         type="primary"
-                        icon={type_cpn === TYPE.CREATE ? "plus" : "check"}
+                        icon={typeCpn === TYPE.CREATE ? "plus" : "check"}
                         style={{ float: "right", margin: "10px 5px" }}
                         onClick={this.createNewData}
                         disabled={!is_disable}
                     >
-                        {type_cpn === TYPE.CREATE ? " Tạo tài khoản admins mới" : "Sửa thông tin tài khoản admins"}
+                        {typeCpn === TYPE.CREATE ? " Tạo tài khoản admins mới" : "Sửa thông tin tài khoản admins"}
                     </Button>
                     {
-                        type_cpn === TYPE.FIX ?
+                        typeCpn === TYPE.FIX ?
                             <Button
                                 type="primary"
                                 icon="check"

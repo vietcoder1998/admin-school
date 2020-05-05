@@ -154,6 +154,7 @@ textarea {
   width: 100%;
   display: flex;
   padding-bottom: 10px;
+  position: relative;
   .title-inside {
     width: 150px;
     margin-right: 20px;
@@ -300,7 +301,8 @@ ul {
 
 .ant-layout-sider-children {
   position: fixed;
-  z-index: 999;
+  z-index: 1;
+  width: 210px;
 }
 
 // wrapper

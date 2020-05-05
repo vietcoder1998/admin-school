@@ -20,7 +20,7 @@ interface IListAdminAccountsProps extends StateProps, DispatchProps {
 }
 
 interface IListAdminAccountsState {
-    loading_table: boolean;
+    loadingTable: boolean;
     list_admin_accounts: Array<IAdminAccount>;
     data_table: Array<any>;
     pageIndex: number;
@@ -35,7 +35,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
     constructor(props: any) {
         super(props);
         this.state = {
-            loading_table: true,
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -73,10 +73,10 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
             return {
                 list_rolist_admin_accountsles: nextProps.list_admin_accounts,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
 
@@ -190,7 +190,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListAdminAccounts(event.current - 1, event.pageSize)
     };
 
@@ -211,7 +211,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
     };
 
     render() {
-        let { data_table, loading_table } = this.state;
+        let { data_table, loadingTable } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -235,7 +235,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                     <Table
                         // @ts-ignore
                         columns={this.columns}
-                        loading={loading_table}
+                        loading={loadingTable}
                         dataSource={data_table}
                         scroll={{ x: 1150 }}
                         bordered

@@ -21,9 +21,9 @@ interface ListMajorJobNamesProps extends StateProps, DispatchProps {
 }
 
 interface ListMajorJobNamesState {
-    list_job_names: Array<IJobName>,
+    listJobNames: Array<IJobName>,
     list_job_groups?: Array<IJobGroup>,
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -44,8 +44,8 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     constructor(props: any) {
         super(props);
         this.state = {
-            list_job_names: [],
-            loading_table: false,
+            listJobNames: [],
+            loadingTable: false,
             data_table: [],
             pageIndex: 0,
             pageSize: 0,
@@ -78,18 +78,18 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             });
 
             return {
-                list_job_names: nextProps.list_job_names,
+                listJobNames: nextProps.listJobNames,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
                 list_id,
                 list_name,
                 list_major_job_names: nextProps.list_major_job_names
             }
         }
 
-        if (nextProps.list_job_names !== prevState.list_job_names) {
+        if (nextProps.listJobNames !== prevState.listJobNames) {
             return {
-                list_job_names: nextProps.list_job_names,
+                listJobNames: nextProps.listJobNames,
             }
         }
 
@@ -100,12 +100,12 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                 id: nextProps.match.params.id
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     list_option = () => {
-        let { list_job_names } = this.props;
-        return list_job_names.map((item, index) => (<Option key={item.id + index} value={item.name}> {item.name}</Option>))
+        let { listJobNames } = this.props;
+        return listJobNames.map((item, index) => (<Option key={item.id + index} value={item.name}> {item.name}</Option>))
     }
 
     toggleModal = (type?: string) => {
@@ -122,11 +122,11 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
     }
 
     handleChangeListId = async (event: any) => {
-        let { list_job_names } = this.props;
+        let { listJobNames } = this.props;
         let { list_name } = this.state;
         let list_id = [];
         await list_name.forEach((item: string) => {
-            list_job_names.forEach((element: IJobName) => {
+            listJobNames.forEach((element: IJobName) => {
                 if (element.name === item) {
                     list_id.push(element.id);
                     console.log(list_id);
@@ -230,7 +230,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
     list_major_job_names: state.MajorJobNames.items,
-    list_job_names: state.JobNames.items,
+    listJobNames: state.JobNames.items,
     totalItems: state.MajorJobNames.totalItems,
 });
 

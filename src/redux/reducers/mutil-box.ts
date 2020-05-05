@@ -4,7 +4,7 @@ import { REDUX } from '../../const/actions';
 let initState: IMutilBox = {
     drawerState: {
         title: "",
-        open_drawer: false,
+        openDrawer: false,
         children: null,
         type_drawer: null,
     },
@@ -31,11 +31,11 @@ export const MutilBox = (state: typeof initState = initState, action: any) => {
             return {
                 ...state,
                 drawerState: {
-                    open_drawer:
+                    openDrawer:
                         action.drawerState &&
-                            action.drawerState.open_drawer ?
-                            action.drawerState.open_drawer :
-                            !state.drawerState.open_drawer
+                            action.drawerState.openDrawer ?
+                            action.drawerState.openDrawer :
+                            !state.drawerState.openDrawer
                 },
             };
 

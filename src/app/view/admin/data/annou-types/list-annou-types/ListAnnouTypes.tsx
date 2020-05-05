@@ -21,7 +21,7 @@ interface IListAnnouTypesProps extends StateProps, DispatchProps {
 
 interface IListAnnouTypesState {
     list_annou_types: Array<IAnnouType>,
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -40,7 +40,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
         super(props);
         this.state = {
             list_annou_types: [],
-            loading_table: true,
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             openModal: false,
@@ -72,7 +72,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             title: 'Tên nhóm bài viết',
             dataIndex: 'name',
             key: 'name',
-            width: 150,
+            width: 250,
             className: 'action',
 
         },
@@ -80,7 +80,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             title: 'Đối tượng',
             dataIndex: 'targets',
             key: 'targets',
-            width: 300,
+            width: 350,
             className: 'action',
 
         },
@@ -120,10 +120,10 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             return {
                 list_annou_types: nextProps.list_annou_types,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     };
 
 
@@ -206,7 +206,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
 
     setPageIndex = async (event: any) => {
         let { target } = this.state;
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.props.getListAnnouTypes(event.current - 1, event.pageSize, target)
     };
 
@@ -245,7 +245,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, target, priority, targets, search, pageIndex, pageSize } = this.state;
+        let { data_table, loadingTable, openModal, name, type, target, priority, targets, search, pageIndex, pageSize } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -301,8 +301,8 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                     </InputTitle>
                 </ModalConfig>
                 <Row>
-                    <Col md={2} lg={0} xl={1} xxl={4} />
-                    <Col md={20} lg={24} xl={22} xxl={16}>
+                    <Col md={0} lg={0} xl={1} xxl={4} />
+                    <Col md={24} lg={24} xl={22} xxl={16}>
                         <h5>
                             Danh sách nhóm bài viết
                                 <Button
@@ -342,7 +342,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                                 </Select>
                             </Col>
                             <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                                <IptLetterP value={"Tìm kiếm"} />
+                                <IptLetterP value={"Lọc"} />
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
@@ -366,9 +366,9 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
-                            scroll={{ x: 700 }}
+                            scroll={{ x: 850 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
@@ -378,7 +378,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             })}
                         />
                     </Col>
-                    <Col md={2} lg={0} xl={1} xxl={4} />
+                    <Col md={0} lg={0} xl={1} xxl={4} />
                 </Row>
             </>
         )

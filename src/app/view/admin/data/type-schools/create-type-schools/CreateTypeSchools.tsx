@@ -70,7 +70,7 @@ class CreateTypeSchools extends PureComponent<CreateTypeSchoolsProps, CreateType
                     onClick={this.createNewData}
                     disabled={name ? false : true}
                 >
-                    Tạo loại trường mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

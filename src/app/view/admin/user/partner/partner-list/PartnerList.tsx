@@ -46,14 +46,14 @@ interface IPartnerListState {
     search?: any;
     pageIndex?: number;
     pageSize?: number;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
-    value_type?: string;
+    valueType?: string;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body?: IPartnersFilter;
     listPartners?: Array<any>;
-    educatedScale_state?: string;
+    educatedScaleState?: string;
 };
 
 class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
@@ -63,11 +63,11 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
-            show_modal: false,
+            showModal: false,
             loading: false,
             id: null,
-            loading_table: true,
-            educatedScale_state: null,
+            loadingTable: true,
+            educatedScaleState: null,
             body: {
                 username: null,
                 regionID: null,
@@ -86,7 +86,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                     style={{ padding: 5, margin: 2 }}
                     type={"search"}
                     onClick={() => {
-                        this.props.handleDrawer({ open_drawer: true });
+                        this.props.handleDrawer({ openDrawer: true });
                         setTimeout(() => {
                             this.props.getPartnerDetail(id);
                         }, 500);
@@ -185,8 +185,8 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     ];
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps?: IPartnerListProps, prevState?: IPartnerListState) {
@@ -210,11 +210,11 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
             return {
                 listPartners: nextProps.listPartners,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     };
 
     async componentDidMount() {
@@ -228,7 +228,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchPartner();
     };
 
@@ -238,7 +238,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     };
 
     createRequest = async (type?: string) => {
-        let { id, educatedScale_state } = this.state;
+        let { id, educatedScaleState } = this.state;
         let method = null;
         let api = PARTNER;
         switch (type) {
@@ -247,7 +247,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                 break;
             case TYPE.BAN:
                 method = PUT;
-                api = api + `/educatedScale/${educatedScale_state === 'true' ? 'false' : 'true'}`
+                api = api + `/educatedScale/${educatedScaleState === 'true' ? 'false' : 'true'}`
                 break;
             default:
                 break;
@@ -294,7 +294,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
         } = this.state;
 
         let {
@@ -313,7 +313,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                                 float: "right",
                             }}
                         >
-                            Tìm kiếm
+                            Lọc
                         </Button>
                         <Link to={routeLink.PARTNER + routePath.CREATE}>
                             <Button
@@ -370,7 +370,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 1400 }}
                             bordered

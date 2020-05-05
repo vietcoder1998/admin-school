@@ -16,8 +16,8 @@ interface ListLanguagesProps extends StateProps, DispatchProps {
 }
 
 interface ListLanguagesState {
-    list_skills: Array<ILanguages>,
-    loading_table: boolean;
+    listSkills: Array<ILanguages>,
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -32,8 +32,8 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     constructor(props: any) {
         super(props);
         this.state = {
-            list_skills: [],
-            loading_table: true,
+            listSkills: [],
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -50,10 +50,10 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.list_skills !== prevState.list_skills) {
+        if (nextProps.listSkills !== prevState.listSkills) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_skills.forEach((item: any, index: number) => {
+            nextProps.listSkills.forEach((item: any, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -62,12 +62,12 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
             });
 
             return {
-                list_skills: nextProps.list_skills,
+                listSkills: nextProps.listSkills,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     EditContent = (
@@ -125,7 +125,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListLanguages(event.current - 1, event.pageSize)
     };
 
@@ -190,7 +190,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
             openModal,
             name,
             type,
@@ -262,7 +262,7 @@ class ListLanguages extends PureComponent<ListLanguagesProps, ListLanguagesState
                             <Table
                                 // @ts-ignore
                                 columns={this.columns}
-                                loading={loading_table}
+                                loading={loadingTable}
                                 dataSource={data_table}
                                 useFixedHeader={true}
                                 scroll={{ y: 500 }}
@@ -291,7 +291,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_skills: state.Languages.items,
+    listSkills: state.Languages.items,
     totalItems: state.Languages.totalItems
 });
 

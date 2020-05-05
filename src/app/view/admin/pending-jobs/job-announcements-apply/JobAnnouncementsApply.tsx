@@ -28,7 +28,7 @@ interface IJobAnnouncementsApplyState {
     list_item: Array<{ label: string, value: string }>,
     loading: boolean;
     value_annou: string;
-    type_cpn: string;
+    typeCpn: string;
     list_em_branches: Array<IEmBranch>;
     list_apply_cans?: Array<IApplyCan>;
     id?: string;
@@ -41,7 +41,7 @@ interface IJobAnnouncementsApplyState {
     list_rejected?: Array<IApplyJob>;
     list_shifts?: Array<IShiftDetail>;
     l_btn?: boolean;
-    open_drawer?: boolean;
+    openDrawer?: boolean;
     default_id?: string;
 };
 
@@ -66,7 +66,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             loading: false,
             value_annou: "",
             list_em_branches: [],
-            type_cpn: null,
+            typeCpn: null,
             list_apply_cans: [],
             id: null,
             list_pending: [],
@@ -75,7 +75,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             list_shifts: [],
             default_id: null,
             l_btn: false,
-            open_drawer: false,
+            openDrawer: false,
         };
     };
 
@@ -137,7 +137,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             }
         }
 
-        return { loading_table: false }
+        return { loadingTable: false }
     }
 
     searchShift = (id?: string, type?: string, default_id?: string) => {
@@ -189,7 +189,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             loading,
             default_id,
             l_btn,
-            open_drawer
+            openDrawer
         } = this.state;
 
         return (
@@ -199,12 +199,12 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                 </h5>
                 <Divider orientation="left" >Danh sách yêu cầu</Divider>
                 <Drawer
-                    title="Tìm kiếm nâng cao"
+                    title="Lọc nâng cao"
                     placement="right"
                     width={"60vw"}
                     closable={true}
-                    onClose={() => this.setState({ open_drawer: false })}
-                    visible={open_drawer}
+                    onClose={() => this.setState({ openDrawer: false })}
+                    visible={openDrawer}
                 >
                     {
                         <CandidatetInfo
@@ -246,7 +246,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     }
                                                     onView={
                                                         () =>{
-                                                            this.setState({open_drawer: true});
+                                                            this.setState({openDrawer: true});
                                                             setTimeout(() => {
                                                                 this.props.getCandidateDetail(item.candidate.id)
                                                             }, 500);
@@ -273,7 +273,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     }
                                                     onView={
                                                         () =>{
-                                                            this.setState({open_drawer: true});
+                                                            this.setState({openDrawer: true});
                                                             setTimeout(() => {
                                                                 this.props.getCandidateDetail(item.candidate.id)
                                                             }, 500);
@@ -301,7 +301,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                         }
                                                         onView={
                                                             () =>{
-                                                                this.setState({open_drawer: true});
+                                                                this.setState({openDrawer: true});
                                                                 setTimeout(() => {
                                                                     this.props.getCandidateDetail(item.candidate.id)
                                                                 }, 500);
@@ -369,8 +369,8 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
-    list_job_names: state.JobNames.items,
-    list_skills: state.Skills.items,
+    listJobNames: state.JobNames.items,
+    listSkills: state.Skills.items,
     list_em_branches: state.EmBranches.items,
     list_apply_cans: state.ApplyCans.items,
     candidate_detail: state.CandidateDetail

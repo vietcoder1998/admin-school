@@ -9,7 +9,7 @@ export interface IModalState {
 export interface IDrawerState {
     title?: string,
     msg?: string,
-    open_drawer?: boolean,
+    openDrawer?: boolean,
     type_drawer?: any,
     children?: string,
 }

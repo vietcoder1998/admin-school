@@ -19,7 +19,7 @@ interface ListJobGroupsProps extends StateProps, DispatchProps {
 
 interface ListJobGroupsState {
     list_job_groups: Array<IJobGroup>,
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -35,7 +35,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
         super(props);
         this.state = {
             list_job_groups: [],
-            loading_table: true,
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -66,10 +66,10 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
             return {
                 list_job_groups: nextProps.list_job_groups,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
 
@@ -134,7 +134,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListJobGroups(event.current - 1, event.pageSize)
     };
 
@@ -163,7 +163,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { data_table, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -234,7 +234,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 350 }}
                             bordered

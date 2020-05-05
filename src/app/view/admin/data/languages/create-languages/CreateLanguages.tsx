@@ -70,7 +70,7 @@ class CreateLanguages extends PureComponent<CreateLanguagesProps, CreateLanguage
                     onClick={this.createNewData}
                     disabled={!name}
                 >
-                    Tạo ngôn ngữ mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

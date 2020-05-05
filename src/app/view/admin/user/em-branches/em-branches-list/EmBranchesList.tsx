@@ -38,19 +38,19 @@ interface IEmBranchesListState {
     target?: string;
     branchNameID?: string;
     jobId?: string;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
     pendingJob?: any;
     message?: string;
     type_management?: Array<any>;
-    value_type?: string;
+    valueType?: string;
     announcementTypeID?: number;
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
     list_em_branches?: Array<any>;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body: IEmBranchesFilter;
 };
 
@@ -65,19 +65,19 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             employerID: null,
             branchNameID: null,
             jobId: null,
-            show_modal: false,
+            showModal: false,
             loading: false,
             pendingJob: null,
             message: null,
             type_management: [],
-            value_type: null,
+            valueType: null,
             announcementTypeID: null,
             createdDate: null,
             adminID: null,
             hidden: false,
             list_em_branches: [],
             id: null,
-            loading_table: true,
+            loadingTable: true,
             body: {
                 regionID: null,
                 headquarters: null,
@@ -212,7 +212,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
         },
         {
             value: 'SEARCH',
-            label: 'Tìm kiếm',
+            label: 'Lọc',
             children: [
                 {
                     value: 'HIGHLIGHT',
@@ -223,8 +223,8 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
     ];
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps?: IEmBranchesListProps, prevState?: IEmBranchesListState) {
@@ -255,9 +255,9 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             return {
                 list_em_branches: nextProps.list_em_branches,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
-        } return { loading_table: false };
+        } return { loadingTable: false };
     };
 
     async componentDidMount() {
@@ -271,7 +271,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchEmBranch();
     };
 
@@ -351,7 +351,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
             loading
         } = this.state;
 
@@ -399,7 +399,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
 
                     <h5>
                         Quản lý chi nhánh
-                        <Tooltip title="Tìm kiếm" >
+                        <Tooltip title="Lọc" >
                             <Button
                                 onClick={() => this.searchEmBranch()}
                                 type="primary"
@@ -411,11 +411,11 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                                     height: "45px",
                                     width: "45px"
                                 }}
-                                icon={loading_table ? "loading" : "search"}
+                                icon={loadingTable ? "loading" : "filter"}
                             />
                         </Tooltip>
                         <Link to={routeLink.EM_BRANCHES + routePath.CREATE} >
-                            <Tooltip title="Tạo chi nhánh mới" >
+                            <Tooltip title="Tạo mới" >
                                 <Button
                                     type="primary"
                                     style={{
@@ -467,7 +467,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 1300 }}
                             bordered

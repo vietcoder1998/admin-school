@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Divider, Button, Input, DatePicker, Select, Tabs, message } from 'antd';
+import { Divider, Button, Input, DatePicker, Select, Tabs, message } from 'antd';
 import { connect } from 'react-redux';
 import './PendingJobsCreate.scss';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
@@ -29,7 +29,7 @@ interface IPendingJobsCreateState {
     list_item: Array<{ label: string, value: string }>,
     loading: boolean;
     value_annou: string;
-    type_cpn: string;
+    typeCpn: string;
     list_em_branches: Array<IEmBranch>;
     body: IAnnoucementBody;
     id?: string;
@@ -58,7 +58,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
             list_item: [],
             loading: false,
             value_annou: "",
-            type_cpn: TYPE.CREATE,
+            typeCpn: TYPE.CREATE,
             list_em_branches: [],
             body: {
                 jobTitle: null,
@@ -155,7 +155,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
     };
 
     createRequest = async () => {
-        let { body, type_cpn, employer } = this.state;
+        let { body, typeCpn, employer } = this.state;
 
         if (!body.shifts) {
             message.warning("Bài đăng chưa chọn ca làm việc", 2)
@@ -194,8 +194,8 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
             body.expirationDate &&
             employer
         ) {
-            let newBody = this.pretreatmentBody(body, type_cpn);
-            let METHOD = type_cpn === TYPE.EDIT ? PUT : POST;
+            let newBody = this.pretreatmentBody(body, typeCpn);
+            let METHOD = typeCpn === TYPE.EDIT ? PUT : POST;
 
             await _requestToServer(
                 METHOD,
@@ -215,11 +215,11 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
 
     }
 
-    pretreatmentBody = (body?: IAnnoucementBody, type_cpn?: string) => {
+    pretreatmentBody = (body?: IAnnoucementBody, typeCpn?: string) => {
         let newBody = body;
         newBody.shifts.forEach((element: any, index: number) => {
             element.genderRequireds = element.genderRequireds.map((item: any, index: number) => {
-                if (item.id && type_cpn === TYPE.EDIT) {
+                if (item.id && typeCpn === TYPE.EDIT) {
                     return {
                         id: item.id,
                         quantity: item.quantity,
@@ -238,7 +238,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
             );
         });
 
-        if (type_cpn !== TYPE.EDIT) {
+        if (typeCpn !== TYPE.EDIT) {
             newBody.shifts.forEach((element: IShifts, index: number) => {
                 if (element.id) {
                     delete element["id"]
@@ -260,22 +260,22 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
 
     render() {
         let {
-            type_cpn,
+            typeCpn,
             body,
             employer
         } = this.state;
 
         let {
-            list_job_names,
+            listJobNames,
             list_em_branches,
-            list_skills,
+            listSkills,
             list_employers
         } = this.props;
 
         let ct_btn_ex = "Huỷ";
         let ct_btn_nt = "Lưu lại";
 
-        switch (type_cpn) {
+        switch (typeCpn) {
             case TYPE.COPY:
                 ct_btn_ex = "Huỷ tạo";
                 ct_btn_nt = "Tạo mới(bản sao)";
@@ -293,9 +293,9 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                 break;
         };
 
-        let list_job_name_options = list_job_names.map((item: IJobName) => ({ label: item.name, value: item.id }));
+        let list_job_name_options = listJobNames.map((item: IJobName) => ({ label: item.name, value: item.id }));
         let list_em_branches_options = list_em_branches.map((item: IEmBranch) => ({ label: item.branchName, value: item.id }));
-        let list_skill_options = list_skills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
+        let list_skill_options = listSkills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
         let list_em_ployer_options = list_employers.map((item: IEmployer, index: number) => ({ label: item.employerName, value: item.id }));
 
         return (
@@ -304,7 +304,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     Đăng bài hộ
                 </h5>
                 <Divider orientation="left" >Nội dung công việc</Divider>
-                <div className="announcements-create-content">
+                <div className="anno-create">
                     <InputTitle
                         type={TYPE.INPUT}
                         title="Tiêu đề"
@@ -438,7 +438,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                             placeholder="ex: Giao tiếp, Tiếng Anh"
                             onChange={
                                 (event: any) => {
-                                    let newRequiredSkillIDs = findIdWithValue(list_skills, event, "name", "id")
+                                    let newRequiredSkillIDs = findIdWithValue(listSkills, event, "name", "id")
                                     body.requiredSkillIDs = newRequiredSkillIDs;
                                     this.setState({ body })
                                 }
@@ -450,14 +450,14 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     </InputTitle>
                 </div>
                 <Divider orientation="left" >Chọn loại công việc</Divider>
-                <div className="announcements-create-content">
+                <div className="anno-create">
                     <Tabs
                         activeKey={body.jobType}
                         style={{ width: "100%" }}
                         onChange={(event: string) => {
                             body.jobType = event;
                             this.setState({ body });
-                            type_cpn === TYPE.CREATE && this.replaceShift();
+                            typeCpn === TYPE.CREATE && this.replaceShift();
                         }}
                     >
                         <TabPane tab="Toàn thời gian" key={TYPE.FULLTIME}>
@@ -514,7 +514,18 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                         </TabPane>
                     </Tabs>
                 </div>
-                <div className="Announcements-create-content">
+                <div className="anno-create">
+                    <Button
+                        type="danger"
+                        prefix={"check"}
+                        style={{
+                            margin: "10px 10px",
+                        }}
+                        icon={"close"}
+                        onClick={() => { this.props.history.push('/v1/admin/jobs/job-announcements/list') }}
+                    >
+                        {ct_btn_ex}
+                    </Button>
                     <Button
                         type="primary"
                         prefix={"check"}
@@ -523,22 +534,11 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                             float: "right"
                         }}
                         onClick={() => this.createRequest()}
+                        icon={"plus"}
                     >
                         {ct_btn_nt}
-                        <Icon type="right" />
                     </Button>
-                    <Button
-                        type="danger"
-                        prefix={"check"}
-                        style={{
-                            margin: "10px 10px",
-                            float: "right"
-                        }}
-                        onClick={() => { this.props.history.push('/v1/admin/jobs/job-announcements/list') }}
-                    >
-                        <Icon type="close" />
-                        {ct_btn_ex}
-                    </Button>
+
                 </div>
             </div >
         )
@@ -555,8 +555,8 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_job_names: state.JobNames.items,
-    list_skills: state.Skills.items,
+    listJobNames: state.JobNames.items,
+    listSkills: state.Skills.items,
     list_em_branches: state.EmBranches.items,
     list_employers: state.Employers.items,
 });

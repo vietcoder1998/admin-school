@@ -70,7 +70,7 @@ class CreateBranches extends PureComponent<CreateBranchesProps, CreateBranchesSt
                     onClick={this.createNewData}
                     disabled={!name}
                 >
-                    Tạo nhóm ngành mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

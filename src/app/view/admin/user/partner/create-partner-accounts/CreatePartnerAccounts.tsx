@@ -23,7 +23,7 @@ interface ICreatePartnerAccountsState {
     contactEmail?: string;
     type?: string;
     id?: string;
-    type_cpn?: string;
+    typeCpn?: string;
     role_detail?: any;
     value?: any;
     api_controller?: Array<IApiFunctions>;
@@ -56,7 +56,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
             lastName: null,
             contactEmail: null,
             type: "",
-            type_cpn: TYPE.CREATE,
+            typeCpn: TYPE.CREATE,
             value: null,
             roleID: null,
             admin_account_detail: null,
@@ -72,7 +72,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
            
             return {
                 id: nextProps.match.params.id,
-                type_cpn: TYPE.FIX
+                typeCpn: TYPE.FIX
             }
         }
 
@@ -92,10 +92,10 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
     }
 
     createNewData = async () => {
-        let { username, type_cpn, id, password, lastName, firstName, contactEmail, roleID } = this.state;
+        let { username, typeCpn, id, password, lastName, firstName, contactEmail, roleID } = this.state;
         let body = null;
 
-        if (type_cpn === TYPE.FIX) {
+        if (typeCpn === TYPE.FIX) {
             body = {
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
@@ -114,9 +114,9 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
 
         if (username && lastName && firstName && contactEmail && password) {
             await _requestToServer(
-                type_cpn === TYPE.CREATE ? POST : PUT,
-                (type_cpn === TYPE.CREATE ? PARTNER : PARTNER)
-                + (type_cpn === TYPE.CREATE ? '/registration/email' : `/${id}/profile`),
+                typeCpn === TYPE.CREATE ? POST : PUT,
+                (typeCpn === TYPE.CREATE ? PARTNER : PARTNER)
+                + (typeCpn === TYPE.CREATE ? '/registration/email' : `/${id}/profile`),
                 body
             ).then((res: any) => {
                 if (res) {
@@ -178,7 +178,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
     render() {
         let {
             username,
-            type_cpn,
+            typeCpn,
             password,
             firstName,
             lastName,
@@ -195,7 +195,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
             <>
                 <div>
                     <h5>
-                        {type_cpn === TYPE.CREATE ? 'Thêm tài khoản cộng tác viên mới' : 'Sửa tài khoản cộng tác viên'}
+                        {typeCpn === TYPE.CREATE ? 'Thêm tài khoản cộng tác viên mới' : 'Sửa tài khoản cộng tác viên'}
                     </h5>
                     <Divider orientation="left">Chi tiết tài khoản cộng tác viên</Divider>
                     <InputTitle
@@ -208,7 +208,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
                         onChange={(event: any) => this.setState({ username: event })}
                     />
                     {
-                        type_cpn !== TYPE.FIX ?
+                        typeCpn !== TYPE.FIX ?
                             <InputTitle
                                 type={TYPE.INPUT}
                                 title="Mật khẩu"
@@ -247,7 +247,7 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
                         onChange={(event: any) => this.setState({ contactEmail: event })}
                     />
                     {
-                        type_cpn === TYPE.FIX ?
+                        typeCpn === TYPE.FIX ?
                             <>
                                 <Divider orientation="left">Đổi mật khẩu</Divider>
                                 <InputTitle
@@ -264,15 +264,15 @@ class CreatePartnerAccounts extends React.Component<ICreatePartnerAccountsProps,
                     }
                     <Button
                         type="primary"
-                        icon={type_cpn === TYPE.CREATE ? "plus" : "check"}
+                        icon={typeCpn === TYPE.CREATE ? "plus" : "check"}
                         style={{ float: "right", margin: "10px 5px" }}
                         onClick={this.createNewData}
                         disabled={!is_disable}
                     >
-                        {type_cpn === TYPE.CREATE ? " Tạo tài khoản cộng tác viên mới" : "Sửa thông tin tài khoản cộng tác viên"}
+                        {typeCpn === TYPE.CREATE ? " Tạo mới" : "Sửa thông tin"}
                     </Button>
                     {/* {
-                        type_cpn === TYPE.FIX ?
+                        typeCpn === TYPE.FIX ?
                             <Button
                                 type="primary"
                                 icon="check"

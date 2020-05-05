@@ -45,7 +45,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     createNewData = async () => {
@@ -114,7 +114,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     onClick={this.createNewData}
                     disabled={!name ||  !branchID}
                 >
-                    Tạo chuyên ngành mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

@@ -24,6 +24,7 @@ interface IStudentsListProps extends StateProps, DispatchProps {
     location?: any;
     getListStudents: Function;
     getAnnoucementDetail: Function;
+    getListSchools: Function;
     getStudentDetail: (id?: string) => any;
 };
 
@@ -42,17 +43,17 @@ interface IStudentsListState {
     search?: any;
     pageIndex?: number;
     pageSize?: number;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
-    value_type?: string;
+    valueType?: string;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body?: IStudentsFilter;
-    list_schools?: Array<IStudent>;
-    educatedScale_state?: string;
-    open_drawer?: boolean;
-    list_students?: Array<IStudent>;
-    type_cpn?: string;
+    listSchools?: Array<IStudent>;
+    educatedScaleState?: string;
+    openDrawer?: boolean;
+    listStudents?: Array<IStudent>;
+    typeCpn?: string;
     openImport?: boolean;
 };
 
@@ -63,11 +64,11 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
-            show_modal: false,
+            showModal: false,
             loading: false,
             id: null,
-            loading_table: true,
-            educatedScale_state: null,
+            loadingTable: true,
+            educatedScaleState: null,
             body: {
                 email: null,
                 phone: null,
@@ -88,7 +89,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 ids: [],
                 createdDate: null,
             },
-            open_drawer: false,
+            openDrawer: false,
             openImport: false,
         };
     }
@@ -102,8 +103,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     type={"search"}
                     onClick={() => {
                         this.setState({
-                            open_drawer: true,
-                            type_cpn: TYPE.DETAIL
+                            openDrawer: true,
+                            typeCpn: TYPE.DETAIL
                         });
                         setTimeout(() => {
                             this.props.getStudentDetail(id);
@@ -239,15 +240,15 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     ];
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps?: IStudentsListProps, prevState?: IStudentsListState) {
-        if (nextProps.list_students && nextProps.list_students !== prevState.list_students) {
+        if (nextProps.listStudents && nextProps.listStudents !== prevState.listStudents) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            nextProps.list_students.forEach((item: IStudent, index: number) => {
+            nextProps.listStudents.forEach((item: IStudent, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -267,17 +268,18 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 });
             })
             return {
-                list_students: nextProps.list_students,
+                listStudents: nextProps.listStudents,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
         }
 
-        return { loading_table: false }
+        return { loadingTable: false }
     };
 
     async componentDidMount() {
         await this.searchStudents();
+        await this.props.getListSchools(0, 10, { name: "" })
     };
 
     handleId = (event) => {
@@ -287,7 +289,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchStudents();
     };
 
@@ -304,13 +306,21 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         body.languageIDs = [];
         this.setState({
             body,
-            open_drawer: false
+            openDrawer: false
         })
+    }
+
+    onGetListSchool = (name?: string) => {
+        if (!name) {
+            name = ""
+        }
+        this.props.getListSchools(0, 10, { shortName: name })
+
     }
 
     createRequest = async (type?: string) => {
         let { id } = this.state;
-        let { student_detail } = this.props;
+        let { studentDetail } = this.props;
         let method = null;
         let api = STUDENTS;
         let body = [id];
@@ -321,7 +331,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 break;
             case TYPE.CERTIFICATE:
                 method = PUT;
-                api = api + `/${id}/profile/verified/${student_detail.profileVerified ? 'false' : 'true'}`;
+                api = api + `/${id}/profile/verified/${studentDetail.profileVerified ? 'false' : 'true'}`;
                 body = undefined;
                 break;
             default:
@@ -344,7 +354,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 }
             }
         ).finally(
-            () => this.setState({ open_drawer: false, loading: false })
+            () => this.setState({ openDrawer: false, loading: false })
         )
     }
 
@@ -377,12 +387,12 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         let { body } = this.state;
 
         let {
-            list_skills,
-            list_languages,
+            listSkills,
+            listLanguages,
         } = this.props;
 
-        let list_skill_options = list_skills.map((item: ISkill, index: number) => (<Select.Option key={index} value={item.name} children={item.name} />));
-        let list_language_options = list_languages.map((item: ILanguage, index: number) => (<Select.Option key={index} value={item.name} children={item.name} />));
+        let list_skill_options = listSkills.map((item: ISkill, index: number) => (<Select.Option key={index} value={item.name} children={item.name} />));
+        let list_language_options = listLanguages.map((item: ILanguage, index: number) => (<Select.Option key={index} value={item.name} children={item.name} />));
 
         return <>
             <IptLetterP
@@ -420,44 +430,40 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                 }}
             />
             <hr />
-            <>
-                <IptLetterP value={"Loại kĩ năng"} />
-                <Select
-                    mode="multiple"
-                    size="default"
-                    placeholder="ex: Giao tiếp, Tiếng Anh,..."
-                    value={findIdWithValue(list_skills, body.skillIDs, "id", "name")}
-                    onChange={
-                        (event: any) => {
-                            let list_data = findIdWithValue(list_skills, event, "name", "id")
-                            body.skillIDs = list_data;
-                            this.setState({ body })
-                        }
+            <IptLetterP value={"Loại kĩ năng"} />
+            <Select
+                mode="multiple"
+                size="default"
+                placeholder="ex: Giao tiếp, Tiếng Anh,..."
+                value={findIdWithValue(listSkills, body.skillIDs, "id", "name")}
+                onChange={
+                    (event: any) => {
+                        let list_data = findIdWithValue(listSkills, event, "name", "id")
+                        body.skillIDs = list_data;
+                        this.setState({ body })
                     }
-                    style={{ width: "100%" }}
-                >
-                    {list_skill_options}
-                </Select>
-            </>
-            <>
-                <IptLetterP value={"Loại ngôn ngữ"} />
-                <Select
-                    mode="multiple"
-                    size="default"
-                    placeholder="ex: Tiếng Anh, Tiếng Trung,.."
-                    value={findIdWithValue(list_languages, body.languageIDs, "id", "name")}
-                    onChange={
-                        (event: any) => {
-                            let list_data = findIdWithValue(list_languages, event, "name", "id")
-                            body.languageIDs = list_data;
-                            this.setState({ body })
-                        }
+                }
+                style={{ width: "100%" }}
+            >
+                {list_skill_options}
+            </Select>
+            <IptLetterP value={"Loại ngôn ngữ"} />
+            <Select
+                mode="multiple"
+                size="default"
+                placeholder="ex: Tiếng Anh, Tiếng Trung,.."
+                value={findIdWithValue(listLanguages, body.languageIDs, "id", "name")}
+                onChange={
+                    (event: any) => {
+                        let list_data = findIdWithValue(listLanguages, event, "name", "id")
+                        body.languageIDs = list_data;
+                        this.setState({ body })
                     }
-                    style={{ width: "100%" }}
-                >
-                    {list_language_options}
-                </Select>
-            </>
+                }
+                style={{ width: "100%" }}
+            >
+                {list_language_options}
+            </Select>
             <div style={{ padding: "40px 0px 20px ", width: "100%" }}>
                 <Button
                     icon="close"
@@ -476,13 +482,13 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                         float: "right"
                     }}
                     onClick={async () => {
-                        await this.setState({ open_drawer: false, type_cpn: TYPE.DETAIL });
+                        await this.setState({ openDrawer: false, typeCpn: TYPE.DETAIL });
                         await setTimeout(() => {
                             // this.searchStudents();
                         }, 250);
                     }}
                 >
-                    Tìm kiếm
+                    Lọc
             </Button>
 
             </div>
@@ -492,9 +498,9 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     render() {
         let {
             data_table,
-            loading_table,
-            open_drawer,
-            type_cpn,
+            loadingTable,
+            openDrawer,
+            typeCpn,
             loading,
             openImport,
         } = this.state;
@@ -502,29 +508,35 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         let {
             totalItems,
             listRegions,
-            student_detail
+            listSchools,
+            studentDetail
         } = this.props
         return (
             <>
                 <Drawer
-                    title="Tìm kiếm nâng cao"
+                    title="Lọc nâng cao"
                     placement="right"
                     width={"60vw"}
                     closable={true}
                     onClose={() => this.onCancelAdvancedFind()}
-                    visible={open_drawer}
+                    visible={openDrawer}
                 >
                     {
-                        type_cpn === TYPE.DETAIL ?
+                        typeCpn === TYPE.DETAIL ?
                             <StudentInfo
-                                data={student_detail}
+                                data={studentDetail}
                                 onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
                                 loading={loading}
                             /> :
                             this.advancedFilter()
                     }
                 </Drawer>
-                <StuInsertExels openImport={openImport} handleImport={() => this.handleVisible()} />
+                <StuInsertExels
+                    openImport={openImport}
+                    handleImport={() => this.handleVisible()}
+                    listSchools={listSchools}
+                    getListSchool={this.onGetListSchool}
+                />
                 <div className="common-content">
                     <h5>
                         Danh sách sinh viên
@@ -546,12 +558,12 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                 float: "right",
                                 margin: "0px 10px",
                             }}
-                            icon={loading_table ? "loading" : "search"}
-                            children={"Tìm kiếm sinh viên"}
+                            icon={loadingTable ? "loading" : "filter"}
+                            children={"Lọc"}
                         />
                         <Button
                             onClick={
-                                () => this.setState({ open_drawer: true, type_cpn: TYPE.SEARCH })
+                                () => this.setState({ openDrawer: true, typeCpn: TYPE.SEARCH })
                             }
                             type="primary"
                             style={{
@@ -659,7 +671,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 2150 }}
                             bordered
@@ -686,18 +698,20 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListStudents: (pageIndex: number, pageSize: number, body?: IStudentsFilter) =>
         dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENTS, pageIndex, pageSize, body }),
+    getListSchools: (pageIndex: number, pageSize: number, body?: IStudentsFilter) =>
+        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
     getStudentDetail: (id?: string) =>
         dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENT_DETAIl, id }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_schools: state.Students.items,
+    listSchools: state.Schools.items,
     listRegions: state.Regions.items,
-    list_skills: state.Skills.items,
-    list_languages: state.Languages.items,
-    list_job_names: state.JobNames.items,
-    list_students: state.Students.items,
-    student_detail: state.StudentDetail,
+    listSkills: state.Skills.items,
+    listLanguages: state.Languages.items,
+    listJobNames: state.JobNames.items,
+    listStudents: state.Students.items,
+    studentDetail: state.StudentDetail,
     totalItems: state.Students.totalItems,
 });
 

@@ -19,7 +19,7 @@ interface CreateRolesState {
     name?: string;
     type?: string;
     id?: string;
-    type_cpn?: string;
+    typeCpn?: string;
     role_detail?: any;
     value?: any;
     treeData?: Array<ITreeParent>;
@@ -41,7 +41,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
             name: "",
             type: "",
             id: "",
-            type_cpn: TYPE.CREATE,
+            typeCpn: TYPE.CREATE,
             role_detail: {},
             value: null,
             treeData: []
@@ -58,7 +58,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
             nextProps.getApiControllerRoles(nextProps.match.params.id);
             return {
                 id: nextProps.match.params.id,
-                type_cpn: TYPE.EDIT
+                typeCpn: TYPE.EDIT
             }
         }
 
@@ -78,15 +78,15 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     createNewData = async () => {
-        let {name, type, type_cpn, id} = this.state;
+        let {name, type, typeCpn, id} = this.state;
         if (name && type) {
             await _requestToServer(
-                type_cpn === TYPE.CREATE ? POST : PUT,
-                ROLES + (type_cpn === TYPE.CREATE ? "" : `/${id}`),
+                typeCpn === TYPE.CREATE ? POST : PUT,
+                ROLES + (typeCpn === TYPE.CREATE ? "" : `/${id}`),
                 {
                     name: name.trim(),
                     type: type.trim().toUpperCase()
@@ -127,7 +127,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
 
 
     render() {
-        let {name, type, type_cpn, value} = this.state;
+        let {name, type, typeCpn, value} = this.state;
         let {treeData} = this.props;
         let is_name = name !== "" && type !== "";
         let new_type = type ? type = type.toUpperCase() : "";
@@ -146,7 +146,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
             <>
                 <div>
                     <h5>
-                        {type_cpn === TYPE.CREATE ? 'Thêm quyền mới' : 'Sửa quyền'}
+                        {typeCpn === TYPE.CREATE ? 'Thêm quyền mới' : 'Sửa quyền'}
                     </h5>
                     <Divider orientation="left">Chi tiết quyền</Divider>
                     <InputTitle
@@ -176,7 +176,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                         onClick={this.createNewData}
                         disabled={!is_name}
                     >
-                        {type_cpn === TYPE.CREATE ? " Tạo quyền mới" : "Sửa thông tin quyền"}
+                        {typeCpn === TYPE.CREATE ? " Tạo quyền mới" : "Sửa thông tin quyền"}
 
                     </Button>
                     <Button
@@ -190,7 +190,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                     </Button>
                 </div>
                 <div className="api-role-controller"
-                     style={{height: "50vh", display: type_cpn === TYPE.EDIT ? "block" : "none"}}>
+                     style={{height: "50vh", display: typeCpn === TYPE.EDIT ? "block" : "none"}}>
                     <Divider orientation="left">Cập nhật phân quyền</Divider>
                     <InputTitle
                         type={TYPE.INPUT}

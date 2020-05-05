@@ -107,23 +107,23 @@ interface IJobAnnouncementsListState {
     target?: string;
     jobNameID?: string;
     jobId?: string;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
     message?: string;
     list_employer_branches?: Array<any>;
-    value_type?: string;
+    valueType?: string;
     announcementTypeID?: number;
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
     list_job_announcements?: Array<any>;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body?: IJobAnnouncementsFilter;
     un_checkbox?: boolean;
     list_check?: Array<any>;
     state_check_box?: Array<string>;
-    open_drawer?: boolean;
+    openDrawer?: boolean;
     homePriority?: string;
     searchPriority?: string;
     homeExpired: boolean;
@@ -145,18 +145,18 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             employerID: null,
             jobNameID: null,
             jobId: null,
-            show_modal: false,
+            showModal: false,
             loading: false,
             message: null,
             list_employer_branches: [],
-            value_type: null,
+            valueType: null,
             announcementTypeID: null,
             createdDate: null,
             adminID: null,
             hidden: false,
             list_job_announcements: [],
             id: null,
-            loading_table: true,
+            loadingTable: true,
             body: {
                 expired: null,
                 hidden: null,
@@ -329,7 +329,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         },
         {
             value: TYPE.JOB_FILTER.searchPriority,
-            label: 'Tìm kiếm',
+            label: 'Lọc',
             children: [
                 {
                     value: TYPE.HIGHLIGHT,
@@ -388,8 +388,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     }
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps: IJobAnnouncementsListProps, prevState: IJobAnnouncementsListState) {
@@ -431,7 +431,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             return {
                 list_job_announcements: nextProps.list_job_announcements,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
         }
 
@@ -450,7 +450,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         }
 
         return {
-            loading_table: false
+            loadingTable: false
         };
     };
 
@@ -513,7 +513,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     }
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchJobAnnouncement();
     };
 
@@ -677,8 +677,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     render() {
         let {
             data_table,
-            value_type,
-            loading_table,
+            valueType,
+            loadingTable,
             un_checkbox,
             list_check,
             homePriority,
@@ -694,7 +694,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         let {
             job_announcement_detail,
             totalItems,
-            list_job_names,
+            listJobNames,
             list_employer_branches,
             list_job_service,
             list_employer,
@@ -852,7 +852,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     value={searchPriority}
                                     disabled={un_active_search}
                                 >
-                                    <Radio value={TYPE.HIGHLIGHT}>Tìm kiếm nổi bật</Radio>
+                                    <Radio value={TYPE.HIGHLIGHT}>Lọc nổi bật</Radio>
                                 </Radio.Group>
                                 <Button
                                     type={un_active_search ? "ghost" : "primary"}
@@ -908,8 +908,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     float: "right",
                                     margin: "0px 10px",
                                 }}
-                                icon={loading_table ? "loading" : "search"}
-                                children="Tìm kiếm"
+                                icon={loadingTable ? "loading" : "filter"}
+                                children="Lọc"
                             />
                             <Link to={routeLink.PENDING_JOBS + routePath.CREATE} >
                                 <Button
@@ -919,7 +919,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         margin: "0px 10px",
                                     }}
                                     icon={"plus"}
-                                    children="Tạo bài đăng mới"
+                                    children="Tạo mới"
                                 />
                             </Link>
                         </h5>
@@ -964,8 +964,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobNameIDs)}
                                     >
                                         {
-                                            list_job_names &&
-                                            list_job_names.map(
+                                            listJobNames &&
+                                            listJobNames.map(
                                                 (item: any, index: number) => <Option key={index} value={item.id}>{item.name}</Option>
                                             )
                                         }
@@ -1045,7 +1045,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         defaultValue="Tất cả"
                                         optionFilterProp="children"
                                         style={{ width: "100%" }}
-                                        value={value_type}
+                                        value={valueType}
                                         onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.hidden)}
                                     >
                                         <Option value={null}>Tất cả</Option>
@@ -1083,7 +1083,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                             <Table
                                 // @ts-ignore
                                 columns={this.columns}
-                                loading={loading_table}
+                                loading={loadingTable}
                                 dataSource={data_table}
                                 scroll={{ x: 2400 }}
                                 bordered
@@ -1131,7 +1131,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_job_announcements: state.JobAnnouncements.items,
-    list_job_names: state.JobNames.items,
+    listJobNames: state.JobNames.items,
     list_employer_branches: state.EmBranches.items,
     list_job_service: state.JobServices,
     list_employer: state.Employers.items,

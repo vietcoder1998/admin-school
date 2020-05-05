@@ -20,9 +20,9 @@ interface IListJobNamesProps extends StateProps, DispatchProps {
 }
 
 interface IListJobNamesState {
-    list_job_names: Array<IJobName>,
+    listJobNames: Array<IJobName>,
     list_job_groups?: Array<IJobGroup>,
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -40,8 +40,8 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     constructor(props: any) {
         super(props);
         this.state = {
-            list_job_names: [],
-            loading_table: true,
+            listJobNames: [],
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -61,10 +61,10 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     }
 
     static getDerivedStateFromProps(nextProps?: IListJobNamesProps, prevState?: IListJobNamesState) {
-        if (nextProps.list_job_names !== prevState.list_job_names) {
+        if (nextProps.listJobNames !== prevState.listJobNames) {
             let data_table: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_job_names.forEach((item?: IJobName, index?: any) => {
+            nextProps.listJobNames.forEach((item?: IJobName, index?: any) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -74,9 +74,9 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             });
 
             return {
-                list_job_names: nextProps.list_job_names,
+                listJobNames: nextProps.listJobNames,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
 
@@ -88,7 +88,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                 list_data,
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     toggleModal = (type?: string) => {
@@ -157,7 +157,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.props.getListJobNames(event.current - 1, event.pageSize);
     };
 
@@ -218,7 +218,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
             openModal,
             type,
             name,
@@ -311,7 +311,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 650 }}
                             bordered
@@ -340,7 +340,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_job_names: state.JobNames.items,
+    listJobNames: state.JobNames.items,
     list_job_groups: state.JobGroups.items,
     totalItems: state.JobNames.totalItems
 });

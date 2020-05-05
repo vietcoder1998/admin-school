@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import { REDUX_SAGA } from '../../../../../const/actions';
-import { Link } from 'react-router-dom';
 import { IAnnouncementDetail } from '../../../../../models/announcement_detail';
 import { TYPE } from '../../../../../const/type';
 import { ICreateNewAnnoucement } from '../../../../../models/announcements';
@@ -28,7 +27,7 @@ interface IAnnouncementCreateState {
     value_annou?: string;
     previewContent?: string;
     announcement_detail?: IAnnouncementDetail;
-    type_cpn?: string;
+    typeCpn?: string;
     data?: ICreateNewAnnoucement;
     loading_avatar?: boolean;
     imageUrl?: string;
@@ -72,7 +71,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
                 content: "",
                 loading: false,
             },
-            type_cpn: TYPE.CREATE,
+            typeCpn: TYPE.CREATE,
             loading_avatar: false,
             loading_content_img: false,
             dataUrl: null,
@@ -85,7 +84,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
         if (nextProps.match.params.id && nextProps.match.params.id !== prevState.id) {
             return {
                 id: nextProps.match.params.id,
-                type_cpn: TYPE.EDIT
+                typeCpn: TYPE.EDIT
             }
         }
 
@@ -131,7 +130,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
         }
 
         return {
-            type_cpn: TYPE.CREATE,
+            typeCpn: TYPE.CREATE,
             value_annou: "Chọn loại bài viết",
         };
     };
@@ -240,7 +239,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
             announcementTypeID,
             hidden,
             content,
-            type_cpn,
+            typeCpn,
             previewContent
         } = this.state;
 
@@ -266,8 +265,8 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
         if (title && imageUrl && announcementTypeID && content) {
             let newContent = `<div style="text-align: justify;">${content}</div> `;
             await _requestToServer(
-                type_cpn === TYPE.CREATE ? POST : PUT,
-                type_cpn === TYPE.CREATE ? ANNOUNCEMENT_DETAIL : ANNOUNCEMENT_DETAIL + `/${this.props.match.params.id}`,
+                typeCpn === TYPE.CREATE ? POST : PUT,
+                typeCpn === TYPE.CREATE ? ANNOUNCEMENT_DETAIL : ANNOUNCEMENT_DETAIL + `/${this.props.match.params.id}`,
                 {
                     title,
                     imageUrl,
@@ -303,7 +302,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
             title,
             hidden,
             content,
-            type_cpn,
+            typeCpn,
             loading_avatar,
             imageUrl,
             loading_content_img,
@@ -383,7 +382,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
                                 <label className='upload-img' htmlFor="avatarUrl">
                                     {!loading_avatar ? <Icon type="plus" /> :
                                         <Icon type="loading" style={{ color: "blue" }} />}
-                                    <div className="ant-upload-text">Upload</div>
+                                    <div className="ant-upload-text">Ảnh đại diện</div>
                                 </label>
                             </>
                         </InputTitle>
@@ -409,7 +408,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
                                 >
                                     {!loading_content_img ? <Icon type="upload" /> :
                                         <Icon type="loading" style={{ color: "blue" }} />}
-                                    Upload
+                                    Thêm ảnh
                                 </label>
                             </div>
                             <CKEditor
@@ -432,27 +431,21 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
                     <div className="mng-create-content">
                         <Button
                             type="primary"
-                            icon={loading_rq ? "loading" : "check"}
+                            icon={loading_rq ? "loading" : "plus"}
                             style={{
                                 margin: "10px 10px",
                                 float: "right"
                             }}
                             onClick={this.createAnnoucement}
                         >
-                            {type_cpn === TYPE.CREATE ? "Tạo mới" : "Lưu lại"}
+                            {typeCpn === TYPE.CREATE ? "Tạo mới" : "Lưu lại"}
                         </Button>
                         <Button
                             type="danger"
-                            prefix={"check"}
-                            style={{
-                                margin: "10px 10px",
-                                float: "right"
-                            }}
+                            icon={"close"}
+                            onClick={() => this.props.history.push(routeLink.ANNOUCEMENT + routePath.LIST)}
                         >
-                            <Link to={routeLink.ANNOUCEMENT + routePath.LIST}>
-                                <Icon type="close" />
-                                {type_cpn === TYPE.CREATE ? "Hủy bài" : "Hủy sửa"}
-                            </Link>
+                            Hủy
                         </Button>
                     </div>
                 </div>

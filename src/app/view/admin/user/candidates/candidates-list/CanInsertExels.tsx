@@ -33,7 +33,7 @@ class CanInsertExels extends PureComponent<IProps, IState> {
                 endColumn: null,
                 startRow: null,
                 endRow: null,
-                commentErrorToFile: false,
+                commentErrorToFile: true,
                 removeImportedRowFromFile: false,
             },
             arrMsg: {
@@ -65,7 +65,7 @@ class CanInsertExels extends PureComponent<IProps, IState> {
                 visible={openImport}
                 onOk={this.sendFile}
                 onCancel={() => this.props.handleImport()}
-                title='Import exel nhà tuyển dụng'
+                title='Import exel ứng viên'
             >
                 <input
                     id="fileSelect"

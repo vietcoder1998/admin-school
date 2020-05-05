@@ -72,7 +72,7 @@ class CreateSkills extends PureComponent<CreateSkillsProps, CreateSkillsState> {
                     onClick={this.createNewData}
                     disabled={name? false : true}
                 >
-                    Tạo kỹ năng mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

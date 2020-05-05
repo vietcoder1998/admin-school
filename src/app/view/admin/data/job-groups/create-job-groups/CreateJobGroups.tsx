@@ -70,7 +70,7 @@ class CreateRegions extends PureComponent<CreateRegionsProps, CreateRegionsState
                     onClick={this.createNewData}
                     disabled={!name}
                 >
-                    Tạo nhóm công việc mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

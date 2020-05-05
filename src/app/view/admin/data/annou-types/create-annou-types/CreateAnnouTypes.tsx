@@ -140,7 +140,7 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
                     onClick={this.createNewData}
                     disabled={!name}
                 >
-                    Tạo nhóm bài viết  mới
+                    Tạo mới
                 </Button>
                 <Button
                     type="danger"

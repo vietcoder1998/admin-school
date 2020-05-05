@@ -19,7 +19,7 @@ interface ListTypeSchoolsProps extends StateProps, DispatchProps {
 
 interface ListTypeSchoolsState {
     list_type_schools: Array<ITypeSchool>;
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -35,7 +35,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
         super(props);
         this.state = {
             list_type_schools: [],
-            loading_table: true,
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -67,10 +67,10 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
             return {
                 list_type_schools: nextProps.list_type_schools,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
 
@@ -133,7 +133,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListTypeSchools(event.current - 1, event.pageSize)
     };
 
@@ -167,7 +167,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type } = this.state;
+        let { data_table, loadingTable, openModal, name, type } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -217,7 +217,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                             <Table
                                 // @ts-ignore
                                 columns={this.columns}
-                                loading={loading_table}
+                                loading={loadingTable}
                                 dataSource={data_table}
                                 scroll={{ x: 350 }}
                                 bordered

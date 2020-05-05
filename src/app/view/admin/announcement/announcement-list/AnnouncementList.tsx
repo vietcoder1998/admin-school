@@ -51,18 +51,18 @@ interface IAnnouncementListState {
     target?: string;
     jobNameID?: string;
     jobId?: string;
-    show_modal?: boolean;
+    showModal?: boolean;
     pendingJob?: any;
     message?: string;
     list_annou_types?: Array<any>;
-    value_type?: string;
+    valueType?: string;
     announcementTypeID?: number;
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
     list_announcements?: Array<any>;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     open_config_modal?: boolean;
     initLoading?: boolean;
     loading?: boolean;
@@ -90,7 +90,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             hidden: undefined,
             list_announcements: [],
             id: "",
-            loading_table: true,
+            loadingTable: true,
             initLoading: false,
             loading: false,
             data: [],
@@ -212,20 +212,20 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
     ];
 
     onToggleModal = () => {
-        let { show_modal } = this.state;
-        if (!show_modal) {
+        let { showModal } = this.state;
+        if (!showModal) {
             let id = localStorage.getItem("id_mgm");
             this.props.getAnnouncementDetail(id);
         }
         this.getData();
-        this.setState({ show_modal: !show_modal, pageSizeAC: 5, tab_key: "1", list_remove: [] });
+        this.setState({ showModal: !showModal, pageSizeAC: 5, tab_key: "1", list_remove: [] });
     };
 
     static getDerivedStateFromProps(nextProps: IAnnouncementListProps, prevState: IAnnouncementListState) {
         if (nextProps.list_annou_types !== prevState.list_annou_types) {
             return {
                 list_annou_types: nextProps.list_annou_types,
-                value_type: "Tất cả",
+                valueType: "Tất cả",
                 announcementTypeID: null
             }
         };
@@ -348,10 +348,10 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             return {
                 list_announcements: nextProps.list_annou_types,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             };
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     };
 
     getData = async () => {
@@ -380,7 +380,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchAnnouncement();
     };
 
@@ -420,11 +420,11 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
     onChangeType = (event: any) => {
         let { list_annou_types } = this.state;
         if (event === null) {
-            this.setState({ announcementTypeID: undefined, value_type: undefined })
+            this.setState({ announcementTypeID: undefined, valueType: undefined })
         } else if (list_annou_types) {
             list_annou_types.forEach(item => {
                 if (item.id === event) {
-                    this.setState({ value_type: item.name, announcementTypeID: item.id })
+                    this.setState({ valueType: item.name, announcementTypeID: item.id })
                 }
             })
         }
@@ -509,8 +509,8 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
         let {
             data_table,
             list_annou_types,
-            value_type,
-            loading_table,
+            valueType,
+            loadingTable,
             open_config_modal,
             initLoading,
             loadingMore,
@@ -522,15 +522,15 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             annoucement_detail,
             totalItems,
             list_annou_comment,
-            open_drawer
+            openDrawer
         } = this.props;
         return (
             <>
                 <Drawer
-                    visible={open_drawer}
+                    visible={openDrawer}
                     width={"50vw"}
                     title={"Xem trước bài viết"}
-                    onClose={() => this.props.handleDrawer({ open_drawer: false })}
+                    onClose={() => this.props.handleDrawer({ openDrawer: false })}
                     destroyOnClose={true}
                 >
                     {
@@ -629,7 +629,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                         <Button
                             key="back"
                             icon="left"
-                            onClick={() => this.props.handleDrawer({ open_drawer: false })}
+                            onClick={() => this.props.handleDrawer({ openDrawer: false })}
                         >
                             Thoát
                         </Button>,
@@ -674,7 +674,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                             }}
                         >
                             <Icon type="filter" />
-                            Tìm kiếm
+                            Lọc
                         </Button>
                         <Button
                             onClick={() => this.searchAnnouncement()}
@@ -686,7 +686,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                         >
                             <Link to={routeLink.ANNOUCEMENT + routePath.CREATE}>
                                 <Icon type="plus" />
-                                Tạo bài viết mới
+                                Tạo mới
                             </Link>
                         </Button>
                     </h5>
@@ -719,7 +719,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                                     placeholder="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    value={value_type}
+                                    value={valueType}
                                     onChange={this.onChangeType}
                                 >
                                     <Option value={undefined}>Tất cả</Option>
@@ -756,7 +756,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 1450 }}
                             bordered={true}
@@ -806,7 +806,7 @@ const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     annoucement_detail: state.AnnouncementDetail.data,
     totalItems: state.Announcements.totalItems,
     list_annou_comment: state.AnnouComments.items,
-    open_drawer: state.MutilBox.drawerState.open_drawer,
+    openDrawer: state.MutilBox.drawerState.openDrawer,
     totalComments: state.AnnouComments.totalItems
 });
 

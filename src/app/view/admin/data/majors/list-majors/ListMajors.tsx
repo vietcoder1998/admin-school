@@ -23,7 +23,7 @@ interface ListMajorsProps extends StateProps, DispatchProps {
 interface ListMajorsState {
     list_majors: Array<IMajor>,
     list_branch?: Array<IBranches>,
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -42,7 +42,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         super(props);
         this.state = {
             list_majors: [],
-            loading_table: true,
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -79,7 +79,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             return {
                 list_majors: nextProps.list_majors,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
         }
 
@@ -92,7 +92,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     };
 
 
@@ -200,7 +200,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListMajors(event.current - 1, event.pageSize)
     };
 
@@ -232,7 +232,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     render() {
-        let { data_table, loading_table, type, openModal, list_data, name, branchName, pageIndex, pageSize, search } = this.state;
+        let { data_table, loadingTable, type, openModal, list_data, name, branchName, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -316,7 +316,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             <Table
                                 // @ts-ignore
                                 columns={this.columns}
-                                loading={loading_table}
+                                loading={loadingTable}
                                 dataSource={data_table}
                                 scroll={{ x: 600 }}
                                 bordered

@@ -80,7 +80,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
     logOut = () => {
@@ -113,7 +113,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             type={show_menu ? 'menu-unfold' : 'menu-fold'}
                             style={{
                                 marginTop: 15,
-                                fontSize: 20
+                                fontSize: 20,
+                                zIndex: 999
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />

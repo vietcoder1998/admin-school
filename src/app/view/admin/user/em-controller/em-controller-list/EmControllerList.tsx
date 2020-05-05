@@ -35,11 +35,11 @@ interface IEmControllerListState {
     search?: any;
     pageIndex?: number;
     pageSize?: number;
-    show_modal?: boolean;
+    showModal?: boolean;
     loading?: boolean;
-    value_type?: string;
+    valueType?: string;
     id?: string;
-    loading_table?: boolean;
+    loadingTable?: boolean;
     body?: IEmControllerFilter;
     list_user_controller?: Array<IEmController>;
     profileVerified_state?: string;
@@ -53,10 +53,10 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
-            show_modal: false,
+            showModal: false,
             loading: false,
             id: null,
-            loading_table: true,
+            loadingTable: true,
             profileVerified_state: null,
             body: {
                 employerName: null,
@@ -79,7 +79,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                     style={{ padding: 5, margin: 2 }}
                     type={"search"}
                     onClick={() => {
-                        this.props.handleDrawer({ open_drawer: true });
+                        this.props.handleDrawer({ openDrawer: true });
                         setTimeout(() => {
                             this.props.getEmployerDetail(id);
                         }, 500);
@@ -169,8 +169,8 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     ];
 
     onToggleDrawer = () => {
-        let { show_modal } = this.state;
-        this.setState({ show_modal: !show_modal });
+        let { showModal } = this.state;
+        this.setState({ showModal: !showModal });
     };
 
     static getDerivedStateFromProps(nextProps?: IEmControllerListProps, prevState?: IEmControllerListState) {
@@ -198,11 +198,11 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             return {
                 list_user_controller: nextProps.list_user_controller,
                 data_table,
-                loading_table: false,
+                loadingTable: false,
             }
         }
 
-        return { loading_table: false };
+        return { loadingTable: false };
     };
 
     async componentDidMount() {
@@ -216,7 +216,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         await this.searchEmControllers();
     };
 
@@ -258,7 +258,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
             (res: any) => {
                 if (res) {
                     if (type !== TYPE.DELETE) {
-                        this.props.handleDrawer({ open_drawer: false });
+                        this.props.handleDrawer({ openDrawer: false });
                     }
                     setTimeout(() => {
                         this.searchEmControllers()
@@ -296,7 +296,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
     render() {
         let {
             data_table,
-            loading_table,
+            loadingTable,
             loading,
             openImport
         } = this.state;
@@ -322,7 +322,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                         icon={"left"}
                         onClick={
                             () => {
-                                this.props.handleDrawer({ open_drawer: false });
+                                this.props.handleDrawer({ openDrawer: false });
                                 this.props.history.push(routeLink.EM_CONTROLLER + routePath.LIST);
                             }
                         }
@@ -342,7 +342,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                                 float: "right",
                             }}
                         >
-                            Tìm kiếm
+                            Lọc
                         </Button>
                         <Button
                             icon="upload"
@@ -426,7 +426,7 @@ class EmControllerList extends PureComponent<IEmControllerListProps, IEmControll
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 1160 }}
                             bordered

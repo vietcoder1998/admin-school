@@ -34,7 +34,7 @@ class EmInsertExels extends PureComponent<IProps, IState> {
                 endColumn: null,
                 startRow: null,
                 endRow: null,
-                commentErrorToFile: false,
+                commentErrorToFile: true,
                 removeImportedRowFromFile: false,
             },
             arrMsg: {

@@ -19,7 +19,7 @@ interface ListRegionsProps extends StateProps, DispatchProps {
 
 interface ListRegionsState {
     listRegions: Array<ILanguage>,
-    loading_table: boolean;
+    loadingTable: boolean;
     data_table: Array<any>;
     pageIndex: number;
     pageSize: number;
@@ -35,7 +35,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
         super(props);
         this.state = {
             listRegions: [],
-            loading_table: true,
+            loadingTable: true,
             data_table: [],
             pageIndex: 0,
             pageSize: 10,
@@ -66,10 +66,10 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
             return {
                 listRegions: nextProps.listRegions,
                 data_table,
-                loading_table: false
+                loadingTable: false
             }
         }
-        return { loading_table: false };
+        return { loadingTable: false };
     }
 
 
@@ -132,7 +132,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loading_table: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
         this.props.getListRegions(event.current - 1, event.pageSize)
     };
 
@@ -163,7 +163,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     };
 
     render() {
-        let { data_table, loading_table, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { data_table, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -233,7 +233,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                         <Table
                             // @ts-ignore
                             columns={this.columns}
-                            loading={loading_table}
+                            loading={loadingTable}
                             dataSource={data_table}
                             scroll={{ x: 350 }}
                             bordered
