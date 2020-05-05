@@ -1,5 +1,5 @@
 import React, { PureComponent, } from 'react'
-import { Modal, InputNumber, Row, Col, List, Input, Avatar, Button } from 'antd';
+import { Modal, InputNumber, Row, Col, List, Input, Avatar, Button, Icon } from 'antd';
 
 import { _requestToServer } from '../../../../../../services/exec';
 import { POST } from '../../../../../../const/method';
@@ -8,6 +8,8 @@ import IImportCan from '../../../../../../models/import-can';
 import { IptLetterP } from '../../../../layout/common/Common';
 import { IMPORT_STU } from './../../../../../../services/api/private.api';
 import { ISchool } from '../../../../../../models/schools';
+//@ts-ignore
+import fileEm from '../../../../../../assets/file/importStudent.xlsx';
 
 interface IProps {
     openImport: boolean,
@@ -92,6 +94,11 @@ class StuInsertExels extends PureComponent<IProps, IState> {
                     onChange={(event) => this.setState({ file: event.target.files[0] })}
                 />
                 <h5 style={{ margin: '16px 0' }}>Danh sách trường</h5>
+                <p>
+                    <a href={fileEm}>
+                        <Icon type={"download"} />  Tải xuống bản mẫu file import sinh viên
+                    </a>
+                </p>
                 <List
                     size="small"
                     header={
@@ -114,7 +121,7 @@ class StuInsertExels extends PureComponent<IProps, IState> {
                                     cursor: "pointer"
                                 }}
                                 onClick={() => this.setState({ id: item.id, name: item.shortName })}>
-                                <Avatar src={item.logoUrl} size={"large"} shape={"square"} style={{ marginRight: 10 }} />
+                                <Avatar src={item.logoUrl} size={"large"} style={{ marginRight: 10 }} />
                                 <ul>
                                     <li>{item.name} ({item.shortName})</li>
                                     <li>{item.email} ({item.email})</li>

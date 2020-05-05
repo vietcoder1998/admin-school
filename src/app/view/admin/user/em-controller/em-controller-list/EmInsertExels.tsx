@@ -1,5 +1,5 @@
 import React, { PureComponent, } from 'react'
-import { Modal, InputNumber, Row, Col } from 'antd';
+import { Modal, InputNumber, Row, Col, Icon, Button } from 'antd';
 import './EmControllerList.scss';
 
 import { _requestToServer } from '../../../../../../services/exec';
@@ -8,6 +8,8 @@ import { POST } from '../../../../../../const/method';
 import { IMPORT_EM } from './../../../../../../services/api/private.api';
 import IImportCan from './../../../../../../models/import-can';
 import { IptLetterP } from '../../../../layout/common/Common';
+//@ts-ignore
+import fileEm from '../../../../../../assets/file/importEmployer.xlsx';
 
 interface IProps {
     openImport: boolean,
@@ -60,7 +62,7 @@ class EmInsertExels extends PureComponent<IProps, IState> {
             arrMsg
         } = this.state;
 
-        let {openImport} = this.props;
+        let { openImport } = this.props;
 
         return (
             <Modal
@@ -68,6 +70,12 @@ class EmInsertExels extends PureComponent<IProps, IState> {
                 onOk={this.sendFile}
                 onCancel={() => this.props.handleImport()}
                 title='Import exel nhà tuyển dụng'
+                width={"600px"}
+                cancelText={"Đóng"}
+                footer={[
+                    <Button key={"cancel"} type={"danger"} onClick={() => this.props.handleImport()} children={"Đóng"} />,
+                    <Button key={"ok"} type={"primary"} onClick={() => this.sendFile()} children={"Hoàn tất"} />
+                ]}
             >
                 <input
                     id="fileSelect"
@@ -75,6 +83,11 @@ class EmInsertExels extends PureComponent<IProps, IState> {
                     accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     onChange={(event) => this.setState({ file: event.target.files[0] })}
                 />
+                <p>
+                    <a href={fileEm}>
+                        <Icon type={"download"} />  Tải xuống bản mẫu file import nhà tuyển dụng
+                </a>
+                </p>
                 <h5>Tham số</h5>
                 <Row>
                     <Col span={6}>
@@ -110,7 +123,7 @@ class EmInsertExels extends PureComponent<IProps, IState> {
                         </IptLetterP>
                     </Col>
                 </Row>
-                <div className={"test"} style={{ minHeight: 200 }}>
+                <div className={"test"} style={{ minHeight: 200, padding: 10, backgroundColor: "white" }}>
                     <div>
                         sheet: {arrMsg.sheet ? arrMsg.sheet : null}
                     </div>
