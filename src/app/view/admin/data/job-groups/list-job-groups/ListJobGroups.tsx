@@ -119,7 +119,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
             title: 'Tên nhóm công việc',
             dataIndex: 'name',
             key: 'name',
-            width: 200,
+            width: 250,
             className: 'action',
 
         },
