@@ -40,6 +40,11 @@ import { AnnouncementDetail } from '../reducers/announcement-detail';
 import { Candidates } from '../reducers/candidates';
 import { CandidateDetail } from '../reducers/candidates-detail';
 import { combineReducers } from 'redux';
+import { EventJobs } from '../reducers/event-jobs';
+import { EventJobDetail } from './../reducers/event-job-detail';
+import { EventSchools } from './../reducers/event-schools';
+import { EventDetail } from './../reducers/event-detail';
+import { EventEms } from './../reducers/event-em';
 
 const rootReducer = combineReducers({
     PendingJobs,
@@ -82,7 +87,12 @@ const rootReducer = combineReducers({
     JobServices,
     JobSuitableCandidates,
     Partners,
-    PartnerDetail
+    PartnerDetail,
+    EventSchools,
+    EventDetail,
+    EventJobs,
+    EventJobDetail,
+    EventEms
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

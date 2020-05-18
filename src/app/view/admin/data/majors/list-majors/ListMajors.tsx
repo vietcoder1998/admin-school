@@ -263,7 +263,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 placeholder="Chọn chuyên ngành "
                                 value={branchName}
                                 widthSelect={'250px'}
-                                list_value={list_data}
+                                listValue={list_data}
                                 style={{ padding: "10px 0px" }}
                                 onSearch={(event: any) => this.props.getListBranches(0, 0, event)}
                                 onChange={this.handleChoseMajor}

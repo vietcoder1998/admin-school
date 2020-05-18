@@ -104,8 +104,8 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                         alt="login"
                     />
                     <Row>
-                        <Col xs={0} sm={4} md={6} lg={8} xl={9} xxl={9}  ></Col>
-                        <Col xs={24} sm={16} md={12} lg={8} xl={6} xxl={6} >
+                        <Col xs={0} sm={4} md={5} lg={6} xl={8} xxl={9}  ></Col>
+                        <Col xs={24} sm={16} md={14} lg={12} xl={8} xxl={6} >
                             <div className="r-p-content">
                                 <p className='a_c'>
                                     <img src={LGW} style={{ width: 180, height: 50 }} alt="workvn-logo"/>
@@ -184,7 +184,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                                 </p> */}
                             </div>
                         </Col>
-                        <Col xs={0} sm={4} md={6} lg={8} xl={9}></Col>
+                        <Col xs={0} sm={4} md={5} lg={6} xl={8}></Col>
                     </Row>
                 </div>
             </div>

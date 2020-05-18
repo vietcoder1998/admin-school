@@ -8,6 +8,8 @@ export const TYPE = {
     REJECTED: "REJECTED",
     ACCEPTED: "ACCEPTED",
     PENDING: "PENDING",
+    TITLE_HIGHLIGHT: 'TITLE_HIGHLIGHT',
+
 
     PARTTIME: "PARTTIME",
     FULLTIME: "FULLTIME",
@@ -101,7 +103,8 @@ export const TYPE = {
         hasAcceptedApplied: "hasAcceptedApplied",
         hasRejectedApplied: "hasRejectedApplied",
         jobShiftFilter: "jobShiftFilter",
-        jobLocationFilter: "jobLocationFilter"
+        jobLocationFilter: "jobLocationFilter",
+        highlight: "highlight"
     },
 
     STUDENT_FILTER: {

@@ -37,4 +37,5 @@ export const IMPORT_CAN = '/api/admins/data/import/excel/candidates';
 export const IMPORT_STU =  (id?: string) =>  `/api/admins/data/import/excel/schools/${id}/students`;
 export const MAJORS_JOB_NAMES = "/api/majors/jobNames/query";
 export const PARTNER = "/api/admins/partners";
+export const EVENT_SCHOOLS = '/api/admins/schools/events'
 

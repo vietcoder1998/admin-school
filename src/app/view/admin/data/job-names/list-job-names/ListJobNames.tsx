@@ -256,7 +256,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                 type={TYPE.SELECT}
                                 title="Chọn nhóm công việc"
                                 placeholder="Chọn nhóm công việc"
-                                list_value={list_data}
+                                listValue={list_data}
                                 value={jobGroupName}
                                 style={{ padding: "10px 20px" }}
                                 widthSelect={'250px'}

@@ -165,7 +165,7 @@ class CreateRoles extends PureComponent<CreateRolesProps, CreateRolesState> {
                         placeholder="ex: ADMINS, CANDIDATES, SUPER_ADMINS, .v.v."
                         widthInput="400px"
                         value={new_type}
-                        list_value={[{label: "ROOT", value: "ROOT"}, {label: "VIEWER", value: "VIEWER"}]}
+                        listValue={[{label: "ROOT", value: "ROOT"}, {label: "VIEWER", value: "VIEWER"}]}
                         style={{padding: "10px 30px"}}
                         onChange={(event: any) => this.setState({type: event})}
                     />

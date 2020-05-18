@@ -20,6 +20,7 @@ import ClearCache from 'react-clear-cache';
 
 import Loading from '../layout/loading/Loading';
 import Announcement from './announcement/Announcement';
+import Event from './event/Event';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -216,6 +217,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.DATA}`} component={Data} />
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.ROLES}`} component={RoleAdmins} />
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.USER}`} component={User} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.EVENT}`} component={Event} />
                                 </Switch> : <Loading />}
                             </Col >
                             <Col sm={1} md={1} lg={2}></Col>

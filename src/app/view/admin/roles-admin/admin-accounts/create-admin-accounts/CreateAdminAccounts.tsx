@@ -318,7 +318,7 @@ class CreateAdminAccounts extends React.Component<ICreateAdminAccountsProps, ICr
                         placeholder="ex: Quản lý, Sinh viên, SUPER_ADMINS, .v.v."
                         widthInput="400px"
                         value={role_name}
-                        list_value={list_roles.map((item?: IRole) => ({ label: item.name, value: item.id }))}
+                        listValue={list_roles.map((item?: IRole) => ({ label: item.name, value: item.id }))}
                         style={{ padding: "10px 30px" }}
                         onChange={
                             (event: any) => this.onChoseRoleID(event)

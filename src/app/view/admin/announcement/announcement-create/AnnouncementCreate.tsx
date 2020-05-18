@@ -346,7 +346,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
                             defaultValue="Loại bài viết"
                             widthSelect="400px"
                             value={value_annou}
-                            list_value={list_item}
+                            listValue={list_item}
                             onChange={(event: any) => this.choseAnou(event)}
                         />
                         <InputTitle

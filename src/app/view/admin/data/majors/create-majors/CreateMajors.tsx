@@ -103,7 +103,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     title="Chọn nhóm ngành"
                     placeholder="Chọn nhóm ngành"
                     value={branchName}
-                    list_value={list_data}
+                    listValue={list_data}
                     style={{padding: "10px 0px"}}
                     onChange={this.handleChoseMajor}
                 />

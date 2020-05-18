@@ -301,8 +301,8 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                     </InputTitle>
                 </ModalConfig>
                 <Row>
-                    <Col md={0} lg={0} xl={1} xxl={4} />
-                    <Col md={24} lg={24} xl={22} xxl={16}>
+                    <Col md={0} lg={0} xl={0} xxl={2} />
+                    <Col md={24} lg={24} xl={24} xxl={20}>
                         <h5>
                             Danh sách nhóm bài viết
                                 <Button
@@ -378,7 +378,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             })}
                         />
                     </Col>
-                    <Col md={0} lg={0} xl={1} xxl={4} />
+                    <Col md={0} lg={0} xl={0} xxl={2} />
                 </Row>
             </>
         )

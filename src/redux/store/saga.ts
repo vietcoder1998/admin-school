@@ -40,6 +40,10 @@ import { JobServiceWatcher } from '../sagas/job-services';
 import { JobSuitableCandidatesWatcher } from '../sagas/job-suitable-candidate';
 import { PartnersWatcher } from '../sagas/partner';
 import { PartnerDetailWatcher } from '../sagas/partner-detail';
+import { EventSchoolsWatcher } from '../sagas/event-schools';
+import { EventDetailWatcher } from '../sagas/event-detail';
+import { EventJobsListWatcher } from '../sagas/event-jobs';
+import { EventEmsListWatcher } from '../sagas/event-em';
 
 
 export default function* rootSaga() {
@@ -85,6 +89,10 @@ export default function* rootSaga() {
         JobSuitableCandidatesWatcher,
         PartnersWatcher,
         PartnerDetailWatcher,
+        EventSchoolsWatcher,
+        EventDetailWatcher,
+        EventJobsListWatcher,
+        EventEmsListWatcher
     ];
 
     try {

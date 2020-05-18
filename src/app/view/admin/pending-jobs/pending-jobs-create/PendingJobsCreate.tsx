@@ -382,7 +382,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn công việc"
                         type={TYPE.SELECT}
-                        list_value={list_job_name_options}
+                        listValue={list_job_name_options}
                         onChange={
                             (event: any) => {
                                 body.jobNameID = event;
@@ -396,7 +396,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn nhà tuyển dụng"
                         type={TYPE.SELECT}
-                        list_value={list_em_ployer_options}
+                        listValue={list_em_ployer_options}
                         onChange={
                             async (event: string) => {
                                 employer.id = event;
@@ -416,7 +416,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn địa chỉ đăng tuyển"
                         type={TYPE.SELECT}
-                        list_value={list_em_branches_options}
+                        listValue={list_em_branches_options}
                         onChange={
                             (event: any) => {
                                 body.employerBranchID = event

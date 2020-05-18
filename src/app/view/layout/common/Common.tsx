@@ -21,6 +21,8 @@ export const IptLetterP = (props: any) => {
     )
 };
 
+export const Required = () => <span style={{ color: "red", marginBottom: 5, marginLeft: 2 }}>*</span>
+
 export const FirstLetter = (props: any) => {
     return <span className="first-letter">{" " + props.value + " "}</span>
 };
@@ -37,8 +39,9 @@ export function Timer(props: any) {
     )
 };
 
-export const NotUpdate = (props?: any) => (
-    <label style={{ fontStyle: "italic" }}>
-        {props.msg ? props.msg : "Chưa cập nhật"}
+
+export const NotUpdate = (props?: { msg?: any, children?: any, warning?: boolean }) => (
+    <label style={{ fontStyle: "italic", color: props.warning ? "red" : undefined }}>
+        {props.children ? props.children : (props.msg ? props.msg : "Chưa cập nhật")}
     </label>
 );

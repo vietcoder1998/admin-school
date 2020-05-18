@@ -27,19 +27,19 @@ export const deleteLoginState = () => {
 export const sendStringHeader = {
     "Access-Control-Allow-Headers": "*",
     "Content-Type": "text/plain",
-    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
 };
 
 export const sendFileHeader = {
     "Access-Control-Allow-Headers": "*",
-    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
 };
 
 // Set State of authenticate
 export const setAuthSate = async (response: any) => {
     if (response.code === 200) {
         localStorage.setItem("userID", response.data.userID);
-        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("token", response.data.token);
     }
 };
 

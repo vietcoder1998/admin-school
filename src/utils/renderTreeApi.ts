@@ -30,17 +30,17 @@ function childrenApi(data: IApi, param?: string): ITreeChildren {
 }
 
 function parentApi(data: IApis, param?: string): ITreeParent {
-    let list_value = [];
+    let listValue = [];
     let list_children = [];
     data.apis.forEach(item => {
         let item_data = childrenApi(item);
         list_children.push(item_data);
-        list_value.push(item_data.value);
+        listValue.push(item_data.value);
     });
 
     let parent: ITreeParent = {
         key: data.description,
-        value: list_value,
+        value: listValue,
         title: data.description,
         children: list_children
     }
@@ -49,20 +49,20 @@ function parentApi(data: IApis, param?: string): ITreeParent {
 }
 
 function rootApi(data: IApiFunctions, param?: string): ITreeParent {
-    let list_value = [];
+    let listValue = [];
     let list_children = [];
     data.apiFunctions.forEach(item => {
         let item_data = parentApi(item);
         let item_data_value = item_data.value;
         item_data_value.forEach(element => {
-            list_value.push(element)
+            listValue.push(element)
         });
         list_children.push(item_data);
     });
 
     let root: ITreeParent = {
         key: data.description,
-        value: list_value,
+        value: listValue,
         title: data.description,
         children: list_children
     }
@@ -76,14 +76,14 @@ export function renderTreeApi(data: Array<IApiFunctions>): ITreeDetail {
     });
     let value = [];
     treeData.forEach(item => {
-        let list_value = item.value;
+        let listValue = item.value;
 
-        if (Array.isArray(list_value)) {
-            list_value.forEach(element => {
+        if (Array.isArray(listValue)) {
+            listValue.forEach(element => {
                 value.push(element);
             });
         } else {
-            value.push(list_value);
+            value.push(listValue);
         }
     });
 

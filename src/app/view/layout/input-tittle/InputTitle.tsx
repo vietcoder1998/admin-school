@@ -9,7 +9,7 @@ interface IInputitleProps {
     widthLabel?: string;
     widthComponent?: string;
     value?: string;
-    list_value?: Array<{ label?: string, value?: any }>;
+    listValue?: Array<{ label?: string, value?: any }>;
     type?: string;
     widthInput?: string;
     defaultValue?: string;
@@ -23,7 +23,7 @@ interface IInputitleProps {
 }
 
 interface INewSelect {
-    list_value?: Array<{ label?: string, value?: string }>;
+    listValue?: Array<{ label?: string, value?: string }>;
     value?: string;
     placeholder?: string;
     defaultValue?: string;
@@ -79,7 +79,7 @@ export const NewTextArea = (props: INewNewTextArea) => {
 };
 
 export const NewSelect = (props: INewSelect) => {
-    let { placeholder, list_value, onChange, widthSelect, defaultValue, style, value, onSearch } = props;
+    let { placeholder, listValue, onChange, widthSelect, defaultValue, style, value, onSearch } = props;
 
     if (value) {
         return (
@@ -94,9 +94,9 @@ export const NewSelect = (props: INewSelect) => {
                 onSearch={onSearch ? (event: any) => onSearch(event) : undefined}
             >
                 {
-                    list_value &&
-                        list_value.length > 0 ?
-                        list_value.map(
+                    listValue &&
+                        listValue.length > 0 ?
+                        listValue.map(
                             (item, index) => <Select.Option key={randomID(16)} value={item.value}>{item.label}</Select.Option>
                         ) : null
                 }
@@ -113,9 +113,9 @@ export const NewSelect = (props: INewSelect) => {
                 onSearch={onSearch ? (event: any) => onSearch(event) : undefined}
             >
                 {
-                    list_value &&
-                        list_value.length > 0 ?
-                        list_value.map(
+                    listValue &&
+                        listValue.length > 0 ?
+                        listValue.map(
                             (item, index) => <Select.Option key={randomID(16)} value={item.value}>{item.label}</Select.Option>
                         ) : null
                 }
@@ -127,7 +127,7 @@ export const InputTitle = (props: IInputitleProps) => {
     let {
         defaultValue,
         value,
-        list_value,
+        listValue,
         placeholder,
         children,
         onChange,
@@ -169,7 +169,7 @@ export const InputTitle = (props: IInputitleProps) => {
                 <NewSelect
                     value={value}
                     defaultValue={defaultValue}
-                    list_value={list_value}
+                    listValue={listValue}
                     placeholder={placeholder}
                     onSearch={onSearch ? onSearch : undefined}
                     onChange={(event: any) => props.onChange ? props.onChange(event) : undefined}

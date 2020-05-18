@@ -38,7 +38,7 @@
 //     address?: string;
 //     skills?: Array<string>
 //     not_complete?: boolean;
-//     job_announcement_detail?: any;
+//     jobAnnouncementDetail?: any;
 // };
 
 // interface IJobAnnouncementsCreateProps extends StateProps, DispatchProps {
@@ -123,11 +123,11 @@
 
 
 //         if (
-//             (props.job_announcement_detail ||
+//             (props.jobAnnouncementDetail ||
 //                 props.pending_job_detail) && props.match.params.id !== state.body.id
 //         ) {
 //             let typeCpn = TYPE.CREATE;
-//             let job_announcement_detail = null;
+//             let jobAnnouncementDetail = null;
 //             let jobID = null;
 //             let body = state.body;
 //             let id = state.body.id;
@@ -136,42 +136,42 @@
 //             if (props.match.url.includes("pending")) {
 //                 typeCpn = TYPE.PENDING;
 //                 id = props.pending_job_detail.id;
-//                 job_announcement_detail = props.pending_job_detail.data;
-//                 jobID = job_announcement_detail.jobNameID;
-//                 requiredSkillIDs = job_announcement_detail.requiredSkillIDs
+//                 jobAnnouncementDetail = props.pending_job_detail.data;
+//                 jobID = jobAnnouncementDetail.jobNameID;
+//                 requiredSkillIDs = jobAnnouncementDetail.requiredSkillIDs
 //             };
 
 //             if (props.match.url.includes("fix")) {
 //                 typeCpn = TYPE.FIX;
-//                 id = props.job_announcement_detail.id;
-//                 job_announcement_detail = props.job_announcement_detail;
-//                 jobID = job_announcement_detail.jobName && job_announcement_detail.jobName.id;
-//                 requiredSkillIDs = job_announcement_detail.requiredSkills && job_announcement_detail.requiredSkills.length &&
-//                     job_announcement_detail.requiredSkills.map((item: any) => item.id)
+//                 id = props.jobAnnouncementDetail.id;
+//                 jobAnnouncementDetail = props.jobAnnouncementDetail;
+//                 jobID = jobAnnouncementDetail.jobName && jobAnnouncementDetail.jobName.id;
+//                 requiredSkillIDs = jobAnnouncementDetail.requiredSkills && jobAnnouncementDetail.requiredSkills.length &&
+//                     jobAnnouncementDetail.requiredSkills.map((item: any) => item.id)
 //             };
 
 //             if (props.match.url.includes("copy")) {
 //                 typeCpn = TYPE.COPY;
-//                 id = props.job_announcement_detail.id;
-//                 job_announcement_detail = props.job_announcement_detail;
-//                 jobID = job_announcement_detail.jobName && job_announcement_detail.jobName.id;
-//                 requiredSkillIDs = job_announcement_detail.requiredSkills && job_announcement_detail.requiredSkills.length &&
-//                     job_announcement_detail.requiredSkills.map((item: any) => item.id)
+//                 id = props.jobAnnouncementDetail.id;
+//                 jobAnnouncementDetail = props.jobAnnouncementDetail;
+//                 jobID = jobAnnouncementDetail.jobName && jobAnnouncementDetail.jobName.id;
+//                 requiredSkillIDs = jobAnnouncementDetail.requiredSkills && jobAnnouncementDetail.requiredSkills.length &&
+//                     jobAnnouncementDetail.requiredSkills.map((item: any) => item.id)
 //             };
 
-//             console.log(job_announcement_detail);
+//             console.log(jobAnnouncementDetail);
 
 //             if (typeCpn !== TYPE.CREATE) {
-//                 if (job_announcement_detail) {
+//                 if (jobAnnouncementDetail) {
 //                     body.id = id;
-//                     body.description = job_announcement_detail.description;
-//                     body.jobTitle = job_announcement_detail.jobTitle;
+//                     body.description = jobAnnouncementDetail.description;
+//                     body.jobTitle = jobAnnouncementDetail.jobTitle;
 //                     body.jobNameID = jobID;
-//                     body.jobType = job_announcement_detail.jobType;
-//                     body.employerBranchID = job_announcement_detail.employerBranchID;
-//                     body.description = job_announcement_detail.description;
-//                     body.expirationDate = job_announcement_detail.expirationDate;
-//                     body.shifts = job_announcement_detail.shifts;
+//                     body.jobType = jobAnnouncementDetail.jobType;
+//                     body.employerBranchID = jobAnnouncementDetail.employerBranchID;
+//                     body.description = jobAnnouncementDetail.description;
+//                     body.expirationDate = jobAnnouncementDetail.expirationDate;
+//                     body.shifts = jobAnnouncementDetail.shifts;
 //                     body.requiredSkillIDs = requiredSkillIDs
 //                 };
 //             };
@@ -179,7 +179,7 @@
 //             return {
 //                 body,
 //                 typeCpn,
-//                 job_announcement_detail
+//                 jobAnnouncementDetail
 //             }
 //         }
 //         return { loadingTable: false }
@@ -313,7 +313,7 @@
 //             listJobNames,
 //             list_em_branches,
 //             listSkills,
-//             job_announcement_detail,
+//             jobAnnouncementDetail,
 //             normal_quantity
 //         } = this.props;
 
@@ -343,7 +343,7 @@
 //         let list_skill_options = listSkills.map((item: IJobName, index: number) => (<Option key={index} value={item.name} children={item.name} />));
 
 //         if (
-//             !job_announcement_detail && job_announcement_detail.id
+//             !jobAnnouncementDetail && jobAnnouncementDetail.id
 //         ) {
 //             return <Result
 //                 status="404"
@@ -449,7 +449,7 @@
 //                         title="Chọn công việc"
 //                         required={true}
 //                         type={TYPE.SELECT}
-//                         list_value={list_job_name_options}
+//                         listValue={list_job_name_options}
 //                         value={findIdWithValue(listJobNames, body.jobNameID, "id", "name")}
 //                         onChange={
 //                             (event: any) => {
@@ -465,7 +465,7 @@
 //                         title="Chọn chi nhánh "
 //                         required={true}
 //                         type={TYPE.SELECT}
-//                         list_value={list_em_branches_options}
+//                         listValue={list_em_branches_options}
 //                         value={findIdWithValue(list_em_branches, body.employerBranchID, "id", "branchName")}
 //                         onChange={
 //                             (event: any) => {
@@ -573,9 +573,9 @@
 //                 </div>
 //                 {
 
-//                     (job_announcement_detail.acceptedApplied === 0 &&
-//                         job_announcement_detail.pendingApplied === 0 &&
-//                         job_announcement_detail.rejectedApplied === 0) ||
+//                     (jobAnnouncementDetail.acceptedApplied === 0 &&
+//                         jobAnnouncementDetail.pendingApplied === 0 &&
+//                         jobAnnouncementDetail.rejectedApplied === 0) ||
 //                         (typeCpn !== TYPE.FIX) ?
 //                         <div className="Announcements-create-content">
 //                             <Button
@@ -615,7 +615,7 @@
 
 // const mapStateToProps = (state: IAppState, ownProps: any) => ({
 //     listJobNames: state.JobNames.items,
-//     job_announcement_detail: state.JobAnnouncementDetail,
+//     jobAnnouncementDetail: state.JobAnnouncementDetail,
 //     pending_job_detail: state.PendingJobDetail,
 //     listSkills: state.Skills.items,
 //     list_em_branches: state.EmBranches.items,

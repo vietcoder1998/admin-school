@@ -89,20 +89,35 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </span>
                     }
                 >
-                    <Menu.Item key="0">
+                    <Menu.Item key="event-create">
                         <Link to={routeLink.ANNOUCEMENT + routePath.CREATE}>
                             <Icon type="file-add" />
                             <span>Tạo mới</span>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="1">
+                    <Menu.Item key="event-list">
                         <Link to={routeLink.ANNOUCEMENT + routePath.LIST}>
                             <Icon type="reconciliation" />
                             <span>Danh sách </span>
                         </Link>
                     </Menu.Item>
                 </SubMenu>
-
+                <SubMenu
+                    key="event"
+                    title={
+                        <span>
+                            <Icon type="star" />
+                            <span>Sự kiện</span>
+                        </span>
+                    }
+                >
+                    <Menu.Item key="1">
+                        <Link to={routeLink.EVENT + routePath.LIST}>
+                            <Icon type="reconciliation" />
+                            <span>Danh sách </span>
+                        </Link>
+                    </Menu.Item>
+                </SubMenu>
                 <SubMenu
                     key="sub2"
                     title={

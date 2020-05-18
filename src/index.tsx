@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
 import 'sweetalert2/src/sweetalert2.scss';
 import 'cropperjs/dist/cropper.css';
+import 'react-image-crop/dist/ReactCrop.css';
 import { Atlg } from './services/auto-login';
 import Routes from './routes/Routes';
 

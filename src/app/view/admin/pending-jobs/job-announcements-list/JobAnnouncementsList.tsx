@@ -128,7 +128,7 @@ interface IJobAnnouncementsListState {
     searchPriority?: string;
     homeExpired: boolean;
     searchExpired: boolean;
-    job_announcement_detail: IJobAnnouncementDetail;
+    jobAnnouncementDetail: IJobAnnouncementDetail;
     type_modal: string;
     eid?: string;
     opjd?: boolean;
@@ -181,7 +181,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             searchPriority: null,
             homeExpired: false,
             searchExpired: false,
-            job_announcement_detail: null,
+            jobAnnouncementDetail: null,
             type_modal: null,
             eid: null,
             jid: null,
@@ -436,16 +436,16 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         }
 
         if (
-            nextProps.job_announcement_detail &&
-            nextProps.job_announcement_detail !== prevState.job_announcement_detail
+            nextProps.jobAnnouncementDetail &&
+            nextProps.jobAnnouncementDetail !== prevState.jobAnnouncementDetail
         ) {
-            let { job_announcement_detail } = nextProps;
+            let { jobAnnouncementDetail } = nextProps;
             return {
-                homePriority: job_announcement_detail.priority.homePriority,
-                searchPriority: job_announcement_detail.priority.searchPriority,
-                homeExpired: job_announcement_detail.priority.homeExpired,
-                searchExpired: job_announcement_detail.priority.searchExpired,
-                job_announcement_detail
+                homePriority: jobAnnouncementDetail.priority.homePriority,
+                searchPriority: jobAnnouncementDetail.priority.searchPriority,
+                homeExpired: jobAnnouncementDetail.priority.homeExpired,
+                searchExpired: jobAnnouncementDetail.priority.searchExpired,
+                jobAnnouncementDetail
             }
         }
 
@@ -692,7 +692,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         } = this.state;
 
         let {
-            job_announcement_detail,
+            jobAnnouncementDetail,
             totalItems,
             listJobNames,
             list_employer_branches,
@@ -704,8 +704,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             can_detail
         } = this.props;
 
-        let homeExpiration = job_announcement_detail.priority.homeExpiration;
-        let searchExpiration = job_announcement_detail.priority.searchExpiration;
+        let homeExpiration = jobAnnouncementDetail.priority.homeExpiration;
+        let searchExpiration = jobAnnouncementDetail.priority.searchExpiration;
         let un_active_home = homeExpiration !== -1 && !homeExpired;
         let un_active_search = searchExpiration !== -1 && !searchExpired;
 
@@ -1136,7 +1136,7 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_job_service: state.JobServices,
     list_employer: state.Employers.items,
     can_detail: state.CandidateDetail,
-    job_announcement_detail: state.JobAnnouncementDetail,
+    jobAnnouncementDetail: state.JobAnnouncementDetail,
     modalState: state.MutilBox.modalState,
     drawerState: state.MutilBox.drawerState,
     totalItems: state.JobAnnouncements.totalItems,
