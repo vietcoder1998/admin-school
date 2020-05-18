@@ -361,13 +361,7 @@ class EventJobCreate extends Component<IProps, IState> {
 
         return (
             <div className='common-content'>
-                <h5>
-                    {
-                        typeCpn === TYPE.FIX || typeCpn === TYPE.PENDING
-                            ? "Thông tin bài đăng sự kiện(sửa)" :
-                            `Đăng bài sự kiện (${normalQuantity ? normalQuantity : 0})`
-                    }
-                </h5>
+
                 <Divider orientation="left" >Nội dung bài đăng</Divider>
                 <div className="announcements-create-content">
                     <InputTitle
