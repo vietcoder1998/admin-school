@@ -108,7 +108,6 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                 />
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
-
                         <Icon
                             className="trigger"
                             type={show_menu ? 'menu-unfold' : 'menu-fold'}
@@ -120,7 +119,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
                         <Tooltip title={"Cập nhật phiên bản"}>
-                            <ClearCache>
+                            <ClearCache auto={true} duration={60000}>
                                 {({ isLatestVersion, emptyCacheStorage }) =>
                                     <div>
                                         {!isLatestVersion && (

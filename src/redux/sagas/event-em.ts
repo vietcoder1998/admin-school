@@ -1,6 +1,6 @@
 import { IEventEms } from '../../models/event-em';
 import { POST } from '../../const/method';
-import { EVENT_SCHOOLS, SCHOOLS } from '../../services/api/private.api';
+import { SCHOOLS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
@@ -21,7 +21,7 @@ function* getListEventEmssData(action: any) {
     };
 
     yield put({
-        type: REDUX.EVENT_SCHOOLS.GET_LIST_EVENT_JOBS,
+        type: REDUX.EVENT_SCHOOLS.GET_LIST_EVENT_EM,
         data
     });
 }
@@ -59,7 +59,7 @@ function callEventEmss(action: any) {
 
 export function* EventEmsListWatcher() {
     yield takeEvery(
-        REDUX_SAGA.EVENT_SCHOOLS.GET_LIST_EVENT_JOBS,
+        REDUX_SAGA.EVENT_SCHOOLS.GET_LIST_EVENT_EM,
         getListEventEmssData
     )
 }

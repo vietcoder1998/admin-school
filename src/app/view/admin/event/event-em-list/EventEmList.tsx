@@ -906,7 +906,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                 </DrawerConfig>
                 <div className="common-content">
                     <h5>
-                        Quản lý bài đăng sự kiện nhà trường {`(${totalItems})`}
+                        Quản lý nhà tuyển dụng sự kiện nhà trường {`(${totalItems})`}
                         <Tooltip title="Lọc tìm kiếm" >
                             <Button
                                 onClick={() => this.searchEventJobs()}

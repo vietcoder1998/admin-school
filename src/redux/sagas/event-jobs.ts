@@ -1,6 +1,6 @@
 import { IEventJobs } from '../../models/event-jobs';
 import { POST } from '../../const/method';
-import { EVENT_SCHOOLS } from '../../services/api/private.api';
+import { EVENT_SCHOOLS, EM_CONTROLLER } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
@@ -41,7 +41,7 @@ function callEventJobss(action: any) {
     try {
         let res = _requestToServer(
             POST,
-            EVENT_SCHOOLS + '/jobs/query',
+            EM_CONTROLLER + '/schools/events/jobs',
             body,
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,

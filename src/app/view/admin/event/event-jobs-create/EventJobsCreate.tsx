@@ -7,8 +7,6 @@ import { REDUX_SAGA } from '../../../../../const/actions';
 import { TYPE } from '../../../../../const/type';
 import { IAppState } from '../../../../../redux/store/reducer';
 import { IJobName } from '../../../../../models/job-names';
-import { IAnnoucementBody, IShift } from '../../../../../models/announcements';
-import { ShiftContent, newShift } from '../../../layout/annou-shift/AnnouShift';
 import { IEmBranch } from '../../../../../models/em-branches';
 import findIdWithValue from '../../../../../utils/findIdWithValue';
 import { _requestToServer } from '../../../../../services/exec';
@@ -17,6 +15,10 @@ import { PENDING_JOBS, EVENT_SCHOOLS } from '../../../../../services/api/private
 import { routeLink, routePath } from '../../../../../const/break-cumb';
 import { NotUpdate } from './../../../layout/common/Common';
 import { Required } from '../../../layout/common/Common';
+import ShiftContent from '../../../layout/annou-shift/AnnouShift';
+import { newShift } from './../../../layout/annou-shift/AnnouShift';
+import { IAnnoucementBody } from '../../../../../models/pending-jobs';
+import { IShift } from '../../../../../models/apply-cans';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -93,7 +95,9 @@ class EventJobCreate extends Component<IProps, IState> {
     };
 
     async componentDidMount() {
+        const {id, eid} = this.state;
         this.props.getListEmBranches();
+        this.props.getEventJobDetail(id, eid);
     };
 
     static getDerivedStateFromProps(props?: IProps, state?: IState) {
@@ -102,6 +106,8 @@ class EventJobCreate extends Component<IProps, IState> {
             let url_string = window.location.href;
             let url = new URL(url_string);
             let eid = url.searchParams.get("eid");
+
+            console.log("map");
 
             if (
                 props.match.url.includes("fix") ||
@@ -217,7 +223,7 @@ class EventJobCreate extends Component<IProps, IState> {
 
         let newBody = await this.pretreatmentBody(body, typeCpn);
         let matching = (typeCpn === TYPE.CREATE || typeCpn === TYPE.COPY) ? `/${eid}/jobs` : `/${eid}/jobs/${id}`;
-        let METHOD = (typeCpn === TYPE.CREATE || typeCpn === TYPE.COPY )? POST : PUT;
+        let METHOD = (typeCpn === TYPE.CREATE || typeCpn === TYPE.COPY) ? POST : PUT;
         let API = typeCpn === TYPE.PENDING ? PENDING_JOBS : EVENT_SCHOOLS;
 
         await this.setState({ loading: true });
@@ -476,7 +482,7 @@ class EventJobCreate extends Component<IProps, IState> {
                                 body.shifts.map((item: any, index: number) => (
                                     <div key={index}>
                                         <ShiftContent
-                                            shift={item}
+                                            shifts={item}
                                             type={TYPE.FULLTIME}
                                             removeButton={false}
                                             id={item.id}
@@ -493,7 +499,7 @@ class EventJobCreate extends Component<IProps, IState> {
                                 body.shifts.map((item: any, index: number) => (
                                     <div key={index}>
                                         <ShiftContent
-                                            shift={item}
+                                            shifts={item}
                                             index={index}
                                             type={TYPE.PARTTIME}
                                             id={item.id}
@@ -514,7 +520,7 @@ class EventJobCreate extends Component<IProps, IState> {
                                         key={index}
                                     >
                                         < ShiftContent
-                                            shift={item}
+                                            shifts={item}
                                             type={TYPE.INTERNSHIP}
                                             removeButton={false}
                                             id={item.id}

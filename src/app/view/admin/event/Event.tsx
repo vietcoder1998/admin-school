@@ -5,6 +5,7 @@ import EventJobsList from './event-jobs-list/EventJobsList';
 import EventSchoolsList from './event-school-list/EventSchoolList';
 import { routePath } from '../../../../const/break-cumb';
 import EventCreate from './event-create/EventCreate';
+import EventJobCreate from './event-jobs-create/EventJobsCreate';
 const Switch = require("react-router-dom").Switch;
 
 interface IState {
@@ -24,8 +25,11 @@ class Announcement extends PureComponent<IProps, IState> {
         return (
             < >
                 <Switch>
-                    <ErrorBoundaryRoute exact path={`${path}/list`} component={EventSchoolsList} />
-                    <ErrorBoundaryRoute exact path={`${path}/jobs/list`} component={EventJobsList} />
+                    <ErrorBoundaryRoute exact path={path + routePath.LIST} component={EventSchoolsList} />
+                    <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.LIST  } component={EventJobsList} />
+                    <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.CREATE } component={EventJobCreate} />
+                    <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.COPY + `/:id`} component={EventJobCreate} />
+                    <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.FIX + `/:id`} component={EventJobCreate} />
                     <ErrorBoundaryRoute exact path={path + routePath.CREATE} component={EventCreate} />
                     <ErrorBoundaryRoute exact path={path + routePath.FIX + `/:eid`} component={EventCreate} />
                 </Switch>

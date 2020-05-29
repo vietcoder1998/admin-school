@@ -23,7 +23,7 @@ function callEventJobDetail(action: any) {
     try {
         let res = _requestToServer(
             GET,
-            EVENT_SCHOOLS + routePath.JOBS + `/${action.id}?schoolEventID=${action.schoolEventID}`,
+            EVENT_SCHOOLS + routePath.JOBS + `/${action.id}`,
             undefined,
             undefined,
             undefined,

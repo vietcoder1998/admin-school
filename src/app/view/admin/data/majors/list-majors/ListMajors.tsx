@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Input, Modal } from 'antd';
+import { Icon, Table, Button, Row, Col, Input, Modal, Select } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IMajor } from '../../../../../../models/majors';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
-
+import { getListBranches } from '../../../../../../redux/actions/branches';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -32,10 +32,13 @@ interface ListMajorsState {
     branchName?: string;
     branchID?: number;
     type: string;
+    brnSearch?: string;
     openModal: boolean;
     list_data: Array<{ label: string, value: number }>;
     name?: string;
 }
+
+const { Option } = Select;
 
 class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     constructor(props: any) {
@@ -49,6 +52,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             list_branch: [],
             id: undefined,
             branchName: undefined,
+            brnSearch: undefined,
             branchID: undefined,
             type: TYPE.EDIT,
             openModal: false,
@@ -200,8 +204,9 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     ];
 
     setPageIndex = async (event: any) => {
+        let { search } = this.state;
         await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
-        this.props.getListMajors(event.current - 1, event.pageSize)
+        this.props.getListMajors(event.current - 1, event.pageSize, search)
     };
 
     editMajor = async () => {
@@ -232,7 +237,19 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     render() {
-        let { data_table, loadingTable, type, openModal, list_data, name, branchName, pageIndex, pageSize, search } = this.state;
+        let {
+            data_table,
+            loadingTable,
+            type,
+            openModal,
+            list_data,
+            name,
+            branchName,
+            pageIndex,
+            pageSize,
+            search,
+            brnSearch
+        } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -312,6 +329,17 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                         }
                                     />
                                 </Col>
+                                <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                    <Select
+                                        placeholder="Tất cả"
+                                        style={{ width: "100%" }}
+                                        value={brnSearch}
+                                        onChange={(event: any) => this.props.getListBranches(0, 10 , event.target.value)}
+                                        onSelect={(event: any) => this.props.getListBranches(0, 10, brnSearch)}
+                                    >
+                                        
+                                    </Select>
+                                </Col>
                             </Row>
                             <Table
                                 // @ts-ignore
@@ -324,9 +352,9 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 size="middle"
                                 onChange={this.setPageIndex}
                                 onRow={(event) => ({
-                                    onMouseEnter: () => {
+                                    onClick: () => {
                                         this.setState({ id: event.key, branchName: event.branchName, name: event.name, branchID: event.branchID });
-                                    }
+                                    },
                                 })}
                             />
                         </Col>

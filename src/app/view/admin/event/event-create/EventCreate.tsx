@@ -4,7 +4,6 @@ import { Divider, Button, DatePicker } from 'antd';
 import { InputTitle } from '../../../layout/input-tittle/InputTitle';
 import TextArea from 'antd/lib/input/TextArea';
 import { TYPE } from '../../../../../const/type';
-import { any, string } from 'prop-types';
 import moment from 'moment';
 import { IEvent } from './../../../../../models/event';
 import findIdWithValue from '../../../../../utils/findIdWithValue';

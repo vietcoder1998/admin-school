@@ -498,7 +498,6 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
     };
 
     async componentDidMount() {
-        await this.props.getListEmBranches();
         await this.searchEventJobs();
     };
 
@@ -944,10 +943,6 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                 style={{
                                     float: "right",
                                     margin: "0px 10px",
-                                    padding: "10px",
-                                    borderRadius: "50%",
-                                    height: "45px",
-                                    width: "45px"
                                 }}
                                 icon={loadingTable ? "loading" : "filter"}
                             />
@@ -959,10 +954,6 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     style={{
                                         float: "right",
                                         margin: "0px 10px",
-                                        padding: "10px",
-                                        borderRadius: "50%",
-                                        height: "45px",
-                                        width: "45px"
                                     }}
                                     icon={"plus"}
                                 />

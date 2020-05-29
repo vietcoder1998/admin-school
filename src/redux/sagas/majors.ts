@@ -28,6 +28,7 @@ function callMajors(action: any) {
     try {
         let pageIndex;
         let pageSize;
+
         if (action.pageIndex) {
             pageIndex = action.pageIndex;
         }
