@@ -6,6 +6,8 @@ import EventSchoolsList from './event-school-list/EventSchoolList';
 import { routePath } from '../../../../const/break-cumb';
 import EventCreate from './event-create/EventCreate';
 import EventJobCreate from './event-jobs-create/EventJobsCreate';
+import EventEmList from './event-em-list/EventEmList';
+import { EMPLOYER } from '../../../../services/api/private.api';
 const Switch = require("react-router-dom").Switch;
 
 interface IState {
@@ -30,6 +32,7 @@ class Announcement extends PureComponent<IProps, IState> {
                     <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.CREATE } component={EventJobCreate} />
                     <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.COPY + `/:id`} component={EventJobCreate} />
                     <ErrorBoundaryRoute exact path={path + routePath.JOBS + routePath.FIX + `/:id`} component={EventJobCreate} />
+                    <ErrorBoundaryRoute exact path={path + routePath.EMPLOYER +  routePath.LIST } component={EventEmList} />
                     <ErrorBoundaryRoute exact path={path + routePath.CREATE} component={EventCreate} />
                     <ErrorBoundaryRoute exact path={path + routePath.FIX + `/:eid`} component={EventCreate} />
                 </Switch>

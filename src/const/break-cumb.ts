@@ -1,3 +1,4 @@
+import { EMPLOYER } from '../services/api/private.api';
 export const routePath = {
     ADMIN: `/admin`,
     LIST: '/list',
@@ -34,6 +35,7 @@ export const routePath = {
     PARTNER: '/partner',
     EVENT: '/event',
     IN_EVENT: '/in-event',
+    EMPLOYER: '/employers'
 };
 
 export const routeLink = {

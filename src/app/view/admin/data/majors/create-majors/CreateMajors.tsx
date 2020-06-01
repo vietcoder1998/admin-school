@@ -106,6 +106,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     listValue={list_data}
                     style={{padding: "10px 0px"}}
                     onChange={this.handleChoseMajor}
+                    onSearch={(event) =>this.props.getListMajors(0, 10, event)}
                 />
                 <Button
                     type="primary"
@@ -132,7 +133,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListMajors: () => dispatch({type: REDUX_SAGA.MAJORS.GET_MAJORS})
+    getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => dispatch({type: REDUX_SAGA.MAJORS.GET_MAJORS, pageIndex , pageSize , name})
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({

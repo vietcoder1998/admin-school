@@ -43,7 +43,8 @@ function callMajors(action: any) {
             {
                 pageIndex: pageIndex ? pageIndex : 0,
                 pageSize: pageSize ? pageSize : 10,
-                name: action.name
+                name: action.name,
+                branchID: action.branchID
             },
             undefined, undefined, false, false
         )

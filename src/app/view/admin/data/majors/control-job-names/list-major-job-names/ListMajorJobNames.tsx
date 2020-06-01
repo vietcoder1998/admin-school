@@ -10,6 +10,7 @@ import { MAJORS } from '../../../../../../../services/api/private.api';
 import { PUT } from '../../../../../../../const/method';
 import { TYPE } from '../../../../../../../const/type';
 import { IJobGroup } from '../../../../../../../models/job-groups';
+import { routePath, routeLink } from '../../../../../../../const/break-cumb';
 
 const { Option } = Select;
 
@@ -164,7 +165,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                             onClick={async () => {
                                 await this.createNewData();
                                 setTimeout(() => {
-                                    this.props.history.push('/admin/data/majors/list');
+                                    this.props.history.push(routeLink.MAJORS + routePath.LIST);
                                 }, 300);
                             }}
                             style={{
@@ -173,7 +174,6 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                                 background: "greenyellow"
                             }}
                         >
-
                             <Icon type="check" />
                             Lưu
                         </Button>
@@ -185,8 +185,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                                 float: "right",
                             }}
                         >
-
-                            <Link to={`/admin/data/job-names/create`}>
+                            <Link to={routeLink.JOB_NAMES + routePath.CREATE}>
                                 <Icon type="plus" />
                                 Thêm loại công việc mới
                             </Link>
@@ -195,7 +194,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
                     <Divider
                         orientation="left"
                     >
-                        Danh sách các công việc thuộc chuyên ngành
+                        Các công việc thuộc chuyên ngành {" " +localStorage.getItem("major")}
                     </Divider>
                     <InputTitle
                         title="Chọn tên công việc"

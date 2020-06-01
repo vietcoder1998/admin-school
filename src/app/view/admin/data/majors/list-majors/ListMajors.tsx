@@ -4,7 +4,7 @@ import { Icon, Table, Button, Row, Col, Input, Modal, Select } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IMajor } from '../../../../../../models/majors';
 import { Link } from 'react-router-dom';
-import { IBranches } from '../../../../../../models/branches';
+import { IBranches, IBranch } from '../../../../../../models/branches';
 import { MAJORS } from '../../../../../../services/api/private.api';
 import { DELETE, PUT, GET } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
@@ -12,11 +12,12 @@ import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import { getListBranches } from '../../../../../../redux/actions/branches';
+import findIdWithValue from '../../../../../../utils/findIdWithValue';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
     history: any;
-    getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => any;
+    getListMajors: (pageIndex?: number, pageSize?: number, name?: string, branchID?: number) => any;
     getListBranches: (pageIndex?: number, pageSize?: number, name?: string) => any;
 }
 
@@ -32,7 +33,7 @@ interface ListMajorsState {
     branchName?: string;
     branchID?: number;
     type: string;
-    brnSearch?: string;
+    brnSearch?: number;
     openModal: boolean;
     list_data: Array<{ label: string, value: number }>;
     name?: string;
@@ -77,6 +78,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     name: item.name,
                     branchName: item.branch ? item.branch.name : "Khác",
                     branchID: item.branch ? item.branch.id : null,
+                    id: item.id
                 });
             });
 
@@ -100,13 +102,13 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
 
-    EditContent = (
+    EditContent =  (id?: string ) => {return (
         <>
             <Icon
                 className='test'
                 type="unordered-list"
                 style={{ padding: 5, margin: 2 }}
-                onClick={() => this.createListJobName()}
+                onClick={() => this.props.history.push(`/admin/data/majors/${id}/job-names/list`)}
             />
             <Icon
                 className='test'
@@ -127,7 +129,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                 onClick={() => this.toggleModal(TYPE.DELETE)}
             />
         </>
-    );
+    )};
 
     toggleModal = (type?: string) => {
         let { openModal } = this.state;
@@ -143,7 +145,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     createListJobName = () => {
         let { id } = this.state;
-        this.props.history.push(`/admin/data/majors/${id}/job-names/list`)
+        
     }
 
     getMajorDetail = async () => {
@@ -196,10 +198,11 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         {
             title: 'Thao tác',
             key: 'operation',
+            dataIndex: 'id',
             className: 'action',
             width: 150,
             fixed: 'right',
-            render: () => this.EditContent,
+            render: (id?: string) => this.EditContent(id),
         },
     ];
 
@@ -250,7 +253,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             search,
             brnSearch
         } = this.state;
-        let { totalItems } = this.props;
+        let { totalItems, list_branches } = this.props;
         return (
             <>
                 <Modal
@@ -307,6 +310,17 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                          Thêm mới
                                     </Link>
                                 </Button>
+                                <Button
+                                    type="primary"
+                                    style={{
+                                        float: "right",
+                                        marginRight: 10
+                                    }}
+                                    onClick={() => this.props.getListMajors(pageIndex, pageSize, search, brnSearch)}
+                                >
+                                        <Icon type="filter" />
+                                    Lọc
+                                </Button>
                             </h5>
                             <Row>
                                 <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
@@ -315,7 +329,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                         style={{ width: "100%" }}
                                         value={search}
                                         onChange={(event: any) => this.setState({ search: event.target.value })}
-                                        onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, search)}
+                                        onPressEnter={(event: any) => this.props.getListMajors(pageIndex, pageSize, search, brnSearch)}
                                         suffix={
                                             search &&
                                                 search.length > 0 ?
@@ -333,11 +347,14 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                     <Select
                                         placeholder="Tất cả"
                                         style={{ width: "100%" }}
-                                        value={brnSearch}
-                                        onChange={(event: any) => this.props.getListBranches(0, 10 , event.target.value)}
-                                        onSelect={(event: any) => this.props.getListBranches(0, 10, brnSearch)}
+                                        showSearch
+                                        onSearch={() => this.props.getListBranches(0)}
+                                        onChange={(event: any) => this.setState({ brnSearch: findIdWithValue(list_branches, event, "name", "id") })}
                                     >
-                                        
+                                    <Option value={null} children="Tất cả" />
+                                        {
+                                            list_branches ? list_branches.map((item?: IBranch, index?: number) => <Option key={item.id} value={item ? item.name : ""} children={item ? item.name : ""} />) : ""
+                                        }
                                     </Select>
                                 </Col>
                             </Row>
@@ -354,6 +371,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 onRow={(event) => ({
                                     onClick: () => {
                                         this.setState({ id: event.key, branchName: event.branchName, name: event.name, branchID: event.branchID });
+                                        localStorage.setItem("major", event.name)
                                     },
                                 })}
                             />
@@ -367,11 +385,12 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => dispatch({
+    getListMajors: (pageIndex?: number, pageSize?: number, name?: string, branchID?: number) => dispatch({
         type: REDUX_SAGA.MAJORS.GET_MAJORS,
         pageIndex,
         pageSize,
-        name
+        name,
+        branchID
     }),
     getListBranches: (pageIndex?: number, pageSize?: number, name?: string) => dispatch({
         type: REDUX_SAGA.BRANCHES.GET_BRANCHES,

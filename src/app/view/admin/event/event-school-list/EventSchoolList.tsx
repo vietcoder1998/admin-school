@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../const/actions';
-import { Button, Table, Icon, Tooltip, Modal } from 'antd';
+import { Button, Table, Icon, Tooltip, Modal, Popconfirm } from 'antd';
 import { timeConverter } from '../../../../../utils/convertTime';
 import { IAppState } from '../../../../../redux/store/reducer';
 // import { IRegion } from '../../../../../models/regions';
@@ -12,8 +12,8 @@ import { routeLink, routePath } from '../../../../../const/break-cumb';
 import EventDetail from './EventDetail';
 import CropImage from '../../../layout/crop-image/CropImage';
 import { _requestToServer } from '../../../../../services/exec';
-import { PUT } from '../../../../../const/method';
-import { EVENT_SCHOOLS, SCHOOLS } from '../../../../../services/api/private.api';
+import { PUT, DELETE } from '../../../../../const/method';
+import { EVENT_SCHOOLS, SCHOOLS, EMPLOYER } from '../../../../../services/api/private.api';
 import { sendFileHeader } from '../../../../../services/auth';
 import { Link } from 'react-router-dom';
 import randomID from './../../../../../utils/randomID';
@@ -88,7 +88,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
     columns = [
         {
             title: '#',
-            width: 20,
+            width: 30,
             dataIndex: 'index',
             key: 'index',
             className: 'action',
@@ -142,7 +142,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
             dataIndex: 'data',
             key: 'data',
             render: (data) => this.EditToolTip(data),
-            width: 80,
+            width: 120,
             fixed: 'right',
         },
     ];
@@ -150,6 +150,15 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
     onToggleModal = () => {
         let { openModal } = this.state;
         this.setState({ openModal: !openModal });
+    };
+
+    deleteEvent = async (id) => {
+        _requestToServer(
+            DELETE, EVENT_SCHOOLS,
+            [id],
+        ).then((res: any) => {
+            this.searchEventSchool();
+        });
     };
 
     EditToolTip = (item?: IEventSchool) => {
@@ -179,7 +188,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
             </Tooltip>
             <Tooltip
                 title={"Sửa Banner"}
-                placement={"bottomRight"}
+                placement={"topRight"}
             >
                 <Icon
                     type={"tool"}
@@ -209,6 +218,41 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                         }}
                     />
                 </Link>
+            </Tooltip>
+            <Tooltip
+                title="Xem nhà tuyển dụng tại sự kiện"
+                placement={"bottom"}
+            >
+                <Link to={routeLink.EVENT + routePath.EMPLOYER  + routePath.LIST + `?id=${item.id}`} >
+                    <Icon
+                        type={"appstore"}
+                        className="f-ic"
+                        style={{
+                            color: "green"
+                        }}
+                    />
+                </Link>
+            </Tooltip>
+            <Tooltip
+                title="Xóa sự kiện"
+                placement={"bottomRight"}
+            >
+                <Popconfirm
+                    title="Bạn có chắc chắc xóa sự kiện này"
+                    onConfirm={() => this.deleteEvent(item.id)}
+                    okText="Xóa"
+                    cancelText="Hủy"
+                    okType='danger'
+                    children={
+                        <Icon
+                            type={"delete"}
+                            className="f-ic"
+                            style={{
+                                color: "red"
+                            }}
+                        />
+                    }
+                />
             </Tooltip>
         </>
     }
@@ -453,7 +497,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
-                            scroll={{ x: 880 }}
+                            scroll={{ x: 950 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"

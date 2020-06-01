@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
 import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Radio, Modal, message, Tabs } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
-import './EventJobsList.scss';
 import { TYPE } from '../../../../../const/type';
 import { Link } from 'react-router-dom';
 import { IptLetterP } from '../../../layout/common/Common';
@@ -18,7 +17,7 @@ import { EVENT_SCHOOLS } from '../../../../../services/api/private.api';
 import { IModalState } from '../../../../../models/mutil-box';
 import { IDrawerState } from 'antd/lib/drawer';
 import { routeLink, routePath } from '../../../../../const/break-cumb';
-import { IEventJobsFilter, IEventJob } from '../../../../../models/event-jobs';
+import { IEventEmFilter, IEventJob } from '../../../../../models/event-jobs';
 import JobDetail from '../../../layout/job-detail/JobDetail';
 
 let { Option } = Select;
@@ -92,9 +91,9 @@ const ViewPriority = (props?: { priority?: string, timeLeft?: string }) => {
     }
 };
 
-interface IEventJobsListProps extends StateProps, DispatchProps {
+interface IProps extends StateProps, DispatchProps {
     match?: any;
-    getListEventJobs: Function;
+    getListEventEm: Function;
     getListEmBranches: Function;
     getTypeManagement: Function;
     getEventJobDetail: (id?: string, schoolEventID?: string) => any;
@@ -105,7 +104,7 @@ interface IEventJobsListProps extends StateProps, DispatchProps {
     history: any;
 };
 
-interface IEventJobsListState {
+interface IState {
     dataTable?: Array<any>;
     pageIndex?: number;
     pageSize?: number;
@@ -122,10 +121,10 @@ interface IEventJobsListState {
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
-    listEventJobs?: Array<any>;
+    listEventEm?: Array<any>;
     id?: string;
     loadingTable?: boolean;
-    body?: IEventJobsFilter;
+    body?: IEventEmFilter;
     unCheckbox?: boolean;
     listCheck?: Array<any>;
     stateCheckbox?: Array<string>;
@@ -144,7 +143,7 @@ interface IEventJobsListState {
 };
 
 
-class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListState> {
+class EventEmList extends PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -163,7 +162,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
             createdDate: null,
             adminID: null,
             hidden: false,
-            listEventJobs: [],
+            listEventEm: [],
             id: null,
             loadingTable: true,
             body: {
@@ -353,7 +352,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                         ).then((res: any) => {
                             if (res) {
                                 setTimeout(() => {
-                                    this.props.getListEventJobs(body, pageIndex, pageSize);
+                                    this.props.getListEventEm(body, pageIndex, pageSize);
                                 }, 250);
                                 message.success("Thành công", 2);
                             }
@@ -432,10 +431,10 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
         )
     }
 
-    static getDerivedStateFromProps(nextProps: IEventJobsListProps, prevState: IEventJobsListState) {
+    static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
         if (
-            nextProps.listEventJobs &&
-            nextProps.listEventJobs !== prevState.listEventJobs
+            nextProps.listEventEm &&
+            nextProps.listEventEm !== prevState.listEventEm
         ) {
             let { pageIndex, pageSize } = prevState;
             let dataTable = [];
@@ -445,7 +444,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
             let body = prevState.body;
             body.schoolEventID = eid;
 
-            nextProps.listEventJobs.forEach((item: IEventJob, index: number) => {
+            nextProps.listEventEm.forEach((item: IEventJob, index: number) => {
                 dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -470,7 +469,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
             })
 
             return {
-                listEventJobs: nextProps.listEventJobs,
+                listEventEm: nextProps.listEventEm,
                 dataTable,
                 loadingTable: false,
                 body,
@@ -499,7 +498,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 
     async componentDidMount() {
         await this.props.getListEmBranches();
-        await this.searchEventJobs();
+        await this.searchEventEm();
     };
 
     onChoseHomePriority = (event: any) => {
@@ -563,12 +562,12 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
-        await this.searchEventJobs();
+        await this.searchEventEm();
     };
 
-    searchEventJobs = async () => {
+    searchEventEm = async () => {
         let { body, pageIndex, pageSize } = this.state;
-        await this.props.getListEventJobs(body, pageIndex, pageSize);
+        await this.props.getListEventEm(body, pageIndex, pageSize);
     };
 
     onChangeType = (event: any, param?: string) => {
@@ -682,7 +681,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                     false
                 ).then((res) => {
                     if (res) {
-                        this.searchEventJobs();
+                        this.searchEventEm();
                         this.props.handleModal();
                     }
                 }).finally(
@@ -698,7 +697,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 
     requeryData = async () => {
         let { id, eid } = this.state;
-        await this.searchEventJobs();
+        await this.searchEventEm();
         await this.props.getJobServiceEvent(eid);
         await this.props.getEventJobDetail(id, eid);
         await this.props.handleModal();
@@ -909,7 +908,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                         Quản lý nhà tuyển dụng sự kiện nhà trường {`(${totalItems})`}
                         <Tooltip title="Lọc tìm kiếm" >
                             <Button
-                                onClick={() => this.searchEventJobs()}
+                                onClick={() => this.searchEventEm()}
                                 type="primary"
                                 style={{
                                     float: "right",
@@ -1104,7 +1103,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 };
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
-    getListEventJobs: (body: IEventJobsFilter, pageIndex: number, pageSize: number) =>
+    getListEventEm: (body: IEventEmFilter, pageIndex: number, pageSize: number) =>
         dispatch({ type: REDUX_SAGA.EVENT_SCHOOLS.GET_LIST_EVENT_JOBS, body, pageIndex, pageSize }),
     getListEmBranches: () =>
         dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES }),
@@ -1119,7 +1118,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
-    listEventJobs: state.EventJobs.items,
+    listEventEm: state.EventJobs.items,
     listJobNames: state.JobNames.items,
     listEmBranches: state.EmBranches.items,
     modalState: state.MutilBox.modalState,
@@ -1132,4 +1131,4 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventJobsList);
+export default connect(mapStateToProps, mapDispatchToProps)(EventEmList);
