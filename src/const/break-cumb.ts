@@ -1,4 +1,3 @@
-import { EMPLOYER } from '../services/api/private.api';
 export const routePath = {
     ADMIN: `/admin`,
     LIST: '/list',

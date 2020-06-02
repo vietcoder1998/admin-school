@@ -24,6 +24,7 @@ export const TYPE = {
     HIGHLIGHT: "HIGHLIGHT",
     IN_DAY: "IN_DAY",
     TOP: "TOP",
+    NORMAL: "NORMAL",
 
     CREATE: "CREATE",
     EDIT: "EDIT",
@@ -107,6 +108,13 @@ export const TYPE = {
         highlight: "highlight"
     },
 
+    EVENT_EM_FILER: {
+        bannerPriority: "bannerPriority",
+        priority: "priority",
+        createdDate: "createdDate",
+        shuffle: "shuffle"
+    },
+
     STUDENT_FILTER: {
         gender: "gender",
         birthYearStart: "birthYearStart",
@@ -147,5 +155,15 @@ export const TYPE = {
         unlocked: "unlocked",
         ids: "ids",
         username: "username"
+    },
+
+    EVENT_FILTER:  {
+        employerID: "employerID",
+        schoolID: "schoolID",
+        createdDate: "createdDate",
+        startedDate: "startedDate",
+        finishedDate: "finishedDate",
+        started: "started",
+        finished: "finished"
     }
 };

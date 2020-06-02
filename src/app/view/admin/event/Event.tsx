@@ -7,7 +7,6 @@ import { routePath } from '../../../../const/break-cumb';
 import EventCreate from './event-create/EventCreate';
 import EventJobCreate from './event-jobs-create/EventJobsCreate';
 import EventEmList from './event-em-list/EventEmList';
-import { EMPLOYER } from '../../../../services/api/private.api';
 const Switch = require("react-router-dom").Switch;
 
 interface IState {

@@ -11,7 +11,6 @@ import { _requestToServer } from '../../../../../../services/exec';
 import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
-import { getListBranches } from '../../../../../../redux/actions/branches';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
@@ -102,34 +101,40 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
 
-    EditContent =  (id?: string ) => {return (
-        <>
-            <Icon
-                className='test'
-                type="unordered-list"
-                style={{ padding: 5, margin: 2 }}
-                onClick={() => this.props.history.push(`/admin/data/majors/${id}/job-names/list`)}
-            />
-            <Icon
-                className='test'
-                key="edit"
-                style={{ padding: 5, margin: 2 }}
-                type="edit"
-                theme="twoTone"
-                onClick={() => this.toggleModal(TYPE.EDIT)}
-            />
+    EditContent = (id?: string) => {
+        return (
+            <>
+                <Icon
+                    className='test'
+                    type="unordered-list"
+                    style={{ padding: 5, margin: 2 }}
+                    onClick={() => this.props.history.push(
+                        routeLink.MAJORS +
+                        `/${id}` +
+                        routePath.JOB_NAMES +
+                        routePath.LIST)}
+                />
+                <Icon
+                    className='test'
+                    key="edit"
+                    style={{ padding: 5, margin: 2 }}
+                    type="edit"
+                    theme="twoTone"
+                    onClick={() => this.toggleModal(TYPE.EDIT)}
+                />
 
-            <Icon
-                className='test'
-                key="delete"
-                style={{ padding: 5, margin: 2 }}
-                type="delete"
-                theme="twoTone"
-                twoToneColor="red"
-                onClick={() => this.toggleModal(TYPE.DELETE)}
-            />
-        </>
-    )};
+                <Icon
+                    className='test'
+                    key="delete"
+                    style={{ padding: 5, margin: 2 }}
+                    type="delete"
+                    theme="twoTone"
+                    twoToneColor="red"
+                    onClick={() => this.toggleModal(TYPE.DELETE)}
+                />
+            </>
+        )
+    };
 
     toggleModal = (type?: string) => {
         let { openModal } = this.state;
@@ -142,11 +147,6 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     choseMajor = async (event: any) => {
         await this.getMajorDetail();
     };
-
-    createListJobName = () => {
-        let { id } = this.state;
-        
-    }
 
     getMajorDetail = async () => {
         let { id } = this.state;
@@ -318,7 +318,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                     }}
                                     onClick={() => this.props.getListMajors(pageIndex, pageSize, search, brnSearch)}
                                 >
-                                        <Icon type="filter" />
+                                    <Icon type="filter" />
                                     Lọc
                                 </Button>
                             </h5>
@@ -351,7 +351,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                         onSearch={() => this.props.getListBranches(0)}
                                         onChange={(event: any) => this.setState({ brnSearch: findIdWithValue(list_branches, event, "name", "id") })}
                                     >
-                                    <Option value={null} children="Tất cả" />
+                                        <Option value={null} children="Tất cả" />
                                         {
                                             list_branches ? list_branches.map((item?: IBranch, index?: number) => <Option key={item.id} value={item ? item.name : ""} children={item ? item.name : ""} />) : ""
                                         }

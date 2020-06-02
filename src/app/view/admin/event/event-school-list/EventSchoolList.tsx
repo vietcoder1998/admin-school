@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../const/actions';
-import { Button, Table, Icon, Tooltip, Modal, Popconfirm } from 'antd';
+import { Button, Table, Icon, Tooltip, Modal, Popconfirm, Select, Row, Col, DatePicker } from 'antd';
 import { timeConverter } from '../../../../../utils/convertTime';
 import { IAppState } from '../../../../../redux/store/reducer';
 // import { IRegion } from '../../../../../models/regions';
@@ -13,11 +13,17 @@ import EventDetail from './EventDetail';
 import CropImage from '../../../layout/crop-image/CropImage';
 import { _requestToServer } from '../../../../../services/exec';
 import { PUT, DELETE } from '../../../../../const/method';
-import { EVENT_SCHOOLS, SCHOOLS, EMPLOYER } from '../../../../../services/api/private.api';
+import { EVENT_SCHOOLS, SCHOOLS } from '../../../../../services/api/private.api';
 import { sendFileHeader } from '../../../../../services/auth';
 import { Link } from 'react-router-dom';
-import randomID from './../../../../../utils/randomID';
+import { TYPE } from '../../../../../const/type';
+import { IptLetterP } from './../../../layout/common/Common';
+import { ISchool } from '../../../../../models/schools';
+import moment from "moment";
 
+const dateFormat = 'DD/MM/YY';
+
+const { RangePicker } = DatePicker;
 let ImageRender = (src?: string) => {
     return <img src={src}
         alt='banner event'
@@ -25,12 +31,15 @@ let ImageRender = (src?: string) => {
     />
 };
 
+const { Option } = Select;
+
 interface IEventSchoolsListProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
     handleModal: Function;
     getListEventSchools: Function;
     getEventSchoolDetail: Function;
+    getListSchools: Function;
 };
 
 interface IEventSchoolsListState {
@@ -223,7 +232,12 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                 title="Xem nhà tuyển dụng tại sự kiện"
                 placement={"bottom"}
             >
-                <Link to={routeLink.EVENT + routePath.EMPLOYER  + routePath.LIST + `?id=${item.id}`} >
+                <Link to={
+                    routeLink.EVENT +
+                    routePath.EMPLOYER +
+                    routePath.LIST +
+                    `?eid=${item.id}&sid=${item.school ? item.school.id : ""}`
+                } >
                     <Icon
                         type={"appstore"}
                         className="f-ic"
@@ -288,6 +302,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
 
     async componentDidMount() {
         await this.searchEventSchool();
+        await this.props.getListSchools(0, 10);
     };
 
     handleId = (event) => {
@@ -310,28 +325,32 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
         this.setState({ openDrawer: false })
     };
 
-    // onChangeType = (event: any, param?: string) => {
-    //     let { body } = this.state;
-    //     let { listRegions } = this.props;
-    //     let value: any = event;
-    //     listRegions.forEach((item: IRegion) => { if (item.name === event) { value = item.id } });
-    //     switch (event) {
-    //         case TYPE.TRUE:
-    //             value = true;
-    //             break;
-    //         case TYPE.FALSE:
-    //             value = false;
-    //             break;
-    //         default:
-    //             break;
-    //     };
+    requeryData = async () => {
+        await this.searchEventSchool();
+    };
 
-    //     body[param] = value;
-    //     this.setState({ body });
-    // };
+    onChangeType = (event: any, param?: string) => {
+        let { body } = this.state;
+        let { listSchools } = this.props;
+        let value: any = event;
+        listSchools.forEach((item: ISchool) => { if (item.name === event) { value = item.id } });
+
+        switch (event) {
+            case TYPE.TRUE:
+                value = true;
+                break;
+            case TYPE.FALSE:
+                value = false;
+                break;
+            default:
+                break;
+        };
+
+        body[param] = value;
+        this.setState({ body });
+    };
 
     uploadToServer = (event) => {
-        console.log(event);
         this.setState({ newBanner: event.blobFile })
     }
 
@@ -364,16 +383,14 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
             openModal,
             modalType,
             newBanner,
-            sid
+            body
         } = this.state;
 
         let {
             totalItems,
-            eventDetail
-            // listJobNames
+            eventDetail,
+            listSchools,
         } = this.props;
-
-        // let listJobNames_options = listJobNames.map((item: ILanguage, index: number) => (<Option key={index} value={item.name} children={item.name} />));
 
         return (
             <>
@@ -406,7 +423,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                 "Cập nhật banner"
                             }
                         /> : <Button
-                                key={"ok"}
+                                key={"oke"}
                                 onClick={
                                     () =>
                                         this.props.history.push(
@@ -430,68 +447,108 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                 <div className="common-content">
                     <h5>
                         Sự kiện Ngày hội việc làm trực tuyến {`(${totalItems})`}
-                        <Tooltip title="Thêm sự kiện mới" >
-                            <Button
-                                onClick={
-                                    () =>
-                                        this.props.history.push(
-                                            routeLink.EVENT +
-                                            routePath.CREATE)}
-                                type="primary"
-                                style={{
-                                    float: "right",
-                                    margin: "0px 10px",
-                                }}
-                                icon={"plus"}
-                            />
-                        </Tooltip>
+                        <Button
+                            onClick={
+                                () =>
+                                    this.props.history.push(
+                                        routeLink.EVENT +
+                                        routePath.CREATE)}
+                            type="primary"
+                            style={{
+                                float: "right",
+                                margin: "0px 10px",
+                            }}
+                            icon={"plus"}
+                            children="Thêm sự kiện mới"
+                        />
+
+                        <Button
+                            onClick={
+                                () =>
+                                    this.requeryData()
+                            }
+                            type="primary"
+                            style={{
+                                float: "right",
+                                margin: "0px 10px",
+                            }}
+                            icon={"filter"}
+                            children="Lọc"
+                        />
                     </h5>
                     <div className="table-operations">
-                        {/* <Row >
+                        <Row >
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái tìm việc"} />
+                                <IptLetterP value={"Tên trường"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.FIND_CANDIDATES_FILTER.lookingForJob)}
-                                >
-                                    <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.TRUE}>Đang tìm việc</Option>
-                                    <Option value={TYPE.FALSE}>Đã có việc</Option>
-                                </Select>
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Giới tính"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.FIND_CANDIDATES_FILTER.gender)}
-                                >
-                                    <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.MALE}>Nam </Option>
-                                    <Option value={TYPE.FEMALE}>Nữ</Option>
-                                </Select>
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tỉnh thành"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.FIND_CANDIDATES_FILTER.regionID)}
+                                    onSearch={(event: string) => this.props.getListSchools(0, 10, { event })}
+                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_FILTER.schoolID)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
-                                        listRegions && listRegions.length >= 1 ?
-                                            listRegions.map((item: IRegion, index: number) =>
+                                        listSchools && listSchools.length >= 1 ?
+                                            listSchools.map((item: ISchool, index: number) =>
                                                 <Option key={index} value={item.name}>{item.name}</Option>
                                             ) : null
                                     }
                                 </Select>
                             </Col>
-                        </Row> */}
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Bắt đầu"} />
+                                <Select
+                                    showSearch
+                                    defaultValue="Tất cả"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_FILTER.started)}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={TYPE.TRUE}>Đã bắt đầu</Option>
+                                    <Option value={TYPE.FALSE}>Chưa bắt đầu</Option>
+                                </Select>
+                            </Col>
+                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Kết thúc"} />
+                                <Select
+                                    showSearch
+                                    defaultValue="Kết thúc"
+                                    style={{ width: "100%" }}
+                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_FILTER.finished)}
+                                >
+                                    <Option value={null}>Tất cả</Option>
+                                    <Option value={TYPE.MALE}>Đã kết thúc </Option>
+                                    <Option value={TYPE.FEMALE}>Chưa kết thúc</Option>
+                                </Select>
+                            </Col>
+                            <Col xs={24} sm={24} md={16} lg={12} xl={12} xxl={12} >
+                                <IptLetterP
+                                    value="Chọn thời gian sự kiện"
+                                >
+                                    <RangePicker
+                                        value={[
+                                            body.startedDate ? moment(body.startedDate) : null,
+                                            body.finishedDate ? moment(body.finishedDate) : null
+                                        ]}
+                                        onChange={(event) => {
+                                            if (event && event[0]) {
+                                                body.startedDate = event[0].unix() * 1000;
+                                                
+                                            } else 
+                                                body.startedDate = null
+
+                                            if (event && event[1]) {
+                                                body.finishedDate = event[1].unix() * 1000;
+                                            } else  body.finishedDate = null
+
+                                            this.setState({ body });
+                                        }}
+                                        format={dateFormat}
+                                    />
+                                </IptLetterP>
+                            </Col>
+                        </Row>
                         <Table
                             // @ts-ignore
                             columns={this.columns}
@@ -524,16 +581,15 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX_SAGA.EVENT_SCHOOLS.GET_LIST_EVENT_SCHOOLS, body, pageIndex, pageSize }),
     getEventSchoolDetail: (id?: string) =>
         dispatch({ type: REDUX_SAGA.EVENT_SCHOOLS.GET_EVENT_DETAIL, id }),
+    getListSchools: (pageIndex?: number, pageSize?: number, body?: any) =>
+        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     listEventSchools: state.EventSchools.items,
     eventDetail: state.EventDetail,
     totalItems: state.EventSchools.totalItems,
-    // listRegions: state.Regions.items,
-    // listSkills: state.Skills.items,
-    // listJobNames: state.JobNames.items,
-    // listLanguages: state.Languages.items,
+    listSchools: state.Schools.items,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

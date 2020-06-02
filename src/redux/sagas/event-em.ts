@@ -39,7 +39,7 @@ function callEventEmss(action: any) {
     try {
         let res = _requestToServer(
             POST,
-            SCHOOLS + `${action.sid}events/${action.eid}/employers/query`,
+            SCHOOLS + `/${action.sid}/events/${action.eid}/employers/query`,
             body,
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,

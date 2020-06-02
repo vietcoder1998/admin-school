@@ -1,6 +1,6 @@
 import { IEventJobs } from '../../models/event-jobs';
 import { POST } from '../../const/method';
-import { EVENT_SCHOOLS, EM_CONTROLLER } from '../../services/api/private.api';
+import { EM_CONTROLLER } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
 import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'

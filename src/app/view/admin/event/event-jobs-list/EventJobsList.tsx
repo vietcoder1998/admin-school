@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Radio, Modal, message, Tabs } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Radio, Modal, message } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
 import './EventJobsList.scss';
 import { TYPE } from '../../../../../const/type';
@@ -23,7 +23,6 @@ import { IEventJobsFilter, IEventJob } from '../../../../../models/event-jobs';
 
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
-const { TabPane } = Tabs;
 const plainOptions = ['Đang chờ', 'Từ chối', 'Chấp nhận'];
 
 const viewCount = (
@@ -216,7 +215,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
             title: 'Tiêu đề',
             width: 200,
             dataIndex: 'title',
-            key: 'jobTitle',
+            key: 'title',
             fixed: 'left'
         },
 
@@ -717,7 +716,6 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
             body,
             loading,
             ojd,
-            jid,
             eid
         } = this.state;
 
@@ -727,7 +725,6 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
             listJobNames,
             listEmBranches,
             modalState,
-            jobSuitableCandidates,
         } = this.props;
 
         let homeExpiration = eventJobDetail.priority.homeExpiration;

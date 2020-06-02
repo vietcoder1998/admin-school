@@ -31,39 +31,17 @@ export interface IEventEms {
 }
 
 export interface IEventEmsFilter {
-    schoolEventID?: string;
-    expired?: boolean;
-    hidden?: boolean;
-    jobType?: null | undefined | string;
-    homePriority?: string;
-    homeExpired?: boolean;
-    searchPriority?: string;
-    searchExpired?: boolean;
-    highlightExpired?: boolean;
-    highlight?: string;
-    excludedJobIDs?: string;
-    jobNameIDs?: string;
-    jobGroupIDs?: string;
-    hasPendingApplied?: boolean;
-    hasAcceptedApplied?: boolean;
-    hasRejectedApplied?: boolean;
-
-    jobShiftFilter?: {
-        gender?: string;
-        weekDays?: any;
-        dayTime?: string;
-    };
-    jobLocationFilter?: {
-        regionID?: string | null,
-        lat?: number,
-        lon?: number,
-        distance?: number
-    } | null | undefined;
+    bannerPriority?: string,
+    priority?: string,
+    createdDate?: 0,
+    shuffle?: boolean
 }
 
 export interface IEventEmFilter {
+    eid?: string;
+    sid?: string;
     bannerPriority?: string,
     priority?: string,
     createdDate?: number,
     shuffle?: boolean
-  }
+}

@@ -14,7 +14,6 @@ import { POST, PUT } from '../../../../../const/method';
 import { ISchoolsFilter } from '../../../../../models/schools';
 import { REDUX_SAGA } from '../../../../../const/actions';
 import IEventDetail from './../../../../../models/event-detail';
-const Switch = require("react-router-dom").Switch;
 const { RangePicker } = DatePicker;
 
 interface IState {
