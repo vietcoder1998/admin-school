@@ -213,7 +213,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     editMajor = async () => {
-        let { name, id, branchID } = this.state;
+        let { name, id, branchID, pageIndex, pageSize , search, brnSearch} = this.state;
         if (name) {
             await _requestToServer(
                 PUT, MAJORS + `/${id}`,
@@ -222,7 +222,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     branchID: branchID
                 }
             ).then((res: any) => {
-                this.props.getListMajors(0);
+                this.props.getListMajors(pageIndex, pageSize, search, brnSearch );
                 this.toggleModal();
             })
         }
@@ -270,7 +270,6 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             <InputTitle
                                 type={TYPE.INPUT}
                                 title="Sửa tên ngành "
-                                widthLabel="120px"
                                 placeholder="Thay đổi tên"
                                 value={name}
                                 widthInput={"250px"}
