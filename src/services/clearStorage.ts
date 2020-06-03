@@ -15,5 +15,5 @@ export default async function clearStorage() {
         description: "Đăng xuất thành công",
     });
 
-    await setTimeout(() => window.location.href = "/login", 2000)
+    await setTimeout(() => window.location.href = "/login", 2500)
 }

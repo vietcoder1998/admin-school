@@ -3,6 +3,7 @@ import {GET, POST, PUT, DELETE} from '../const/method';
 import {_delete, _get, _post, _put} from './base-api';
 import Swal from 'sweetalert2';
 import {authHeaders} from "./auth";
+import clearStorage from './clearStorage';
 
 export const _requestToServer = async (
     method: string,
@@ -60,11 +61,17 @@ export const _requestToServer = async (
     } catch (err) {
         let code;
         let msg;
+        
         if (err.response) {
             let data = err.response.data;
             if (data) {
                 code = data.code;
                 msg = data.msg;
+
+                if (code === 4014 || code === 4015) {
+                    Swal.fire("Đăng nhập hết hạn", "Vui lòng đăng nhập lại", 'error');
+                    clearStorage();
+                }
             } else {
                 code = err.response.code;
             }
