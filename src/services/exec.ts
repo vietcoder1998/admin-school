@@ -1,8 +1,8 @@
-import {notification} from 'antd';
-import {GET, POST, PUT, DELETE} from '../const/method';
-import {_delete, _get, _post, _put} from './base-api';
+import { notification } from 'antd';
+import { GET, POST, PUT, DELETE } from '../const/method';
+import { _delete, _get, _post, _put } from './base-api';
 import Swal from 'sweetalert2';
-import {authHeaders} from "./auth";
+import { authHeaders } from "./auth";
 
 export const _requestToServer = async (
     method: string,
@@ -61,7 +61,7 @@ export const _requestToServer = async (
     } catch (err) {
         let code;
         let msg;
-        
+
         if (err.response) {
             let data = err.response.data;
             if (data) {
@@ -69,7 +69,13 @@ export const _requestToServer = async (
                 msg = data.msg;
 
                 if (code && (code === 4014 || code === 4015)) {
-                    Swal.fire("Đăng nhập hết hạn", "Vui lòng đăng nhập lại", 'error');
+                    Swal.fire({
+                        title: "Đăng nhập hết hạn",
+                        text: "Vui lòng đăng nhập lại",
+                        icon: 'error',
+                        onClose: () => window.location.assign('/'),
+                        timer: 5500
+                    });
                 }
 
             } else {
