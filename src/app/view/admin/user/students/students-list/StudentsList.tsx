@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Button, Table, Icon, Popconfirm, Col, Select, Row, Tooltip, Avatar, Drawer, Slider, Input } from 'antd';
+import { Button, Table, Icon, Popconfirm, Col, Select, Row, Tooltip, Avatar, Drawer, Slider, Input, DatePicker } from 'antd';
 import './StudentsList.scss';
 import { timeConverter } from '../../../../../../utils/convertTime';
 import { IAppState } from '../../../../../../redux/store/reducer';
@@ -17,6 +17,7 @@ import findIdWithValue from '../../../../../../utils/findIdWithValue';
 import { ISkill } from '../../../../../../models/skills';
 import StudentInfo from '../../../../layout/student-info/StudentInfo';
 import StuInsertExels from './StuInsertExels';
+import moment from 'moment';
 
 interface IStudentsListProps extends StateProps, DispatchProps {
     match?: any;
@@ -63,7 +64,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         this.state = {
             data_table: [],
             pageIndex: 0,
-            pageSize: 10,
+            pageSize: 5,
             showModal: false,
             loading: false,
             id: null,
@@ -97,7 +98,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     EditToolAction = () => {
         let { id } = this.state;
         return <>
-            <Tooltip title='Xem hồ sơ' >
+            {/* <Tooltip title='Xem hồ sơ' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
                     type={"search"}
@@ -111,7 +112,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                         }, 300);
                     }}
                 />
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title='Xác thực' >
                 <Icon
                     className='test' style={{ padding: 5, margin: 2 }}
@@ -149,25 +150,12 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             key: 'avatarUrl',
         },
         {
-            title: 'Xác thực',
-            width: 80,
-            dataIndex: 'profileVerified',
-            className: 'action',
-            key: 'profileVerified',
-        },
-        {
             title: 'Họ và tên',
             dataIndex: 'name',
             className: 'action',
             key: 'name',
             width: 200,
-        },
-        {
-            title: 'Giới tính',
-            dataIndex: 'gender',
-            key: 'gender',
-            className: "action",
-            width: 100,
+            render: ({ item }) => this.renderName(item),
         },
         {
             title: 'Số điện thoại',
@@ -181,46 +169,6 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             key: 'email',
             width: 150,
         },
-        {
-            title: 'Trường học',
-            dataIndex: 'school',
-            key: 'school',
-            width: 300,
-        },
-        {
-            title: 'Ngày sinh',
-            dataIndex: 'birthday',
-            className: 'action',
-            key: 'birthday',
-            width: 100,
-        },
-        {
-            title: 'Tìm việc',
-            dataIndex: 'lookingForJob',
-            className: 'action',
-            key: 'lookingForJob',
-            width: 80,
-        },
-        {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
-            key: 'address',
-            width: 300,
-        },
-        {
-            title: 'Tỉnh thành',
-            dataIndex: 'region',
-            className: 'action',
-            key: 'region',
-            width: 90,
-        },
-        {
-            title: 'Ngành học',
-            dataIndex: 'major',
-            className: 'action',
-            key: 'major',
-            width: 200,
-        },
 
         {
             title: 'Ngày tạo',
@@ -230,12 +178,39 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             width: 100,
         },
         {
+            title: 'Ngành học',
+            dataIndex: 'major',
+            className: 'action',
+            key: 'major',
+            width: 200,
+        },
+        {
+            title: 'Trường học',
+            dataIndex: 'school',
+            key: 'school',
+            width: 300,
+        },
+        {
+            title: 'Tìm việc',
+            dataIndex: 'lookingForJob',
+            className: 'action',
+            key: 'lookingForJob',
+            width: 80,
+        },
+        {
+            title: 'Tỉnh thành',
+            dataIndex: 'region',
+            className: 'action',
+            key: 'region',
+            width: 90,
+        },
+        {
             title: 'Thao tác',
             key: 'operation',
             fixed: 'right',
             className: 'action',
             render: () => this.EditToolAction(),
-            width: 140,
+            width: 80,
         },
     ];
 
@@ -248,23 +223,20 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         if (nextProps.listStudents && nextProps.listStudents !== prevState.listStudents) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
+            
             nextProps.listStudents.forEach((item: IStudent, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     avatarUrl: <ImageRender src={item.avatarUrl} alt="Ảnh đại diện" />,
-                    name: (item.lastName ? item.lastName : "") + " " + (item.firstName ? item.firstName : ""),
-                    gender: item.gender === TYPE.MALE ? 'Nam' : 'Nữ',
-                    profileVerified: <Tooltip title={(item.profileVerified ? "Đã" : "Chưa") + " xác thực"}><Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red" }} /></Tooltip>,
+                    name: { item },
                     phone: item.phone ? item.phone : '',
                     lookingForJob: item.lookingForJob ? "Có" : "Đã có việc",
                     email: item.email ? item.email : '',
                     school: item.school ? item.school.name + `(${item.school.shortName})` : '',
-                    address: item.address ? item.address : "",
                     region: item.region ? item.region.name : "",
                     major: item.major ? item.major.name : "",
-                    birthday: item.birthday === -1 ? "" : timeConverter(item.birthday, 1000),
-                    createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000),
+                    createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000, 'DD/MM/YYYY'),
                 });
             })
             return {
@@ -274,14 +246,34 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             }
         }
 
-        return { loadingTable: false }
+        return null
     };
 
     async componentDidMount() {
+
         await this.searchStudents();
         await this.props.getListSchools(0, 10, { name: "" })
     };
+    renderName = (item) => {
+        return (
+            <div>
+                <span className="wapper-name-student" onClick={() => {
+                    this.setState({
+                        openDrawer: true,
+                        typeCpn: TYPE.DETAIL
+                    });
+                    // setTimeout(() => {
+                    this.props.getStudentDetail(item.id);
+                    // }, 300);
+                }}>
+                    <span className="nameStudent">{(item.lastName ? item.lastName : "") + " " + (item.firstName ? item.firstName : "")}</span>
+                    <Tooltip title={(item.profileVerified ? "Đã" : "Chưa") + " xác thực"}><Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red", position: 'relative', top: 3.2, left: 3 }} /></Tooltip>
+                </span>
+                <div style={{display: 'flex', justifyContent: 'flex-start', fontSize: '0.95em'}}>{item.gender === TYPE.MALE ? 'Nam' : 'Nữ'}</div>
+            </div>
 
+        )
+    }
     handleId = (event) => {
         if (event.key) {
             this.setState({ id: event.key })
@@ -289,12 +281,13 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: 5 });
         await this.searchStudents();
     };
 
     searchStudents = async () => {
         let { pageIndex, pageSize, body } = this.state;
+        this.setState({ loadingTable: true });
         await this.props.getListStudents(pageIndex, pageSize, body);
     };
 
@@ -503,6 +496,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
             typeCpn,
             loading,
             openImport,
+            body,
+            createdDate
         } = this.state;
 
         let {
@@ -575,9 +570,9 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                         />
                     </h5>
                     <div className="table-operations">
-                        <Row >
+                        <Row style={{ marginBottom: 10 }}>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tên tài khoản"} />
+                                <IptLetterP value={"Email"} />
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
@@ -599,6 +594,26 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                 </Select>
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <IptLetterP value={"Ngày tạo tài khoản"} />
+                                <DatePicker
+                                        format={"DD/MM/YYYY"}
+                                        style={{ width: '100%' }}
+                                        placeholder={'ex: ' + moment().format("DD/MM/YYYY")}
+                                        defaultPickerValue={null}
+                                        value={body.createdDate ? moment(body.createdDate) : null}
+                                        onChange={
+                                            (event?: any) => {
+                                                // console.log(event)
+                                                event ?
+                                                    body.createdDate = event.unix() * 1000 :
+                                                    body.createdDate = null;
+                                                this.setState({ body });
+                                                this.forceUpdate()
+                                            }
+                                        }
+                                    />
+                            </Col>
+                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Giới tính"} />
                                 <Select
                                     showSearch
@@ -610,7 +625,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     <Select.Option value={TYPE.MALE}>Nam </Select.Option>
                                     <Select.Option value={TYPE.FEMALE}>Nữ</Select.Option>
                                 </Select>
-                            </Col>
+                            </Col> */}
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Tỉnh thành"} />
                                 <Select
@@ -628,7 +643,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Trạng thái hồ sơ"} />
                                 <Select
                                     showSearch
@@ -640,8 +655,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     <Select.Option value={TYPE.TRUE}>Hoàn thiện </Select.Option>
                                     <Select.Option value={TYPE.FALSE}>Chưa hoàn thiện</Select.Option>
                                 </Select>
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            </Col> */}
+                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Tình trạng xác minh"} />
                                 <Select
                                     showSearch
@@ -653,8 +668,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     <Select.Option value={TYPE.TRUE}>Đã xác minh </Select.Option>
                                     <Select.Option value={TYPE.FALSE}>Chưa xác minh </Select.Option>
                                 </Select>
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            </Col> */}
+                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Trạng thái mở khóa"} />
                                 <Select
                                     showSearch
@@ -666,16 +681,16 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     <Select.Option value={TYPE.TRUE}>Đã mở khóa </Select.Option>
                                     <Select.Option value={TYPE.FALSE}>Chưa mở khóa</Select.Option>
                                 </Select>
-                            </Col>
+                            </Col> */}
                         </Row>
                         <Table
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={data_table}
-                            scroll={{ x: 2150 }}
+                            scroll={{ x: 1610 }}
                             bordered
-                            pagination={{ total: totalItems, showSizeChanger: true }}
+                            pagination={{ total: totalItems, pageSize: 5 }}
                             size="middle"
                             onChange={this.setPageIndex}
                             onRow={(record: any, rowIndex: any) => {

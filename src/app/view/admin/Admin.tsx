@@ -185,7 +185,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        <Breadcrumb >
+                        {/* <Breadcrumb >
                             <Breadcrumb.Item >
                                 <a href='/admin' >
                                     <Icon type="home" />
@@ -206,10 +206,10 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
                                 return newBreakCump
                             })}
-                        </Breadcrumb>
+                        </Breadcrumb> */}
                         <Row>
-                            <Col sm={1} md={1} lg={2}></Col>
-                            <Col sm={22} md={22} lg={20}>
+                            {/* <Col sm={1} md={1} lg={2}></Col> */}
+                            <Col sm={24} md={24} lg={24}>
                                 {!loading ? <Switch>
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.PENDING_JOBS}`} component={PendingJobs} />
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.ANNOUNCEMENT}`} component={Announcement} />
@@ -219,7 +219,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.EVENT}`} component={Event} />
                                 </Switch> : <Loading />}
                             </Col >
-                            <Col sm={1} md={1} lg={2}></Col>
+                            {/* <Col sm={1} md={1} lg={2}></Col> */}
                         </Row>
                     </Content>
                 </Layout>

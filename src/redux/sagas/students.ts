@@ -32,7 +32,9 @@ function callStudents(action: any) {
                 action.body ? action.body : undefined,
                 {
                     pageIndex: action.pageIndex ? action.pageIndex : 0,
-                    pageSize: action.pageSize ? action.pageSize : 10
+                    pageSize: action.pageSize ? action.pageSize : 5,
+                    sortBy: "s.createdDate",
+                    sortType: "desc"
                 },
                 undefined, undefined, false, false
             )
