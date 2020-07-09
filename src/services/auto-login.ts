@@ -1,19 +1,19 @@
-import { TYPE } from './../const/type';
-import { toUnixTime } from './../utils/toUnixTime';
-import Cookies from 'universal-cookie';
-import { loginUser } from './login';
+import { TYPE } from "./../const/type";
+import { toUnixTime } from "./../utils/toUnixTime";
+import Cookies from "universal-cookie";
+import { loginUser } from "./login";
 
 export function Atlg() {
-    let cookie = new Cookies();
-    let atlg = cookie.get("atlg");
-    let actk = cookie.get("actk");
-    if (atlg === true && actk) {
-        let rftk = cookie.get("rftk");
-        let timeEnd = cookie.get("t_e_actk");
-        if (timeEnd < toUnixTime(new Date())) {
-            loginUser(rftk, TYPE.REFESH_LOGIN)
-        }
-    } else {
-        cookie.set("atlg", false, {path: "/"});
-    }
+  let cookie = new Cookies();
+  let actk = cookie.get("actk");
+
+//   console.log(actk);
+
+//   if (atlg === true) {
+//     let rftk = cookie.get("rftk");
+//     loginUser(rftk, TYPE.REFESH_LOGIN);
+//   } else {
+//     // cookie.set("atlg", false, { path: "/" });
+//     console.log("??");
+//   }
 }

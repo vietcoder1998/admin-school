@@ -1,4 +1,5 @@
 // Check invalid header
+
 export const authHeaders = {
     "Access-Control-Allow-Headers": "*",
     "Authorization": `Bearer ${localStorage.getItem("token")}`,
