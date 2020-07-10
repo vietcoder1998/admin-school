@@ -58,7 +58,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
     if (cookie.get("rftk")) {
       let refreshToken = cookie.get("rftk");
       await loginUser({ refreshToken }, TYPE.REFESH_LOGIN);
-      this.setState({ loginSuccess: true });
+      // this.setState({ loginSuccess: true });
     } else {
       console.log("no refresh token");
     }

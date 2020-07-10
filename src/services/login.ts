@@ -33,12 +33,12 @@ export function loginUser(data?: any, type?: string) {
         });
         localStorage.setItem("userID", res.data.userID);
         localStorage.setItem("token", res.data.accessToken);
-        // let last_url = localStorage.getItem("last_url");
-        // if (last_url) {
-        //   window.location.href = last_url;
-        // } else {
-        //   window.location.href = "/admin/pending-jobs/list";
-        // }
+        let last_url = localStorage.getItem("last_url");
+        if (last_url) {
+          window.location.href = last_url;
+        } else {
+          window.location.href = "/admin/pending-jobs/list";
+        }
       }
     })
     .catch((e) => {
