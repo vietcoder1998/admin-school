@@ -9,6 +9,7 @@ export const _get = async (host: string | undefined, api: string,
 export const _post = async (host: string | undefined, api: string,
     data?: any, params?: any, headers?: any) => {
     let res = await axios.post(host + api, data, { headers, params });
+    console.log(headers)
     return res.data;
 };
 

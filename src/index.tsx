@@ -13,31 +13,11 @@ import "antd/dist/antd.css";
 import "sweetalert2/src/sweetalert2.scss";
 import "cropperjs/dist/cropper.css";
 import "react-image-crop/dist/ReactCrop.css";
-import { Atlg } from "./services/auto-login";
 import Routes from "./routes/Routes";
-import { loginUser } from "./services/login";
-import Cookies from "universal-cookie";
-import { TYPE } from "./const/type";
 
 require("dotenv").config();
 
-// async function LoginByRefreshToken() {
-//   console.log('start login')
-//   await Atlg();
-// }
-// LoginByRefreshToken(); /// chỗ này là làm
-const cookie = new Cookies();
-console.log(cookie);
-console.log(cookie.get('actk'));
-console.log(cookie.get('rftk'))
-// async function AutoLogin() {
-  
-//   console.log(cookie);
-//   await loginUser(cookie.get("rftk"), TYPE.REFESH_LOGIN);
-// }
 
-// if()
-// console.log('start render')
 const rootEl = document.getElementById("root");
 const appRenderer = (Component: any) =>
   ReactDOM.render(

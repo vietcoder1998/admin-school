@@ -75,10 +75,10 @@ export const _requestToServer = async (
                         text: "Vui lòng đăng nhập lại",
                         icon: 'error',
                         onClose: () => {
-                            // window.location.assign('/')
-                            // clearStorage()
+                            window.location.assign('/')
+                            clearStorage()
                         },
-                        // timer: 5500
+                        timer: 5500
                     });
                 }
 
