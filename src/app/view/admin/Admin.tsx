@@ -114,7 +114,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             style={{
                                 marginTop: 15,
                                 fontSize: 20,
-                                zIndex: 999
+                                zIndex: 999,
+                                color: 'white'
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />

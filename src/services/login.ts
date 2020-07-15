@@ -4,10 +4,9 @@ import { _requestToServer } from "./exec";
 import { loginHeaders } from "./auth";
 import { ADMIN_LOGIN, RFTK_LOGIN } from "./api/public.api";
 import { POST } from "./../const/method";
-import Cookies from "universal-cookie";
+
 
 export function loginUser(data?: any, type?: string) {
-  console.log(data);
   _requestToServer(
     POST,
     type === TYPE.NORMAL_LOGIN ? ADMIN_LOGIN : RFTK_LOGIN,
@@ -23,22 +22,24 @@ export function loginUser(data?: any, type?: string) {
   )
     .then((res) => {
       if (res && res.code === 200) {
-        let cookie = new Cookies();
-        let timeEnd = toUnixTime(new Date());
-        cookie.set("actk", res.data.accessToken, { path: "/" });
-        cookie.set("rftk", res.data.refreshToken, { path: "/" });
-        cookie.set("t_e_rftk", res.data.refreshTokenExpSecs, { path: "/" });
-        cookie.set("t_e_actk", timeEnd + res.data.accessTokenExpSecs, {
-          path: "/",
-        });
+        // let cookie = new Cookies();
+        // let timeEnd = toUnixTime(new Date());
+        // cookie.set("actk", res.data.accessToken, { path: "/" });
+        // cookie.set("rftk", res.data.refreshToken, { path: "/" });
+        // cookie.set("t_e_rftk", res.data.refreshTokenExpSecs, { path: "/" });
+        // cookie.set("t_e_actk", timeEnd + res.data.accessTokenExpSecs, {
+        //   path: "/",
+        // });
+        console.log(res)
         localStorage.setItem("userID", res.data.userID);
         localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
         let last_url = localStorage.getItem("last_url");
-        if (last_url) {
-          window.location.href = last_url;
-        } else {
-          window.location.href = "/admin/pending-jobs/list";
-        }
+        // if (last_url) {
+        //   window.location.href = last_url;
+        // } else {
+        //   window.location.href = "/admin/pending-jobs/list";
+        // }
       }
     })
     .catch((e) => {

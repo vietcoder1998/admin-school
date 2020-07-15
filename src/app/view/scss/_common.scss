@@ -177,12 +177,17 @@ textarea {
 
 .action {
   text-align: center !important;
+
   label {
     min-width: 80px;
     text-align: center;
   }
 }
-
+.ant-table-thead{
+  th {
+    text-align: center !important;
+  }
+}
 #cke_dialog_tab {
   display: block !important;
 }
