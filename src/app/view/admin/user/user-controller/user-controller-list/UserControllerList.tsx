@@ -66,7 +66,7 @@ class UserControllerList extends PureComponent<
       body: {
         username: null,
         email: null,
-        banned: false,
+        banned: null,
         activated: null,
         createdDate: null,
         lastActive: null,

@@ -35,11 +35,11 @@ export function loginUser(data?: any, type?: string) {
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
         let last_url = localStorage.getItem("last_url");
-        // if (last_url) {
-        //   window.location.href = last_url;
-        // } else {
-        //   window.location.href = "/admin/pending-jobs/list";
-        // }
+        if (last_url) {
+          window.location.href = last_url;
+        } else {
+          window.location.href = "/admin/pending-jobs/list";
+        }
       }
     })
     .catch((e) => {

@@ -18,8 +18,10 @@ export const _post = async (
   headers?: any
 ) => {
   console.log(data);
-  console.log(host + api)
+  console.log(host + api);
+  console.log(headers)
   let res = await axios.post(host + api, data, { headers, params });
+ 
   return res.data;
 };
 
