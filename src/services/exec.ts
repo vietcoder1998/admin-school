@@ -69,7 +69,7 @@ export const _requestToServer = async (
                 msg = data.msg;
 
                 if (code && (code === 4014 || code === 4015)) {
-                    console.log(code)
+                   
                     Swal.fire({
                         title: "Đăng nhập hết hạn",
                         text: "Vui lòng đăng nhập lại",

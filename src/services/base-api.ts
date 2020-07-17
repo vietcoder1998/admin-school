@@ -17,9 +17,7 @@ export const _post = async (
   params?: any,
   headers?: any
 ) => {
-  console.log(data);
-  console.log(host + api);
-  console.log(headers)
+ 
   let res = await axios.post(host + api, data, { headers, params });
  
   return res.data;

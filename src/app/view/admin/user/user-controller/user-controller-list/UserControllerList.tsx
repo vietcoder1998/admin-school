@@ -46,6 +46,7 @@ interface IUserControllerListState {
   body?: IUserControllerFilter;
   list_user_controller?: Array<IUserController>;
   banned_state?: string;
+  filter?: any;
 }
 
 class UserControllerList extends PureComponent<
@@ -72,6 +73,13 @@ class UserControllerList extends PureComponent<
         lastActive: null,
       },
       list_user_controller: [],
+
+      filter: {
+        offset: 0,
+        limit: 10,
+        startTime: null,
+        endTime: null,
+      },
     };
   }
 
@@ -120,58 +128,57 @@ class UserControllerList extends PureComponent<
   };
 
   columns = [
-      {
-          title: '#',
-          width: 50,
-          dataIndex: 'index',
-          key: 'index',
-          className: 'action',
-          fixed: 'left',
-      },
-      {
-          title: 'Tên tài khoản',
-          dataIndex: 'username',
-         
-          key: 'username',
-          width: 200,
-         
-      },
-      {
-          title: 'Email',
-          dataIndex: 'email',
-          
-          key: 'email',
-          width: 200,
-      },
-      {
-          title: 'Trạng thái cấm',
-          dataIndex: 'banned',
-          className: 'action',
-          key: 'banned',
-          width: 100,
-      },
-      {
-          title: 'Ngày tạo',
-          dataIndex: 'createdDate',
-          className: 'action',
-          key: 'createdDate',
-          width: 100,
-      },
-      {
-          title: 'Đăng nhập cuối',
-          dataIndex: 'lastActive',
-          className: 'action',
-          key: 'lastActive',
-          width: 100,
-      },
-      {
-          title: 'Thao tác',
-          key: 'operation',
-          fixed: 'right',
-          className: 'action',
-          width: 100,
-          render: () => this.EditToolAction()
-      },
+    {
+      title: "#",
+      width: 50,
+      dataIndex: "index",
+      key: "index",
+      className: "action",
+      fixed: "left",
+    },
+    {
+      title: "Tên tài khoản",
+      dataIndex: "username",
+
+      key: "username",
+      width: 200,
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+
+      key: "email",
+      width: 200,
+    },
+    {
+      title: "Trạng thái cấm",
+      dataIndex: "banned",
+      className: "action",
+      key: "banned",
+      width: 100,
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "createdDate",
+      className: "action",
+      key: "createdDate",
+      width: 100,
+    },
+    {
+      title: "Đăng nhập cuối",
+      dataIndex: "lastActive",
+      className: "action",
+      key: "lastActive",
+      width: 100,
+    },
+    {
+      title: "Thao tác",
+      key: "operation",
+      fixed: "right",
+      className: "action",
+      width: 100,
+      render: () => this.EditToolAction(),
+    },
   ];
 
   onToggleModal = () => {
@@ -211,10 +218,9 @@ class UserControllerList extends PureComponent<
       return {
         list_user_controller: nextProps.list_user_controller,
         data_table,
-        loadingTable: false,
       };
     }
-    return { loadingTable: false };
+    return {};
   }
 
   async componentDidMount() {
@@ -230,7 +236,6 @@ class UserControllerList extends PureComponent<
   setPageIndex = async (event: any) => {
     await this.setState({
       pageIndex: event.current - 1,
-      loadingTable: true,
       pageSize: event.pageSize,
     });
     await this.searchUserControllers();
@@ -238,8 +243,18 @@ class UserControllerList extends PureComponent<
 
   searchUserControllers = async () => {
     let { pageIndex, pageSize, body } = this.state;
-    
+    this.setState({ loadingTable: true });
     await this.props.getListUserControllers(pageIndex, pageSize, body);
+    this.setState({
+      loadingTable: false,
+    });
+  };
+
+  searchFilter = async () => {
+    await this.setState({
+      pageIndex: 0,
+    });
+    this.searchUserControllers();
   };
 
   createRequest = async (type?: string) => {
@@ -300,7 +315,9 @@ class UserControllerList extends PureComponent<
             Danh sách người dùng
             <Button
               icon="filter"
-              onClick={() => this.searchUserControllers()}
+              onClick={() => {
+                this.searchFilter();
+              }}
               type="primary"
               style={{
                 float: "right",
@@ -322,7 +339,7 @@ class UserControllerList extends PureComponent<
                   }
                   onKeyDown={(event: any) => {
                     if (event.keyCode === 13) {
-                      this.searchUserControllers();
+                      this.searchFilter();
                     }
                   }}
                 />
@@ -340,7 +357,7 @@ class UserControllerList extends PureComponent<
                   }
                   onKeyDown={(event: any) => {
                     if (event.keyCode === 13) {
-                      this.searchUserControllers();
+                      this.searchFilter();
                     }
                   }}
                 />
@@ -394,11 +411,15 @@ class UserControllerList extends PureComponent<
             <Table
               // @ts-ignore
               columns={this.columns}
-              loading={loadingTable}
+              loading={this.state.loadingTable}
               dataSource={data_table}
               scroll={{ x: 850 }}
               bordered
-              pagination={{ total: totalItems, showSizeChanger: true }}
+              pagination={{
+                total: totalItems,
+                showSizeChanger: true,
+                current: this.state.pageIndex + 1,
+              }}
               size="middle"
               onChange={this.setPageIndex}
               onRow={(record: any, rowIndex: any) => {

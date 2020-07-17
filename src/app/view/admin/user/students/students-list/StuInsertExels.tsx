@@ -57,7 +57,7 @@ class StuInsertExels extends PureComponent<IProps, IState> {
         let data = new FormData();
         data.append('file', file);
         let res = await _requestToServer(POST, IMPORT_STU(id), data, params, undefined, undefined, true, false);
-        console.log(res.data);
+      
         this.setState({ arrMsg: res.data[0] });
     }
 

@@ -30,7 +30,7 @@ export function loginUser(data?: any, type?: string) {
         // cookie.set("t_e_actk", timeEnd + res.data.accessTokenExpSecs, {
         //   path: "/",
         // });
-        console.log(res)
+       
         localStorage.setItem("userID", res.data.userID);
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
@@ -43,7 +43,7 @@ export function loginUser(data?: any, type?: string) {
       }
     })
     .catch((e) => {
-      console.log(e);
+     
     });
 }
 

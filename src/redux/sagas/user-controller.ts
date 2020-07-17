@@ -17,7 +17,7 @@ function* getListUserControllersData(action: any) {
     if (res.code === 200) {
         data = res.data
     }
-    console.log(data)
+   
     yield put({
         type: REDUX.USER_CONTROLLER.GET_USER_CONTROLLER,
         data
