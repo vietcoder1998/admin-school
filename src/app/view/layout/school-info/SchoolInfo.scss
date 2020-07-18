@@ -77,7 +77,9 @@
     height: auto;
     margin: 0px -10px;
     background-color: white;
-
+    .ant-card-body {
+      text-align: justify;
+    }
     .description-info {
       width: 100%;
       min-height: 25vh;

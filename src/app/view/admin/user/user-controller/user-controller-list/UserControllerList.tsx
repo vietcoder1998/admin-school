@@ -49,10 +49,7 @@ interface IUserControllerListState {
   filter?: any;
 }
 
-class UserControllerList extends PureComponent<
-  IUserControllerListProps,
-  IUserControllerListState
-> {
+class UserControllerList extends PureComponent<IUserControllerListProps, IUserControllerListState> {
   constructor(props) {
     super(props);
     this.state = {
