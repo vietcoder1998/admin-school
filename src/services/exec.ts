@@ -3,6 +3,7 @@ import { GET, POST, PUT, DELETE } from '../const/method';
 import { _delete, _get, _post, _put } from './base-api';
 import Swal from 'sweetalert2';
 import { authHeaders } from "./auth";
+import clearStorage from './clearStorage';
 
 export const _requestToServer = async (
     method: string,
@@ -73,7 +74,7 @@ export const _requestToServer = async (
                         title: "Đăng nhập hết hạn",
                         text: "Vui lòng đăng nhập lại",
                         icon: 'error',
-                        onClose: () => window.location.assign('/'),
+                        onClose: () => {window.location.assign('/'); clearStorage()},
                         timer: 5500
                     });
                 }

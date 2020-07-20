@@ -399,6 +399,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                     onCancel={() => this.onToggleModal()}
                     title={modalType === "BANNER" ? "CẬP NHẬT BANNER" : <div style={{ textTransform: "uppercase" }}>{eventDetail.name}</div>}
                     width={'50vw'}
+                    destroyOnClose={true}
                     bodyStyle={{ padding: 10 }}
                     footer={[
                         <Button
@@ -422,21 +423,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                             children={
                                 "Cập nhật banner"
                             }
-                        /> : <Button
-                                key={"oke"}
-                                onClick={
-                                    () =>
-                                        this.props.history.push(
-                                            routeLink.EVENT +
-                                            routePath.FIX + `/${eventDetail.id}`
-                                        )
-                                }
-                                type={"primary"}
-                                icon={"tool"}
-                                children={
-                                    "Sửa thông tin"
-                                }
-                            />
+                        /> : ""
                     ]}
                 >
                     {modalType === "BANNER" ?

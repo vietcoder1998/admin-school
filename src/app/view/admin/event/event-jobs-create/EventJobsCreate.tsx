@@ -95,7 +95,7 @@ class EventJobCreate extends Component<IProps, IState> {
     };
 
     async componentDidMount() {
-        const {id, eid} = this.state;
+        const { id, eid } = this.state;
         this.props.getListEmBranches();
         this.props.getEventJobDetail(id, eid);
     };
@@ -107,12 +107,12 @@ class EventJobCreate extends Component<IProps, IState> {
             let url = new URL(url_string);
             let eid = url.searchParams.get("eid");
 
-            console.log("map");
 
             if (
                 props.match.url.includes("fix") ||
                 props.match.url.includes("copy")
             ) {
+                console.log("map");
                 props.getEventJobDetail(id, eid);
             }
 
