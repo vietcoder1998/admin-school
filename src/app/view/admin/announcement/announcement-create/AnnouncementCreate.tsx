@@ -292,7 +292,7 @@ class AnnouncementCreate extends PureComponent<IAnnouncementCreateProps, IAnnoun
 
     componentWillUnmount() {
         window.removeEventListener("focus", () => {
-            console.log("ok")
+         
         })
 
     }

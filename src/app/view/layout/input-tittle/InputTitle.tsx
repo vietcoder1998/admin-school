@@ -192,7 +192,7 @@ export const InputTitle = (props: IInputitleProps) => {
                     className="title-inside"
                     style={{
                         fontWeight: 550,
-                        fontFamily: "IBMPlexSanLights",
+                        // fontFamily: "IBMPlexSanLights",
                         lineHeight: "30px",
                         width: !props.widthLabel ? "150px" : props.widthLabel
                     }}

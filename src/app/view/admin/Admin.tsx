@@ -40,10 +40,12 @@ interface AdminProps extends StateProps, DispatchProps {
     getListJobGroups: Function;
     getListBranches: Function;
     getListSkills: Function;
+    getListLanguages: Function;
     getListApiController: Function;
     getListRegions: Function;
     getListRoles: Function;
     handleLoading: Function;
+
 }
 
 class Admin extends PureComponent<AdminProps, AdminState> {
@@ -62,6 +64,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListTypeManagement({ target: null });
         await this.props.getListJobGroups();
         await this.props.getListBranches();
+        await this.props.getListLanguages();
         await this.props.getListApiController();
         await this.props.getListRegions();
         await this.props.getListRoles();
@@ -114,7 +117,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             style={{
                                 marginTop: 15,
                                 fontSize: 20,
-                                zIndex: 999
+                                zIndex: 999,
+                                color: 'white'
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
@@ -185,7 +189,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        <Breadcrumb >
+                        {/* <Breadcrumb >
                             <Breadcrumb.Item >
                                 <a href='/admin' >
                                     <Icon type="home" />
@@ -206,10 +210,10 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
                                 return newBreakCump
                             })}
-                        </Breadcrumb>
+                        </Breadcrumb> */}
                         <Row>
-                            <Col sm={1} md={1} lg={2}></Col>
-                            <Col sm={22} md={22} lg={20}>
+                            {/* <Col sm={1} md={1} lg={2}></Col> */}
+                            <Col sm={24} md={24} lg={24}>
                                 {!loading ? <Switch>
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.PENDING_JOBS}`} component={PendingJobs} />
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.ANNOUNCEMENT}`} component={Announcement} />
@@ -219,7 +223,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.EVENT}`} component={Event} />
                                 </Switch> : <Loading />}
                             </Col >
-                            <Col sm={1} md={1} lg={2}></Col>
+                            {/* <Col sm={1} md={1} lg={2}></Col> */}
                         </Row>
                     </Content>
                 </Layout>
@@ -241,6 +245,9 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     }),
     getListBranches: () => dispatch({
         type: REDUX_SAGA.BRANCHES.GET_BRANCHES
+    }),
+    getListLanguages: () => dispatch({
+        type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES
     }),
     getListApiController: () => dispatch({
         type: REDUX_SAGA.API_CONTROLLER.GET_API_CONTROLLER

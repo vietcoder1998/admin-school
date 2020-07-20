@@ -16,6 +16,7 @@ function* getListStudentsData(action: any) {
 
     if (res) {
         data = res.data;
+        console.log(data)
     }
 
     yield put({
@@ -27,12 +28,16 @@ function* getListStudentsData(action: any) {
 function callStudents(action: any) {
     try {
         if (action.body) {
+            // console.log(action.body)
+            console.log(action.pageIndex)
             return _requestToServer(
                 POST, STUDENTS + '/query',
                 action.body ? action.body : undefined,
                 {
                     pageIndex: action.pageIndex ? action.pageIndex : 0,
-                    pageSize: action.pageSize ? action.pageSize : 10
+                    pageSize: action.pageSize ? action.pageSize : 5,
+                    sortBy: "s.createdDate",
+                    sortType: "desc"
                 },
                 undefined, undefined, false, false
             )
@@ -48,3 +53,5 @@ export function* StudentsWatcher() {
         getListStudentsData
     )
 }
+
+

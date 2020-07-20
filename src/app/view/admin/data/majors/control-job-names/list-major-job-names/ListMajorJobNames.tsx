@@ -130,7 +130,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             listJobNames.forEach((element: IJobName) => {
                 if (element.name === item) {
                     list_id.push(element.id);
-                    console.log(list_id);
+                  
                 }
             });
 

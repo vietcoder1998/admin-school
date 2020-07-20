@@ -1,0 +1,12 @@
+.nameStudent {
+    font-weight: bold;
+    color: rgb(24, 144, 255);
+    font-size: 1.05em;
+}
+.wapper-name-student {
+    display: flex;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline rgb(24, 144, 255);
+    }
+}

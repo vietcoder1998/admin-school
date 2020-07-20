@@ -183,7 +183,7 @@ function StudentInfo(props: IStudentInfoProps) {
                                 <Card title="Yêu cầu khác" bordered={false}>
                                     <div>
                                         {data && data.skills && data.skills.length > 0 ? data.skills.map((item?: ISkill, i?: number) =>
-                                            <span className='item-more-info' key={i}>{item.name}</span>
+                                            <span className='item-more-info' key={i}>{item.name + ", "}</span>
                                         ) : <NotUpdate />}
                                     </div>
                                 </Card>

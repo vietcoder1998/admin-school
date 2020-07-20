@@ -255,8 +255,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     lookingForJob: item.lookingForJob ? "Có" : "Đã có việc",
                     address: item.address ? item.address : "",
                     region: item.region ? item.region.name : "",
-                    birthday: item.birthday === -1 ? "" : timeConverter(item.birthday, 1000),
-                    createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000),
+                    birthday: item.birthday === -1 ? "Chưa cập nhật" : timeConverter(item.birthday, 1000, "DD/MM/YYYY"),
+                    createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000, "DD/MM/YYYY"),
                     profileVerified: <Tooltip title={(item.profileVerified ? "Đã" : "Chưa") + " xác thực"}><Icon type={"safety"} style={{ color: item.profileVerified ? "green" : "red" }} />  </Tooltip>,
                 });
             })
@@ -287,6 +287,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
 
     searchCandidate = async () => {
         let { body, pageIndex, pageSize } = this.state;
+        console.log(body)
         await this.props.getListCandidates(body, pageIndex, pageSize);
     };
 
@@ -494,9 +495,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     }}
                     onClick={async () => {
                         await this.setState({ openDrawer: false });
-                        await setTimeout(() => {
-                            this.searchCandidate();
-                        }, 250);
+                        await this.searchCandidate();                     
                     }}
                 >
                     Lọc
@@ -509,7 +508,12 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         let { openImport } = this.state;
         this.setState({ openImport: !openImport })
     }
-
+    searchFilter = async () => {   // change index to 0 when start searching
+        await this.setState({
+          pageIndex: 0,
+        });
+        this.searchCandidate();
+      };
     render() {
         let {
             data_table,
@@ -529,7 +533,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         return (
             <>
                 <Drawer
-                    title="Lọc nâng cao"
+                    // title="Lọc nâng cao"
                     placement="right"
                     width={"60vw"}
                     closable={true}
@@ -562,7 +566,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             Import
                         </Button>
                         <Button
-                            onClick={() => this.searchCandidate()}
+                            onClick={() => this.searchFilter()}
                             type="primary"
                             style={{
                                 float: "right",
@@ -590,7 +594,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
                                     onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.CANDIDATES_FILTER.username)}
-                                    onPressEnter={(event: any) => this.searchCandidate()}
+                                    onPressEnter={(event: any) => this.searchFilter()}
                                 />
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >

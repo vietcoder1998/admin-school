@@ -9,7 +9,7 @@ function* getListEventDetailData(action: any) {
     let res = yield call(callEventDetail, action);
     let data: IEventDetail = {};
 
-    console.log(res.data)
+   
 
     if (res) {
         data = res.data
