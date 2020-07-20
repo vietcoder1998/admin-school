@@ -61,9 +61,10 @@ export const _requestToServer = async (
     } catch (err) {
         let code;
         let msg;
-
+       
         if (err.response) {
             let data = err.response.data;
+           
             if (data) {
                 code = data.code;
                 msg = data.msg;

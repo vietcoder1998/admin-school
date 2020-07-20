@@ -40,10 +40,12 @@ interface AdminProps extends StateProps, DispatchProps {
     getListJobGroups: Function;
     getListBranches: Function;
     getListSkills: Function;
+    getListLanguages: Function;
     getListApiController: Function;
     getListRegions: Function;
     getListRoles: Function;
     handleLoading: Function;
+
 }
 
 class Admin extends PureComponent<AdminProps, AdminState> {
@@ -62,6 +64,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListTypeManagement({ target: null });
         await this.props.getListJobGroups();
         await this.props.getListBranches();
+        await this.props.getListLanguages();
         await this.props.getListApiController();
         await this.props.getListRegions();
         await this.props.getListRoles();
@@ -242,6 +245,9 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     }),
     getListBranches: () => dispatch({
         type: REDUX_SAGA.BRANCHES.GET_BRANCHES
+    }),
+    getListLanguages: () => dispatch({
+        type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES
     }),
     getListApiController: () => dispatch({
         type: REDUX_SAGA.API_CONTROLLER.GET_API_CONTROLLER

@@ -362,7 +362,7 @@ class EmControllerList extends PureComponent<
     this.setState({ openImport: !openImport });
   };
 
-  searchFilter = async () => {
+  searchFilter = async () => {   // change index to 0 when start searching
     await this.setState({
       pageIndex: 0,
     });

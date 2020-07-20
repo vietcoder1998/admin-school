@@ -3,6 +3,7 @@ import { Icon, Avatar, Row, Col, Tabs, Card, Divider, Skeleton } from 'antd';
 import './EmInfo.scss';
 // @ts-ignore
 import backGround from '../../../../assets/image/base-image.jpg';
+
 // @ts-ignore
 import avatar from '../../../../assets/image/avatar_placeholder.png';
 import { NotUpdate, IptLetterP } from '../common/Common';
@@ -158,19 +159,19 @@ function EmployerInfo(props: IEmployerInfoProps) {
                     <TabPane tab="Ảnh xác minh" key="2">
                         <div className='verified-profile'>
                             <Row>
-                                <Col xs={24} md={12} lg={12} xl={12} xxl={24} >
+                                <Col xs={24} md={12} lg={12} xl={12} xxl={12} >
                                     <div className="ic-ct-img">
                                         <IptLetterP value={"Mặt trước giấy phép"} />
                                         <Skeleton avatar loading={data ? false : true} >
-                                            <img className='ic' src={data && data.identityCardFrontImageUrl} alt='front description' />
+                                            <img className='ic' src={data && data.identityCardFrontImageUrl === null ? backGround : data.identityCardFrontImageUrl} alt='front description' />
                                         </Skeleton>
                                     </div>
                                 </Col>
-                                <Col xs={24} md={12} lg={12} xl={12} xxl={24} >
+                                <Col xs={24} md={12} lg={12} xl={12} xxl={12} >
                                     <div className="ic-ct-img">
                                         <IptLetterP value={"Ảnh văn phòng sau"} />
                                         <Skeleton avatar loading={data ? false : true} >
-                                            <img className='ic' src={data && data.identityCardBackImageUrl} alt='front description' />
+                                            <img className='ic' src={data && data.identityCardBackImageUrl === null ? backGround : data.identityCardBackImageUrl} alt='front description' />
                                         </Skeleton>
                                     </div>
                                 </Col>

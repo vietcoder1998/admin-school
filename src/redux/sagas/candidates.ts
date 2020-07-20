@@ -14,9 +14,10 @@ function* getListCandidatesData(action: any) {
         pageSize: 0,
         totalItems: 0,
     };
-
+    console.log(res)
     if (res.code === 200) {
-        data = res.data
+        data = res.data;
+       
     }
 
     yield put({
@@ -25,9 +26,11 @@ function* getListCandidatesData(action: any) {
     });
 }
 
+
 function callCandidates(action: any) {
     if (action.body) {
         try {
+           console.log(action.body)
             let res = _requestToServer(
                 POST,
                 CANDIDATES +'/query',
@@ -43,9 +46,11 @@ function callCandidates(action: any) {
                 false,
                 false
             )
+           
             return res
 
         } catch (error) {
+            
             throw error;
         }
     }

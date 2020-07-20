@@ -28,8 +28,8 @@ function* getListStudentsData(action: any) {
 function callStudents(action: any) {
     try {
         if (action.body) {
-            console.log(action.body)
-            // console.log(action.pageIndex)
+            // console.log(action.body)
+            console.log(action.pageIndex)
             return _requestToServer(
                 POST, STUDENTS + '/query',
                 action.body ? action.body : undefined,
