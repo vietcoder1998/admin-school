@@ -64,7 +64,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
         this.state = {
             data_table: [],
             pageIndex: 0,
-            pageSize: 5,
+            pageSize: 10,
             showModal: false,
             loading: false,
             id: null,
@@ -235,8 +235,8 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                     email: item.email ? item.email : 'Chưa cập nhật',
                     school: item.school ? item.school.name + `(${item.school.shortName})` : 'Chưa cập nhật',
                     region: item.region ? item.region.name : "Chưa cập nhật",
-                    major: item.major ? item.major.name : "",
-                    createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000, 'DD/MM/YYYY'),
+                    major: item.major ? item.major.name : "Chưa cập nhật",
+                    createdDate: item.createdDate === -1 ? "Chưa cập nhật" : timeConverter(item.createdDate, 1000, 'DD/MM/YYYY'),
                 });
             })
             return {
@@ -281,7 +281,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: 5 });
+        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: 10 });
         await this.searchStudents();
     };
 
@@ -613,19 +613,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                         }
                                     />
                             </Col>
-                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Giới tính"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.STUDENT_FILTER.gender)}
-                                >
-                                    <Select.Option value={null}>Tất cả</Select.Option>
-                                    <Select.Option value={TYPE.MALE}>Nam </Select.Option>
-                                    <Select.Option value={TYPE.FEMALE}>Nữ</Select.Option>
-                                </Select>
-                            </Col> */}
+                         
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                 <IptLetterP value={"Tỉnh thành"} />
                                 <Select
@@ -643,45 +631,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                                     }
                                 </Select>
                             </Col>
-                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái hồ sơ"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.STUDENT_FILTER.completeProfile)}
-                                >
-                                    <Select.Option value={null}>Tất cả</Select.Option>
-                                    <Select.Option value={TYPE.TRUE}>Hoàn thiện </Select.Option>
-                                    <Select.Option value={TYPE.FALSE}>Chưa hoàn thiện</Select.Option>
-                                </Select>
-                            </Col> */}
-                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tình trạng xác minh"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.STUDENT_FILTER.profileVerified)}
-                                >
-                                    <Select.Option value={null}>Tất cả</Select.Option>
-                                    <Select.Option value={TYPE.TRUE}>Đã xác minh </Select.Option>
-                                    <Select.Option value={TYPE.FALSE}>Chưa xác minh </Select.Option>
-                                </Select>
-                            </Col> */}
-                            {/* <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái mở khóa"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.STUDENT_FILTER.unlocked)}
-                                >
-                                    <Select.Option value={null}>Tất cả</Select.Option>
-                                    <Select.Option value={TYPE.TRUE}>Đã mở khóa </Select.Option>
-                                    <Select.Option value={TYPE.FALSE}>Chưa mở khóa</Select.Option>
-                                </Select>
-                            </Col> */}
+                          
                         </Row>
                         <Table
                             // @ts-ignore
@@ -690,7 +640,7 @@ class StudentsList extends PureComponent<IStudentsListProps, IStudentsListState>
                             dataSource={data_table}
                             scroll={{ x: 1610 }}
                             bordered
-                            pagination={{ total: totalItems, pageSize: 5 }}
+                            pagination={{ total: totalItems, pageSize: 10 }}
                             size="middle"
                             onChange={this.setPageIndex}
                             onRow={(record: any, rowIndex: any) => {
