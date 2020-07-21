@@ -710,8 +710,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             list_employer,
             modalState,
             job_detail,
-            job_suitable_candidates,
-            can_detail
+            jobSuitableCandidates,
+            CanDetail
         } = this.props;
 
         let homeExpiration = jobAnnouncementDetail.priority.homeExpiration;
@@ -764,6 +764,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     onCancel={() => {
                         this.setState({ opjd: false, loading: false });
                     }}
+                    style={{top: 20}}
                     footer={[
                         <Button
                             key="cancel"
@@ -792,19 +793,19 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                             />
                         </Col>
                         <Col span={4}>
-                            <h6>ỨNG VIÊN THÍCH HỢP</h6>
+                            <h6>SINH VIÊN TƯƠNG THÍCH</h6>
                             <JobSuitableCandidate
-                                job_suitable_candidates={job_suitable_candidates.items}
-                                pageIndex={job_suitable_candidates.pageIndex}
-                                pageSize={job_suitable_candidates.pageSize}
-                                totalItems={job_suitable_candidates.totalItems}
+                                jobSuitableCandidates={jobSuitableCandidates.items}
+                                pageIndex={jobSuitableCandidates.pageIndex}
+                                pageSize={jobSuitableCandidates.pageSize}
+                                totalItems={jobSuitableCandidates.totalItems}
                                 onGetCanDetail={(id) => this.props.getCanDetail(id)}
                                 onGetListJobSuitableCandidate={(pageIndex, pageSize) => this.props.getListJobSuitableCandidate(jid, pageIndex, pageSize)}
                             />
                         </Col>
                         <Col span={10}>
                             {
-                                job_suitable_candidates.items.length > 0 ? <CandidatetInfo data={can_detail} /> : <Empty />
+                                jobSuitableCandidates.items.length > 0 ? <CandidatetInfo data={CanDetail} /> : <Empty />
                             }
 
                         </Col>
@@ -1131,7 +1132,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getListJobService: (id?: string) =>
         dispatch({ type: REDUX_SAGA.JOB_SERVICE.GET_JOB_SERVICE, id }),
     getCanDetail: (id?: string) =>
-        dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id }),
+        dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENT_DETAIl, id }),
     getListEmployer: (body?: string, pageIndex?: number, pageSize?: number) =>
         dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, body, pageIndex, pageSize }),
     getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) =>
@@ -1145,13 +1146,13 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_employer_branches: state.EmBranches.items,
     list_job_service: state.JobServices,
     list_employer: state.Employers.items,
-    can_detail: state.CandidateDetail,
+    CanDetail: state.StudentDetail,
     jobAnnouncementDetail: state.JobAnnouncementDetail,
     modalState: state.MutilBox.modalState,
     drawerState: state.MutilBox.drawerState,
     totalItems: state.JobAnnouncements.totalItems,
     job_detail: state.JobAnnouncementDetail,
-    job_suitable_candidates: state.JobSuitableCandidates
+    jobSuitableCandidates: state.JobSuitableCandidates
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

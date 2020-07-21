@@ -61,12 +61,12 @@ export function ApplyJobItem(props: IApplyCanItem) {
                         >
                             <div
                                 style={{ width: "4.8vw", height: "4.8vw" }}>
-                                <Avatar style={{ width: "4vw", height: "4vw", margin: "0.2vw" }} shape="square" src={data.candidate.avatarUrl} alt="anh" icon="user" />
+                                <Avatar style={{ width: "4vw", height: "4vw", margin: "0.2vw" }} shape="square" src={data.student.avatarUrl} alt="anh" icon="user" />
                             </div>
                             <div style={{ margin: "0px 15px" }}>
                                 <p style={{ marginBottom: 5 }}>
-                                    {data ? data.candidate.lastName + " " + data.candidate.firstName : <NotUpdate />}
-                                    {data && data.candidate.gender && data.candidate.gender === TYPE.MALE ? " (Nam)" : " (Nữ)"}
+                                    {data ? data.student.lastName + " " + data.student.firstName : <NotUpdate />}
+                                    {data && data.student.gender && data.student.gender === TYPE.MALE ? " (Nam)" : " (Nữ)"}
                                 </p>
                                 <span
                                     style={{
@@ -78,9 +78,13 @@ export function ApplyJobItem(props: IApplyCanItem) {
                                 <p style={{ marginBottom: 5 }}>
                                     Lời nhắn:
                                 </p>
-                                <div className="test" style={{ fontStyle: "italic", padding: '5px 10px', width: '100%' }}>
-                                    {data ? data.message : <NotUpdate msg="Không có" />}
-                                </div>
+                                {
+                                    data && data.message !== "" ?
+                                        <div className="test" style={{ fontStyle: "italic", padding: '5px 10px', width: '100%' }}>
+                                            {data.message}
+                                        </div> :
+                                        <NotUpdate warning={true} msg="Không có" />
+                                }
                             </div>
                         </div>
                     </Col>

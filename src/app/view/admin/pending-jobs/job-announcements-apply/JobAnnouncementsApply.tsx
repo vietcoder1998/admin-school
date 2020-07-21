@@ -232,23 +232,23 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                 >
                                     <div className="content-apply">
                                         {
-                                            list_pending.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_pending.map((item: IApplyCan, index: number) =>
+                                            list_pending.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_pending.map((item: IApplyCan , index: number) =>
                                                 <ApplyJobItem
                                                     key={index}
                                                     type="PENDING"
                                                     l_btn={l_btn}
                                                     data={item}
-                                                    id={item.candidate.id}
-                                                    id_default={item.candidate.id === default_id}
+                                                    id={item && item.student ? item.student.id: null}
+                                                    id_default={item.student.id === default_id}
                                                     onChangeType={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                     onClick={
-                                                        (event: string) => this.searchShift(event, TYPE.PENDING, item.candidate.id)
+                                                        (event: string) => this.searchShift(event, TYPE.PENDING, item.student.id)
                                                     }
                                                     onView={
                                                         () =>{
                                                             this.setState({openDrawer: true});
                                                             setTimeout(() => {
-                                                                this.props.getCandidateDetail(item.candidate.id)
+                                                                this.props.getCandidateDetail(item.student.id)
                                                             }, 500);
                                                         }
                                                     }

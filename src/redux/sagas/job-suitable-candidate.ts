@@ -34,7 +34,7 @@ function callJobSuitableCandidates(action: any) {
 
         let res = _requestToServer(
             POST,
-            JOB_ANNOUNCEMENTS + `/${jid}/candidates/recommended`,
+            JOB_ANNOUNCEMENTS + `/${jid}/students/recommended`,
             action.body ? action.body : {},
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,
