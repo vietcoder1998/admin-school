@@ -1,8 +1,8 @@
-import { PARTNER } from './../../services/api/private.api';
+// import { PARTNER } from './../../services/api/private.api';
 import { IPartners } from '../../models/partner';
-import { POST } from '../../const/method';
+// import { POST } from '../../const/method';
 import { takeEvery, put, call, } from 'redux-saga/effects';
-import { _requestToServer } from '../../services/exec';
+// import { _requestToServer } from '../../services/exec';
 import { REDUX_SAGA, REDUX } from '../../const/actions'
 
 function* getListPartnersData(action: any) {
@@ -27,15 +27,15 @@ function* getListPartnersData(action: any) {
 function callPartners(action: any) {
     try {
         if (action.body) {
-            return _requestToServer(
-                POST, PARTNER + '/query',
-                action.body ? action.body : undefined,
-                {
-                    pageIndex: action.pageIndex ? action.pageIndex : 0,
-                    pageSize: action.pageSize ? action.pageSize : 10
-                },
-                undefined, undefined, false, false
-            )
+            // return _requestToServer(
+            //     POST, PARTNER + '/query',
+            //     action.body ? action.body : undefined,
+            //     {
+            //         pageIndex: action.pageIndex ? action.pageIndex : 0,
+            //         pageSize: action.pageSize ? action.pageSize : 10
+            //     },
+            //     undefined, undefined, false, false
+            // )
         }
     } catch (e) {
         throw e;

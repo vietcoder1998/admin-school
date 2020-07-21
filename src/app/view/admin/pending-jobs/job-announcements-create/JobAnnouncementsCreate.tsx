@@ -31,7 +31,7 @@
 //     loading: boolean;
 //     value_annou: string;
 //     typeCpn: string;
-//     list_em_branches: Array<IEmBranch>;
+//     listEmBranches: Array<IEmBranch>;
 //     body: IAnnoucementBody;
 //     id?: string;
 //     jobName?: string;
@@ -60,7 +60,7 @@
 //             loading: false,
 //             value_annou: "",
 //             typeCpn: TYPE.CREATE,
-//             list_em_branches: [],
+//             listEmBranches: [],
 //             body: {
 //                 jobTitle: null,
 //                 jobNameID: null,
@@ -311,7 +311,7 @@
 
 //         let {
 //             listJobNames,
-//             list_em_branches,
+//             listEmBranches,
 //             listSkills,
 //             jobAnnouncementDetail,
 //             normal_quantity
@@ -339,7 +339,7 @@
 //         };
 
 //         let list_job_name_options = listJobNames.map((item: IJobName) => ({ label: item.name, value: item.id }));
-//         let list_em_branches_options = list_em_branches.map((item: any) => ({ label: item.branchName, value: item.id }));
+//         let listEmBranches_options = listEmBranches.map((item: any) => ({ label: item.branchName, value: item.id }));
 //         let list_skill_options = listSkills.map((item: IJobName, index: number) => (<Option key={index} value={item.name} children={item.name} />));
 
 //         if (
@@ -465,8 +465,8 @@
 //                         title="Chọn chi nhánh "
 //                         required={true}
 //                         type={TYPE.SELECT}
-//                         listValue={list_em_branches_options}
-//                         value={findIdWithValue(list_em_branches, body.employerBranchID, "id", "branchName")}
+//                         listValue={listEmBranches_options}
+//                         value={findIdWithValue(listEmBranches, body.employerBranchID, "id", "branchName")}
 //                         onChange={
 //                             (event: any) => {
 //                                 body.employerBranchID = event;
@@ -618,7 +618,7 @@
 //     jobAnnouncementDetail: state.JobAnnouncementDetail,
 //     pending_job_detail: state.PendingJobDetail,
 //     listSkills: state.Skills.items,
-//     list_em_branches: state.EmBranches.items,
+//     listEmBranches: state.EmBranches.items,
 //     normal_quantity: state.JobService.nomalQuantity
 // });
 

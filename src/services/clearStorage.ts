@@ -1,5 +1,5 @@
 
-import {notification} from "antd";
+// import {notification} from "antd";
 
 export default async function clearStorage() {
     localStorage.clear();

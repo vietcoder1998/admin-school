@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Col, Row, Icon, Form, Input, Button, Checkbox } from "antd";
+import { Col, Row, Icon, Form, Input, Button } from "antd";
 import "./Login.scss";
 // @ts-ignore
 import LGM from "../../../assets/image/login-image.jpg";
@@ -8,7 +8,7 @@ import LGW from "../../../assets/image/logo-color.png";
 
 import { loginUser } from "../../../services/login";
 import { TYPE } from "../../../const/type";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 interface ILoginState {
   email?: string;

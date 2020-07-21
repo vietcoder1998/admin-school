@@ -48,7 +48,7 @@ interface IEmBranchesListState {
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
-    list_em_branches?: Array<any>;
+    listEmBranches?: Array<any>;
     id?: string;
     loadingTable?: boolean;
     body: IEmBranchesFilter;
@@ -75,7 +75,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             createdDate: null,
             adminID: null,
             hidden: false,
-            list_em_branches: [],
+            listEmBranches: [],
             id: null,
             loadingTable: true,
             body: {
@@ -235,10 +235,10 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             }
         }
 
-        if (nextProps.list_em_branches !== prevState.list_em_branches) {
+        if (nextProps.listEmBranches !== prevState.listEmBranches) {
             let { pageIndex, pageSize } = prevState;
             let data_table = [];
-            nextProps.list_em_branches.forEach((item: IEmBranch, index: number) => {
+            nextProps.listEmBranches.forEach((item: IEmBranch, index: number) => {
                 data_table.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -253,7 +253,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                 });
             })
             return {
-                list_em_branches: nextProps.list_em_branches,
+                listEmBranches: nextProps.listEmBranches,
                 data_table,
                 loadingTable: false,
             }
@@ -502,7 +502,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_em_branches: state.EmBranches.items,
+    listEmBranches: state.EmBranches.items,
     totalItems: state.EmBranches.totalItems,
     listRegions: state.Regions.items,
     modalState: state.MutilBox.modalState

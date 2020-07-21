@@ -14,6 +14,7 @@ import {
   Slider,
   Input,
   DatePicker,
+  Modal,
 } from "antd";
 import "./StudentsList.scss";
 import { timeConverter } from "../../../../../../utils/convertTime";
@@ -21,7 +22,7 @@ import { IAppState } from "../../../../../../redux/store/reducer";
 import { REDUX_SAGA } from "../../../../../../const/actions";
 import { _requestToServer } from "../../../../../../services/exec";
 import { DELETE, PUT } from "../../../../../../const/method";
-import { STUDENTS } from "../../../../../../services/api/private.api";
+import { STUDENTS, USER_CONTROLLER } from "../../../../../../services/api/private.api";
 import { TYPE } from "../../../../../../const/type";
 import { IptLetterP } from "../../../../layout/common/Common";
 import { IStudent, IStudentsFilter } from "../../../../../../models/students";
@@ -32,6 +33,7 @@ import { ISkill } from "../../../../../../models/skills";
 import StudentInfo from "../../../../layout/student-info/StudentInfo";
 import StuInsertExels from "./StuInsertExels";
 import moment from "moment";
+import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 
 interface IStudentsListProps extends StateProps, DispatchProps {
   match?: any;
@@ -79,12 +81,14 @@ interface IStudentsListState {
   listStudents?: Array<IStudent>;
   typeCpn?: string;
   openImport?: boolean;
+  visible?: boolean;
+  newPassword?: string;
 }
 
 class StudentsList extends PureComponent<
   IStudentsListProps,
   IStudentsListState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,13 +122,40 @@ class StudentsList extends PureComponent<
       },
       openDrawer: false,
       openImport: false,
+      visible: false,
+      newPassword: null,
     };
   }
 
+  onChangePw = async () => {
+    let { newPassword, id } = this.state;
+    let api = USER_CONTROLLER + `/${id}/password`;
+    await this.setState({ loading: true })
+    await _requestToServer(
+      PUT,
+      api,
+      { newPassword },
+      undefined,
+      undefined,
+      undefined,
+      true,
+      false
+    ).then((res) => {
+      this.setState({ visible: false, loading: false })
+    });
+  }
+
   EditToolAction = () => {
-    let { id } = this.state;
     return (
       <>
+        <Tooltip title="Đổi mật khẩu">
+          <Icon
+            className="test"
+            style={{ padding: 5, margin: 2 }}
+            type="key"
+            onClick={() => this.setState({ visible: true })}
+          />
+        </Tooltip>
         <Tooltip title="Xác thực">
           <Icon
             className="test"
@@ -388,7 +419,7 @@ class StudentsList extends PureComponent<
         api =
           api +
           `/${id}/profile/verified/${
-            studentDetail.profileVerified ? "false" : "true"
+          studentDetail.profileVerified ? "false" : "true"
           }`;
         body = undefined;
         break;
@@ -510,7 +541,7 @@ class StudentsList extends PureComponent<
           mode="multiple"
           size="default"
           placeholder="ex: Tiếng Anh, Tiếng Trung,.."
-        //   value={findIdWithValue(listLanguages, body.languageIDs, "id", "name")}
+          //   value={findIdWithValue(listLanguages, body.languageIDs, "id", "name")}
           onChange={(event: any) => {
             let list_data = findIdWithValue(listLanguages, event, "name", "id");
             body.languageIDs = list_data;
@@ -519,7 +550,7 @@ class StudentsList extends PureComponent<
           }}
           style={{ width: "100%" }}
         >
-           {list_language_options}
+          {list_language_options}
         </Select>
         <div style={{ padding: "40px 0px 20px ", width: "100%" }}>
           <Button
@@ -569,9 +600,11 @@ class StudentsList extends PureComponent<
       loading,
       openImport,
       body,
+      visible,
+      newPassword
     } = this.state;
-
     let { totalItems, listRegions, listSchools, studentDetail } = this.props;
+
     return (
       <>
         <Drawer
@@ -589,8 +622,8 @@ class StudentsList extends PureComponent<
               loading={loading}
             />
           ) : (
-            this.advancedFilter()
-          )}
+              this.advancedFilter()
+            )}
         </Drawer>
         <StuInsertExels
           openImport={openImport}
@@ -598,6 +631,23 @@ class StudentsList extends PureComponent<
           listSchools={listSchools}
           getListSchool={this.onGetListSchool}
         />
+        <Modal
+          title="Đổi mật khẩu"
+          visible={this.state.visible}
+          onOk={this.onChangePw}
+          onCancel={() => this.setState({ visible: !visible })}
+          okText="Thay đổi"
+          cancelText="Hủy"
+          confirmLoading={loading}
+        >
+          <InputTitle
+            title={"Mật khẩu mới"}
+            placeholder={"Nhập mật khẩu"}
+            type={TYPE.INPUT}
+            value={newPassword}
+            onChange={(event) => this.setState({ newPassword: event })}
+          />
+        </Modal>
         <div className="common-content">
           <h5>
             Danh sách sinh viên
@@ -621,7 +671,7 @@ class StudentsList extends PureComponent<
               }}
               icon={loadingTable ? "loading" : "filter"}
               children={"Lọc"}
-              // tự nhiên đổi style code ??
+            // tự nhiên đổi style code ??
             />
             <Button
               onClick={() =>
@@ -702,10 +752,10 @@ class StudentsList extends PureComponent<
                   <Select.Option value={null}>Tất cả</Select.Option>
                   {listRegions && listRegions.length >= 1
                     ? listRegions.map((item: IRegion, index: number) => (
-                        <Select.Option key={index} value={item.name}>
-                          {item.name}
-                        </Select.Option>
-                      ))
+                      <Select.Option key={index} value={item.name}>
+                        {item.name}
+                      </Select.Option>
+                    ))
                     : null}
                 </Select>
               </Col>
@@ -746,7 +796,7 @@ class StudentsList extends PureComponent<
               onChange={this.setPageIndex}
               onRow={(record: any, rowIndex: any) => {
                 return {
-                  onClick: (event: any) => {}, // click row
+                  onClick: (event: any) => { }, // click row
                   onMouseEnter: (event) => {
                     this.setState({ id: record.key });
                   }, // mouse enter row
@@ -796,7 +846,6 @@ const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
   listStudents: state.Students.items,
   studentDetail: state.StudentDetail,
   totalItems: state.Students.totalItems,
-  
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

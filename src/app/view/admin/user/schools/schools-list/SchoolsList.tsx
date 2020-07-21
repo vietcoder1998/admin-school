@@ -10,6 +10,7 @@ import {
   Input,
   Tooltip,
   Select,
+  Modal,
   //  Avatar
 } from "antd";
 import "./SchoolsList.scss";
@@ -18,7 +19,7 @@ import { IAppState } from "../../../../../../redux/store/reducer";
 import { REDUX_SAGA, REDUX } from "../../../../../../const/actions";
 import { _requestToServer } from "../../../../../../services/exec";
 import { DELETE, PUT } from "../../../../../../const/method";
-import { SCHOOLS } from "../../../../../../services/api/private.api";
+import { SCHOOLS, USER_CONTROLLER } from "../../../../../../services/api/private.api";
 import { TYPE } from "../../../../../../const/type";
 // import { IptLetterP } from '../../../../layout/common/Common';
 import { ISchool, ISchoolsFilter } from "../../../../../../models/schools";
@@ -29,6 +30,7 @@ import DrawerConfig from "../../../../layout/config/DrawerConfig";
 import { IDrawerState } from "../../../../../../models/mutil-box";
 import SchoolInfo from "../../../../layout/school-info/SchoolInfo";
 import { IptLetterP } from "../../../../layout/common/Common";
+import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 
 const { Option } = Select;
 
@@ -55,6 +57,8 @@ interface ISchoolsListState {
   body?: ISchoolsFilter;
   listSchools?: Array<ISchool>;
   educatedScaleState?: string;
+  visible: boolean;
+  newPassword?: string;
 }
 
 class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
@@ -80,7 +84,9 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         connected: null,
         createdDate: null,
       },
+      visible: false,
       listSchools: [],
+      newPassword: null,
     };
   }
 
@@ -88,6 +94,14 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     let { id } = this.state;
     return (
       <>
+              <Tooltip title="Đổi mật khẩu">
+          <Icon
+            className="test"
+            style={{ padding: 5, margin: 2 }}
+            type="key"
+            onClick={()=> this.setState({visible: true})}
+          />
+        </Tooltip>
         <Tooltip title="Xem chi tiết trường ">
           <Icon
             className="test"
@@ -316,9 +330,26 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     this.setState({ body });
   };
 
-  render() {
-    let { data_table, loadingTable } = this.state;
+  onChangePw = async () => {
+    let { newPassword, id } = this.state;
+    let api = USER_CONTROLLER + `/${id}/password`;
+    await this.setState({ loading: true })
+    await _requestToServer(
+      PUT,
+      api,
+      { newPassword },
+      undefined,
+      undefined,
+      undefined,
+      true,
+      false
+    ).then((res) => {
+      this.setState({ visible: false, loading: false })
+    });
+  }
 
+  render() {
+    let { data_table, loadingTable, loading, visible, newPassword } = this.state;
     let { totalItems, school_detail, listRegions } = this.props;
     return (
       <>
@@ -334,6 +365,23 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
             Thoát
           </Button>
         </DrawerConfig>
+        <Modal
+          title="Đổi mật khẩu"
+          visible={this.state.visible}
+          onOk={this.onChangePw}
+          onCancel={() => this.setState({ visible: !visible })}
+          okText="Thay đổi"
+          cancelText="Hủy"
+          confirmLoading={loading}
+        >
+          <InputTitle
+            title={"Mật khẩu mới"}
+            placeholder={"Nhập mật khẩu"}
+            type={TYPE.INPUT}
+            value={newPassword}
+            onChange={(event) => this.setState({ newPassword: event })}
+          />
+        </Modal>
         <div className="common-content">
           <h5>
             Danh sách nhà trường
@@ -402,10 +450,10 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                   <Option value={null}>Tất cả</Option>
                   {listRegions && listRegions.length >= 1
                     ? listRegions.map((item: IRegion, index: number) => (
-                        <Option key={index} value={item.name}>
-                          {item.name}
-                        </Option>
-                      ))
+                      <Option key={index} value={item.name}>
+                        {item.name}
+                      </Option>
+                    ))
                     : null}
                 </Select>
               </Col>

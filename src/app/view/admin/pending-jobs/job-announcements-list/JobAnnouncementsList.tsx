@@ -31,27 +31,37 @@ import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Đang chờ', 'Từ chối', 'Chấp nhận'];
-
-const viewCount = (id?: string | number, count?: string | number, color?: "red" | "#1687f2" | "orange", state?: string, icon?: "user" | "user-delete" | "user-add" | "eye") => (
-    <div
-        className="n-candidate"
-        style={{
-            pointerEvents: count === 0 ? 'none' : undefined
-        }}
-    >
-        <Link
-            to={routeLink.JOB_ANNOUNCEMENTS + routePath.APPLY + `/${id}?state=${state}`}
-            target="_blank"
+function viewCount(
+    id?: string | number,
+    count?: string | number,
+    color?: "red" | "#1687f2" | "orange",
+    state?: string,
+    icon?: "user" | "user-delete" | "user-add" | "eye"
+) {
+    return (
+        < div
+            className="n-candidate test"
+            style={{
+                pointerEvents: count === 0 ? 'none' : undefined,
+                padding: 5,
+                margin: 2,
+                width: 45,
+                height: 30,
+                display: "inline-block"
+            }}
         >
-            <Tooltip title="Xem chi tiết">
-                <div style={{ color }}>
-                    {count} <Icon type={icon} />
-                </div>
-            </Tooltip>
-        </Link>
-    </div >
-);
-
+            <Link
+                to={routeLink.JOB_ANNOUNCEMENTS + routePath.APPLY + `/${id}?state=${state}`}
+                target="_blank"
+            >
+                <Tooltip title="Xem chi tiết">
+                    <div style={{ color }}>
+                        {count} <Icon type={icon} />
+                    </div>
+                </Tooltip>
+            </Link>
+        </div >);
+};
 const ViewPriority = (props?: { priority?: string, timeLeft?: string }) => {
     let { priority } = props;
     switch (priority) {
@@ -199,7 +209,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         },
         {
             title: 'Tiêu đề',
-            width: 100,
+            width: 200,
             dataIndex: 'title',
             className: 'action',
             key: 'title',
@@ -212,25 +222,12 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             width: 200,
         },
         {
-            title: 'Đang chờ',
-            dataIndex: 'pendingApplied',
+            title: 'Ứng tuyển',
+            dataIndex: 'apply',
             className: 'action',
-            key: 'pendingApplied',
-            width: 100,
-        },
-        {
-            title: 'Đã chấp nhận',
-            dataIndex: 'acceptedApplied',
-            className: 'action',
-            key: 'acceptedApplied',
-            width: 100,
-        },
-        {
-            title: 'Từ chối',
-            dataIndex: 'rejectedApplied',
-            className: 'action',
-            key: 'rejectedApplied',
-            width: 100,
+            key: 'apply',
+            render: (data) => this.ViewCount(data),
+            width: 140,
         },
         {
             title: 'Tên NTD',
@@ -299,7 +296,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             dataIndex: 'priority',
             className: 'action',
             key: 'priority',
-            width: 190,
+            width: 200,
         },
         {
             title: 'Thao tác',
@@ -308,7 +305,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             className: 'action',
             dataIndex: 'operation',
             render: (item) => this.EditToolTip(item.id, item.employerID),
-            width: 120,
+            width: 80,
         }
     ];
 
@@ -373,7 +370,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         }}
                     />
                 </Tooltip>
-                <Tooltip placement="topRight" title={"Xóa bài đăng"}>
+                <Tooltip placement="bottom" title={"Xóa bài đăng"}>
                     <Icon
                         className='test'
                         style={{ padding: "5px 5px", margin: 2 }}
@@ -383,6 +380,16 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         onClick={() => this.props.handleModal({ msg: "Bạn muốn xóa bài đăng này", type_modal: TYPE.DELETE })}
                     />
                 </Tooltip>
+            </>
+        )
+    }
+
+    ViewCount = (data) => {
+        return (
+            <>
+                { viewCount(data.id, data.accepted, "#1687f2", TYPE.ACCEPTED, "user-add")} 
+                { viewCount(data.id, data.rejected, "red", TYPE.REJECTED, "user-delete")} 
+                { viewCount(data.id, data.pending, "orange", TYPE.PENDING, "user")}
             </>
         )
     }
@@ -407,16 +414,19 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     title: item.jobTitle,
                     jobName: item.jobName ? item.jobName.name : "",
-                    jobType: item.jobType ,
+                    jobType: item.jobType,
                     employerBranchName: item.employerBranchName ? item.employerBranchName : "",
                     employerName: item.employerName ? item.employerName : "",
                     employerBranchPhone: item.employerBranchPhone ? item.employerBranchPhone : "",
                     employerBranchEmail: item.employerBranchEmail ? item.employerBranchEmail : "",
                     createdDate: timeConverter(item.createdDate, 1000),
                     expirationDate: timeConverter(item.expirationDate, 1000),
-                    acceptedApplied: viewCount(item.id, item.acceptedApplied, "#1687f2", TYPE.ACCEPTED, "user-add"),
-                    rejectedApplied: viewCount(item.id, item.rejectedApplied, "red", TYPE.REJECTED, "user-delete"),
-                    pendingApplied: viewCount(item.id, item.pendingApplied, "orange", TYPE.PENDING, "user"),
+                    apply: {
+                        accepted: item.acceptedApplied,
+                        rejected: item.rejectedApplied,
+                        pending: item.pendingApplied,
+                        id: item.id
+                    },
                     address: item.address ? item.address : "",
                     hidden: `${!item.hidden ? "Hiện" : "Ẩn"}, ${!item.expired ? "Còn hạn" : "Hết hạn"}`,
                     priority:
@@ -1085,7 +1095,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 columns={this.columns}
                                 loading={loadingTable}
                                 dataSource={data_table}
-                                scroll={{ x: 2400 }}
+                                scroll={{ x: 2060 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}
                                 size="middle"

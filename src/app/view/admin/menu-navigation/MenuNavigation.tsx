@@ -237,7 +237,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                             <span>Sinh viên</span>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="20">
+                    {/* <Menu.Item key="20">
                         <Link to={routeLink.CANDIDATES + routePath.LIST}>
                             <Icon type="idcard" />
                             <span>Ứng viên</span>
@@ -248,7 +248,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                             <Icon type="usergroup-add" />
                             <span>Cộng tác viên</span>
                         </Link>
-                    </Menu.Item>
+                    </Menu.Item> */}
                 </SubMenu>
             </Menu>
         </Sider>

@@ -330,7 +330,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
 
     createRequest = async (type?: string) => {
         let { id } = this.state;
-        let { candidate_detail } = this.props;
+        let { candidateDetail } = this.props;
         let method = null;
         let api = CANDIDATES;
         let body = [id];
@@ -343,7 +343,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                 break;
             case TYPE.CERTIFICATE:
                 method = PUT;
-                api = api + `/${id}/profile/verified/${candidate_detail.profileVerified ? 'false' : 'true'}`;
+                api = api + `/${id}/profile/verified/${candidateDetail.profileVerified ? 'false' : 'true'}`;
                 body = undefined;
                 break;
             default:
@@ -527,7 +527,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
         let {
             totalItems,
             listRegions,
-            candidate_detail
+            candidateDetail
         } = this.props;
 
         return (
@@ -543,7 +543,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     {
                         typeCpn === TYPE.DETAIL ?
                             <CandidatetInfo
-                                data={candidate_detail}
+                                data={candidateDetail}
                                 onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
                                 loading={loading}
                             /> :
@@ -725,7 +725,7 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     listRegions: state.Regions.items,
     listSkills: state.Skills.items,
     listJobNames: state.JobNames.items,
-    candidate_detail: state.CandidateDetail,
+    candidateDetail: state.CandidateDetail,
     listLanguages: state.Languages.items,
 });
 

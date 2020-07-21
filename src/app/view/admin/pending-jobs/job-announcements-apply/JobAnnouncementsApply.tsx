@@ -29,8 +29,8 @@ interface IJobAnnouncementsApplyState {
     loading: boolean;
     value_annou: string;
     typeCpn: string;
-    list_em_branches: Array<IEmBranch>;
-    list_apply_cans?: Array<IApplyCan>;
+    listEmBranches: Array<IEmBranch>;
+    listApplyCans?: Array<IApplyCan>;
     id?: string;
     jobName?: string;
     address?: string;
@@ -65,9 +65,9 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             list_item: [],
             loading: false,
             value_annou: "",
-            list_em_branches: [],
+            listEmBranches: [],
             typeCpn: null,
-            list_apply_cans: [],
+            listApplyCans: [],
             id: null,
             list_pending: [],
             list_accepted: [],
@@ -93,26 +93,26 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
             props.match.params.id &&
             props.match.params.id !== state.id
         ) {
-            let list_apply_cans = props.list_apply_cans;
+            let listApplyCans = props.listApplyCans;
             const param = new URLSearchParams(props.location.search);
             const state = param.get('state');
             return {
                 id: props.match.params.id,
-                list_apply_cans,
+                listApplyCans,
                 state
             }
         }
 
         if (
-            props.list_apply_cans &&
-            props.list_apply_cans !== state.list_apply_cans
+            props.listApplyCans &&
+            props.listApplyCans !== state.listApplyCans
         ) {
-            let list_apply_cans = props.list_apply_cans;
+            let listApplyCans = props.listApplyCans;
             let list_pending = [];
             let list_accepted = [];
             let list_rejected = [];
-            if (list_apply_cans && list_apply_cans.length > 0) {
-                list_apply_cans.forEach((item: IApplyJob, index: number) => {
+            if (listApplyCans && listApplyCans.length > 0) {
+                listApplyCans.forEach((item: IApplyJob, index: number) => {
                     switch (item.state) {
                         case TYPE.PENDING:
                             list_pending.push(item);
@@ -130,7 +130,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                 })
             }
             return {
-                list_apply_cans,
+                listApplyCans,
                 list_pending,
                 list_rejected,
                 list_accepted,
@@ -142,12 +142,12 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
 
     searchShift = (id?: string, type?: string, default_id?: string) => {
         console.log(id, type, default_id);
-        let { list_apply_cans } = this.state;
+        let { listApplyCans } = this.state;
         this.setState({ loading: true })
         let list_shifts = [];
         setTimeout(() => {
             if (id) {
-                list_apply_cans.forEach((item: IApplyCan) => {
+                listApplyCans.forEach((item: IApplyCan) => {
                     if (item.candidate && default_id === item.candidate.id) {
                         list_shifts = item.appliedShifts;
                     }
@@ -179,7 +179,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
     }
 
     render() {
-        let { candidate_detail } = this.props;
+        let { candidateDetail } = this.props;
         let {
             state,
             list_rejected,
@@ -208,7 +208,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                 >
                     {
                         <CandidatetInfo
-                            data={candidate_detail}
+                            data={candidateDetail}
                             onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
                             loading={loading}
                         />
@@ -371,9 +371,9 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     listJobNames: state.JobNames.items,
     listSkills: state.Skills.items,
-    list_em_branches: state.EmBranches.items,
-    list_apply_cans: state.ApplyCans.items,
-    candidate_detail: state.CandidateDetail
+    listEmBranches: state.EmBranches.items,
+    listApplyCans: state.ApplyCans.items,
+    candidateDetail: state.CandidateDetail
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -30,7 +30,7 @@ interface IPendingJobsCreateState {
     loading: boolean;
     value_annou: string;
     typeCpn: string;
-    list_em_branches: Array<IEmBranch>;
+    listEmBranches: Array<IEmBranch>;
     body: IAnnoucementBody;
     id?: string;
     jobName?: string;
@@ -59,7 +59,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
             loading: false,
             value_annou: "",
             typeCpn: TYPE.CREATE,
-            list_em_branches: [],
+            listEmBranches: [],
             body: {
                 jobTitle: null,
                 jobNameID: null,
@@ -267,7 +267,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
 
         let {
             listJobNames,
-            list_em_branches,
+            listEmBranches,
             listSkills,
             list_employers
         } = this.props;
@@ -294,7 +294,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
         };
 
         let list_job_name_options = listJobNames.map((item: IJobName) => ({ label: item.name, value: item.id }));
-        let list_em_branches_options = list_em_branches.map((item: IEmBranch) => ({ label: item.branchName, value: item.id }));
+        let listEmBranches_options = listEmBranches.map((item: IEmBranch) => ({ label: item.branchName, value: item.id }));
         let list_skill_options = listSkills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
         let list_em_ployer_options = list_employers.map((item: IEmployer, index: number) => ({ label: item.employerName, value: item.id }));
 
@@ -416,7 +416,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn địa chỉ đăng tuyển"
                         type={TYPE.SELECT}
-                        listValue={list_em_branches_options}
+                        listValue={listEmBranches_options}
                         onChange={
                             (event: any) => {
                                 body.employerBranchID = event
@@ -557,7 +557,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     listJobNames: state.JobNames.items,
     listSkills: state.Skills.items,
-    list_em_branches: state.EmBranches.items,
+    listEmBranches: state.EmBranches.items,
     list_employers: state.Employers.items,
 });
 

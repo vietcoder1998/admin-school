@@ -10,6 +10,7 @@ import {
   Row,
   Input,
   Tooltip,
+  Modal,
 } from "antd";
 import "./UserControllerList.scss";
 import { timeConverter } from "./../../../../../../utils/convertTime";
@@ -24,6 +25,7 @@ import {
   IUserController,
   IUserControllerFilter,
 } from "./../../../../../../models/user-controller";
+import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 
 interface IUserControllerListProps extends StateProps, DispatchProps {
   match?: any;
@@ -47,6 +49,8 @@ interface IUserControllerListState {
   list_user_controller?: Array<IUserController>;
   banned_state?: string;
   filter?: any;
+  visible?: boolean;
+  newPassword?: string;
 }
 
 class UserControllerList extends PureComponent<IUserControllerListProps, IUserControllerListState> {
@@ -70,7 +74,8 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         lastActive: null,
       },
       list_user_controller: [],
-
+      visible: false,
+      newPassword: null,
       filter: {
         offset: 0,
         limit: 10,
@@ -84,6 +89,14 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     let { body } = this.state;
     return (
       <>
+        <Tooltip title="Đổi mật khẩu">
+          <Icon
+            className="test"
+            style={{ padding: 5, margin: 2 }}
+            type="key"
+            onClick={()=> this.setState({visible: true})}
+          />
+        </Tooltip>
         <Popconfirm
           placement="topRight"
           title={"Xóa khỏi danh sách"}
@@ -266,6 +279,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         method = PUT;
         api = api + `/banned/${banned_state === "true" ? "false" : "true"}`;
         break;
+
       default:
         break;
     }
@@ -301,12 +315,46 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     this.setState({ body });
   };
 
-  render() {
-    let { data_table, loadingTable } = this.state;
+  onChangePw = async () => {
+    let { newPassword, id } = this.state;
+    let api = USER_CONTROLLER + `/${id}/password`;
+    await this.setState({loading: true})
+    await _requestToServer(
+      PUT,
+      api,
+      { newPassword },
+      undefined,
+      undefined,
+      undefined,
+      true,
+      false
+    ).then((res)=> {
+       this.setState({ visible: false , loading: false})
+    } );
+  }
 
+  render() {
+    let { data_table, loadingTable, visible, newPassword, loading } = this.state;
     let { totalItems } = this.props;
     return (
       <>
+        <Modal
+          title="Đổi mật khẩu"
+          visible={this.state.visible}
+          onOk={this.onChangePw}
+          onCancel={() => this.setState({ visible: !visible })}
+          okText="Thay đổi"
+          cancelText="Hủy"
+          confirmLoading={loading}
+        >
+          <InputTitle
+            title={"Mật khẩu mới"}
+            placeholder={"Nhập mật khẩu"}
+            type={TYPE.INPUT}
+            value={newPassword}
+            onChange={(event) => this.setState({ newPassword: event })}
+          />
+        </Modal>
         <div className="common-content">
           <h5>
             Danh sách người dùng
@@ -408,7 +456,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             <Table
               // @ts-ignore
               columns={this.columns}
-              loading={this.state.loadingTable}
+              loading={loadingTable}
               dataSource={data_table}
               scroll={{ x: 850 }}
               bordered

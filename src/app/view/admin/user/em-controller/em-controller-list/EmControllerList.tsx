@@ -11,6 +11,7 @@ import {
   Input,
   Tooltip,
   Avatar,
+  Modal,
 } from "antd";
 import "./EmControllerList.scss";
 import { timeConverter } from "../../../../../../utils/convertTime";
@@ -18,7 +19,7 @@ import { IAppState } from "../../../../../../redux/store/reducer";
 import { REDUX_SAGA, REDUX } from "../../../../../../const/actions";
 import { _requestToServer } from "../../../../../../services/exec";
 import { DELETE, PUT } from "../../../../../../const/method";
-import { EM_CONTROLLER } from "../../../../../../services/api/private.api";
+import { EM_CONTROLLER, USER_CONTROLLER } from "../../../../../../services/api/private.api";
 import { TYPE } from "../../../../../../const/type";
 import { IptLetterP } from "../../../../layout/common/Common";
 import {
@@ -33,6 +34,7 @@ import DrawerConfig from "./../../../../layout/config/DrawerConfig";
 import EmInfo from "../../../../layout/em-info/EmInfo";
 import IImportCan from "../../../../../../models/import-can";
 import EmInsertExels from "./EmInsertExels";
+import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 
 interface IEmControllerListProps extends StateProps, DispatchProps {
   match?: any;
@@ -62,12 +64,14 @@ interface IEmControllerListState {
   list_user_controller?: Array<IEmController>;
   profileVerified_state?: string;
   openImport?: boolean;
+  visible?: boolean;
+  newPassword?: string;
 }
 
 class EmControllerList extends PureComponent<
   IEmControllerListProps,
   IEmControllerListState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -88,6 +92,8 @@ class EmControllerList extends PureComponent<
       },
       list_user_controller: [],
       openImport: false,
+      visible: false,
+      newPassword: null,
     };
   }
 
@@ -95,6 +101,14 @@ class EmControllerList extends PureComponent<
     let { id } = this.state;
     return (
       <>
+        <Tooltip title="Đổi mật khẩu">
+          <Icon
+            className="test"
+            style={{ padding: 5, margin: 2 }}
+            type="key"
+            onClick={() => this.setState({ visible: true })}
+          />
+        </Tooltip>
         <Tooltip title="Xem hồ sơ ">
           <Icon
             className="test"
@@ -196,7 +210,7 @@ class EmControllerList extends PureComponent<
       key: "operation",
       fixed: "right",
       className: "action",
-      width: 140,
+      width: 80,
       render: () => this.EditToolAction(),
     },
   ];
@@ -272,6 +286,25 @@ class EmControllerList extends PureComponent<
     }
   };
 
+  onChangePw = async () => {
+    let { newPassword, id } = this.state;
+    let api = USER_CONTROLLER + `/${id}/password`;
+    await this.setState({ loading: true })
+    await _requestToServer(
+      PUT,
+      api,
+      { newPassword },
+      undefined,
+      undefined,
+      undefined,
+      true,
+      false
+    ).then((res) => {
+      this.setState({ visible: false, loading: false })
+    });
+  }
+
+
   setPageIndex = async (event: any) => {
     await this.setState({
       pageIndex: event.current - 1,
@@ -303,7 +336,7 @@ class EmControllerList extends PureComponent<
         api =
           api +
           `/${id}/profile/verified/${
-            employer_detail.profileVerified ? "false" : "true"
+          employer_detail.profileVerified ? "false" : "true"
           }`;
         body = undefined;
         break;
@@ -370,9 +403,9 @@ class EmControllerList extends PureComponent<
   };
 
   render() {
-    let { data_table, loadingTable, loading, openImport } = this.state;
-
+    let { data_table, loadingTable, loading, openImport, visible, newPassword } = this.state;
     let { totalItems, listRegions, employer_detail } = this.props;
+
     return (
       <>
         <DrawerConfig width={"50vw"} title={"Thông tin nhà tuyển dụng"}>
@@ -383,8 +416,8 @@ class EmControllerList extends PureComponent<
               loading
                 ? "loading"
                 : employer_detail.profileVerified
-                ? "dislike"
-                : "like"
+                  ? "dislike"
+                  : "like"
             }
             style={{ float: "right" }}
             onClick={() => this.createRequest(TYPE.CERTIFICATE)}
@@ -401,6 +434,23 @@ class EmControllerList extends PureComponent<
             Thoát
           </Button>
         </DrawerConfig>
+        <Modal
+          title="Đổi mật khẩu"
+          visible={this.state.visible}
+          onOk={this.onChangePw}
+          onCancel={() => this.setState({ visible: !visible })}
+          okText="Thay đổi"
+          cancelText="Hủy"
+          confirmLoading={loading}
+        >
+          <InputTitle
+            title={"Mật khẩu mới"}
+            placeholder={"Nhập mật khẩu"}
+            type={TYPE.INPUT}
+            value={newPassword}
+            onChange={(event) => this.setState({ newPassword: event })}
+          />
+        </Modal>
         <EmInsertExels
           openImport={openImport}
           handleImport={() => this.handleVisible()}
@@ -480,10 +530,10 @@ class EmControllerList extends PureComponent<
                 <Select.Option value={null}>Tất cả</Select.Option>
                 {listRegions && listRegions.length >= 1
                   ? listRegions.map((item: IRegion, index: number) => (
-                      <Select.Option key={index} value={item.name}>
-                        {item.name}
-                      </Select.Option>
-                    ))
+                    <Select.Option key={index} value={item.name}>
+                      {item.name}
+                    </Select.Option>
+                  ))
                   : null}
               </Select>
             </Col>
@@ -515,7 +565,7 @@ class EmControllerList extends PureComponent<
               columns={this.columns}
               loading={loadingTable}
               dataSource={data_table}
-              scroll={{ x: 1160 }}
+              scroll={{ x: 1100 }}
               bordered
               pagination={{
                 total: totalItems,

@@ -27,7 +27,7 @@ function* getListApplyCansData(action: any) {
 function callApplyCans(action: any) {
     try {
         return _requestToServer(
-            GET, APPLY_CAN + `/${action.id}/apply/candidates`,
+            GET, APPLY_CAN + `/${action.id}/apply/students`,
             {
                 jobID: action.id ? action.id : null
             },

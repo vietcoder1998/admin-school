@@ -218,8 +218,6 @@ th {
   &:hover {
     background-color: rgb(209, 209, 209) !important;
   }
-
-  transition: 500ms !important;
 }
 
 td {
@@ -717,6 +715,7 @@ thead {
 .n-candidate {
   font-size: 0.9rem;
   text-align: center;
+  display: inline;
 
   svg {
     margin-top: -8px;

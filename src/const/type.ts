@@ -4,7 +4,8 @@ export const TYPE = {
     SUCCESS: "success",
     ERROR: "error",
     WARNING: "warning",
-
+    
+    UPDATE: "UPDATE",
     REJECTED: "REJECTED",
     ACCEPTED: "ACCEPTED",
     PENDING: "PENDING",
