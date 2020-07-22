@@ -45,7 +45,7 @@ interface AdminProps extends StateProps, DispatchProps {
     getListRegions: Function;
     getListRoles: Function;
     handleLoading: Function;
-
+    getProfileAdmin: Function;
 }
 
 class Admin extends PureComponent<AdminProps, AdminState> {
@@ -69,6 +69,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListRegions();
         await this.props.getListRoles();
         await this.props.getListSkills();
+        await this.props.getProfileAdmin(localStorage.getItem('userID'));
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
@@ -189,7 +190,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        <Breadcrumb style={{padding: 20}} >
+                        <Breadcrumb style={{ padding: 20 }} >
                             <Breadcrumb.Item >
                                 <a href='/admin' >
                                     <Icon type="home" />
@@ -261,7 +262,12 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
     getListRoles: () => dispatch({
         type: REDUX_SAGA.ROLES.GET_ROLES
     }),
-    handleLoading: (loading: boolean) => dispatch({ type: REDUX.HANDLE_LOADING, loading })
+    handleLoading: (loading: boolean) => dispatch({
+        type: REDUX.HANDLE_LOADING, loading
+    }),
+    getProfileAdmin: (id?: string) => dispatch({
+        type: REDUX_SAGA.ADMIN_ACCOUNTS.GET_ADMIN_ACCOUNT_DETAIL, id
+    }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({

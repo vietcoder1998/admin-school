@@ -33,7 +33,6 @@ function callWorkingTool(action: any) {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,
                 pageSize: action.pageSize ? action.pageSize : 0,
                 name: action.name ? action.name : "",
-                jobGroupID: action.id ? action.id : undefined,
             }, undefined, undefined, false, false
         )
     } catch (e) {

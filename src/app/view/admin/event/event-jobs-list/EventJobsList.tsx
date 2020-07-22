@@ -501,7 +501,6 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
     };
 
     onChoseHomePriority = (event: any) => {
-        console.log(event)
         this.setState({ homePriority: event });
     };
 

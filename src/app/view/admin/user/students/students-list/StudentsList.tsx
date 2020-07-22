@@ -530,7 +530,6 @@ class StudentsList extends PureComponent<
             let list_data = findIdWithValue(listSkills, event, "name", "id");
             body.skillIDs = list_data;
             this.setState({ body });
-            console.log(body)
           }}
           style={{ width: "100%" }}
         >
@@ -546,7 +545,6 @@ class StudentsList extends PureComponent<
             let list_data = findIdWithValue(listLanguages, event, "name", "id");
             body.languageIDs = list_data;
             this.setState({ body });
-            console.log(body)
           }}
           style={{ width: "100%" }}
         >

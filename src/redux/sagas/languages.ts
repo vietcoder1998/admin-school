@@ -16,7 +16,6 @@ function* getListLanguagesData(action: any) {
 
     if (res.code === 200) {
         data = res.data
-        console.log(data)
     }
 
     yield put({

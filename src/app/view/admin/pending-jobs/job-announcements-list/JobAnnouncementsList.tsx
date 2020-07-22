@@ -709,7 +709,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             list_job_service,
             list_employer,
             modalState,
-            job_detail,
+            jobDetail,
             jobSuitableCandidates,
             CanDetail
         } = this.props;
@@ -781,15 +781,16 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         <Col span={10}>
                             <JobDetail
                                 jobDetail={{
-                                    jobName: job_detail.jobName.name,
-                                    jobTitle: job_detail.jobTitle,
-                                    employerName: job_detail.employerName,
-                                    employerUrl: job_detail.employerLogoUrl,
-                                    expriratedDate: job_detail.expirationDate,
-                                    jobType: job_detail.jobType,
-                                    shifts: job_detail.shifts,
-                                    description: job_detail.description
+                                    jobName: jobDetail.jobName.name,
+                                    jobTitle: jobDetail.jobTitle,
+                                    employerName: jobDetail.employerName,
+                                    employerUrl: jobDetail.employerLogoUrl,
+                                    expriratedDate: jobDetail.expirationDate,
+                                    jobType: jobDetail.jobType,
+                                    shifts: jobDetail.shifts,
+                                    description: jobDetail.description,
                                 }}
+                                data = {jobDetail.data}
                             />
                         </Col>
                         <Col span={4}>
@@ -1104,7 +1105,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 onRow={(record: any, rowIndex: any) => {
                                     return {
                                         onClick: (event: any) => {
-                                            console.log(record);
                                             this.setState({ id: record.key, eid: record.eid })
                                         }, // mouse enter row
                                     };
@@ -1151,7 +1151,7 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     modalState: state.MutilBox.modalState,
     drawerState: state.MutilBox.drawerState,
     totalItems: state.JobAnnouncements.totalItems,
-    job_detail: state.JobAnnouncementDetail,
+    jobDetail: state.JobAnnouncementDetail,
     jobSuitableCandidates: state.JobSuitableCandidates
 });
 

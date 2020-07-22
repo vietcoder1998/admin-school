@@ -11,6 +11,12 @@ function* getAdminAccountDetailData(action: any) {
     if (res.code === 200) {
         data = res.data
     }
+
+    if (action.id === localStorage.getItem("userID")) {
+        console.log("true")
+        localStorage.setItem("avatarUrl", data.avatarUrl)
+    }
+    
     yield put({
         type: REDUX.ADMIN_ACCOUNTS.GET_ADMIN_ACCOUNT_DETAIL,
         data

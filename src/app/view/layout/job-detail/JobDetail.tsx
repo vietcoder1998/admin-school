@@ -11,20 +11,26 @@ import { IJobName } from '../../../../models/job-type';
 import IJobDetail from '../../../../models/job-detail';
 
 interface IJobDetailProps {
-    list_job_skills?: Array<ISkill>,
-    job_id?: string,
+    listSkills?: Array<ISkill>,
+    jobId?: string,
     listJobNames?: Array<IJobName>
     jobDetail?: IJobDetail;
 }
 
-export default function JobDetail(props: IJobDetailProps) {
-    let { list_job_skills, jobDetail } = props;
+export default function JobDetail(props: any) {
+    let { listSkills, jobDetail } = props;
+    let data = jobDetail.data;
     let [requireSkill, setRequireSkill] = React.useState([]);
-    let list_des = jobDetail && convertStringToArray(jobDetail.description);
+    let listDescription = jobDetail && convertStringToArray(jobDetail.description);
 
     React.useState(() => {
-        if (jobDetail && jobDetail.requiredSkills && jobDetail.requiredSkills.length > 0) {
-            let requireSkill = findIdWithValue(list_job_skills, jobDetail.requiredSkills, "id", "name");
+        if (data && data.requiredSkills && data.requiredSkills.length > 0) {
+            let requireSkill = findIdWithValue(listSkills, jobDetail.requiredSkills, "id", "name");
+            setRequireSkill(requireSkill);
+        }
+
+        if (data && data.requiredSkillIDs && data.requiredSkillIDs.length > 0) {
+            let requireSkill = findIdWithValue(listSkills, jobDetail.requiredSkills, "id", "name");
             setRequireSkill(requireSkill);
         }
     });
@@ -88,9 +94,9 @@ export default function JobDetail(props: IJobDetailProps) {
             {/* Description job */}
             <div className='description-job'>
                 <h6>MÔ TẢ CÔNG VIỆC</h6>
-                {list_des &&
-                    list_des !== [] ?
-                    list_des.map(
+                {listDescription &&
+                    listDescription !== [] ?
+                    listDescription.map(
                         (item: any) => (<p key={item.index}>
                             {item.value[0] === '+' || item.value[0] === '\n' ||
                                 item.value[0] === '-' || item.value[0] === '=' ? "" : '-'}
@@ -143,18 +149,13 @@ export default function JobDetail(props: IJobDetailProps) {
             {/* Skills job */}
             <div className='skills-job-detail '>
                 <h6>KỸ NĂNG CÔNG VIỆC</h6>
-                <div>
-                    {jobDetail &&
-                        jobDetail.requiredSkills &&
-                        jobDetail.requiredSkills.length > 0 &&
-                        requireSkill &&
-                        requireSkill.length > 0 ?
+                {
+                    requireSkill ?
                         requireSkill.map(
                             (item: any, index: number) => (
                                 <label key={index} className='skills-detail'>{item.name}</label>
                             )) : <p>Ứng viên không cần đòi hỏi chuyên môn</p>
-                    }
-                </div>
+                }
             </div>
         </div>
     )

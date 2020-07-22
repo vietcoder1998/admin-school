@@ -16,7 +16,6 @@ function* getListSchoolsData(action: any) {
 
   if (res) {
     data = res.data;
-    console.log(res);
   }
 
   yield put({

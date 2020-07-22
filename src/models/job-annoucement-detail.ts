@@ -21,6 +21,7 @@ export interface IShiftDetail {
 }
 
 export interface IJobAnnouncementDetail {
+    data?: any;
     id?: string,
     employerCoverUrl?: string,
     jobName?: {

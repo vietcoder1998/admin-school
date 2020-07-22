@@ -263,7 +263,6 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
   searchSchools = async () => {
     let { pageIndex, pageSize, body } = this.state;
-    console.log(body)
     await this.props.getListSchools(pageIndex, pageSize, body);
   };
 

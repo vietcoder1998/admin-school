@@ -177,7 +177,6 @@ class Announcement extends Component<IProps, IState> {
                             value={body.description}
                             onChange={
                                 (event: any) => {
-                                    console.log(event.target.value)
                                     body.description = event.target.value;
                                     this.setState({ body });
                                 }

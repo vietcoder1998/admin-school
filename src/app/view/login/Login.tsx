@@ -46,7 +46,6 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
 
   componentDidMount() {
     // let is_authen = localStorage.getItem("token") ? true : false;
-   
     this.AutoLogin();
   }
 
@@ -60,6 +59,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
      
     }
   };
+
   createRequest = async () => {
     let { password, username } = this.state;
     loginUser({ username, password }, TYPE.NORMAL_LOGIN);

@@ -6,14 +6,13 @@ import { REDUX_SAGA, REDUX } from '../../const/actions'
 
 function* getListCandidatesData(action: any) {
     let res = yield call(callCandidates, action);
-
     let data = {
         items: [],
         pageIndex: 0,
         pageSize: 0,
         totalItems: 0,
     };
-    console.log(res)
+
     if (res.code === 200) {
         data = res.data;
        

@@ -287,7 +287,6 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
 
     searchCandidate = async () => {
         let { body, pageIndex, pageSize } = this.state;
-        console.log(body)
         await this.props.getListCandidates(body, pageIndex, pageSize);
     };
 

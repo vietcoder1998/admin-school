@@ -112,7 +112,6 @@ class EventJobCreate extends Component<IProps, IState> {
                 props.match.url.includes("fix") ||
                 props.match.url.includes("copy")
             ) {
-                console.log("map");
                 props.getEventJobDetail(id, eid);
             }
 

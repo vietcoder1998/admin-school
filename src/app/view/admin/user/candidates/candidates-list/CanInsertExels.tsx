@@ -50,7 +50,6 @@ class CanInsertExels extends PureComponent<IProps, IState> {
         let data = new FormData();
         data.append('file', file);
         let res = await _requestToServer(POST, IMPORT_CAN, data, params, undefined, undefined, true, false);
-        console.log(res.data);
         this.setState({ arrMsg: res.data[0] });
     }
 

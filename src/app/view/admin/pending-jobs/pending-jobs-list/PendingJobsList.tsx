@@ -74,8 +74,7 @@ interface IPendingJobListState {
     pendingJob?: any;
     message?: string;
     loadingTable?: boolean;
-    list_jobs?: Array<IPendingJob>
-    job_id?: string;
+    listJobs?: Array<IPendingJob>
     id?: string;
 }
 
@@ -90,11 +89,10 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             jobType: undefined,
             jobNameID: undefined,
             pageIndex: 0,
-            jobId: undefined,
             show_job: false,
             loading: false,
             loadingTable: true,
-            job_id: null,
+            jobId: null,
             id: null,
         }
     }
@@ -193,11 +191,11 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     };
 
     static getDerivedStateFromProps(nextProps: IPendingJobListProps, prevState: IPendingJobListState) {
-        if (nextProps.list_jobs && nextProps.list_jobs !== prevState.list_jobs) {
+        if (nextProps.listJobs && nextProps.listJobs !== prevState.listJobs) {
             let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
 
-            nextProps.list_jobs.forEach((item?: IPendingJob, index?: number) => {
+            nextProps.listJobs.forEach((item?: IPendingJob, index?: number) => {
                 dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -245,7 +243,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 });
             });
             return {
-                list_jobs: nextProps.list_jobs,
+                listJobs: nextProps.listJobs,
                 dataTable,
                 loadingTable: false
             }
@@ -279,11 +277,11 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     };
 
     handlePendingJob = async (state?: string) => {
-        let { job_id, message } = this.state;
+        let { jobId, message } = this.state;
         let body = state === "accepted" ? undefined : { message };
         await this.setState({ loading: true });
         await _requestToServer(
-            POST, PENDING_JOBS + `/${job_id}/${state}`,
+            POST, PENDING_JOBS + `/${jobId}/${state}`,
             body,
             null, null, undefined, true, false
         ).finally(
@@ -305,7 +303,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
         let {
             listJobNames,
             totalItems,
-            job_detail,
+            jobDetail,
             open_modal,
             employer_detail
         } = this.props;
@@ -364,15 +362,16 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 >
                     <JobDetail
                         jobDetail={{
-                            jobName: job_detail.jobName && job_detail.jobName.name,
-                            jobTitle: job_detail.data.jobTitle,
-                            employerName: job_detail.employer.employerName,
-                            employerUrl: job_detail.employer.logoUrl,
-                            expriratedDate: job_detail.data.expirationDate,
-                            shifts: job_detail.data.shifts,
-                            description: job_detail.data.description,
-                            jobType: job_detail.data.jobType,
-                            createdDate: job_detail.createdDate,
+                            jobName: jobDetail.jobName && jobDetail.jobName.name,
+                            jobTitle: jobDetail.data.jobTitle,
+                            employerName: jobDetail.employer.employerName,
+                            employerUrl: jobDetail.employer.logoUrl,
+                            expriratedDate: jobDetail.data.expirationDate,
+                            shifts: jobDetail.data.shifts,
+                            description: jobDetail.data.description,
+                            jobType: jobDetail.data.jobType,
+                            createdDate: jobDetail.createdDate,
+                            data: jobDetail.data
                         }}
                     />
                 </Modal>
@@ -473,7 +472,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                             onChange={this.setPageIndex}
                             onRow={
                                 (event: any) => ({
-                                    onMouseEnter: () => this.setState({ job_id: event.key })
+                                    onMouseEnter: () => this.setState({ jobId: event.key })
                                 })
                             }
                         />
@@ -503,12 +502,12 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_jobs: state.PendingJobs.items,
+    listJobs: state.PendingJobs.items,
     listJobNames: state.JobNames.items,
-    list_job_skills: state.Skills.items,
+    listJobSkills: state.Skills.items,
     modalState: state.MutilBox.modalState,
     employer_detail: state.EmployerDetail,
-    job_detail: state.PendingJobDetail,
+    jobDetail: state.PendingJobDetail,
     open_modal: state.MutilBox.modalState.open_modal,
     totalItems: state.PendingJobs.totalItems,
 });

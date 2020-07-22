@@ -22,7 +22,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-interface IPendingJobsCreateState {
+interface IState {
     title: string;
     announcementTypeID: string;
     type_management: Array<any>;
@@ -40,15 +40,18 @@ interface IPendingJobsCreateState {
     employer?: IEmployer,
 };
 
-interface IPendingJobsCreateProps extends StateProps, DispatchProps {
+interface IProps extends StateProps, DispatchProps {
     match: any;
     history: any;
     getPendingsJobDetail: Function;
     getListEmBranches: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter, id?: any) => any;
     getListEmployers: (pageIndex?: number, pageSize?: number, body?: IEmployerFilter) => any;
+    getListWorkingTools: (pageIndex?: number, pageSize?: number, name?: string) => any;
+    getListLanguages: (pageIndex?: number, pageSize?: number, name?: string) => any
+
 };
 
-class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsCreateState> {
+class PendingJobsCreate extends Component<IProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -84,7 +87,9 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                         sun: false,
                         genderRequireds: null
                     },
-                ]
+                ],
+                requiredLanguageIDs: [],
+                requiredWorkingToolIDs: []
             },
             id: null,
             filter_em: {
@@ -107,6 +112,8 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
         let { filter_em } = this.state;
         this.props.getListEmployers(0, 10, filter_em);
         this.props.getListEmBranches(0, 0, null, null);
+        this.props.getListLanguages(0, 10, null);
+        this.props.getListWorkingTools(0, 10, null);
     };
 
     onChangeValue = (event: any, param: string) => {
@@ -269,7 +276,9 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
             listJobNames,
             listEmBranches,
             listSkills,
-            list_employers
+            listEmployers,
+            listWorkingTools,
+            listLanguages
         } = this.props;
 
         let ct_btn_ex = "Huỷ";
@@ -293,10 +302,12 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                 break;
         };
 
-        let list_job_name_options = listJobNames.map((item: IJobName) => ({ label: item.name, value: item.id }));
-        let listEmBranches_options = listEmBranches.map((item: IEmBranch) => ({ label: item.branchName, value: item.id }));
-        let list_skill_options = listSkills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
-        let list_em_ployer_options = list_employers.map((item: IEmployer, index: number) => ({ label: item.employerName, value: item.id }));
+        let listJobNameOptions = listJobNames.map((item: IJobName) => ({ label: item.name, value: item.id }));
+        let listEmBranchesOptions = listEmBranches.map((item: IEmBranch) => ({ label: item.branchName, value: item.id }));
+        let listSkillOptions = listSkills.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
+        let listWorkingToolsOptions = listWorkingTools.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
+        let listLanguagesOptions = listLanguages.map((item: ISkill, index: number) => (<Option key={index} value={item.name} children={item.name} />));
+        let listEmployerOptions = listEmployers.map((item: IEmployer, index: number) => ({ label: item.employerName, value: item.id }));
 
         return (
             <div className='common-content'>
@@ -382,7 +393,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn công việc"
                         type={TYPE.SELECT}
-                        listValue={list_job_name_options}
+                        listValue={listJobNameOptions}
                         onChange={
                             (event: any) => {
                                 body.jobNameID = event;
@@ -396,7 +407,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn nhà tuyển dụng"
                         type={TYPE.SELECT}
-                        listValue={list_em_ployer_options}
+                        listValue={listEmployerOptions}
                         onChange={
                             async (event: string) => {
                                 employer.id = event;
@@ -416,7 +427,7 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                     <InputTitle
                         title="Chọn địa chỉ đăng tuyển"
                         type={TYPE.SELECT}
-                        listValue={listEmBranches_options}
+                        listValue={listEmBranchesOptions}
                         onChange={
                             (event: any) => {
                                 body.employerBranchID = event
@@ -427,7 +438,26 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                         widthSelect="100%"
                         placeholder="ex: Công ti abc"
                     />
-
+                    <InputTitle
+                        title="Chọn công cụ làm việc"
+                        widthLabel="200px"
+                    >
+                        <Select
+                            mode="multiple"
+                            size="default"
+                            placeholder="ex: AutoCard, Blender"
+                            onChange={
+                                (event: any) => {
+                                    let newRequiredWorkingToolIDs = findIdWithValue(listWorkingTools, event, "name", "id")
+                                    body.requiredWorkingToolIDs = newRequiredWorkingToolIDs;
+                                    this.setState({ body })
+                                }
+                            }
+                            style={{ width: '100%' }}
+                        >
+                            {listWorkingToolsOptions}
+                        </Select>
+                    </InputTitle>
                     <InputTitle
                         title="Chọn loại kĩ năng"
                         widthLabel="200px"
@@ -445,7 +475,27 @@ class PendingJobsCreate extends Component<IPendingJobsCreateProps, IPendingJobsC
                             }
                             style={{ width: '100%' }}
                         >
-                            {list_skill_options}
+                            {listSkillOptions}
+                        </Select>
+                    </InputTitle>
+                    <InputTitle
+                        title="Chọn loại ngôn ngữ"
+                        widthLabel="200px"
+                    >
+                        <Select
+                            mode="multiple"
+                            size="default"
+                            placeholder="ex: English, Vietnamese"
+                            onChange={
+                                (event: any) => {
+                                    let newRequiredLanguageIDs = findIdWithValue(listLanguages, event, "name", "id")
+                                    body.requiredLanguageIDs = newRequiredLanguageIDs;
+                                    this.setState({ body })
+                                }
+                            }
+                            style={{ width: '100%' }}
+                        >
+                            {listLanguagesOptions}
                         </Select>
                     </InputTitle>
                 </div>
@@ -552,13 +602,19 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
         dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES, pageIndex, pageSize, id }),
     getListEmployers: (pageIndex?: number, pageSize?: number, body?: IEmBranchesFilter) =>
         dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, pageIndex, pageSize, body }),
+    getListWorkingTools: (pageIndex?: number, pageSize?: number, name?: string) =>
+        dispatch({ type: REDUX_SAGA.WORKING_TOOL.GET_WORKING_TOOLS, pageIndex, pageSize, name }),
+    getListLanguages: (pageIndex?: number, pageSize?: number, name?: string) =>
+        dispatch({ type: REDUX_SAGA.LANGUAGES.GET_LANGUAGES, pageIndex, pageSize, name }),
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     listJobNames: state.JobNames.items,
     listSkills: state.Skills.items,
     listEmBranches: state.EmBranches.items,
-    list_employers: state.Employers.items,
+    listEmployers: state.Employers.items,
+    listWorkingTools: state.WorkingTools.items,
+    listLanguages: state.Languages.items,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

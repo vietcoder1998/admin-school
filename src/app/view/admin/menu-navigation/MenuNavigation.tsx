@@ -40,7 +40,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                 defaultSelectedKeys={[state_bar]}
                 style={{
                     borderRight: "none",
-                    margin: "50px 0px",
+                    margin: "49px 0px",
                     paddingBottom: 100,
                     height: "100vh",
                     overflowY: "auto",

@@ -52,7 +52,6 @@ class EmInsertExels extends PureComponent<IProps, IState> {
         data.append('file', file);
 
         let res = await _requestToServer(POST, IMPORT_EM, data, params, undefined, undefined, true, false);
-        console.log(res.data);
         this.setState({ arrMsg: res.data[0] });
     }
 

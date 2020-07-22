@@ -280,7 +280,6 @@ class EventEmList extends PureComponent<IProps, IState> {
             let body = prevState.body;
 
             nextProps.listEventEm.forEach((item: IEventEm, index: number) => {
-                console.log(item.bannerUrl);
                 dataTable.push({
                     key: item.id,
                     employerID: item.employer ? item.employer.id : null,
