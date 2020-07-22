@@ -34,7 +34,8 @@ export const routePath = {
     PARTNER: '/partner',
     EVENT: '/event',
     IN_EVENT: '/in-event',
-    EMPLOYER: '/employers'
+    EMPLOYER: '/employers',
+    WORKING_TOOL: '/working-tools'
 };
 
 export const routeLink = {
@@ -48,6 +49,7 @@ export const routeLink = {
     JOB_GROUPS: routePath.ADMIN + routePath.DATA + routePath.JOB_GROUPS,
     BRANCHES: routePath.ADMIN + routePath.DATA + routePath.BRANCHES,
     ANNOU_TYPE: routePath.ADMIN + routePath.DATA + routePath.ANNOU_TYPE,
+    WORKING_TOOL: routePath.ADMIN + routePath.DATA + routePath.WORKING_TOOL,
 
     // role
     ROLES_ADMIN: routePath.ADMIN + routePath.ROLES + routePath.ROLES_ADMIN,
@@ -56,7 +58,6 @@ export const routeLink = {
     // job management
     PENDING_JOBS: routePath.ADMIN + routePath.PENDING_JOBS,
     ANNOUCEMENT: routePath.ADMIN + routePath.ANNOUNCEMENT ,
-
     EVENT: routePath.ADMIN + routePath.EVENT,
 
     // user management
@@ -96,8 +97,8 @@ export const breakCumb = [
     { label: "job-groups", name: "Nhóm công việc", icon: null, url: routeLink.JOB_GROUPS + routePath.LIST },
     { label: "branches", name: "Nhóm ngành", icon: null, url: routeLink.BRANCHES + routePath.LIST },
     { label: "annou-types", name: "Loại bài viết", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST },
-
     { label: "event", name: "Sự kiện", icon: null, url: routeLink.EVENT + routePath.LIST },
+    { label: "working-tools", name: "Công cụ", icon: null, url: routeLink.WORKING_TOOL + routePath.LIST },
     // User
     { label: "user-controller", name: "Quản lý người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST },
     { label: "em-controller", name: "Quản lý NTD", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST },

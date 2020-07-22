@@ -42,7 +42,7 @@ interface IAnnouncementListProps extends StateProps, DispatchProps {
 }
 
 interface IAnnouncementListState {
-    data_table?: Array<any>;
+    dataTable?: Array<any>;
        search?: any;
     pageIndex?: number;
     pageSize?: number;
@@ -232,7 +232,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
 
         if (nextProps.list_announcements !== prevState.list_announcements) {
             let { pageIndex, pageSize, pageIndexAC, pageSizeAC, body } = prevState;
-            let data_table: any = [];
+            let dataTable: any = [];
             nextProps.list_announcements.forEach((item: any, index: number) => {
                 const EditJob = (item?: any) => (
                     <>
@@ -330,7 +330,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                     </>
                 );
 
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     title: item.title,
@@ -347,7 +347,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             });
             return {
                 list_announcements: nextProps.list_annou_types,
-                data_table,
+                dataTable,
                 loadingTable: false,
             };
         }
@@ -507,7 +507,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
 
     render() {
         let {
-            data_table,
+            dataTable,
             list_annou_types,
             valueType,
             loadingTable,
@@ -757,7 +757,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 1450 }}
                             bordered={true}
                             pagination={{ total: totalItems, showSizeChanger: true }}

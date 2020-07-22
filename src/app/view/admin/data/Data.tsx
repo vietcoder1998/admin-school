@@ -11,6 +11,8 @@ import TypeSchools from './type-schools/TypeSchools';
 import JobGroups from './job-groups/JobGroups';
 import Branches from './branches/Branches';
 import AnnouTypes from './annou-types/AnnouTypes';
+import WorkingTools from './working-tools/index';
+import { routePath } from '../../../../const/break-cumb';
 const Switch = require("react-router-dom").Switch;
 
 interface DataState {
@@ -40,6 +42,7 @@ class Data extends PureComponent<DataProps, DataState> {
                     <ErrorBoundaryRoute  path={`${path}/job-groups`} component={JobGroups} />
                     <ErrorBoundaryRoute  path={`${path}/branches`} component={Branches} />
                     <ErrorBoundaryRoute  path={`${path}/annou-types`} component={AnnouTypes} />
+                    <ErrorBoundaryRoute  path={`${path + routePath.WORKING_TOOL}`} component={WorkingTools} />
                 </Switch>
             </>
         )

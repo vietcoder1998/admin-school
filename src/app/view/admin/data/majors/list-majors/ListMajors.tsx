@@ -24,7 +24,7 @@ interface ListMajorsState {
     list_majors: Array<IMajor>,
     list_branch?: Array<IBranches>,
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     search?: string;
@@ -47,7 +47,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
         this.state = {
             list_majors: [],
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             list_branch: [],
@@ -71,7 +71,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
 
         if (nextProps.list_majors !== prevState.list_majors) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let params = (new URL(window.location.href)).searchParams;
             let pageIndex = parseInt(params.get('pageIndex'));
             let pageSize = parseInt(params.get('pageSize'));
@@ -79,7 +79,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             let branchID = params.get('branchID');
 
             nextProps.list_majors.forEach((item: any, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
@@ -91,7 +91,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
             return {
                 list_majors: nextProps.list_majors,
-                data_table,
+                dataTable,
                 loadingTable: false,
                 pageIndex,
                 pageSize,
@@ -261,7 +261,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     render() {
         let {
-            data_table,
+            dataTable,
             loadingTable,
             type,
             openModal,
@@ -382,7 +382,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 600 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true, defaultCurrent: pageIndex + 1 }}

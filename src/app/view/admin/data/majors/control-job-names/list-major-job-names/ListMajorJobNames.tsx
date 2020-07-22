@@ -23,9 +23,9 @@ interface ListMajorJobNamesProps extends StateProps, DispatchProps {
 
 interface ListMajorJobNamesState {
     listJobNames: Array<IJobName>,
-    list_job_groups?: Array<IJobGroup>,
+    listJobGroups?: Array<IJobGroup>,
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal?: boolean;
@@ -47,14 +47,14 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
         this.state = {
             listJobNames: [],
             loadingTable: false,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 0,
             openModal: false,
             id: null,
             name: undefined,
             type: TYPE.EDIT,
-            list_job_groups: [],
+            listJobGroups: [],
             jobGroupID: undefined,
             jobGroupName: undefined,
             list_id: [],
@@ -70,7 +70,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.list_major_job_names && nextProps.list_major_job_names !== prevState.list_major_job_names) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let list_id: Array<string> = [];
             let list_name: Array<string> = [];
             nextProps.list_major_job_names.forEach((item: any, index: any) => {
@@ -80,7 +80,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
 
             return {
                 listJobNames: nextProps.listJobNames,
-                data_table,
+                dataTable,
                 loadingTable: false,
                 list_id,
                 list_name,

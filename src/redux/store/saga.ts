@@ -44,6 +44,7 @@ import { EventSchoolsWatcher } from '../sagas/event-schools';
 import { EventDetailWatcher } from '../sagas/event-detail';
 import { EventJobsListWatcher } from '../sagas/event-jobs';
 import { EventEmsListWatcher } from '../sagas/event-em';
+import { WorkingToolWatcher } from '../sagas/working-tools';
 
 
 export default function* rootSaga() {
@@ -92,7 +93,8 @@ export default function* rootSaga() {
         EventSchoolsWatcher,
         EventDetailWatcher,
         EventJobsListWatcher,
-        EventEmsListWatcher
+        EventEmsListWatcher,
+        WorkingToolWatcher
     ];
 
     try {

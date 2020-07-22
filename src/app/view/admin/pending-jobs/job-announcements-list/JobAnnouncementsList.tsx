@@ -110,7 +110,7 @@ interface IJobAnnouncementsListProps extends StateProps, DispatchProps {
 };
 
 interface IJobAnnouncementsListState {
-    data_table?: Array<any>;
+    dataTable?: Array<any>;
     pageIndex?: number;
     pageSize?: number;
     employerID?: string;
@@ -149,7 +149,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     constructor(props) {
         super(props);
         this.state = {
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             employerID: null,
@@ -405,10 +405,10 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             nextProps.list_job_announcements !== prevState.list_job_announcements
         ) {
             let { pageIndex, pageSize } = prevState;
-            let data_table = [];
+            let dataTable = [];
 
             nextProps.list_job_announcements.forEach((item: IJobAnnouncement, index: number) => {
-                data_table.push({
+                dataTable.push({
                     eid: item.employerID,
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -440,7 +440,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
             return {
                 list_job_announcements: nextProps.list_job_announcements,
-                data_table,
+                dataTable,
                 loadingTable: false,
             }
         }
@@ -686,7 +686,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
     render() {
         let {
-            data_table,
+            dataTable,
             valueType,
             loadingTable,
             un_checkbox,
@@ -1095,7 +1095,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 // @ts-ignore
                                 columns={this.columns}
                                 loading={loadingTable}
-                                dataSource={data_table}
+                                dataSource={dataTable}
                                 scroll={{ x: 2060 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}

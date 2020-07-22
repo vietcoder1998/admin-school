@@ -22,7 +22,7 @@ interface IListAnnouTypesProps extends StateProps, DispatchProps {
 interface IListAnnouTypesState {
     list_annou_types: Array<IAnnouType>,
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
@@ -41,7 +41,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
         this.state = {
             list_annou_types: [],
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             openModal: false,
             name: undefined,
@@ -104,10 +104,10 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
 
     static getDerivedStateFromProps(nextProps: IListAnnouTypesProps, prevState: IListAnnouTypesState) {
         if (nextProps.list_annou_types !== prevState.list_annou_types) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.list_annou_types.forEach((item: IAnnouType, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
@@ -119,7 +119,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
 
             return {
                 list_annou_types: nextProps.list_annou_types,
-                data_table,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -245,7 +245,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
     };
 
     render() {
-        let { data_table, loadingTable, openModal, name, type, target, priority, targets, search, pageIndex, pageSize } = this.state;
+        let { dataTable, loadingTable, openModal, name, type, target, priority, targets, search, pageIndex, pageSize } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -367,7 +367,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 850 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

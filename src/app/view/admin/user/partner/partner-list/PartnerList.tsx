@@ -42,7 +42,7 @@ interface IPartnerListProps extends StateProps, DispatchProps {
 };
 
 interface IPartnerListState {
-    data_table?: Array<any>;
+    dataTable?: Array<any>;
     search?: any;
     pageIndex?: number;
     pageSize?: number;
@@ -60,7 +60,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     constructor(props) {
         super(props);
         this.state = {
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             showModal: false,
@@ -192,9 +192,9 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
     static getDerivedStateFromProps(nextProps?: IPartnerListProps, prevState?: IPartnerListState) {
         if (nextProps.listPartners && nextProps.listPartners !== prevState.listPartners) {
             let { pageIndex, pageSize } = prevState;
-            let data_table = [];
+            let dataTable = [];
             nextProps.listPartners.forEach((item: IPartner, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: (item.firstName ? item.firstName : ' ') + " " + (item.lastName ? item.lastName : ''),
@@ -209,7 +209,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
             })
             return {
                 listPartners: nextProps.listPartners,
-                data_table,
+                dataTable,
                 loadingTable: false,
             }
         }
@@ -293,7 +293,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
 
     render() {
         let {
-            data_table,
+            dataTable,
             loadingTable,
         } = this.state;
 
@@ -371,7 +371,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 1400 }}
                             bordered
                             pagination={{ total: 0, showSizeChanger: true }}

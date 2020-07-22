@@ -36,7 +36,7 @@ interface IUserControllerListProps extends StateProps, DispatchProps {
 }
 
 interface IUserControllerListState {
-  data_table?: Array<any>;
+  dataTable?: Array<any>;
   search?: any;
   pageIndex?: number;
   pageSize?: number;
@@ -57,7 +57,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
   constructor(props) {
     super(props);
     this.state = {
-      data_table: [],
+      dataTable: [],
       pageIndex: 0,
       pageSize: 10,
       showModal: false,
@@ -205,10 +205,10 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
       nextProps.list_user_controller !== prevState.list_user_controller
     ) {
       let { pageIndex, pageSize } = prevState;
-      let data_table = [];
+      let dataTable = [];
       nextProps.list_user_controller.forEach(
         (item: IUserController, index: number) => {
-          data_table.push({
+          dataTable.push({
             key: item.id,
             index:
               index +
@@ -227,7 +227,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
       );
       return {
         list_user_controller: nextProps.list_user_controller,
-        data_table,
+        dataTable,
       };
     }
     return {};
@@ -334,7 +334,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
   }
 
   render() {
-    let { data_table, loadingTable, visible, newPassword, loading } = this.state;
+    let { dataTable, loadingTable, visible, newPassword, loading } = this.state;
     let { totalItems } = this.props;
     return (
       <>
@@ -457,7 +457,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
               // @ts-ignore
               columns={this.columns}
               loading={loadingTable}
-              dataSource={data_table}
+              dataSource={dataTable}
               scroll={{ x: 850 }}
               bordered
               pagination={{

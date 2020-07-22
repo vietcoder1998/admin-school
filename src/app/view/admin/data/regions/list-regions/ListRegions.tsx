@@ -20,7 +20,7 @@ interface ListRegionsProps extends StateProps, DispatchProps {
 interface ListRegionsState {
     listRegions: Array<ILanguage>,
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
@@ -36,7 +36,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
         this.state = {
             listRegions: [],
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
@@ -53,10 +53,10 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.listRegions !== prevState.listRegions) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.listRegions.forEach((item: any, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
@@ -65,7 +65,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
 
             return {
                 listRegions: nextProps.listRegions,
-                data_table,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -163,7 +163,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     };
 
     render() {
-        let { data_table, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { dataTable, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -234,7 +234,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 350 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

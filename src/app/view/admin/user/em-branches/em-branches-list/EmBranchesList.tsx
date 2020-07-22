@@ -29,7 +29,7 @@ interface IEmBranchesListProps extends StateProps, DispatchProps {
 };
 
 interface IEmBranchesListState {
-    data_table?: Array<any>;
+    dataTable?: Array<any>;
        search?: any;
     pageIndex?: number;
     pageSize?: number;
@@ -58,7 +58,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
     constructor(props) {
         super(props);
         this.state = {
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             state: null,
@@ -237,9 +237,9 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
 
         if (nextProps.listEmBranches !== prevState.listEmBranches) {
             let { pageIndex, pageSize } = prevState;
-            let data_table = [];
+            let dataTable = [];
             nextProps.listEmBranches.forEach((item: IEmBranch, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     branchName: item.branchName ? item.branchName : "",
@@ -254,7 +254,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             })
             return {
                 listEmBranches: nextProps.listEmBranches,
-                data_table,
+                dataTable,
                 loadingTable: false,
             }
         } return { loadingTable: false };
@@ -350,7 +350,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
 
     render() {
         let {
-            data_table,
+            dataTable,
             loadingTable,
             loading
         } = this.state;
@@ -468,7 +468,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 1300 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

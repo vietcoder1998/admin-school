@@ -181,6 +181,12 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                             <span>Nhóm bài viết</span>
                         </Link>
                     </Menu.Item>
+                    <Menu.Item key="working-tools">
+                        <Link to={routeLink.WORKING_TOOL + routePath.LIST}>
+                            <Icon type="tool" />
+                            <span>Công cụ</span>
+                        </Link>
+                    </Menu.Item>
                 </SubMenu>
                 <SubMenu
                     key="sub3"

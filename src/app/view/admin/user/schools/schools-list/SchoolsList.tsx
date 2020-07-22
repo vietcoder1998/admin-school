@@ -45,7 +45,7 @@ interface ISchoolsListProps extends StateProps, DispatchProps {
 }
 
 interface ISchoolsListState {
-  data_table?: Array<any>;
+  dataTable?: Array<any>;
   search?: any;
   pageIndex?: number;
   pageSize?: number;
@@ -65,7 +65,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
   constructor(props) {
     super(props);
     this.state = {
-      data_table: [],
+      dataTable: [],
       pageIndex: 0,
       pageSize: 10,
       showModal: false,
@@ -212,9 +212,9 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
       nextProps.listSchools !== prevState.listSchools
     ) {
       let { pageIndex, pageSize } = prevState;
-      let data_table = [];
+      let dataTable = [];
       nextProps.listSchools.forEach((item: ISchool, index: number) => {
-        data_table.push({
+        dataTable.push({
           key: item.id,
           index:
             index +
@@ -234,7 +234,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
       });
       return {
         listSchools: nextProps.listSchools,
-        data_table,
+        dataTable,
         loadingTable: false,
       };
     }
@@ -349,7 +349,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
   }
 
   render() {
-    let { data_table, loadingTable, loading, visible, newPassword } = this.state;
+    let { dataTable, loadingTable, loading, visible, newPassword } = this.state;
     let { totalItems, school_detail, listRegions } = this.props;
     return (
       <>
@@ -477,7 +477,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
               // @ts-ignore
               columns={this.columns}
               loading={loadingTable}
-              dataSource={data_table}
+              dataSource={dataTable}
               scroll={{ x: 1100 }}
               bordered
               pagination={{

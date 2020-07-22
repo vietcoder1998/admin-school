@@ -20,7 +20,7 @@ interface ListBranchesProps extends StateProps, DispatchProps {
 interface ListBranchesState {
     list_branches: Array<ILanguage>,
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
@@ -36,7 +36,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
         this.state = {
             list_branches: [],
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
@@ -53,10 +53,10 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.list_branches !== prevState.list_branches) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.list_branches.forEach((item: any, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
@@ -65,7 +65,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
 
             return {
                 list_branches: nextProps.list_branches,
-                data_table,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -164,7 +164,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     };
 
     render() {
-        let { data_table, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { dataTable, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return <>
             <ModalConfig
@@ -235,7 +235,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         // @ts-ignore
                         columns={this.columns}
                         loading={loadingTable}
-                        dataSource={data_table}
+                        dataSource={dataTable}
                         scroll={{ x: 400 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}

@@ -22,7 +22,7 @@ interface IListAdminAccountsProps extends StateProps, DispatchProps {
 interface IListAdminAccountsState {
     loadingTable: boolean;
     list_admin_accounts: Array<IAdminAccount>;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
@@ -36,7 +36,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
         super(props);
         this.state = {
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
@@ -53,10 +53,10 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
 
     static getDerivedStateFromProps(nextProps: IListAdminAccountsProps, prevState: IListAdminAccountsState) {
         if (nextProps.list_admin_accounts && nextProps.list_admin_accounts !== prevState.list_admin_accounts) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.list_admin_accounts.forEach((item: IAdminAccount, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     avatarUrl: <Avatar shape="square" src={item.avatarUrl} icon="user" style={{ width: 50, height: 50 }} />,
@@ -72,7 +72,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
 
             return {
                 list_rolist_admin_accountsles: nextProps.list_admin_accounts,
-                data_table,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -211,7 +211,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
     };
 
     render() {
-        let { data_table, loadingTable } = this.state;
+        let { dataTable, loadingTable } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -236,7 +236,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         // @ts-ignore
                         columns={this.columns}
                         loading={loadingTable}
-                        dataSource={data_table}
+                        dataSource={dataTable}
                         scroll={{ x: 1150 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}

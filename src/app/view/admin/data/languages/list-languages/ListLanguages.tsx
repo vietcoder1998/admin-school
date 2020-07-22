@@ -27,7 +27,7 @@ interface ListLanguagesProps extends StateProps, DispatchProps {
 interface ListLanguagesState {
   listSkills: Array<ILanguages>;
   loadingTable: boolean;
-  data_table: Array<any>;
+  dataTable: Array<any>;
   pageIndex: number;
   pageSize: number;
   openModal: boolean;
@@ -46,7 +46,7 @@ class ListLanguages extends PureComponent<
     this.state = {
       listSkills: [],
       loadingTable: true,
-      data_table: [],
+      dataTable: [],
       pageIndex: 0,
       pageSize: 10,
       openModal: false,
@@ -63,10 +63,10 @@ class ListLanguages extends PureComponent<
 
   static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
     if (nextProps.listSkills !== prevState.listSkills) {
-      let data_table: any = [];
+      let dataTable: any = [];
       let { pageIndex, pageSize } = prevState;
       nextProps.listSkills.forEach((item: any, index: number) => {
-        data_table.push({
+        dataTable.push({
           key: item.id,
           index:
             index +
@@ -78,7 +78,7 @@ class ListLanguages extends PureComponent<
 
       return {
         listSkills: nextProps.listSkills,
-        data_table,
+        dataTable,
         loadingTable: false,
       };
     }
@@ -198,7 +198,7 @@ class ListLanguages extends PureComponent<
 
   render() {
     let {
-      data_table,
+      dataTable,
       loadingTable,
       openModal,
       name,
@@ -265,7 +265,7 @@ class ListLanguages extends PureComponent<
                 // @ts-ignore
                 columns={this.columns}
                 loading={loadingTable}
-                dataSource={data_table}
+                dataSource={dataTable}
                 useFixedHeader={true}
                 scroll={{ y: 500 }}
                 bordered

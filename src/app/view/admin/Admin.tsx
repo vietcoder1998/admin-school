@@ -189,7 +189,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        <Breadcrumb >
+                        <Breadcrumb style={{padding: 20}} >
                             <Breadcrumb.Item >
                                 <a href='/admin' >
                                     <Icon type="home" />

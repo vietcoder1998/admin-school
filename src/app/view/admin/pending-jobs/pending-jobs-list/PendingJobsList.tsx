@@ -60,7 +60,7 @@ interface IPendingJobListProps extends StateProps, DispatchProps {
 }
 
 interface IPendingJobListState {
-    data_table?: Array<any>;
+    dataTable?: Array<any>;
     search?: any;
     pageIndex?: number;
     pageSize?: number;
@@ -83,7 +83,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
     constructor(props: any) {
         super(props);
         this.state = {
-            data_table: [],
+            dataTable: [],
             pageSize: 10,
             state: TYPE.PENDING,
             employerID: undefined,
@@ -194,11 +194,11 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
 
     static getDerivedStateFromProps(nextProps: IPendingJobListProps, prevState: IPendingJobListState) {
         if (nextProps.list_jobs && nextProps.list_jobs !== prevState.list_jobs) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
 
             nextProps.list_jobs.forEach((item?: IPendingJob, index?: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     jobName: item.jobName && item.jobName.name,
@@ -246,7 +246,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             });
             return {
                 list_jobs: nextProps.list_jobs,
-                data_table,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -295,7 +295,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
 
     render() {
         let {
-            data_table,
+            dataTable,
             loading,
             message,
             loadingTable,
@@ -465,7 +465,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 1650 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

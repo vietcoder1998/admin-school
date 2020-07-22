@@ -18,9 +18,9 @@ interface ListJobGroupsProps extends StateProps, DispatchProps {
 }
 
 interface ListJobGroupsState {
-    list_job_groups: Array<IJobGroup>,
+    listJobGroups: Array<IJobGroup>,
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
@@ -34,9 +34,9 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     constructor(props: any) {
         super(props);
         this.state = {
-            list_job_groups: [],
+            listJobGroups: [],
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
@@ -52,11 +52,11 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.list_job_groups !== prevState.list_job_groups) {
-            let data_table: any = [];
+        if (nextProps.listJobGroups !== prevState.listJobGroups) {
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_job_groups.forEach((item: any, index: number) => {
-                data_table.push({
+            nextProps.listJobGroups.forEach((item: any, index: number) => {
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
@@ -64,8 +64,8 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
             });
 
             return {
-                list_job_groups: nextProps.list_job_groups,
-                data_table,
+                listJobGroups: nextProps.listJobGroups,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -163,7 +163,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
     };
 
     render() {
-        let { data_table, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { dataTable, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -235,7 +235,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 350 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
@@ -261,7 +261,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_job_groups: state.JobGroups.items,
+    listJobGroups: state.JobGroups.items,
     totalItems: state.JobGroups.totalItems
 });
 

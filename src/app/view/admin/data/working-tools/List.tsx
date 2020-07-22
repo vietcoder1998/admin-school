@@ -1,29 +1,27 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Icon, Table, Button, Input, Row, Col } from 'antd';
-import { REDUX_SAGA } from '../../../../../../const/actions';
-import { IJobName } from '../../../../../../models/job-type';
 import { Link } from 'react-router-dom';
-import { ModalConfig } from '../../../../layout/modal-config/ModalConfig';
-import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
-import { _requestToServer } from '../../../../../../services/exec';
-import { JOB_NAMES } from '../../../../../../services/api/private.api';
-import { DELETE, PUT, GET } from '../../../../../../const/method';
-import { TYPE } from '../../../../../../const/type';
-import { IJobGroup } from '../../../../../../models/job-groups';
-import { IAppState } from '../../../../../../redux/store/reducer';
+import IWorkingTools, { IWorkingTool } from '../../../../../models/working-tools';
+import { _requestToServer } from '../../../../../services/exec';
+import { DELETE, PUT, GET } from '../../../../../const/method';
+import { WORKING_TOOLS } from '../../../../../services/api/private.api';
+import { InputTitle } from '../../../layout/input-tittle/InputTitle';
+import { TYPE } from '../../../../../const/type';
+import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
+import { REDUX_SAGA } from '../../../../../const/actions';
+import { IAppState } from '../../../../../redux/store/reducer';
 
-interface IListJobNamesProps extends StateProps, DispatchProps {
+interface IProps extends StateProps, DispatchProps {
     match: Readonly<any>;
-    getListJobNames: (pageIndex?: number, pageSize?: number, name?: string) => any;
+    getListWorkingTools: (pageIndex?: number, pageSize?: number, name?: string) => any;
     getListMajors: (pageIndex?: number, pageSize?: number, name?: string) => any;
 }
 
-interface IListJobNamesState {
-    listJobNames: Array<IJobName>,
-    listJobGroups?: Array<IJobGroup>,
+interface IState {
+    listWorkingTools: Array<IWorkingTools>,
     loadingTable: boolean;
-    dataTable: Array<any>;
+    dataTale: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal?: boolean;
@@ -36,20 +34,19 @@ interface IListJobNamesState {
     search?: string;
 }
 
-class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState> {
+class ListWorkingTools extends PureComponent<IProps, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            listJobNames: [],
+            listWorkingTools: [],
             loadingTable: true,
-            dataTable: [],
+            dataTale: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
             id: undefined,
             name: undefined,
             type: TYPE.EDIT,
-            listJobGroups: [],
             jobGroupID: undefined,
             jobGroupName: undefined,
             list_data: [],
@@ -57,37 +54,28 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     }
 
     async componentDidMount() {
-        await this.props.getListJobNames(0, 10);
+        await this.props.getListWorkingTools(0, 10);
     }
 
-    static getDerivedStateFromProps(nextProps?: IListJobNamesProps, prevState?: IListJobNamesState) {
-        if (nextProps.listJobNames !== prevState.listJobNames) {
-            let dataTable: any = [];
+    static getDerivedStateFromProps(nextProps?: IProps, prevState?: IState) {
+        if (nextProps.listWorkingTools !== prevState.listWorkingTools) {
+            let dataTale: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.listJobNames.forEach((item?: IJobName, index?: any) => {
-                dataTable.push({
+            nextProps.listWorkingTools.forEach((item?: IWorkingTool, index?: any) => {
+                dataTale.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
-                    jobGroupName: item && item.jobGroup ? item.jobGroup.name : ''
                 });
             });
 
             return {
-                listJobNames: nextProps.listJobNames,
-                dataTable,
+                listWorkingTools: nextProps.listWorkingTools,
+                dataTale,
                 loadingTable: false
             }
         }
 
-        if (nextProps.listJobGroups !== prevState.listJobGroups) {
-            let list_data: any = [];
-            nextProps.listJobGroups.forEach((item: any) => list_data.push({ value: item.id, label: item.name }));
-            return {
-                listJobGroups: nextProps.listJobGroups,
-                list_data,
-            }
-        }
         return { loadingTable: false };
     }
 
@@ -131,17 +119,9 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             fixed: 'left',
         },
         {
-            title: 'Loại công việc',
+            title: 'Tên công cụ',
             dataIndex: 'name',
             key: 'name',
-            width: 250,
-            className: 'action',
-            fixed: false,
-        },
-        {
-            title: 'Thuộc nhóm công việc',
-            dataIndex: 'jobGroupName',
-            key: 'jobGroupName',
             width: 250,
             className: 'action',
             fixed: false,
@@ -158,72 +138,55 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
-        await this.props.getListJobNames(event.current - 1, event.pageSize);
+        await this.props.getListWorkingTools(event.current - 1, event.pageSize);
     };
 
-    choseJobName = (event: any) => {
+    choseWorkingTool = (event: any) => {
         this.setState({ id: event.key, name: event.name, jobGroupName: event.jobGroupName });
-        this.getJobNameDetail(event.key);
+        this.getWorkingToolDetail(event.key);
     };
 
-    getJobNameDetail = async (id: number) => {
+    getWorkingToolDetail = async (id: number) => {
         await _requestToServer(
-            GET, JOB_NAMES + `/${id}`,
+            GET, WORKING_TOOLS + `/${id}`,
             undefined,
             undefined, undefined, undefined, false, false
-        ).then((res: any) => {
-            if (res) {
-                this.setState({ jobGroupID: res.data.jobGroup.id })
-            }
-        })
+        )
     };
 
-    handleChoseJobGroup = (id: number) => {
-        let { list_data } = this.state;
-        list_data.forEach(item => {
-            if (item.value === id) {
-                this.setState({ jobGroupName: item.label })
-            }
-        });
-        this.setState({ jobGroupID: id })
-    };
-
-    editJobNames = async () => {
-        let { name, id, jobGroupID } = this.state;
+    editWorkingTools = async () => {
+        let { name, id } = this.state;
         if (name) {
             await _requestToServer(
-                PUT, JOB_NAMES + `/${id}`,
+                PUT, WORKING_TOOLS + `/${id}`,
                 {
                     name: name.trim(),
-                    jobGroupID
                 }
             ).then((res: any) => {
-                this.props.getListJobNames(0);
+                this.props.getListWorkingTools(0);
                 this.toggleModal();
             })
         }
     };
 
-    removeJobNames = async () => {
+    removeWorkingTools = async () => {
         let { id } = this.state;
         await _requestToServer(
-            DELETE, JOB_NAMES,
+            DELETE, WORKING_TOOLS,
             [id]
         ).then((res: any) => {
-            this.props.getListJobNames(0);
+            this.props.getListWorkingTools(0);
             this.toggleModal();
         })
     };
 
     render() {
         let {
-            dataTable,
+            dataTale,
             loadingTable,
             openModal,
             type,
             name,
-            jobGroupName,
-            list_data,
             pageIndex,
             pageSize,
             search,
@@ -236,7 +199,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                     namebtn2={"Hoàn thành"}
                     title="Thay đổi công việc"
                     isOpen={openModal}
-                    handleOk={() => type === TYPE.EDIT ? this.editJobNames() : this.removeJobNames()}
+                    handleOk={() => type === TYPE.EDIT ? this.editWorkingTools() : this.removeWorkingTools()}
                     handleClose={this.toggleModal}
                     toggleModal={this.toggleModal}
                 >
@@ -245,32 +208,21 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                             <InputTitle
                                 type={TYPE.INPUT}
                                 title="Sửa tên công việc"
-                                widthLabel="120px"
+                                widthLabel="200px"
                                 placeholder="Thay đổi tên"
                                 value={name}
-                                widthInput={"250px"}
+                                widthInput={"200px"}
                                 style={{ padding: 10 }}
                                 onChange={(event: any) => this.setState({ name: event })}
-                            />
-                            <InputTitle
-                                type={TYPE.SELECT}
-                                title="Chọn nhóm công việc"
-                                placeholder="Chọn nhóm công việc"
-                                listValue={list_data}
-                                value={jobGroupName}
-                                style={{ padding: "10px 20px" }}
-                                widthSelect={'250px'}
-                                onSearch={(event?: any) => this.props.getListMajors(0, 0, event)}
-                                onChange={this.handleChoseJobGroup}
                             />
                         </>
                     ) : <div>Bạn chắc chắn muốn xóa loại công việc này: {name}</div>}
                 </ModalConfig>
                 <Row>
-                    <Col md={0} lg={0} xl={1} xxl={4} />
-                    <Col md={24} lg={24} xl={22} xxl={16} >
+                    <Col md={0} lg={5} xl={6} xxl={4} />
+                    <Col md={24} lg={14} xl={12} xxl={16} >
                         <h5>
-                            Danh sách loại công việc
+                            Danh sách công cụ làm việc
                         <Button
                                 onClick={() => {
                                 }}
@@ -279,8 +231,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                     float: "right",
                                 }}
                             >
-
-                                <Link to='/admin/data/job-names/create'>
+                                <Link to={'/admin/data/working-tools/create'}>
                                     <Icon type="plus" />
                                 Thêm mới
                             </Link>
@@ -293,7 +244,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                     style={{ width: "100%" }}
                                     value={search}
                                     onChange={(event: any) => this.setState({ search: event.target.value })}
-                                    onPressEnter={(event: any) => this.props.getListJobNames(pageIndex, pageSize, search)}
+                                    onPressEnter={(event: any) => this.props.getListWorkingTools(pageIndex, pageSize, search)}
                                     suffix={
                                         search &&
                                             search.length > 0 ?
@@ -312,17 +263,17 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={dataTable}
-                            scroll={{ x: 650 }}
+                            dataSource={dataTale}
+                            scroll={{ x: 400 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
                             size="middle"
                             onChange={this.setPageIndex}
-                            onRow={(event: any) => ({ onClick: () => this.choseJobName(event) })}
+                            onRow={(event: any) => ({ onClick: () => this.choseWorkingTool(event) })}
                         />
                     </Col>
 
-                    <Col md={2} lg={0} xl={1} xxl={4} />
+                    <Col md={2} lg={5} xl={6} xxl={4} />
                 </Row>
 
             </>
@@ -331,21 +282,17 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
-    getListJobNames: (pageIndex: number, pageSize: number, name?: string) => dispatch({
-        type: REDUX_SAGA.JOB_NAMES.GET_JOB_NAMES, pageIndex, pageSize, name
+    getListWorkingTools: (pageIndex: number, pageSize: number, name?: string) => dispatch({
+        type: REDUX_SAGA.WORKING_TOOL.GET_WORKING_TOOLS, pageIndex, pageSize, name
     }),
-    getListMajors: (pageIndex: number, pageSize: number, name?: string) => dispatch({
-        type: REDUX_SAGA.MAJORS.GET_MAJORS, pageIndex, pageSize, name
-    })
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    listJobNames: state.JobNames.items,
-    listJobGroups: state.JobGroups.items,
-    totalItems: state.JobNames.totalItems
+    listWorkingTools: state.WorkingTools.items,
+    totalItems: state.WorkingTools.totalItems
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListJobNames)
+export default connect(mapStateToProps, mapDispatchToProps)(ListWorkingTools)

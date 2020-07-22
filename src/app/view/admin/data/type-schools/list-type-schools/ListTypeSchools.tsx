@@ -20,7 +20,7 @@ interface ListTypeSchoolsProps extends StateProps, DispatchProps {
 interface ListTypeSchoolsState {
     list_type_schools: Array<ITypeSchool>;
     loadingTable: boolean;
-    data_table: Array<any>;
+    dataTable: Array<any>;
     pageIndex: number;
     pageSize: number;
     openModal: boolean;
@@ -36,7 +36,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
         this.state = {
             list_type_schools: [],
             loadingTable: true,
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             openModal: false,
@@ -53,10 +53,10 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.list_type_schools !== prevState.list_type_schools) {
-            let data_table: any = [];
+            let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
             nextProps.list_type_schools.forEach((item: any, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     name: item.name,
@@ -66,7 +66,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
 
             return {
                 list_type_schools: nextProps.list_type_schools,
-                data_table,
+                dataTable,
                 loadingTable: false
             }
         }
@@ -167,7 +167,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
     };
 
     render() {
-        let { data_table, loadingTable, openModal, name, type } = this.state;
+        let { dataTable, loadingTable, openModal, name, type } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -218,7 +218,7 @@ class ListTypeSchools extends PureComponent<ListTypeSchoolsProps, ListTypeSchool
                                 // @ts-ignore
                                 columns={this.columns}
                                 loading={loadingTable}
-                                dataSource={data_table}
+                                dataSource={dataTable}
                                 scroll={{ x: 350 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}

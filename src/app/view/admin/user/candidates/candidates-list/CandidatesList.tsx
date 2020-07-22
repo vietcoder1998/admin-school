@@ -42,7 +42,7 @@ interface ICandidatesListProps extends StateProps, DispatchProps {
 };
 
 interface ICandidatesListState {
-    data_table?: Array<any>;
+    dataTable?: Array<any>;
     pageIndex?: number;
     pageSize?: number;
     state?: string;
@@ -68,7 +68,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
     constructor(props) {
         super(props);
         this.state = {
-            data_table: [],
+            dataTable: [],
             pageIndex: 0,
             pageSize: 10,
             showModal: false,
@@ -242,9 +242,9 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
     static getDerivedStateFromProps(nextProps?: ICandidatesListProps, prevState?: ICandidatesListState) {
         if (nextProps.list_find_candidates && nextProps.list_find_candidates !== prevState.list_find_candidates) {
             let { pageIndex, pageSize } = prevState;
-            let data_table = [];
+            let dataTable = [];
             nextProps.list_find_candidates.forEach((item: ICandidate, index: number) => {
-                data_table.push({
+                dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
                     avatarUrl: <ImageRender src={item.avatarUrl} alt="Ảnh đại diện" />,
@@ -262,7 +262,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             })
             return {
                 list_find_candidates: nextProps.list_find_candidates,
-                data_table,
+                dataTable,
                 loadingTable: false,
             }
         }
@@ -516,7 +516,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
       };
     render() {
         let {
-            data_table,
+            dataTable,
             loadingTable,
             openDrawer,
             typeCpn,
@@ -685,7 +685,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             // @ts-ignore
                             columns={this.columns}
                             loading={loadingTable}
-                            dataSource={data_table}
+                            dataSource={dataTable}
                             scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

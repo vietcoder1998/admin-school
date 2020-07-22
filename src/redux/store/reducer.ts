@@ -1,3 +1,4 @@
+import { WorkingTools } from './../reducers/working-tools';
 import { PartnerDetail } from './../reducers/partner-detail';
 import { Partners } from './../reducers/partner';
 import { JobSuitableCandidates } from './../reducers/job-suitable-candidate';
@@ -92,7 +93,8 @@ const rootReducer = combineReducers({
     EventDetail,
     EventJobs,
     EventJobDetail,
-    EventEms
+    EventEms,
+    WorkingTools
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;

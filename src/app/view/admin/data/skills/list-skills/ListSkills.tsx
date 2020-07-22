@@ -20,7 +20,7 @@ interface ListSkillsProps extends StateProps, DispatchProps {
 interface ListSkillsState {
   listSkills: Array<ISkills>;
   loadingTable: boolean;
-  data_table: Array<any>;
+  dataTable: Array<any>;
   pageIndex: number;
   pageSize: number;
   openModal: boolean;
@@ -36,7 +36,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
     this.state = {
       listSkills: [],
       loadingTable: true,
-      data_table: [],
+      dataTable: [],
       pageIndex: 0,
       pageSize: 10,
       openModal: false,
@@ -53,10 +53,10 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
   static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
     if (nextProps.listSkills !== prevState.listSkills) {
-      let data_table: any = [];
+      let dataTable: any = [];
       let { pageIndex, pageSize } = prevState;
       nextProps.listSkills.forEach((item: any, index: any) => {
-        data_table.push({
+        dataTable.push({
           key: item.id,
           index:
             index +
@@ -68,7 +68,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
       return {
         listSkills: nextProps.listSkills,
-        data_table,
+        dataTable,
         loadingTable: false,
       };
     }
@@ -163,7 +163,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
 
   render() {
     let {
-      data_table,
+      dataTable,
       loadingTable,
       openModal,
       name,
@@ -249,7 +249,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
               // @ts-ignore
               columns={this.columns}
               loading={loadingTable}
-              dataSource={data_table}
+              dataSource={dataTable}
               scroll={{ x: 400 }}
               bordered
               pagination={{ total: totalItems, showSizeChanger: true }}

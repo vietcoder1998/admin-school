@@ -51,7 +51,7 @@ interface IEmControllerListProps extends StateProps, DispatchProps {
 }
 
 interface IEmControllerListState {
-  data_table?: Array<any>;
+  dataTable?: Array<any>;
   search?: any;
   pageIndex?: number;
   pageSize?: number;
@@ -75,7 +75,7 @@ class EmControllerList extends PureComponent<
   constructor(props) {
     super(props);
     this.state = {
-      data_table: [],
+      dataTable: [],
       pageIndex: 0,
       pageSize: 10,
       showModal: false,
@@ -229,10 +229,10 @@ class EmControllerList extends PureComponent<
       nextProps.list_user_controller !== prevState.list_user_controller
     ) {
       let { pageIndex, pageSize } = prevState;
-      let data_table = [];
+      let dataTable = [];
       nextProps.list_user_controller.forEach(
         (item: IEmController, index: number) => {
-          data_table.push({
+          dataTable.push({
             key: item.id,
             index:
               index +
@@ -268,7 +268,7 @@ class EmControllerList extends PureComponent<
       );
       return {
         list_user_controller: nextProps.list_user_controller,
-        data_table,
+        dataTable,
         loadingTable: false,
       };
     }
@@ -403,7 +403,7 @@ class EmControllerList extends PureComponent<
   };
 
   render() {
-    let { data_table, loadingTable, loading, openImport, visible, newPassword } = this.state;
+    let { dataTable, loadingTable, loading, openImport, visible, newPassword } = this.state;
     let { totalItems, listRegions, employer_detail } = this.props;
 
     return (
@@ -564,7 +564,7 @@ class EmControllerList extends PureComponent<
               // @ts-ignore
               columns={this.columns}
               loading={loadingTable}
-              dataSource={data_table}
+              dataSource={dataTable}
               scroll={{ x: 1100 }}
               bordered
               pagination={{

@@ -65,7 +65,7 @@ let ImageRender = (props: any) => {
 };
 
 interface IStudentsListState {
-  data_table?: Array<any>;
+  dataTable?: Array<any>;
   search?: any;
   pageIndex?: number;
   pageSize?: number;
@@ -92,7 +92,7 @@ class StudentsList extends PureComponent<
   constructor(props) {
     super(props);
     this.state = {
-      data_table: [],
+      dataTable: [],
       pageIndex: 0,
       pageSize: 10,
       showModal: false,
@@ -279,10 +279,10 @@ class StudentsList extends PureComponent<
       nextProps.listStudents !== prevState.listStudents
     ) {
       let { pageIndex, pageSize } = prevState;
-      let data_table = [];
+      let dataTable = [];
 
       nextProps.listStudents.forEach((item: IStudent, index: number) => {
-        data_table.push({
+        dataTable.push({
           key: item.id,
           index:
             index +
@@ -306,7 +306,7 @@ class StudentsList extends PureComponent<
       });
       return {
         listStudents: nextProps.listStudents,
-        data_table,
+        dataTable,
         loadingTable: false,
       };
     }
@@ -593,7 +593,7 @@ class StudentsList extends PureComponent<
 
   render() {
     let {
-      data_table,
+      dataTable,
       loadingTable,
       openDrawer,
       typeCpn,
@@ -788,7 +788,7 @@ class StudentsList extends PureComponent<
               // @ts-ignore
               columns={this.columns}
               loading={loadingTable}
-              dataSource={data_table}
+              dataSource={dataTable}
               scroll={{ x: 1610 }}
               bordered
               pagination={{ total: totalItems, pageSize: 10 }}
