@@ -4,7 +4,7 @@ export const TYPE = {
     SUCCESS: "success",
     ERROR: "error",
     WARNING: "warning",
-    
+
     UPDATE: "UPDATE",
     REJECTED: "REJECTED",
     ACCEPTED: "ACCEPTED",
@@ -158,7 +158,7 @@ export const TYPE = {
         username: "username"
     },
 
-    EVENT_FILTER:  {
+    EVENT_FILTER: {
         employerID: "employerID",
         schoolID: "schoolID",
         createdDate: "createdDate",
@@ -166,5 +166,14 @@ export const TYPE = {
         finishedDate: "finishedDate",
         started: "started",
         finished: "finished"
+    },
+
+    EM_SCHOOL_FILTER: {
+        name: "name",
+        regionID: "regionID",
+        headquarters: "headquarters",
+        hasRequest: "hasRequest",
+        state: "state",
+        id: "id"
     }
 };

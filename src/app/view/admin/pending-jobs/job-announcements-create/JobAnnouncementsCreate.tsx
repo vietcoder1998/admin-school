@@ -26,7 +26,7 @@
 // interface IJobAnnouncementsCreateState {
 //     title: string;
 //     announcementTypeID: string;
-//     type_management: Array<any>;
+//     typeManagement: Array<any>;
 //     list_item: Array<{ label: string, value: string }>,
 //     loading: boolean;
 //     value_annou: string;
@@ -55,7 +55,7 @@
 //         this.state = {
 //             title: "",
 //             announcementTypeID: "",
-//             type_management: [],
+//             typeManagement: [],
 //             list_item: [],
 //             loading: false,
 //             value_annou: "",

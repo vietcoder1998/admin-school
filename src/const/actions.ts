@@ -134,6 +134,9 @@ export const REDUX = {
     },
     WORKING_TOOL: {
         GET_WORKING_TOOLS: "GET_WORKING_TOOLS",
+    },
+    CONNECT_EM_SCHOOL:  {
+        GET_CONNECT_EM_SCHOOL: "GET_CONNECT_EM_SCHOOL"
     }
 };
 
@@ -263,5 +266,8 @@ export const REDUX_SAGA = {
     },
     WORKING_TOOL: {
         GET_WORKING_TOOLS: "GET_WORKING_TOOLS_DATA",
+    },
+    CONNECT_EM_SCHOOL:  {
+        GET_CONNECT_EM_SCHOOL: "GET_CONNECT_EM_SCHOOL_DATA"
     }
 };

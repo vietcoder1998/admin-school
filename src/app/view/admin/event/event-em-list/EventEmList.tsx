@@ -355,7 +355,7 @@ class EventEmList extends PureComponent<IProps, IState> {
         await this.props.getListEventEm(body, pageIndex, pageSize, sid, eid);
     };
 
-    onChangeType = (event: any, param?: string) => {
+    onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
         let value: any = event;
         switch (param) {
@@ -583,7 +583,7 @@ class EventEmList extends PureComponent<IProps, IState> {
                                     defaultValue="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_EM_FILER.priority)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EVENT_EM_FILER.priority)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TOP}>TOP</Option>
@@ -598,7 +598,7 @@ class EventEmList extends PureComponent<IProps, IState> {
                                     placeholder="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_EM_FILER.bannerPriority)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EVENT_EM_FILER.bannerPriority)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TOP}>TOP</Option>

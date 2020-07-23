@@ -120,7 +120,7 @@ interface IJobAnnouncementsListState {
     showModal?: boolean;
     loading?: boolean;
     message?: string;
-    list_employer_branches?: Array<any>;
+    listEmployerBranches?: Array<any>;
     valueType?: string;
     announcementTypeID?: number;
     createdDate?: number;
@@ -158,7 +158,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             showModal: false,
             loading: false,
             message: null,
-            list_employer_branches: [],
+            listEmployerBranches: [],
             valueType: null,
             announcementTypeID: null,
             createdDate: null,
@@ -532,9 +532,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         await this.props.getListJobAnnouncements(body, pageIndex, pageSize);
     };
 
-    onChangeType = (event: any, param?: string) => {
+    onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
-        let { list_employer_branches, list_employer } = this.props;
+        let { listEmployerBranches, listEmployer } = this.props;
         let value: any = event;
 
         switch (param) {
@@ -543,13 +543,13 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 break;
             case TYPE.JOB_FILTER.jobLocationFilter:
                 if (value) {
-                    let data = list_employer_branches.filter((item: IEmBranch, index: number) => { return item.id === event });
+                    let data = listEmployerBranches.filter((item: IEmBranch, index: number) => { return item.id === event });
                     value = { distance: 1, lat: data[0].lat, lon: data[0].lon }
                 }
                 break;
             case TYPE.JOB_FILTER.employerID:
                 if (value) {
-                    let data = list_employer.filter((item: IEmployer, index: number) => { return item.employerName === event });
+                    let data = listEmployer.filter((item: IEmployer, index: number) => { return item.employerName === event });
                     if (data.length > 0) {
                         value = data[0].id
                     }
@@ -705,9 +705,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             jobAnnouncementDetail,
             totalItems,
             listJobNames,
-            list_employer_branches,
+            listEmployerBranches,
             list_job_service,
-            list_employer,
+            listEmployer,
             modalState,
             jobDetail,
             jobSuitableCandidates,
@@ -943,12 +943,12 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         showSearch
                                         defaultValue="Tất cả"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.employerID)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.employerID)}
                                         onSearch={(event) => { this.props.getListEmployer({ employerName: event }, 0, 10) }}
                                     >
                                         <Option key={1} value={null}>Tất cả</Option>
                                         {
-                                            list_employer && list_employer.map((item?: IEmController, i?: any) =>
+                                            listEmployer && listEmployer.map((item?: IEmController, i?: any) =>
                                                 (<Option key={item.id} value={item.employerName}>{item.employerName + '(' + item.email + ')'} </Option>)
                                             )
                                         }
@@ -960,7 +960,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         showSearch
                                         defaultValue="Tất cả"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.expired)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
                                     >
                                         <Option value={null}>Tất cả</Option>
                                         <Option value={TYPE.FALSE}>Còn hạn</Option>
@@ -973,7 +973,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         showSearch
                                         defaultValue="Tất cả"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobNameIDs)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobNameIDs)}
                                     >
                                         {
                                             listJobNames &&
@@ -990,12 +990,12 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         placeholder="Tất cả"
                                         optionFilterProp="children"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobLocationFilter)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobLocationFilter)}
                                     >
                                         <Option value={null}>Tất cả</Option>
                                         {
-                                            list_employer_branches &&
-                                            list_employer_branches.map(
+                                            listEmployerBranches &&
+                                            listEmployerBranches.map(
                                                 (item: IEmBranch, index: number) => <Option key={index} value={item.id}>{item.branchName}</Option>
                                             )
                                         }
@@ -1009,7 +1009,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         defaultValue="Tất cả"
                                         optionFilterProp="children"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobType)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobType)}
                                     >
                                         <Option value={null}>Tất cả</Option>
                                         <Option value={TYPE.FULLTIME}>Toàn thời gian</Option>
@@ -1029,7 +1029,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                                     body.homePriority = null;
                                                     body.searchPriority = null;
                                                     this.setState({ body });
-                                                } else this.onChangeType(event[1], event[0]);
+                                                } else this.onChangeFilter(event[1], event[0]);
                                             }
                                         }
                                     />
@@ -1042,7 +1042,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         placeholder="Tất cả"
                                         optionFilterProp="children"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.expired)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
                                     >
                                         <Option value={null}>Tất cả</Option>
                                         <Option value={TYPE.FALSE}>Còn hạn</Option>
@@ -1058,7 +1058,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         optionFilterProp="children"
                                         style={{ width: "100%" }}
                                         value={valueType}
-                                        onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.hidden)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.hidden)}
                                     >
                                         <Option value={null}>Tất cả</Option>
                                         <Option value={TYPE.TRUE}>Đang ẩn</Option>
@@ -1143,9 +1143,9 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
     list_job_announcements: state.JobAnnouncements.items,
     listJobNames: state.JobNames.items,
-    list_employer_branches: state.EmBranches.items,
+    listEmployerBranches: state.EmBranches.items,
     list_job_service: state.JobServices,
-    list_employer: state.Employers.items,
+    listEmployer: state.Employers.items,
     CanDetail: state.StudentDetail,
     jobAnnouncementDetail: state.JobAnnouncementDetail,
     modalState: state.MutilBox.modalState,

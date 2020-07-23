@@ -256,6 +256,22 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </Link>
                     </Menu.Item> */}
                 </SubMenu>
+                <SubMenu
+                    key="connect"
+                    title={
+                        <span>
+                            <Icon type="api" />
+                            <span>Kết nối</span>
+                        </span>
+                    }
+                >
+                    <Menu.Item key="em-school">
+                        <Link to={routeLink.EM_SCHOOL + routePath.LIST}>
+                            <Icon type="team" />
+                            <span>NTD - Trường học</span>
+                        </Link>
+                    </Menu.Item>
+                </SubMenu>
             </Menu>
         </Sider>
     )

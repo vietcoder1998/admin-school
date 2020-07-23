@@ -417,7 +417,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
         this.setState({ jobNameID: event })
     };
 
-    onChangeType = (event: any) => {
+    onChangeFilter = (event: any) => {
         let { list_annou_types } = this.state;
         if (event === null) {
             this.setState({ announcementTypeID: undefined, valueType: undefined })
@@ -720,7 +720,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
                                     value={valueType}
-                                    onChange={this.onChangeType}
+                                    onChange={this.onChangeFilter}
                                 >
                                     <Option value={undefined}>Tất cả</Option>
                                     {

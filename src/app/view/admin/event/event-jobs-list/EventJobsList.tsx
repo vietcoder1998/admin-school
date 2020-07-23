@@ -568,7 +568,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
         await this.props.getListEventJobs(body, pageIndex, pageSize);
     };
 
-    onChangeType = (event: any, param?: string) => {
+    onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
         let { listEmBranches } = this.props;
         let value: any = event;
@@ -964,7 +964,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.expired)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.FALSE}>Còn hạn</Option>
@@ -977,7 +977,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobNameIDs)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobNameIDs)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
@@ -995,7 +995,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     placeholder="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobLocationFilter)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobLocationFilter)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
@@ -1014,7 +1014,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     defaultValue="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.jobType)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobType)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.FULLTIME}>Toàn thời gian</Option>
@@ -1034,7 +1034,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                                 body.homePriority = null;
                                                 body.searchPriority = null;
                                                 this.setState({ body });
-                                            } else this.onChangeType(event[1], event[0]);
+                                            } else this.onChangeFilter(event[1], event[0]);
                                         }
                                     }
                                 />
@@ -1047,7 +1047,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     placeholder="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.expired)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.FALSE}>Còn hạn</Option>
@@ -1061,7 +1061,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     placeholder="Tất cả"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.JOB_FILTER.hidden)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.hidden)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Đang ẩn</Option>

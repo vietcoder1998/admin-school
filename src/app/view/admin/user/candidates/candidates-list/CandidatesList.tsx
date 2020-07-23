@@ -50,17 +50,17 @@ interface ICandidatesListState {
     employerID?: string;
     showModal?: boolean;
     loading?: boolean;
-    type_management?: Array<any>;
+    typeManagement?: Array<any>;
     announcementTypeID?: number;
     birthday?: number;
     adminID?: string;
     hidden?: boolean;
-    list_find_candidates?: Array<any>;
+    listFindCandidates?: Array<any>;
     id?: string;
     loadingTable?: boolean;
     body?: ICandidateFilter;
     openDrawer: boolean;
-    type_view?: string;
+    typeView?: string;
     openImport?: boolean;
 };
 
@@ -77,7 +77,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
             birthday: null,
             adminID: null,
             hidden: false,
-            list_find_candidates: [],
+            listFindCandidates: [],
             id: null,
             loadingTable: true,
             body: {
@@ -240,10 +240,10 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
     };
 
     static getDerivedStateFromProps(nextProps?: ICandidatesListProps, prevState?: ICandidatesListState) {
-        if (nextProps.list_find_candidates && nextProps.list_find_candidates !== prevState.list_find_candidates) {
+        if (nextProps.listFindCandidates && nextProps.listFindCandidates !== prevState.listFindCandidates) {
             let { pageIndex, pageSize } = prevState;
             let dataTable = [];
-            nextProps.list_find_candidates.forEach((item: ICandidate, index: number) => {
+            nextProps.listFindCandidates.forEach((item: ICandidate, index: number) => {
                 dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -261,7 +261,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                 });
             })
             return {
-                list_find_candidates: nextProps.list_find_candidates,
+                listFindCandidates: nextProps.listFindCandidates,
                 dataTable,
                 loadingTable: false,
             }
@@ -719,7 +719,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
-    list_find_candidates: state.Candidates.items,
+    listFindCandidates: state.Candidates.items,
     totalItems: state.Candidates.totalItems,
     listRegions: state.Regions.items,
     listSkills: state.Skills.items,

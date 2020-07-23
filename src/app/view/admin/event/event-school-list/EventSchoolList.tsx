@@ -329,7 +329,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
         await this.searchEventSchool();
     };
 
-    onChangeType = (event: any, param?: string) => {
+    onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
         let { listSchools } = this.props;
         let value: any = event;
@@ -472,7 +472,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
                                     onSearch={(event: string) => this.props.getListSchools(0, 10, { event })}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_FILTER.schoolID)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EVENT_FILTER.schoolID)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {
@@ -489,7 +489,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_FILTER.started)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EVENT_FILTER.started)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Đã bắt đầu</Option>
@@ -502,7 +502,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     showSearch
                                     defaultValue="Kết thúc"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EVENT_FILTER.finished)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EVENT_FILTER.finished)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.MALE}>Đã kết thúc </Option>

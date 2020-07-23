@@ -42,7 +42,7 @@ interface IEmBranchesListState {
     loading?: boolean;
     pendingJob?: any;
     message?: string;
-    type_management?: Array<any>;
+    typeManagement?: Array<any>;
     valueType?: string;
     announcementTypeID?: number;
     createdDate?: number;
@@ -69,7 +69,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             loading: false,
             pendingJob: null,
             message: null,
-            type_management: [],
+            typeManagement: [],
             valueType: null,
             announcementTypeID: null,
             createdDate: null,
@@ -280,7 +280,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
         this.props.getListEmBranchs(pageIndex, pageSize, body, id);
     };
 
-    onChangeType = (event: any, param?: string) => {
+    onChangeFilter = (event: any, param?: string) => {
         let { body } = this.state;
         let { listRegions } = this.props;
         let value: any = event;
@@ -439,7 +439,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EM_BRANCHES.headquarters)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EM_BRANCHES.headquarters)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Cơ sở chính</Option>
@@ -452,7 +452,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeType(event, TYPE.EM_BRANCHES.regionID)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EM_BRANCHES.regionID)}
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     {

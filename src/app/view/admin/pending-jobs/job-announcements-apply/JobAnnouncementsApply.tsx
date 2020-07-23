@@ -24,7 +24,7 @@ const { TabPane } = Tabs;
 interface IJobAnnouncementsApplyState {
     title: string;
     announcementTypeID: string;
-    type_management: Array<any>;
+    typeManagement: Array<any>;
     list_item: Array<{ label: string, value: string }>,
     loading: boolean;
     value_annou: string;
@@ -61,7 +61,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
         this.state = {
             title: "",
             announcementTypeID: "",
-            type_management: [],
+            typeManagement: [],
             list_item: [],
             loading: false,
             value_annou: "",
@@ -240,7 +240,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     data={item}
                                                     id={item && item.student ? item.student.id: null}
                                                     id_default={item.student.id === default_id}
-                                                    onChangeType={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
+                                                    onChangeFilter={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                     onClick={
                                                         (event: string) => this.searchShift(event, TYPE.PENDING, item.student.id)
                                                     }
@@ -267,7 +267,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     data={item}
                                                     id={item.candidate.id}
                                                     id_default={item.candidate.id === default_id}
-                                                    onChangeType={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
+                                                    onChangeFilter={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                     onClick={
                                                         (event: string) => this.searchShift(event, TYPE.ACCEPTED, item.candidate.id)
                                                     }
@@ -295,7 +295,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                         data={item}
                                                         id={item.candidate.id}
                                                         id_default={item.candidate.id === default_id}
-                                                        onChangeType={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
+                                                        onChangeFilter={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                         onClick={
                                                             (event: string) => this.searchShift(event, TYPE.REJECTED, item.candidate.id)
                                                         }

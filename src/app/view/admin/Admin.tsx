@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 
 import Data from './data/Data';
 import clearStorage from '../../../services/clearStorage';
-import RoleAdmins from './roles-admin/RoleAdmins';
-import PendingJobs from './pending-jobs/PendingJobs';
-import User from './user/User';
+import RoleAdmins from './roles-admin';
+import PendingJobs from './pending-jobs';
+import User from './user';
 
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
 import { breakCumb, IBrk, routePath, routeLink } from '../../../const/break-cumb';
@@ -19,8 +19,9 @@ import { IAppState } from '../../../redux/store/reducer';
 import ClearCache from 'react-clear-cache';
 
 import Loading from '../layout/loading/Loading';
-import Announcement from './announcement/Announcement';
-import Event from './event/Event';
+import Announcement from './announcement';
+import Event from './event';
+import Connect from './connect';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -222,6 +223,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.ROLES}`} component={RoleAdmins} />
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.USER}`} component={User} />
                                     <ErrorBoundaryRoute path={`${match.url}${routePath.EVENT}`} component={Event} />
+                                    <ErrorBoundaryRoute path={`${match.url}${routePath.CONNECT}`} component={Connect} />
                                 </Switch> : <Loading />}
                             </Col >
                             {/* <Col sm={1} md={1} lg={2}></Col> */}

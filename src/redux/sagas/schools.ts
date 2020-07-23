@@ -26,22 +26,21 @@ function* getListSchoolsData(action: any) {
 
 function callSchools(action: any) {
   try {
-    if (action.body) {
-      
-      return _requestToServer(
-        POST,
-        SCHOOLS + "/query",
-        action.body ? action.body : undefined,
-        {
-          pageIndex: action.pageIndex ? action.pageIndex : 0,
-          pageSize: action.pageSize ? action.pageSize : 10,
-        },
-        undefined,
-        undefined,
-        false,
-        false
-      );
-    }
+    let body = action.body;
+    return _requestToServer(
+      POST,
+      SCHOOLS + "/query",
+      body ? body : undefined,
+      {
+        pageIndex: action.pageIndex ? action.pageIndex : 0,
+        pageSize: action.pageSize ? action.pageSize : 10,
+      },
+      undefined,
+      undefined,
+      false,
+      false
+    );
+
   } catch (e) {
     throw e;
   }

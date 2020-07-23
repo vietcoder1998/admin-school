@@ -15,7 +15,7 @@ interface IApplyCanItem {
     id_default?: boolean;
     l_btn?: boolean;
     type?: 'PENDING' | 'ACCEPTED' | 'REJECTED';
-    onChangeType?: Function;
+    onChangeFilter?: Function;
     onClick?: Function;
     onView?: Function;
     removeApplyJob?: Function;
@@ -134,7 +134,7 @@ export function ApplyJobItem(props: IApplyCanItem) {
                             display: props.type !== TYPE.ACCEPTED ? "block" : "none"
                         }}
                         loading={props.l_btn}
-                        onClick={() => props.onChangeType ? props.onChangeType(props.id, TYPE.ACCEPTED) : undefined}
+                        onClick={() => props.onChangeFilter ? props.onChangeFilter(props.id, TYPE.ACCEPTED) : undefined}
                     />
                 </Tooltip>
                 <Tooltip title='Từ chối'>
@@ -150,7 +150,7 @@ export function ApplyJobItem(props: IApplyCanItem) {
                             display: props.type !== TYPE.REJECTED ? "block" : "none"
                         }}
                         loading={props.l_btn}
-                        onClick={() => props.onChangeType ? props.onChangeType(props.id, TYPE.REJECTED) : undefined}
+                        onClick={() => props.onChangeFilter ? props.onChangeFilter(props.id, TYPE.REJECTED) : undefined}
                     />
                 </Tooltip>
                 <Tooltip title='Chuyển thành đang chờ'>
@@ -168,7 +168,7 @@ export function ApplyJobItem(props: IApplyCanItem) {
                             display: props.type !== TYPE.PENDING ? "block" : "none"
                         }}
                         loading={props.l_btn}
-                        onClick={() => props.onChangeType ? props.onChangeType(props.id, TYPE.PENDING) : undefined}
+                        onClick={() => props.onChangeFilter ? props.onChangeFilter(props.id, TYPE.PENDING) : undefined}
                     />
                 </Tooltip>
 
