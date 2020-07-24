@@ -26,6 +26,36 @@ let ImageRender = (props: any) => {
     }
 };
 
+const Label = (props: any) => {
+    let value = "";
+    switch (props.type) {
+        case TYPE.PENDING:
+            value = "Đang chờ";
+            break;
+        case TYPE.ACCEPTED:
+            value = "Đã chấp nhận";
+            break;
+        case TYPE.REJECTED:
+            value = "Đã từ chối";
+            break;
+        case TYPE.PARTTIME:
+            value = "Bán thời gian";
+            break;
+        case TYPE.FULLTIME:
+            value = "Toàn thời gian";
+            break;
+        case TYPE.INTERNSHIP:
+            value = "Thực tập sinh";
+            break;
+    }
+
+    if (props.type) {
+        return < >{value}</>
+    }
+    return
+};
+
+
 interface IProps extends StateProps, DispatchProps {
     match?: any;
     history?: any;
@@ -90,15 +120,18 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
 
     EditToolAction = (state) => (
         <>
-            <Dropdown overlay={this.menu} trigger="click"  >
-                <Button
-                    icon={
-                        this.state.loadingTable ? "loading" : "down"
-                    }
-                    style={{ marginTop: 5 }}
-                >
-                    {state}
-                </Button>
+            <Dropdown
+                overlay={this.menu}
+                trigger="click"
+            >
+                <Tooltip title="Đổi trạng thái kết nối">
+                    <Button
+                        style={{ marginTop: -5 }}
+                    >
+                        {this.state.loading ? <Icon type={"loading"} /> : state}
+                    </Button>
+                </Tooltip>
+
             </Dropdown>
             <Popconfirm
                 placement="topRight"
@@ -146,7 +179,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                 Đang chờ
           </Menu.Item>
             <Menu.Item key={TYPE.ACCEPTED}>
-                Đã kết nối
+                Chấp nhận
           </Menu.Item>
             <Menu.Divider />
             <Menu.Item key={TYPE.REJECTED} style={{ color: "red" }}>
@@ -220,7 +253,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
             dataIndex: 'state',
             className: 'action',
             render: this.EditToolAction,
-            width: 150
+            width: 180
         },
     ];
 
@@ -249,7 +282,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                     address: employer.address ? employer.address : "",
                     region: employer.region ? employer.region.name : "",
                     createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000, "DD/MM/YYYY"),
-                    state: item.state ? item.state : "Fail"
+                    state: <Label type={item.state} />
                 });
             })
             return {
@@ -357,11 +390,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
             true,
             false,
         ).then(
-            (res: any) => {
-                if (res) {
-                    this.searchConnectEmSchool();
-                }
-            }
+            () => this.searchConnectEmSchool()
         ).finally(
             () => this.setState({ loading: false, loadingTable: false })
         )

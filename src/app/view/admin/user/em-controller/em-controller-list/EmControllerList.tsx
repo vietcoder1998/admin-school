@@ -388,7 +388,7 @@ class EmControllerList extends PureComponent<
     }
     body[type] = value;
     this.setState({ body });
-    if (type !==TYPE.EM_CONTROLLER.employerName) {
+    if (type !==TYPE.EM_CONTROLLER.employerName ) {
       this.searchEmControllers();
     }
   };
@@ -461,7 +461,7 @@ class EmControllerList extends PureComponent<
         <div className="common-content">
           <h5>
             Danh sách nhà tuyển dụng
-            <Button
+            {/* <Button
               icon="filter"
               onClick={() => this.searchFilter()}
               type="primary"
@@ -470,7 +470,7 @@ class EmControllerList extends PureComponent<
               }}
             >
               Lọc
-            </Button>
+            </Button> */}
             <Button
               icon="upload"
               onClick={() => this.handleVisible()}

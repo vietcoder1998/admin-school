@@ -39,73 +39,74 @@ export function ApplyJobItem(props: IApplyCanItem) {
                 cursor: "pointed",
             }}
         >
-
-            <div
-                style={{
-                    border: "dashed gray 1px",
-                    display: "inline-flex",
-                    borderRadius: 5,
-                    padding: 2,
-                    width: "100%"
-                }}
-                onClick={() => props.onClick ? props.onClick(props.id) : null}
-            >
-                <Row>
-                    <Col md={24} lg={24} xl={24}>
-                        <div
-                            style={{
-                                display: "inline-flex",
-                                width: "100%",
-                                padding: "2px 5px",
-                            }}
-                        >
+            <Tooltip title={"Click vào hình để xem ca"}>
+                <div
+                    style={{
+                        border: "dashed gray 1px",
+                        display: "inline-flex",
+                        borderRadius: 5,
+                        padding: 2,
+                        width: "100%"
+                    }}
+                    onClick={() => props.onClick ? props.onClick(props.id) : null}
+                >
+                    <Row>
+                        <Col md={24} lg={24} xl={24}>
                             <div
-                                style={{ width: "4.8vw", height: "4.8vw" }}>
-                                <Avatar style={{ width: "4vw", height: "4vw", margin: "0.2vw" }} shape="square" src={data.student.avatarUrl} alt="anh" icon="user" />
-                            </div>
-                            <div style={{ margin: "0px 15px" }}>
-                                <p style={{ marginBottom: 5 }}>
-                                    {data ? data.student.lastName + " " + data.student.firstName : <NotUpdate />}
-                                    {data && data.student.gender && data.student.gender === TYPE.MALE ? " (Nam)" : " (Nữ)"}
+                                style={{
+                                    display: "inline-flex",
+                                    width: "100%",
+                                    padding: "2px 5px",
+                                }}
+                            >
+                                <div
+                                    style={{ width: "4.8vw", height: "4.8vw" }}>
+                                    <Avatar style={{ width: "4vw", height: "4vw", margin: "0.2vw" }} shape="square" src={data.student.avatarUrl} alt="anh" icon="user" />
+                                </div>
+                                <div style={{ margin: "0px 15px" }}>
+                                    <p style={{ marginBottom: 5 }}>
+                                        {data ? data.student.lastName + " " + data.student.firstName : <NotUpdate />}
+                                        {data && data.student.gender && data.student.gender === TYPE.MALE ? " (Nam)" : " (Nữ)"}
+                                    </p>
+                                    <span
+                                        style={{
+                                            fontSize: "0.7rem",
+                                        }}
+                                    >
+                                        {data && timeConverter(data.appliedDate, 1000, "HH:mm DD-MM-YY")}
+                                    </span>
+                                    <p style={{ marginBottom: 5 }}>
+                                        Lời nhắn:
                                 </p>
-                                <span
-                                    style={{
-                                        fontSize: "0.7rem",
-                                    }}
-                                >
-                                    {data && timeConverter(data.appliedDate, 1000, "HH:mm DD-MM-YY")}
-                                </span>
-                                <p style={{ marginBottom: 5 }}>
-                                    Lời nhắn:
-                                </p>
-                                {
-                                    data && data.message !== "" ?
-                                        <div className="test" style={{ fontStyle: "italic", padding: '5px 10px', width: '100%' }}>
-                                            {data.message}
-                                        </div> :
-                                        <NotUpdate warning={true} msg="Không có" />
-                                }
+                                    {
+                                        data && data.message !== "" ?
+                                            <div className="test" style={{ fontStyle: "italic", padding: '5px 10px', width: '100%' }}>
+                                                {data.message}
+                                            </div> :
+                                            <NotUpdate warning={true} msg="Không có" />
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    </Col>
-                    <Col md={24} lg={24} xl={24}>
+                        </Col>
+                        <Col md={24} lg={24} xl={24}>
 
-                    </Col>
-                    <Col md={24} lg={24} xl={24}>
-                        <ul >
-                            <li>
-                                <span>Thái độ</span>   <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
-                            </li>
-                            <li>
-                                <span>Kĩ năng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
-                            </li>
-                            <li>
-                                <span>Hài lòng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
-                            </li>
-                        </ul>
-                    </Col>
-                </Row>
-            </div>
+                        </Col>
+                        <Col md={24} lg={24} xl={24}>
+                            <ul >
+                                <li>
+                                    <span>Thái độ</span>   <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
+                                </li>
+                                <li>
+                                    <span>Kĩ năng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
+                                </li>
+                                <li>
+                                    <span>Hài lòng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
+                                </li>
+                            </ul>
+                        </Col>
+                    </Row>
+                </div>
+            </Tooltip>
             <div>
                 <Tooltip title="Xem hồ sơ">
                     <Button

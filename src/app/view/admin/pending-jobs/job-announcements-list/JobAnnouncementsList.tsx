@@ -31,12 +31,14 @@ import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Đang chờ', 'Từ chối', 'Chấp nhận'];
+
 function viewCount(
     id?: string | number,
     count?: string | number,
     color?: "red" | "#1687f2" | "orange",
     state?: string,
-    icon?: "user" | "user-delete" | "user-add" | "eye"
+    icon?: "user" | "user-delete" | "user-add" | "eye",
+    type?: "Đang chờ" | "Từ Chối" | "Chấp nhận"
 ) {
     return (
         < div
@@ -54,7 +56,7 @@ function viewCount(
                 to={routeLink.JOB_ANNOUNCEMENTS + routePath.APPLY + `/${id}?state=${state}`}
                 target="_blank"
             >
-                <Tooltip title="Xem chi tiết">
+                <Tooltip title={`Xem chi tiết (${type})`}>
                     <div style={{ color }}>
                         {count} <Icon type={icon} />
                     </div>
@@ -387,9 +389,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     ViewCount = (data) =>
         (
             <>
-                {viewCount(data.id, data.accepted, "#1687f2", TYPE.ACCEPTED, "user-add")}
-                {viewCount(data.id, data.rejected, "red", TYPE.REJECTED, "user-delete")}
-                {viewCount(data.id, data.pending, "orange", TYPE.PENDING, "user")}
+                {viewCount(data.id, data.accepted, "#1687f2", TYPE.ACCEPTED, "user-add", "Chấp nhận")}
+                {viewCount(data.id, data.rejected, "red", TYPE.REJECTED, "user-delete", "Từ Chối")}
+                {viewCount(data.id, data.pending, "orange", TYPE.PENDING, "user", "Đang chờ")}
             </>
         )
 

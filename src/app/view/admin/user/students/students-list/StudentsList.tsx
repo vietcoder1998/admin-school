@@ -12,7 +12,6 @@ import {
   Avatar,
   Drawer,
   Slider,
-  Input,
   DatePicker,
   Modal,
 } from "antd";
@@ -34,6 +33,7 @@ import StudentInfo from "../../../../layout/student-info/StudentInfo";
 import StuInsertExels from "./StuInsertExels";
 import moment from "moment";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
+import Search from "antd/lib/input/Search";
 
 interface IStudentsListProps extends StateProps, DispatchProps {
   match?: any;
@@ -467,6 +467,13 @@ class StudentsList extends PureComponent<
 
     body[type] = value;
     this.setState({ body });
+
+    if (
+      type !== TYPE.STUDENT_FILTER.username ||
+      type !== TYPE.STUDENT_FILTER.username
+    ) {
+      this.searchFilter();
+    }
   };
 
   handleVisible = () => {
@@ -660,7 +667,7 @@ class StudentsList extends PureComponent<
             >
               Import
             </Button>
-            <Button
+            {/* <Button
               onClick={() => this.searchFilter()}
               type="primary"
               style={{
@@ -669,8 +676,7 @@ class StudentsList extends PureComponent<
               }}
               icon={loadingTable ? "loading" : "filter"}
               children={"Lọc"}
-            // tự nhiên đổi style code ??
-            />
+            /> */}
             <Button
               onClick={() =>
                 this.setState({ openDrawer: true, typeCpn: TYPE.SEARCH })
@@ -688,7 +694,7 @@ class StudentsList extends PureComponent<
             <Row style={{ marginBottom: 10 }}>
               <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
                 <IptLetterP value={"Email"} />
-                <Input
+                <Search
                   placeholder="Tất cả"
                   style={{ width: "100%" }}
                   onChange={(event: any) =>

@@ -7,7 +7,6 @@ const Admin = lazy(() => import('./../app/view/admin/Admin'));
 const Login = lazy(() => import('./../app/view/login/Login'));
 const NotFound = lazy(() => import('./../app/view/not-found/NotFound'));
 
-
 export default function Routes(props: any) {
     return (
         <>

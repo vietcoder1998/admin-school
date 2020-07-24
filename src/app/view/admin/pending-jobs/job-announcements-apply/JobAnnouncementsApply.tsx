@@ -21,7 +21,7 @@ import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
 
 const { TabPane } = Tabs;
 
-interface IJobAnnouncementsApplyState {
+interface IState {
     title: string;
     announcementTypeID: string;
     typeManagement: Array<any>;
@@ -45,17 +45,18 @@ interface IJobAnnouncementsApplyState {
     default_id?: string;
 };
 
-interface IJobAnnouncementsApplyProps extends StateProps, DispatchProps {
+interface IProps extends StateProps, DispatchProps {
     match: any;
     history: any;
     location: any;
     getApplyCans: Function;
     getListEmBranches: Function;
     getCandidateDetail: Function;
+    getStudentDetail: Function;
 };
 
 
-class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobAnnouncementsApplyState> {
+class JobAnnouncementsApply extends Component<IProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -88,7 +89,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
         this.props.getListEmBranches();
     };
 
-    static getDerivedStateFromProps(props: IJobAnnouncementsApplyProps, state: IJobAnnouncementsApplyState) {
+    static getDerivedStateFromProps(props: IProps, state: IState) {
         if (
             props.match.params.id &&
             props.match.params.id !== state.id
@@ -179,7 +180,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
     }
 
     render() {
-        let { candidateDetail } = this.props;
+        let { studentDetail } = this.props;
         let {
             state,
             list_rejected,
@@ -208,7 +209,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                 >
                     {
                         <CandidatetInfo
-                            data={candidateDetail}
+                            data={studentDetail}
                             onClickButton={() => this.createRequest(TYPE.CERTIFICATE)}
                             loading={loading}
                         />
@@ -248,7 +249,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                         () => {
                                                             this.setState({ openDrawer: true });
                                                             setTimeout(() => {
-                                                                this.props.getCandidateDetail(item.student.id)
+                                                                this.props.getStudentDetail(item.student.id)
                                                             }, 500);
                                                         }
                                                     }
@@ -275,7 +276,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                         () => {
                                                             this.setState({ openDrawer: true });
                                                             setTimeout(() => {
-                                                                this.props.getCandidateDetail(item.student.id)
+                                                                this.props.getStudentDetail(item.student.id)
                                                             }, 500);
                                                         }
                                                     }
@@ -365,7 +366,8 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getApplyCans: (id?: string) => dispatch({ type: REDUX_SAGA.APPLY_CAN.GET_APPLY_CAN, id }),
     getListEmBranches: () => dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES }),
-    getCandidateDetail: (id?: string) => dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id })
+    // getCandidateDetail: (id?: string) => dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id }),
+    getStudentDetail: (id?: string) => dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENT_DETAIl, id })
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
@@ -373,7 +375,7 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     listSkills: state.Skills.items,
     listEmBranches: state.EmBranches.items,
     listApplyCans: state.ApplyCans.items,
-    candidateDetail: state.CandidateDetail
+    studentDetail: state.StudentDetail
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

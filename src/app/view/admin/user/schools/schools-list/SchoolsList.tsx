@@ -7,7 +7,7 @@ import {
   Popconfirm,
   Col,
   Row,
-  Input,
+  // Input,
   Tooltip,
   Select,
   Modal,
@@ -31,6 +31,7 @@ import { IDrawerState } from "../../../../../../models/mutil-box";
 import SchoolInfo from "../../../../layout/school-info/SchoolInfo";
 import { IptLetterP } from "../../../../layout/common/Common";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
+import Search from "antd/lib/input/Search";
 
 const { Option } = Select;
 
@@ -94,12 +95,12 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     let { id } = this.state;
     return (
       <>
-              <Tooltip title="Đổi mật khẩu">
+        <Tooltip title="Đổi mật khẩu">
           <Icon
             className="test"
             style={{ padding: 5, margin: 2 }}
             type="key"
-            onClick={()=> this.setState({visible: true})}
+            onClick={() => this.setState({ visible: true })}
           />
         </Tooltip>
         <Tooltip title="Xem chi tiết trường ">
@@ -309,11 +310,13 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
   onChangeFilter = (value?: any, type?: string) => {
     let { body } = this.state;
     let { listRegions } = this.props;
+
     listRegions.forEach((item: IRegion) => {
       if (item.name === value) {
         value = item.id;
       }
     });
+
     switch (value) {
       case TYPE.TRUE:
         value = true;
@@ -327,6 +330,14 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
     body[type] = value;
     this.setState({ body });
+
+    if (
+      type !== TYPE.SCHOOLS.username ||
+      type !== TYPE.SCHOOLS.email ||
+      type !== TYPE.SCHOOLS.shortName
+    ) {
+      this.searchFilter();
+    }
   };
 
   onChangePw = async () => {
@@ -384,7 +395,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         <div className="common-content">
           <h5>
             Danh sách nhà trường
-            <Button
+            {/* <Button
               icon="filter"
               onClick={() => this.searchFilter()}
               type="primary"
@@ -393,27 +404,13 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
               }}
             >
               Lọc
-            </Button>
+            </Button> */}
           </h5>
           <div className="table-operations">
             <Row>
               <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                <IptLetterP value={"Tên tài khoản"} />
-                <Input
-                  placeholder="Tất cả"
-                  style={{ width: "100%" }}
-                  onChange={(event: any) =>
-                    this.onChangeFilter(
-                      event.target.value,
-                      TYPE.SCHOOLS.username
-                    )
-                  }
-                  onPressEnter={(event: any) => this.searchFilter()}
-                />
-              </Col>
-              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
                 <IptLetterP value={"Tên rút gọn"} />
-                <Input
+                <Search
                   placeholder="Tất cả"
                   style={{ width: "100%" }}
                   onChange={(event: any) =>
@@ -426,12 +423,28 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                 />
               </Col>
               <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                <IptLetterP value={"Email"} />
-                <Input
+                <IptLetterP value={"Tên tài khoản"} />
+                <Search
                   placeholder="Tất cả"
                   style={{ width: "100%" }}
                   onChange={(event: any) =>
-                    this.onChangeFilter(event.target.value, TYPE.SCHOOLS.email)
+                    this.onChangeFilter(
+                      event.target.value,
+                      TYPE.SCHOOLS.username
+                    )
+                  }
+                  onPressEnter={(event: any) => this.searchFilter()}
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                <IptLetterP value={"Email"} />
+                <Search
+                  placeholder="Tất cả"
+                  style={{ width: "100%" }}
+                  onChange={(event: any) =>
+                    this.onChangeFilter(
+                      event.target.value,
+                      TYPE.SCHOOLS.email)
                   }
                   onPressEnter={(event: any) => this.searchFilter()}
                 />
