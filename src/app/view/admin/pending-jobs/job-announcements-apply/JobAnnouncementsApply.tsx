@@ -148,7 +148,7 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
         setTimeout(() => {
             if (id) {
                 listApplyCans.forEach((item: IApplyCan) => {
-                    if (item.candidate && default_id === item.candidate.id) {
+                    if (item.student && default_id === item.student.id) {
                         list_shifts = item.appliedShifts;
                     }
                 });
@@ -232,21 +232,21 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                 >
                                     <div className="content-apply">
                                         {
-                                            list_pending.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_pending.map((item: IApplyCan , index: number) =>
+                                            list_pending.length === 0 ? <Empty style={{ paddingTop: "5vh" }} /> : (list_pending.map((item: IApplyCan, index: number) =>
                                                 <ApplyJobItem
                                                     key={index}
                                                     type="PENDING"
                                                     l_btn={l_btn}
                                                     data={item}
-                                                    id={item && item.student ? item.student.id: null}
+                                                    id={item && item.student ? item.student.id : null}
                                                     id_default={item.student.id === default_id}
                                                     onChangeFilter={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                     onClick={
                                                         (event: string) => this.searchShift(event, TYPE.PENDING, item.student.id)
                                                     }
                                                     onView={
-                                                        () =>{
-                                                            this.setState({openDrawer: true});
+                                                        () => {
+                                                            this.setState({ openDrawer: true });
                                                             setTimeout(() => {
                                                                 this.props.getCandidateDetail(item.student.id)
                                                             }, 500);
@@ -265,17 +265,17 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                     key={index}
                                                     type={"ACCEPTED"}
                                                     data={item}
-                                                    id={item.candidate.id}
-                                                    id_default={item.candidate.id === default_id}
+                                                    id={item.student ? item.student.id : null}
+                                                    id_default={item.student.id === default_id}
                                                     onChangeFilter={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                     onClick={
-                                                        (event: string) => this.searchShift(event, TYPE.ACCEPTED, item.candidate.id)
+                                                        (event: string) => this.searchShift(event, TYPE.ACCEPTED, item.student.id)
                                                     }
                                                     onView={
-                                                        () =>{
-                                                            this.setState({openDrawer: true});
+                                                        () => {
+                                                            this.setState({ openDrawer: true });
                                                             setTimeout(() => {
-                                                                this.props.getCandidateDetail(item.candidate.id)
+                                                                this.props.getCandidateDetail(item.student.id)
                                                             }, 500);
                                                         }
                                                     }
@@ -293,17 +293,17 @@ class JobAnnouncementsApply extends Component<IJobAnnouncementsApplyProps, IJobA
                                                         type="REJECTED"
                                                         key={index}
                                                         data={item}
-                                                        id={item.candidate.id}
-                                                        id_default={item.candidate.id === default_id}
+                                                        id={item.student ? item.student.id : null}
+                                                        id_default={item.student.id === default_id}
                                                         onChangeFilter={(id?: string, state?: 'PENDING' | 'REJECTED' | 'ACCEPTED') => this.createRequest(id, state)}
                                                         onClick={
-                                                            (event: string) => this.searchShift(event, TYPE.REJECTED, item.candidate.id)
+                                                            (event: string) => this.searchShift(event, TYPE.REJECTED, item.student.id)
                                                         }
                                                         onView={
-                                                            () =>{
-                                                                this.setState({openDrawer: true});
+                                                            () => {
+                                                                this.setState({ openDrawer: true });
                                                                 setTimeout(() => {
-                                                                    this.props.getCandidateDetail(item.candidate.id)
+                                                                    this.props.getCandidateDetail(item.student.id)
                                                                 }, 500);
                                                             }
                                                         }

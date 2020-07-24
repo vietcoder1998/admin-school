@@ -321,7 +321,7 @@ class EmControllerList extends PureComponent<
 
   createRequest = async (type?: string) => {
     let { id } = this.state;
-    let { employer_detail } = this.props;
+    let { employerDetail } = this.props;
     let method = null;
     let api = EM_CONTROLLER;
     let body = null;
@@ -336,7 +336,7 @@ class EmControllerList extends PureComponent<
         api =
           api +
           `/${id}/profile/verified/${
-          employer_detail.profileVerified ? "false" : "true"
+          employerDetail.profileVerified ? "false" : "true"
           }`;
         body = undefined;
         break;
@@ -388,6 +388,9 @@ class EmControllerList extends PureComponent<
     }
     body[type] = value;
     this.setState({ body });
+    if (type !==TYPE.EM_CONTROLLER.employerName) {
+      this.searchEmControllers();
+    }
   };
 
   handleVisible = () => {
@@ -404,25 +407,25 @@ class EmControllerList extends PureComponent<
 
   render() {
     let { dataTable, loadingTable, loading, openImport, visible, newPassword } = this.state;
-    let { totalItems, listRegions, employer_detail } = this.props;
+    let { totalItems, listRegions, employerDetail } = this.props;
 
     return (
       <>
         <DrawerConfig width={"50vw"} title={"Thông tin nhà tuyển dụng"}>
-          <EmInfo data={employer_detail} />
+          <EmInfo data={employerDetail} />
           <Button
-            type={employer_detail.profileVerified ? "danger" : "primary"}
+            type={employerDetail.profileVerified ? "danger" : "primary"}
             icon={
               loading
                 ? "loading"
-                : employer_detail.profileVerified
+                : employerDetail.profileVerified
                   ? "dislike"
                   : "like"
             }
             style={{ float: "right" }}
             onClick={() => this.createRequest(TYPE.CERTIFICATE)}
           >
-            {employer_detail.profileVerified ? "Hủy xác thực" : " Xác thực"}
+            {employerDetail.profileVerified ? "Hủy xác thực" : " Xác thực"}
           </Button>
           <Button
             icon={"left"}
@@ -509,11 +512,10 @@ class EmControllerList extends PureComponent<
                       TYPE.EM_CONTROLLER.employerName
                     )
                   }
-                  onKeyDown={(event: any) => {
-                    if (event.keyCode === 13) {
-                      this.searchFilter();
-                    }
-                  }}
+                  onPressEnter={() => {
+                    this.searchFilter();
+                  }
+                  }
                 />
               </IptLetterP>
             </Col>
@@ -612,7 +614,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
   list_user_controller: state.EmControllers.items,
   listRegions: state.Regions.items,
-  employer_detail: state.EmployerDetail,
+  employerDetail: state.EmployerDetail,
   totalItems: state.EmControllers.totalItems,
   drawerState: state.MutilBox.drawerState,
 });

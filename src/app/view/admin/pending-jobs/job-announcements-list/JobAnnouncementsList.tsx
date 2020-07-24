@@ -384,15 +384,15 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         )
     }
 
-    ViewCount = (data) => {
-        return (
+    ViewCount = (data) =>
+        (
             <>
-                { viewCount(data.id, data.accepted, "#1687f2", TYPE.ACCEPTED, "user-add")} 
-                { viewCount(data.id, data.rejected, "red", TYPE.REJECTED, "user-delete")} 
-                { viewCount(data.id, data.pending, "orange", TYPE.PENDING, "user")}
+                {viewCount(data.id, data.accepted, "#1687f2", TYPE.ACCEPTED, "user-add")}
+                {viewCount(data.id, data.rejected, "red", TYPE.REJECTED, "user-delete")}
+                {viewCount(data.id, data.pending, "orange", TYPE.PENDING, "user")}
             </>
         )
-    }
+
 
     onToggleModal = () => {
         let { showModal } = this.state;
@@ -465,7 +465,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     };
 
     async componentDidMount() {
-        await this.props.getListEmBranches();
+        await this.props.getListEmployer(undefined, 0, 10)
         await this.searchJobAnnouncement();
     };
 
@@ -520,6 +520,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         }
 
         this.setState({ body });
+        this.searchJobAnnouncement();
     }
 
     setPageIndex = async (event: any) => {
@@ -529,7 +530,11 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
     searchJobAnnouncement = async () => {
         let { body, pageIndex, pageSize } = this.state;
-        await this.props.getListJobAnnouncements(body, pageIndex, pageSize);
+        await this.setState({ loadingTable: true });
+        await setTimeout(() => {
+            this.props.getListJobAnnouncements(body, pageIndex, pageSize);
+        }, 250);
+        await this.setState({ loadingTable: false })
     };
 
     onChangeFilter = (event: any, param?: string) => {
@@ -572,6 +577,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
         body[param] = value;
         this.setState({ body });
+        this.searchJobAnnouncement()
     };
 
     onChangeCreatedDate = (event) => {
@@ -722,7 +728,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         return (
             <>
                 <Modal
-                    visible={modalState.open_modal}
+                    visible={modalState.openModal}
                     title={"Workvn thông báo"}
                     destroyOnClose={true}
                     onOk={this.createRequest}
@@ -764,7 +770,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     onCancel={() => {
                         this.setState({ opjd: false, loading: false });
                     }}
-                    style={{top: 20}}
+                    style={{ top: 20 }}
                     footer={[
                         <Button
                             key="cancel"
@@ -790,7 +796,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     shifts: jobDetail.shifts,
                                     description: jobDetail.description,
                                 }}
-                                data = {jobDetail.data}
+                                data={jobDetail.data}
                             />
                         </Col>
                         <Col span={4}>
@@ -913,7 +919,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     <div className="common-content">
                         <h5>
                             Quản lý bài đăng {`(${totalItems})`}
-                            <Button
+                            {/* <Button
                                 onClick={() => this.searchJobAnnouncement()}
                                 type="primary"
                                 style={{
@@ -922,7 +928,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 }}
                                 icon={loadingTable ? "loading" : "filter"}
                                 children="Lọc"
-                            />
+                            /> */}
                             <Link to={routeLink.PENDING_JOBS + routePath.CREATE} >
                                 <Button
                                     type="primary"
@@ -1029,7 +1035,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                                     body.homePriority = null;
                                                     body.searchPriority = null;
                                                     this.setState({ body });
-                                                } else this.onChangeFilter(event[1], event[0]);
+                                                }
+
+                                                this.onChangeFilter(event[1], event[0]);
                                             }
                                         }
                                     />
@@ -1070,9 +1078,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     <Checkbox
                                         indeterminate={un_checkbox}
                                         onChange={
-                                            (event: any) => {
-                                                this.handleCheckBox(event.target.checked);
-                                                this.setState({ un_checkbox: event.target.checked })
+                                            async (event: any) => {
+                                                await this.handleCheckBox(event.target.checked);
+                                                await this.setState({ un_checkbox: event.target.checked });
                                             }
                                         }
                                     >

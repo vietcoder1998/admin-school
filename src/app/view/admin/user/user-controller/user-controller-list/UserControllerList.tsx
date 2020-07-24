@@ -8,7 +8,6 @@ import {
   Col,
   Select,
   Row,
-  Input,
   Tooltip,
   Modal,
 } from "antd";
@@ -26,6 +25,7 @@ import {
   IUserControllerFilter,
 } from "./../../../../../../models/user-controller";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
+import Search from "antd/lib/input/Search";
 
 interface IUserControllerListProps extends StateProps, DispatchProps {
   match?: any;
@@ -94,7 +94,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
             className="test"
             style={{ padding: 5, margin: 2 }}
             type="key"
-            onClick={()=> this.setState({visible: true})}
+            onClick={() => this.setState({ visible: true })}
           />
         </Tooltip>
         <Popconfirm
@@ -299,7 +299,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     });
   };
 
-  onChangeFilter = (value?: any, type?: string) => {
+  onChangeFilter = async (value?: any, type?: string) => {
     let { body } = this.state;
     switch (value) {
       case TYPE.TRUE:
@@ -313,12 +313,15 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     }
     body[type] = value;
     this.setState({ body });
+    if (type !== TYPE.USER_CONTROLLER.username && type !== TYPE.USER_CONTROLLER.email) {
+      this.searchUserControllers();
+    }
   };
 
   onChangePw = async () => {
     let { newPassword, id } = this.state;
     let api = USER_CONTROLLER + `/${id}/password`;
-    await this.setState({loading: true})
+    await this.setState({ loading: true })
     await _requestToServer(
       PUT,
       api,
@@ -328,9 +331,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
       undefined,
       true,
       false
-    ).then((res)=> {
-       this.setState({ visible: false , loading: false})
-    } );
+    ).then((res) => {
+      this.setState({ visible: false, loading: false })
+    });
   }
 
   render() {
@@ -374,7 +377,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
           <Row>
             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <IptLetterP value={"Tên tài khoản"}>
-                <Input
+                <Search
                   placeholder="ex: works"
                   onChange={(event: any) =>
                     this.onChangeFilter(
@@ -382,17 +385,13 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                       TYPE.USER_CONTROLLER.username
                     )
                   }
-                  onKeyDown={(event: any) => {
-                    if (event.keyCode === 13) {
-                      this.searchFilter();
-                    }
-                  }}
+                  onPressEnter={() => this.searchFilter()}
                 />
               </IptLetterP>
             </Col>
             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <IptLetterP value={"Địa chỉ Email"}>
-                <Input
+                <Search
                   placeholder="ex: works@gmail.com"
                   onChange={(event: any) =>
                     this.onChangeFilter(
@@ -400,11 +399,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                       TYPE.USER_CONTROLLER.email
                     )
                   }
-                  onKeyDown={(event: any) => {
-                    if (event.keyCode === 13) {
-                      this.searchFilter();
-                    }
-                  }}
+                  onPressEnter={() => this.searchFilter()}
                 />
               </IptLetterP>
             </Col>

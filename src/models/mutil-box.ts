@@ -1,6 +1,6 @@
 export interface IModalState {
     title?: string,
-    open_modal?: boolean,
+    openModal?: boolean,
     children?: any,
     type_modal?: string,
     msg?: any,

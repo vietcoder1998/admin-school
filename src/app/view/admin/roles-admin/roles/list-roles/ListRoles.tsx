@@ -35,7 +35,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
         super(props);
         this.state = {
             list_roles: [],
-            loadingTable: false,
+            loadingTable: true,
             dataTable: [],
             pageIndex: 0,
             pageSize: 10,

@@ -364,7 +364,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
             <>
                 <div className="common-content">
                     <Modal
-                        visible={modalState.open_modal}
+                        visible={modalState.openModal}
                         title={"Workvn thông báo"}
                         destroyOnClose={true}
                         onOk={this.createRequest}

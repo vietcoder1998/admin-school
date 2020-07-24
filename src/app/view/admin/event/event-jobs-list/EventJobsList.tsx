@@ -498,6 +498,9 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 
     async componentDidMount() {
         await this.searchEventJobs();
+        await setTimeout(() => {
+            this.props.getListEmBranches(0, 10)
+        }, 500);
     };
 
     onChoseHomePriority = (event: any) => {
@@ -599,6 +602,10 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 
         body[param] = value;
         this.setState({ body });
+
+        if (param !== TYPE.JOB_FILTER.employerID) {
+            this.searchEventJobs();
+        }
     };
 
     onChangeCreatedDate = (event) => {
@@ -734,7 +741,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
         return (
             <>
                 <Modal
-                    visible={modalState.open_modal}
+                    visible={modalState.openModal}
                     title={"Workvn thông báo"}
                     destroyOnClose={true}
                     onOk={this.createRequest}
@@ -1123,8 +1130,8 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
 const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     getListEventJobs: (body: IEventJobsFilter, pageIndex: number, pageSize: number) =>
         dispatch({ type: REDUX_SAGA.EVENT_SCHOOLS.GET_LIST_EVENT_JOBS, body, pageIndex, pageSize }),
-    getListEmBranches: () =>
-        dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES }),
+    getListEmBranches: (pageIndex?: number, pageSize?: number, body?: any) =>
+        dispatch({ type: REDUX_SAGA.EM_BRANCHES.GET_EM_BRANCHES, pageIndex, pageSize, body }),
     handleDrawer: (drawerState?: IDrawerState) =>
         dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
     handleModal: (modalState?: IModalState) =>

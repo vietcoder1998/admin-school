@@ -9,13 +9,15 @@ import { _requestToServer } from '../../../../../services/exec';
 import { POST } from '../../../../../const/method';
 import { PENDING_JOBS } from '../../../../../services/api/private.api';
 import { TYPE } from '../../../../../const/type';
-import { IptLetter } from '../../../layout/common/Common';
+import { IptLetter, IptLetterP } from '../../../layout/common/Common';
 import { IPendingJob } from '../../../../../models/pending-jobs';
 import { IAppState } from '../../../../../redux/store/reducer';
 import JobDetail from '../../../layout/job-detail/JobDetail';
 import { IModalState, IDrawerState } from '../../../../../models/mutil-box';
 import DrawerConfig from '../../../layout/config/DrawerConfig';
 import EmInfo from '../../../layout/em-info/EmInfo';
+import { IEmController } from '../../../../../models/em-controller';
+import { IEmployer } from '../../../../../models/employers';
 
 let { Option } = Select;
 const { TextArea } = Input;
@@ -46,7 +48,7 @@ const Label = (props: any) => {
     if (props.type) {
         return <label className={props.type.toLowerCase()}>{value}</label>
     }
-    return 
+    return
 };
 
 interface IPendingJobListProps extends StateProps, DispatchProps {
@@ -57,6 +59,7 @@ interface IPendingJobListProps extends StateProps, DispatchProps {
     handleModal: (modalState?: IModalState) => any;
     getEmployerDetail: (id?: string) => any;
     handleDrawer: (drawerState?: IDrawerState) => any;
+    getListEmployer: Function;
 }
 
 interface IPendingJobListState {
@@ -169,25 +172,29 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
         },
     ];
 
-    componentDidMount() {
-        this.queryPendingJob()
+    async componentDidMount() {
+        await this.searchPendingJob()
     }
 
-    queryPendingJob = () => {
+    searchPendingJob = async () => {
         let { employerID, state, jobType, jobNameID, pageIndex, pageSize } = this.state;
-        this.props.getPendingJobs({
-            employerID,
-            state,
-            jobType,
-            jobNameID,
-            pageIndex,
-            pageSize
-        })
+        await this.setState({ loadingTable: true });
+        await setTimeout(() => {
+            this.props.getPendingJobs({
+                employerID,
+                state,
+                jobType,
+                jobNameID,
+                pageIndex,
+                pageSize
+            })
+        }, 250);
+        await this.setState({ loadingTable: false });
     };
 
     setPageIndex = async (event: any) => {
         await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
-        await this.queryPendingJob();
+        await this.searchPendingJob();
     };
 
     static getDerivedStateFromProps(nextProps: IPendingJobListProps, prevState: IPendingJobListState) {
@@ -217,7 +224,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                                     style={{ padding: 5, margin: 2 }}
                                     onClick={
                                         async () => {
-                                            nextProps.handleModal({ open_modal: true });
+                                            nextProps.handleModal({ openModal: true });
                                             nextProps.getPendingJobDetail(item.id);
                                         }
                                     }
@@ -251,21 +258,31 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
         return { loadingTable: false };
     }
 
-
-    onChangeState = (event: any) => {
-        this.setState({ state: event })
+    onChangeState = async (event: any) => {
+        await this.setState({ state: event });
+        await this.searchPendingJob();
     };
 
-    onChangeJobType = (event: any) => {
-        this.setState({ jobType: event })
+    onChangeJobType = async (event: any) => {
+        await this.setState({ jobType: event });
+        await this.searchPendingJob();
     };
 
-    onChangeEmployer = (event: any) => {
-        this.setState({ employerID: event })
+    onChangeEmployer = async (value: any) => {
+        let { listEmployer } = this.props;
+        let data = listEmployer.filter(
+            (item: IEmployer, index: number) => (item.employerName === value)
+        );
+        if (data.length > 0) {
+            value = data[0].id
+        }
+        await this.setState({ employerID: value })
+        await this.searchPendingJob();
     };
 
-    onChangeJobName = (event: any) => {
-        this.setState({ jobNameID: event })
+    onChangeJobName = async (event: any) => {
+        await this.setState({ jobNameID: event });
+        await this.searchPendingJob();
     };
 
     onToggleModal = () => {
@@ -287,8 +304,8 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
         ).finally(
             () => this.setState({ loading: false })
         );
-        await this.props.handleModal({ open_modal: false })
-        await this.queryPendingJob();
+        await this.props.handleModal({ openModal: false })
+        await this.searchPendingJob();
     };
 
     render() {
@@ -304,14 +321,15 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
             listJobNames,
             totalItems,
             jobDetail,
-            open_modal,
-            employer_detail
+            openModal,
+            employerDetail,
+            listEmployer
         } = this.props;
 
         return (
             <>
                 <DrawerConfig width={'50vw'} title={"Thông tin nhà tuyển dụng"}>
-                    <EmInfo data={employer_detail} />
+                    <EmInfo data={employerDetail} />
                     <Button
                         icon={"left"}
                         onClick={
@@ -324,9 +342,9 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                     </Button>
                 </DrawerConfig>
                 <Modal
-                    visible={open_modal}
+                    visible={openModal}
                     title="CHI TIẾT CÔNG VIỆC"
-                    onCancel={() => this.props.handleModal({ open_modal: false })}
+                    onCancel={() => this.props.handleModal({ openModal: false })}
                     destroyOnClose={true}
                     width={'50vw'}
                     style={{ top: "5vh" }}
@@ -378,34 +396,35 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 <div className="common-content">
                     <h5>
                         Danh sách yêu cầu xét duyệt {`(${totalItems})`}
-                        <Button
+                        {/* <Button
                             icon="filter"
-                            onClick={() => this.queryPendingJob()}
+                            onClick={() => this.searchPendingJob()}
                             type="primary"
                             style={{
                                 float: "right",
                             }}
                         >
                             Lọc
-                        </Button>
+                        </Button> */}
                     </h5>
                     <div>
                         <div className="table-operations">
                             <Row>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
-                                    <p>
-                                        <IptLetter value={"Nhà tuyển dụng"} />
-                                    </p>
+                                    <IptLetterP value={"Tên nhà tuyển dụng"} />
                                     <Select
                                         showSearch
-                                        placeholder="Tất cả"
-                                        optionFilterProp="children"
+                                        defaultValue="Tất cả"
                                         style={{ width: "100%" }}
+                                        onChange={(event: any) => this.onChangeEmployer(event)}
+                                        onSearch={(event) => { this.props.getListEmployer({ employerName: event }, 0, 10) }}
                                     >
-                                        <Option key="1" value={undefined}>Tất cả</Option>
-                                        <Option key="2" value="jack">Jack</Option>
-                                        <Option key="3" value="lucy">Lucy</Option>
-                                        <Option key="4" value="tom">Tom</Option>
+                                        <Option key={1} value={null}>Tất cả</Option>
+                                        {
+                                            listEmployer && listEmployer.map((item?: IEmController, i?: any) =>
+                                                (<Option key={item.id} value={item.employerName}>{item.employerName + '(' + item.email + ')'} </Option>)
+                                            )
+                                        }
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
@@ -493,6 +512,13 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
             type: REDUX_SAGA.PENDING_JOB_DETAIL.GET_PENDING_JOB_DETAIL,
             id
         }),
+    getListEmployer: (body?: any, pageIndex?: number, pageSize?: number) =>
+        dispatch({
+            type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER,
+            body,
+            pageIndex,
+            pageSize,
+        }),
     getEmployerDetail: (id?: string) =>
         dispatch({ type: REDUX_SAGA.EM_CONTROLLER.GET_EM_CONTROLLER_DETAIL, id }),
     handleModal: (modalState?: IModalState) =>
@@ -506,10 +532,11 @@ const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     listJobNames: state.JobNames.items,
     listJobSkills: state.Skills.items,
     modalState: state.MutilBox.modalState,
-    employer_detail: state.EmployerDetail,
+    employerDetail: state.EmployerDetail,
     jobDetail: state.PendingJobDetail,
-    open_modal: state.MutilBox.modalState.open_modal,
+    openModal: state.MutilBox.modalState.openModal,
     totalItems: state.PendingJobs.totalItems,
+    listEmployer: state.Employers.items
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Avatar, Menu, Tooltip, Popconfirm, Input, Dropdown } from 'antd';
+import { REDUX_SAGA } from '../../../../../const/actions';
+import { Button, Table, Icon, Select, Row, Col, Avatar, Menu, Tooltip, Popconfirm, Dropdown } from 'antd';
 import { timeConverter } from '../../../../../utils/convertTime';
 import { TYPE } from '../../../../../const/type';
 import { IptLetterP } from '../../../layout/common/Common';
@@ -11,8 +11,9 @@ import { DELETE, PUT } from '../../../../../const/method';
 import { CONNECT_EM_SCHOOL } from '../../../../../services/api/private.api';
 import { _requestToServer } from '../../../../../services/exec';
 import { IConnectEmSchool, IConnectEmSchoolFilter } from '../../../../../models/connect-em-school';
-import { ISchools, ISchoolsFilter, ISchool } from '../../../../../models/schools';
+import { ISchoolsFilter, ISchool } from '../../../../../models/schools';
 import { Link } from 'react-router-dom';
+import Search from 'antd/lib/input/Search';
 
 let { Option } = Select;
 let ImageRender = (props: any) => {
@@ -24,22 +25,6 @@ let ImageRender = (props: any) => {
         </div>
     }
 };
-
-const menu = (
-    <Menu >
-        <Menu.Item key={TYPE.PENDING}>
-            Đang chờ
-      </Menu.Item>
-        <Menu.Item key={TYPE.ACCEPTED}>
-            Đã kết nối
-      </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key={TYPE.REJECTED}>>
-        Từ chối
-          </Menu.Item>
-    </Menu>
-);
-
 
 interface IProps extends StateProps, DispatchProps {
     match?: any;
@@ -73,7 +58,6 @@ interface IState {
     body?: IConnectEmSchoolFilter;
     typeView?: string;
     school?: ISchool
-    state?: string;
 };
 
 class ConnectEmSchoolList extends React.Component<IProps, IState> {
@@ -96,7 +80,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                 name: null,
                 regionID: null,
                 headquarters: null,
-                hasRequest: null,
+                hasRequest: true,
                 state: null,
             },
             typeCpn: null,
@@ -106,9 +90,19 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
 
     EditToolAction = (state) => (
         <>
+            <Dropdown overlay={this.menu} trigger="click"  >
+                <Button
+                    icon={
+                        this.state.loadingTable ? "loading" : "down"
+                    }
+                    style={{ marginTop: 5 }}
+                >
+                    {state}
+                </Button>
+            </Dropdown>
             <Popconfirm
                 placement="topRight"
-                title={"Xóa"}
+                title={"Xóa kết nối"}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
                 okType={'danger'}
                 okText="Xóa"
@@ -117,7 +111,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                 <Icon
                     className='test'
                     style={{
-                        padding: 5,
+                        padding: 6,
                         margin: 2
                     }}
                     type="delete"
@@ -127,23 +121,39 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
             </Popconfirm>
         </>)
 
-
-    EmployerName = (data: any) => {
-        return (
+    EmployerName = (data: any) =>
+        (
             <Tooltip
                 title={(data.profileVerified ? "Đã" : "Chưa") + " xác thực"}
             >
-                <Link >
+                <Link to={"abc"} >
                     {data.employerName}
-                    abbbbbbbb
-                    <Icon
-                        type={"safety"}
-                        style={{ color: data.profileVerified ? "green" : "red" }}
-                    />
+
                 </Link>
+                <Icon
+                    type={"safety"}
+                    style={{ color: data.profileVerified ? "green" : "red" }}
+                />
             </Tooltip>
         )
-    }
+
+    menu = (
+        <Menu onClick={async (event) => {
+            await this.setState({ state: event.key });
+            await this.createRequest(TYPE.PUT)
+        }}>
+            <Menu.Item key={TYPE.PENDING}>
+                Đang chờ
+          </Menu.Item>
+            <Menu.Item key={TYPE.ACCEPTED}>
+                Đã kết nối
+          </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key={TYPE.REJECTED} style={{ color: "red" }}>
+                Từ chối
+            </Menu.Item>
+        </Menu>
+    );
 
     columns = [
         {
@@ -163,10 +173,10 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         },
         {
             title: 'Tên công ty',
-            dataIndex: 'employerName',
+            dataIndex: 'employerNameObject',
             className: 'action',
-            key: 'employerName',
-            // render: (employerName) => this.EmployerName(employerName),
+            key: 'employerNameObject',
+            render: this.EmployerName,
             width: 150,
         },
         {
@@ -207,9 +217,10 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
             title: 'Thao tác',
             key: 'operation',
             fixed: 'right',
+            dataIndex: 'state',
             className: 'action',
-            render: (state) => this.EditToolAction(state),
-            width: 140
+            render: this.EditToolAction,
+            width: 150
         },
     ];
 
@@ -233,19 +244,17 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                         employerName: employer.employerName,
                         profileVerified: employer.profileVerified
                     },
-                    employerName: employer.employerName,
                     phone: employer.phone ? employer.phone : '',
                     email: employer.email ? employer.email : '',
                     address: employer.address ? employer.address : "",
                     region: employer.region ? employer.region.name : "",
                     createdDate: item.createdDate === -1 ? "" : timeConverter(item.createdDate, 1000, "DD/MM/YYYY"),
-                    state: item.state
+                    state: item.state ? item.state : "Fail"
                 });
             })
             return {
                 listFindConnectEmSchool: nextProps.listFindConnectEmSchool,
                 dataTable,
-                loadingTable: false,
             }
         }
 
@@ -253,7 +262,6 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
     };
 
     async componentDidMount() {
-        // await this.searchConnectEmSchool();
         await this.props.getListSchools(0, 10, null);
     };
 
@@ -264,7 +272,11 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
 
     searchConnectEmSchool = async () => {
         let { body, pageIndex, pageSize } = this.state;
-        await this.props.getListConnectEmSchool(pageIndex, pageSize, body);
+        await this.setState({ loadingTable: true })
+        await setTimeout(() => {
+            this.props.getListConnectEmSchool(pageIndex, pageSize, body);
+        }, 250);
+        await this.setState({ loadingTable: false })
     };
 
     onChangeFilter = (event: any, param?: string) => {
@@ -272,13 +284,16 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         let { listRegions, listSchools } = this.props;
         let value: any = event;
 
-        switch (param) {
+        switch (event) {
             case TYPE.TRUE:
                 value = true;
                 break;
             case TYPE.FALSE:
                 value = false;
                 break;
+        }
+
+        switch (param) {
             case TYPE.EM_SCHOOL_FILTER.id:
                 if (value) {
                     let data = listSchools.filter(
@@ -306,22 +321,23 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
 
         body[param] = value;
         this.setState({ body });
-    };
 
-    EmployerName = (employerName?: string, profileVerified?: boolean) => (
-        <Link></Link>
-    )
+        if (param !== TYPE.EM_SCHOOL_FILTER.name) {
+            this.searchConnectEmSchool();
+        }
+    };
 
     createRequest = async (type?: string) => {
         let { id, body, state } = this.state;
-        let method = null;
+        let method, newBody = null;
+
         let api = CONNECT_EM_SCHOOL(body.id);
-
-        await this.setState({ loading: true });
-
+        await this.setState({ loading: true, loadingTable: true });
         switch (type) {
             case TYPE.DELETE:
                 method = DELETE;
+                api += '/request';
+                newBody = [id];
                 break;
             case TYPE.PUT:
                 method = PUT;
@@ -334,7 +350,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         await _requestToServer(
             method,
             api,
-            body,
+            newBody ? newBody : body,
             undefined,
             undefined,
             undefined,
@@ -347,13 +363,14 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                 }
             }
         ).finally(
-            () => this.setState({ openDrawer: false, loading: false })
+            () => this.setState({ loading: false, loadingTable: false })
         )
     };
 
     searchFilter = async () => {   // change index to 0 when start searching
         await this.setState({
             pageIndex: 0,
+            loadingTable: true,
         });
         this.searchConnectEmSchool();
     };
@@ -362,7 +379,6 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         let {
             dataTable,
             loadingTable,
-            school
         } = this.state;
 
         let {
@@ -373,20 +389,9 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
 
         return (
             <>
-
                 <div className="common-content">
                     <h5>
                         Danh sách kết nối doanh nghiệp - nhà trường
-                        <Button
-                            onClick={() => this.searchFilter()}
-                            type="primary"
-                            style={{
-                                float: "right",
-                                margin: "0px 10px",
-                            }}
-                            icon={loadingTable ? "loading" : "filter"}
-                            children={"Lọc ứng viên"}
-                        />
                     </h5>
                     <div className="table-operations">
                         <Row >
@@ -406,12 +411,13 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tìm việc"} />
-                                <Input
-                                    defaultValue="Tất cả"
+                            <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={6} >
+                                <IptLetterP value={"Tên doanh nghiệp"} />
+                                <Search
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EM_SCHOOL_FILTER.name)}
+                                    placeholder={"Nhập tên doanh nghiệp ..."}
+                                    onPressEnter={this.searchConnectEmSchool}
+                                    onChange={(event: any) => this.onChangeFilter(event.target.value, TYPE.EM_SCHOOL_FILTER.name)}
                                 />
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
@@ -432,7 +438,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                                 </Select>
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Chi nhánh chuyển dụng"} />
+                                <IptLetterP value={"Loại chi nhánh"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"
@@ -441,7 +447,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.TRUE}>Chính </Option>
-                                    <Option value={TYPE.FALSE}>Khsc</Option>
+                                    <Option value={TYPE.FALSE}>Khác</Option>
                                 </Select>
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
@@ -450,11 +456,12 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                                     showSearch
                                     defaultValue="Tất cả"
                                     style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EM_SCHOOL_FILTER.hasRequest)}
+                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.EM_SCHOOL_FILTER.state)}
                                 >
                                     <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.TRUE}>Đã có </Option>
-                                    <Option value={TYPE.FALSE}>Chưa có </Option>
+                                    <Option value={TYPE.PENDING}>Đang chờ </Option>
+                                    <Option value={TYPE.ACCEPTED}>Đã chấp nhận</Option>
+                                    <Option value={TYPE.REJECTED}>Đã chấp nhận</Option>
                                 </Select>
                             </Col>
                         </Row>
@@ -492,10 +499,6 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, pageIndex, pageSize, body }),
     getConnectEmSchoolDetail: (id?: string) =>
         dispatch({ type: REDUX_SAGA.CANDIDATES.GET_CANDIDATE_DETAIL, id }),
-    handleModal: (modalState: IModalState) =>
-        dispatch({ type: REDUX.HANDLE_MODAL, modalState }),
-    handleDrawer: (drawerState: IDrawerState) =>
-        dispatch({ type: REDUX.HANDLE_DRAWER, drawerState }),
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({

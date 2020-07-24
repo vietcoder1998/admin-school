@@ -11,7 +11,7 @@ let initState: IMutilBox = {
     modalState: {
         title: null,
         msg: null,
-        open_modal: false,
+        openModal: false,
         type_modal: null,
         children: null,
     },
@@ -44,11 +44,11 @@ export const MutilBox = (state: typeof initState = initState, action: any) => {
                 ...state,
                 modalState: {
                     ...action.modalState,
-                    open_modal:
+                    openModal:
                         action.modalState &&
-                            action.modalState.open_modal ?
-                            action.modalState.open_modal :
-                            !state.modalState.open_modal,
+                            action.modalState.openModal ?
+                            action.modalState.openModal :
+                            !state.modalState.openModal,
 
                     msg:
                         action.modalState &&

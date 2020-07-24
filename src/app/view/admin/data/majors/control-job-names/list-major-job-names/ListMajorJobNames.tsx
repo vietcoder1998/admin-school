@@ -46,7 +46,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
         super(props);
         this.state = {
             listJobNames: [],
-            loadingTable: false,
+            loadingTable: true,
             dataTable: [],
             pageIndex: 0,
             pageSize: 0,
