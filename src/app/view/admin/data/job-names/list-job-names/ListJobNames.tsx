@@ -32,7 +32,7 @@ interface IListJobNamesState {
     type?: string;
     name?: string;
     jobGroupName?: string;
-    list_data: Array<{ label: string, value: number }>;
+    listData: Array<{ label: string, value: number }>;
     search?: string;
 }
 
@@ -52,7 +52,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             listJobGroups: [],
             jobGroupID: undefined,
             jobGroupName: undefined,
-            list_data: [],
+            listData: [],
         }
     }
 
@@ -81,11 +81,11 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
         }
 
         if (nextProps.listJobGroups !== prevState.listJobGroups) {
-            let list_data: any = [];
-            nextProps.listJobGroups.forEach((item: any) => list_data.push({ value: item.id, label: item.name }));
+            let listData: any = [];
+            nextProps.listJobGroups.forEach((item: any) => listData.push({ value: item.id, label: item.name }));
             return {
                 listJobGroups: nextProps.listJobGroups,
-                list_data,
+                listData,
             }
         }
         return { loadingTable: false };
@@ -179,8 +179,8 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
     };
 
     handleChoseJobGroup = (id: number) => {
-        let { list_data } = this.state;
-        list_data.forEach(item => {
+        let { listData } = this.state;
+        listData.forEach(item => {
             if (item.value === id) {
                 this.setState({ jobGroupName: item.label })
             }
@@ -223,7 +223,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
             type,
             name,
             jobGroupName,
-            list_data,
+            listData,
             pageIndex,
             pageSize,
             search,
@@ -256,7 +256,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                                 type={TYPE.SELECT}
                                 title="Chọn nhóm công việc"
                                 placeholder="Chọn nhóm công việc"
-                                listValue={list_data}
+                                listValue={listData}
                                 value={jobGroupName}
                                 style={{ padding: "10px 20px" }}
                                 widthSelect={'250px'}
@@ -313,6 +313,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 650 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

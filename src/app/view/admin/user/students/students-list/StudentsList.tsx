@@ -203,22 +203,21 @@ class StudentsList extends PureComponent<
     {
       title: "Họ và tên",
       dataIndex: "name",
-      className: "action",
       key: "name",
-      width: 200,
+      width: 160,
       render: ({ item }) => this.renderName(item),
     },
     {
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",
-      width: 150,
+      width: 120,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      width: 150,
+      width: 120,
     },
 
     {
@@ -233,20 +232,13 @@ class StudentsList extends PureComponent<
       dataIndex: "major",
       className: "action",
       key: "major",
-      width: 200,
+      width: 100,
     },
     {
       title: "Trường học",
       dataIndex: "school",
       key: "school",
-      width: 300,
-    },
-    {
-      title: "Tìm việc",
-      dataIndex: "lookingForJob",
-      className: "action",
-      key: "lookingForJob",
-      width: 80,
+      width: 200,
     },
     {
       title: "Tỉnh thành",
@@ -291,7 +283,6 @@ class StudentsList extends PureComponent<
           avatarUrl: <ImageRender src={item.avatarUrl} alt="Ảnh đại diện" />,
           name: { item },
           phone: item.phone ? item.phone : "Chưa cập nhật",
-          lookingForJob: item.lookingForJob ? "Có" : "Đã có việc",
           email: item.email ? item.email : "Chưa cập nhật",
           school: item.school
             ? item.school.name + `(${item.school.shortName})`
@@ -358,6 +349,7 @@ class StudentsList extends PureComponent<
           }}
         >
           {item.gender === TYPE.MALE ? "Nam" : "Nữ"}
+          ( {item.lookingForJob ? "Đang tìm việc" : "Đã có việc"})
         </div>
       </div>
     );
@@ -379,8 +371,7 @@ class StudentsList extends PureComponent<
 
   searchStudents = async () => {
     let { pageIndex, pageSize, body } = this.state;
-    console.log(pageIndex);
-    this.setState({ loadingTable: true });
+    await this.setState({ loadingTable: true });
     await this.props.getListStudents(pageIndex, pageSize, body);
   };
 
@@ -534,8 +525,8 @@ class StudentsList extends PureComponent<
           // value={findIdWithValue(listSkills, body.skillIDs, "id", "name")}
           onChange={(event: any) => {
             // console.log(event);
-            let list_data = findIdWithValue(listSkills, event, "name", "id");
-            body.skillIDs = list_data;
+            let listData = findIdWithValue(listSkills, event, "name", "id");
+            body.skillIDs = listData;
             this.setState({ body });
           }}
           style={{ width: "100%" }}
@@ -549,8 +540,8 @@ class StudentsList extends PureComponent<
           placeholder="ex: Tiếng Anh, Tiếng Trung,.."
           //   value={findIdWithValue(listLanguages, body.languageIDs, "id", "name")}
           onChange={(event: any) => {
-            let list_data = findIdWithValue(listLanguages, event, "name", "id");
-            body.languageIDs = list_data;
+            let listData = findIdWithValue(listLanguages, event, "name", "id");
+            body.languageIDs = listData;
             this.setState({ body });
           }}
           style={{ width: "100%" }}
@@ -655,7 +646,7 @@ class StudentsList extends PureComponent<
         </Modal>
         <div className="common-content">
           <h5>
-            Danh sách sinh viên
+            Danh sách sinh viên ({totalItems})
             <Button
               icon="upload"
               onClick={() => this.handleVisible()}
@@ -793,7 +784,8 @@ class StudentsList extends PureComponent<
               columns={this.columns}
               loading={loadingTable}
               dataSource={dataTable}
-              scroll={{ x: 1610 }}
+              locale={{ emptyText: 'Không có dữ liệu' }}
+              scroll={{ x: 1070 }}
               bordered
               pagination={{ total: totalItems, pageSize: 10 }}
               size="middle"

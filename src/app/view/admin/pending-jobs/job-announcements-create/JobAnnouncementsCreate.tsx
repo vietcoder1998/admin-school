@@ -489,8 +489,8 @@
 //                             value={findIdWithValue(listSkills, body.requiredSkillIDs, "id", "name")}
 //                             onChange={
 //                                 (event: any) => {
-//                                     let list_data = findIdWithValue(listSkills, event, "name", "id")
-//                                     body.requiredSkillIDs = list_data;
+//                                     let listData = findIdWithValue(listSkills, event, "name", "id")
+//                                     body.requiredSkillIDs = listData;
 //                                     this.setState({ body })
 //                                 }
 //                             }

@@ -135,10 +135,11 @@ class JobAnnouncementsApply extends Component<IProps, IState> {
                 list_pending,
                 list_rejected,
                 list_accepted,
+                loadingTable: false 
             }
         }
 
-        return { loadingTable: false }
+        return null;
     }
 
     searchShift = (id?: string, type?: string, default_id?: string) => {
@@ -337,7 +338,7 @@ class JobAnnouncementsApply extends Component<IProps, IState> {
                                                         return ''
                                                     }
                                                 }
-                                            ) : <Empty style={{ paddingTop: "5vh" }} />
+                                            ) : <Empty style={{ paddingTop: "5vh" }} description="Không tìm thấy dữ liệu ca " />
                                     }
                                 </div>
                             }

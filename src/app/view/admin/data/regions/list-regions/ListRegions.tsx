@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Input } from 'antd';
+import { Icon, Table, Button, Row, Col } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { ILanguage } from '../../../../../../models/languages';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { PUT, DELETE } from '../../../../../../const/method';
 import { REGIONS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
+import Search from 'antd/lib/input/Search';
 
 interface ListRegionsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -132,9 +133,21 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     ];
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
-        this.props.getListRegions(event.current - 1, event.pageSize)
+        await this.setState({
+            pageIndex: event.current - 1,
+            loadingTable: true,
+            pageSize: event.pageSize
+        });
+        await this.props.getListRegions(event.current - 1, event.pageSize)
     };
+
+    searchRegions = async () => {
+        let { pageIndex, pageSize, search } = this.state;
+        await this.setState({ loadingTable: true });
+        await setTimeout(() => {
+            this.props.getListRegions(pageIndex, pageSize, search)
+        }, 250);
+    }
 
     editRegions = async () => {
         let { name, id } = this.state;
@@ -163,7 +176,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
     };
 
     render() {
-        let { dataTable, loadingTable, openModal, name, type, pageIndex, pageSize, search } = this.state;
+        let { dataTable, loadingTable, openModal, name, type, search } = this.state;
         let { totalItems } = this.props;
         return (
             <>
@@ -193,7 +206,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                     <Col md={2} lg={5} xl={6} xxl={8} />
                     <Col md={20} lg={14} xl={12} xxl={8}>
                         <h5>
-                            Danh sách tỉnh thành
+                            Danh sách tỉnh thành ({totalItems})
                         <Button
                                 onClick={() => {
                                 }}
@@ -210,23 +223,12 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                         </h5>
                         <Row>
                             <Col sm={12} md={16} lg={16} xl={16} xxl={16}>
-                                <Input
+                                <Search
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
                                     value={search}
                                     onChange={(event: any) => this.setState({ search: event.target.value })}
-                                    onPressEnter={(event: any) => this.props.getListRegions(pageIndex, pageSize, search)}
-                                    suffix={
-                                        search &&
-                                            search.length > 0 ?
-                                            <Icon
-                                                type={"close-circle"}
-                                                theme={"filled"}
-                                                onClick={
-                                                    () => this.setState({ search: null })
-                                                }
-                                            /> : <Icon type={"search"} />
-                                    }
+                                    onPressEnter={(event: any) => this.searchRegions()}
                                 />
                             </Col>
                         </Row>
@@ -235,6 +237,7 @@ class ListRegions extends PureComponent<ListRegionsProps, ListRegionsState> {
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 350 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

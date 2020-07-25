@@ -236,6 +236,7 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 350 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

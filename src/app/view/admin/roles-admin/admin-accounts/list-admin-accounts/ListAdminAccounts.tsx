@@ -237,6 +237,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         columns={this.columns}
                         loading={loadingTable}
                         dataSource={dataTable}
+locale={{ emptyText: 'Không có dữ liệu' }}
                         scroll={{ x: 1150 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}

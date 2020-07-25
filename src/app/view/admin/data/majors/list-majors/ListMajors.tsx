@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Input, Modal, Select, Tooltip } from 'antd';
+import { Icon, Table, Button, Row, Col, Modal, Select, Tooltip } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IMajor } from '../../../../../../models/majors';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { TYPE } from '../../../../../../const/type';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
+import Search from 'antd/lib/input/Search';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -21,7 +22,7 @@ interface ListMajorsProps extends StateProps, DispatchProps {
 }
 
 interface ListMajorsState {
-    list_majors: Array<IMajor>,
+    listMajors: Array<IMajor>,
     list_branch?: Array<IBranches>,
     loadingTable: boolean;
     dataTable: Array<any>;
@@ -34,7 +35,7 @@ interface ListMajorsState {
     type: string;
     brnSearch?: number;
     openModal: boolean;
-    list_data: Array<{ label: string, value: number }>;
+    listData: Array<{ label: string, value: number }>;
     name?: string;
     loading?: boolean;
 }
@@ -45,7 +46,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            list_majors: [],
+            listMajors: [],
             loadingTable: true,
             dataTable: [],
             pageIndex: 0,
@@ -57,7 +58,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             branchID: undefined,
             type: TYPE.EDIT,
             openModal: false,
-            list_data: [],
+            listData: [],
             search: undefined,
             loading: false,
         };
@@ -65,12 +66,17 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
 
     async componentDidMount() {
         let { pageIndex, pageSize, search, brnSearch } = this.state;
-        await this.props.getListMajors(pageIndex, pageSize, search, brnSearch);
+        await this.props.getListMajors(
+            pageIndex,
+            pageSize,
+            search,
+            brnSearch
+        );
     };
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
 
-        if (nextProps.list_majors !== prevState.list_majors) {
+        if (nextProps.listMajors !== prevState.listMajors) {
             let dataTable: any = [];
             let params = (new URL(window.location.href)).searchParams;
             let pageIndex = parseInt(params.get('pageIndex'));
@@ -78,7 +84,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             let name = params.get('name');
             let branchID = params.get('branchID');
 
-            nextProps.list_majors.forEach((item: any, index: number) => {
+            nextProps.listMajors.forEach((item: any, index: number) => {
                 dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -90,26 +96,26 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             });
 
             return {
-                list_majors: nextProps.list_majors,
+                listMajors: nextProps.listMajors,
                 dataTable,
                 loadingTable: false,
                 pageIndex,
                 pageSize,
                 search: name,
-                brnSearch: branchID ? branchID: null
+                brnSearch: branchID ? branchID : null
             }
         }
 
-        if (nextProps.list_branches !== prevState.list_branches) {
-            let list_data: any = [];
-            nextProps.list_branches.forEach((item: any) => list_data.push({ value: item.id, label: item.name }));
+        if (nextProps.listBranches !== prevState.listBranches) {
+            let listData: any = [];
+            nextProps.listBranches.forEach((item: any) => listData.push({ value: item.id, label: item.name }));
             return {
-                list_branches: nextProps.list_branches,
-                list_data,
+                listBranches: nextProps.listBranches,
+                listData,
             }
         }
 
-        return { loadingTable: false };
+        return null;
     };
 
 
@@ -177,8 +183,8 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     handleChoseMajor = (id: number) => {
-        let { list_data } = this.state;
-        list_data.forEach(item => {
+        let { listData } = this.state;
+        listData.forEach(item => {
             if (item.value === id) {
                 this.setState({ branchName: item.label })
             }
@@ -227,7 +233,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             search: `?pageIndex=${event.current - 1}&pageSize=${event.pageSize}`
         })
         await this.setState({ loadingTable: true });
-        this.props.getListMajors(event.current - 1, event.pageSize, search, brnSearch)
+        await this.props.getListMajors(event.current - 1, event.pageSize, search, brnSearch)
     };
 
     editMajor = async () => {
@@ -247,17 +253,25 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
     };
 
     removeMajor = async () => {
-        let { id, pageIndex, pageSize, search, brnSearch } = this.state;
+        let { id } = this.state;
         await this.setState({ loading: true })
         await _requestToServer(
             DELETE, MAJORS,
             [id]
         ).then((res: any) => {
-            this.props.getListMajors(pageIndex, pageSize, search, brnSearch);
             this.setState({ loading: false })
             this.toggleModal();
+            this.searchMajors()
         })
     };
+
+    searchMajors = async () => {
+        let { pageIndex, pageSize, search, brnSearch } = this.state;
+        await this.setState({ loadingTable: true });
+        await setTimeout(() => {
+            this.props.getListMajors(pageIndex, pageSize, search, brnSearch)
+        }, 250);
+    }
 
     render() {
         let {
@@ -265,15 +279,14 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             loadingTable,
             type,
             openModal,
-            list_data,
+            listData,
             name,
             branchName,
             pageIndex,
             search,
             loading,
-            brnSearch
         } = this.state;
-        let { totalItems, list_branches } = this.props;
+        let { totalItems, listBranches } = this.props;
         return (
             <>
                 <Modal
@@ -303,7 +316,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 placeholder="Chọn chuyên ngành "
                                 value={branchName}
                                 widthSelect={'250px'}
-                                listValue={list_data}
+                                listValue={listData}
                                 style={{ padding: "10px 0px" }}
                                 onSearch={(event: any) => this.props.getListBranches(0, 0, event)}
                                 onChange={this.handleChoseMajor}
@@ -315,7 +328,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     <Col md={2} lg={0} xl={3} xxl={6} />
                     <Col md={20} lg={24} xl={18} xxl={12}>
                         <h5>
-                            Danh sách chuyên ngành
+                            Danh sách chuyên ngành ({totalItems})
                                 <Button
                                 type="primary"
                                 style={{
@@ -327,40 +340,17 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                          Thêm mới
                                     </Link>
                             </Button>
-                            <Button
-                                type="primary"
-                                style={{
-                                    float: "right",
-                                    marginRight: 10
-                                }}
-                                onClick={() => {
-                                    this.props.getListMajors(0, 0, search, brnSearch)
-                                }}
-                            >
-                                <Icon type="filter" />
-                                    Lọc
-                                </Button>
                         </h5>
                         <Row>
                             <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                                <Input
+                                <Search
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
                                     value={search}
                                     onChange={(event: any) => {
                                         this.setState({ search: event.target.value });
                                     }}
-                                    suffix={
-                                        search &&
-                                            search.length > 0 ?
-                                            <Icon
-                                                type={"close-circle"}
-                                                theme={"filled"}
-                                                onClick={
-                                                    () => this.setState({ search: null })
-                                                }
-                                            /> : <Icon type={"search"} />
-                                    }
+                                    onPressEnter={this.searchMajors}
                                 />
                             </Col>
                             <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
@@ -369,11 +359,18 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                     style={{ width: "100%" }}
                                     showSearch
                                     onSearch={() => this.props.getListBranches(0)}
-                                    onChange={(event: any) => this.setState({ brnSearch: findIdWithValue(list_branches, event, "name", "id") })}
+                                    onChange={(event: any) => this.setState({ brnSearch: findIdWithValue(listBranches, event, "name", "id") })}
                                 >
                                     <Option value={null} children="Tất cả" />
                                     {
-                                        list_branches ? list_branches.map((item?: IBranch, index?: number) => <Option key={item.id} value={item ? item.name : ""} children={item ? item.name : ""} />) : ""
+                                        listBranches ?
+                                            listBranches.map(
+                                                (item?: IBranch, index?: number) => <Option
+                                                    key={item.id}
+                                                    value={item ? item.name : ""}
+                                                    children={item ? item.name : ""}
+                                                />
+                                            ) : ""
                                     }
                                 </Select>
                             </Col>
@@ -383,6 +380,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 600 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true, defaultCurrent: pageIndex + 1 }}
@@ -424,8 +422,8 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_majors: state.Majors.items,
-    list_branches: state.Branches.items,
+    listMajors: state.Majors.items,
+    listBranches: state.Branches.items,
     totalItems: state.Majors.totalItems
 });
 

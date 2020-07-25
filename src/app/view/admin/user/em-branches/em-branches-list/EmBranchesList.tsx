@@ -469,6 +469,7 @@ class EmBranchesList extends PureComponent<IEmBranchesListProps, IEmBranchesList
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1300 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

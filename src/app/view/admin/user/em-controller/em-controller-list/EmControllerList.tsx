@@ -8,7 +8,6 @@ import {
   Col,
   Select,
   Row,
-  Input,
   Tooltip,
   Avatar,
   Modal,
@@ -35,6 +34,7 @@ import EmInfo from "../../../../layout/em-info/EmInfo";
 import IImportCan from "../../../../../../models/import-can";
 import EmInsertExels from "./EmInsertExels";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
+import Search from "antd/lib/input/Search";
 
 interface IEmControllerListProps extends StateProps, DispatchProps {
   match?: any;
@@ -61,7 +61,7 @@ interface IEmControllerListState {
   id?: string;
   loadingTable?: boolean;
   body?: IEmControllerFilter;
-  list_user_controller?: Array<IEmController>;
+  listUserController?: Array<IEmController>;
   profileVerified_state?: string;
   openImport?: boolean;
   visible?: boolean;
@@ -90,7 +90,7 @@ class EmControllerList extends PureComponent<
         profileVerified: null,
         ids: [],
       },
-      list_user_controller: [],
+      listUserController: [],
       openImport: false,
       visible: false,
       newPassword: null,
@@ -225,12 +225,12 @@ class EmControllerList extends PureComponent<
     prevState?: IEmControllerListState
   ) {
     if (
-      nextProps.list_user_controller &&
-      nextProps.list_user_controller !== prevState.list_user_controller
+      nextProps.listUserController &&
+      nextProps.listUserController !== prevState.listUserController
     ) {
       let { pageIndex, pageSize } = prevState;
       let dataTable = [];
-      nextProps.list_user_controller.forEach(
+      nextProps.listUserController.forEach(
         (item: IEmController, index: number) => {
           dataTable.push({
             key: item.id,
@@ -267,13 +267,13 @@ class EmControllerList extends PureComponent<
         }
       );
       return {
-        list_user_controller: nextProps.list_user_controller,
+        listUserController: nextProps.listUserController,
         dataTable,
         loadingTable: false,
       };
     }
 
-    return { loadingTable: false };
+    return null;
   }
 
   async componentDidMount() {
@@ -316,6 +316,7 @@ class EmControllerList extends PureComponent<
 
   searchEmControllers = async () => {
     let { pageIndex, pageSize, body } = this.state;
+    await this.setState({loadingTable: true});
     await this.props.getListEmControllers(pageIndex, pageSize, body);
   };
 
@@ -368,7 +369,7 @@ class EmControllerList extends PureComponent<
       });
   };
 
-  onChangeFilter = (value?: any, type?: string) => {
+  onChangeFilter = async (value?: any, type?: string) => {
     let { body } = this.state;
     let { listRegions } = this.props;
     listRegions.forEach((item: IRegion) => {
@@ -387,9 +388,9 @@ class EmControllerList extends PureComponent<
         break;
     }
     body[type] = value;
-    this.setState({ body });
-    if (type !==TYPE.EM_CONTROLLER.employerName ) {
-      this.searchEmControllers();
+    await this.setState({ body });
+    if (type === TYPE.EM_CONTROLLER.regionID || type === TYPE.EM_CONTROLLER.profileVerified) {
+      await this.searchEmControllers();
     }
   };
 
@@ -460,7 +461,7 @@ class EmControllerList extends PureComponent<
         />
         <div className="common-content">
           <h5>
-            Danh sách nhà tuyển dụng
+            Danh sách nhà tuyển dụng ({totalItems})
             {/* <Button
               icon="filter"
               onClick={() => this.searchFilter()}
@@ -486,7 +487,7 @@ class EmControllerList extends PureComponent<
           <Row>
             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <IptLetterP value={"Tên tài khoản"}>
-                <Input
+                <Search
                   placeholder="ex: daipham.uet@gmail.com"
                   onChange={(event: any) =>
                     this.onChangeFilter(
@@ -494,17 +495,13 @@ class EmControllerList extends PureComponent<
                       TYPE.EM_CONTROLLER.username
                     )
                   }
-                  onKeyDown={(event: any) => {
-                    if (event.keyCode === 13) {
-                      this.searchFilter();
-                    }
-                  }}
+                  onPressEnter={this.searchEmControllers}
                 />
               </IptLetterP>
             </Col>
             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <IptLetterP value={"Tên nhà tuyển dụng"}>
-                <Input
+                <Search
                   placeholder="ex: works"
                   onChange={(event: any) =>
                     this.onChangeFilter(
@@ -512,10 +509,7 @@ class EmControllerList extends PureComponent<
                       TYPE.EM_CONTROLLER.employerName
                     )
                   }
-                  onPressEnter={() => {
-                    this.searchFilter();
-                  }
-                  }
+                  onPressEnter={this.searchFilter}
                 />
               </IptLetterP>
             </Col>
@@ -567,6 +561,7 @@ class EmControllerList extends PureComponent<
               columns={this.columns}
               loading={loadingTable}
               dataSource={dataTable}
+              locale={{ emptyText: 'Không có dữ liệu' }}
               scroll={{ x: 1100 }}
               bordered
               pagination={{
@@ -612,7 +607,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-  list_user_controller: state.EmControllers.items,
+  listUserController: state.EmControllers.items,
   listRegions: state.Regions.items,
   employerDetail: state.EmployerDetail,
   totalItems: state.EmControllers.totalItems,

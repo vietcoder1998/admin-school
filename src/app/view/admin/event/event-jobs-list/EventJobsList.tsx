@@ -1107,6 +1107,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1600 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

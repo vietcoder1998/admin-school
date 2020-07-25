@@ -30,7 +30,7 @@ interface IState {
     type?: string;
     name?: string;
     jobGroupName?: string;
-    list_data: Array<{ label: string, value: number }>;
+    listData: Array<{ label: string, value: number }>;
     search?: string;
 }
 
@@ -49,7 +49,7 @@ class ListWorkingTools extends PureComponent<IProps, IState> {
             type: TYPE.EDIT,
             jobGroupID: undefined,
             jobGroupName: undefined,
-            list_data: [],
+            listData: [],
         }
     }
 

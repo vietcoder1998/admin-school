@@ -128,7 +128,7 @@ interface IJobAnnouncementsListState {
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
-    list_job_announcements?: Array<any>;
+    listJobAnnouncements?: Array<any>;
     id?: string;
     loadingTable?: boolean;
     body?: IJobAnnouncementsFilter;
@@ -166,7 +166,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             createdDate: null,
             adminID: null,
             hidden: false,
-            list_job_announcements: [],
+            listJobAnnouncements: [],
             id: null,
             loadingTable: true,
             body: {
@@ -403,13 +403,13 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
     static getDerivedStateFromProps(nextProps: IJobAnnouncementsListProps, prevState: IJobAnnouncementsListState) {
         if (
-            nextProps.list_job_announcements &&
-            nextProps.list_job_announcements !== prevState.list_job_announcements
+            nextProps.listJobAnnouncements &&
+            nextProps.listJobAnnouncements !== prevState.listJobAnnouncements
         ) {
             let { pageIndex, pageSize } = prevState;
             let dataTable = [];
 
-            nextProps.list_job_announcements.forEach((item: IJobAnnouncement, index: number) => {
+            nextProps.listJobAnnouncements.forEach((item: IJobAnnouncement, index: number) => {
                 dataTable.push({
                     eid: item.employerID,
                     key: item.id,
@@ -441,9 +441,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             })
 
             return {
-                list_job_announcements: nextProps.list_job_announcements,
+                listJobAnnouncements: nextProps.listJobAnnouncements,
                 dataTable,
-                loadingTable: false,
+                loadingTable: false
             }
         }
 
@@ -457,13 +457,11 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 searchPriority: jobAnnouncementDetail.priority.searchPriority,
                 homeExpired: jobAnnouncementDetail.priority.homeExpired,
                 searchExpired: jobAnnouncementDetail.priority.searchExpired,
-                jobAnnouncementDetail
+                jobAnnouncementDetail,
             }
         }
 
-        return {
-            loadingTable: false
-        };
+        return null;
     };
 
     async componentDidMount() {
@@ -536,7 +534,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         await setTimeout(() => {
             this.props.getListJobAnnouncements(body, pageIndex, pageSize);
         }, 250);
-        await this.setState({ loadingTable: false })
     };
 
     onChangeFilter = (event: any, param?: string) => {
@@ -714,7 +711,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             totalItems,
             listJobNames,
             listEmployerBranches,
-            list_job_service,
+            listJobService,
             listEmployer,
             modalState,
             jobDetail,
@@ -762,7 +759,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     ]}
                     children={modalState.msg}
                 />
-
                 <Modal
                     visible={opjd}
                     title={"Chi tiết công việc"}
@@ -827,9 +823,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     >
                         <h6>Các gói của bạn</h6>
                         <>
-                            <label className='top'>Gói tuyển dụng gấp: {list_job_service.homeTopQuantiy}</label>
-                            <label className='in_day'>Gói tuyển dụng trong ngày: {list_job_service.homeInDayQuantity}</label>
-                            <label className='high_light'>Gói tìm kiếm nổi bật:  {list_job_service.searchHighLightQuantity}</label>
+                            <label className='top'>Gói tuyển dụng gấp: {listJobService.homeTopQuantiy}</label>
+                            <label className='in_day'>Gói tuyển dụng trong ngày: {listJobService.homeInDayQuantity}</label>
+                            <label className='high_light'>Gói tìm kiếm nổi bật:  {listJobService.searchHighLightQuantity}</label>
                         </>
                         <hr />
                         <h6>Hãy chọn gói phù hợp cho bạn <Icon type="check" style={{ color: "green" }} /></h6>
@@ -1107,6 +1103,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 columns={this.columns}
                                 loading={loadingTable}
                                 dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                                 scroll={{ x: 2060 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}
@@ -1151,10 +1148,10 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({
-    list_job_announcements: state.JobAnnouncements.items,
+    listJobAnnouncements: state.JobAnnouncements.items,
     listJobNames: state.JobNames.items,
     listEmployerBranches: state.EmBranches.items,
-    list_job_service: state.JobServices,
+    listJobService: state.JobServices,
     listEmployer: state.Employers.items,
     CanDetail: state.StudentDetail,
     jobAnnouncementDetail: state.JobAnnouncementDetail,

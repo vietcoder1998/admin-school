@@ -45,7 +45,12 @@ export default function JobSuitableCandidate(props?: IProps) {
                         <Empty description={"Không có ứng viên nào phù hợp"} />
                 }
             </ul>
-            <Pagination pageSize={props.pageSize} total={props.totalItems} onChange={(page, pageSize) => props.onGetListJobSuitableCandidate(page - 1, pageSize)} />
+            <Pagination
+                pageSize={props.pageSize}
+                total={props.totalItems}
+                onChange={
+                    (page, pageSize) => props.onGetListJobSuitableCandidate(page - 1, pageSize)}
+            />
         </>
     )
 }

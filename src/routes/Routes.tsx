@@ -7,6 +7,8 @@ const Admin = lazy(() => import('./../app/view/admin/Admin'));
 const Login = lazy(() => import('./../app/view/login/Login'));
 const NotFound = lazy(() => import('./../app/view/not-found/NotFound'));
 
+let tk = localStorage.getItem("token");
+
 export default function Routes(props: any) {
     return (
         <>
@@ -15,10 +17,10 @@ export default function Routes(props: any) {
                     <Route path={'/admin'} component={Admin} />
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
-                    <Route exact path='/login' component={Login} /> 
+                    <Route exact path='/login' component={tk ? Admin :  Login} /> 
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
-                    <Route exact path='/' component={Login} /> 
+                    <Route exact path='/' component={tk ? Admin :  Login} /> 
                 </Suspense>
                 <Suspense fallback={<FallBack />}>
                     <Route exact path='*' component={NotFound} /> 

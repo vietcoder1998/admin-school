@@ -250,6 +250,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
               columns={this.columns}
               loading={loadingTable}
               dataSource={dataTable}
+locale={{ emptyText: 'Không có dữ liệu' }}
               scroll={{ x: 400 }}
               bordered
               pagination={{ total: totalItems, showSizeChanger: true }}

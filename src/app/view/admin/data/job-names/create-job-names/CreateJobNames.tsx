@@ -15,7 +15,7 @@ interface CreateJobNamesState {
     listJobGroups?: Array<IJobGroup>;
     jobGroupName?: string;
     jobGroupID?: number;
-    list_data?: Array<{ label: string, value: number }>
+    listData?: Array<{ label: string, value: number }>
 }
 
 interface CreateJobNamesProps extends StateProps, DispatchProps {
@@ -37,11 +37,11 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
         if (nextProps.listJobGroups !== prevState.listJobGroups) {
-            let list_data: any = [];
-            nextProps.listJobGroups.forEach((item: any) => list_data.push({value: item.id, label: item.name}));
+            let listData: any = [];
+            nextProps.listJobGroups.forEach((item: any) => listData.push({value: item.id, label: item.name}));
             return {
                 listJobGroups: nextProps.listJobGroups,
-                list_data,
+                listData,
             }
         }
         return { loadingTable: false };
@@ -68,9 +68,9 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
     };
 
     handleChoseJobGroup = (id: number) => {
-        let {list_data} = this.state;
-        if (list_data) {
-            list_data.forEach(item => {
+        let {listData} = this.state;
+        if (listData) {
+            listData.forEach(item => {
                 if (item.value === id) {
                     this.setState({jobGroupName: item.label})
                 }
@@ -80,7 +80,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
     };
 
     render() {
-        let {name, list_data, jobGroupName} = this.state;
+        let {name, listData, jobGroupName} = this.state;
         return (
             <>
                 <div>
@@ -101,7 +101,7 @@ class CreateJobNames extends PureComponent<CreateJobNamesProps, CreateJobNamesSt
                     title="Chọn nhóm công việc"
                     placeholder="Chọn nhóm công việc"
                     value={jobGroupName}
-                    listValue={list_data}
+                    listValue={listData}
                     style={{padding: "10px 30px"}}
                     onChange={this.handleChoseJobGroup}
                 />

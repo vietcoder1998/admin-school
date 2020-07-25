@@ -189,7 +189,6 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 pageSize
             })
         }, 250);
-        await this.setState({ loadingTable: false });
     };
 
     setPageIndex = async (event: any) => {
@@ -255,7 +254,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                 loadingTable: false
             }
         }
-        return { loadingTable: false };
+        return null;
     }
 
     onChangeState = async (event: any) => {
@@ -328,14 +327,15 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
 
         return (
             <>
-                <DrawerConfig width={'50vw'} title={"Thông tin nhà tuyển dụng"}>
+                <DrawerConfig
+                    width={'50vw'}
+                    title={"Thông tin nhà tuyển dụng"}
+                >
                     <EmInfo data={employerDetail} />
                     <Button
                         icon={"left"}
                         onClick={
-                            () => {
-                                this.props.handleDrawer({ openDrawer: false });
-                            }
+                            () => this.props.handleDrawer({ openDrawer: false })
                         }
                     >
                         Thoát
@@ -484,6 +484,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1650 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

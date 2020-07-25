@@ -611,6 +611,7 @@ class EventEmList extends PureComponent<IProps, IState> {
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1430 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

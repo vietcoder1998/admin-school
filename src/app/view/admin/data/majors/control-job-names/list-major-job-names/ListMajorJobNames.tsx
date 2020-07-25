@@ -36,7 +36,7 @@ interface ListMajorJobNamesState {
     jobGroupName?: string;
     list_id?: Array<string>
     list_name?: any;
-    list_data?: Array<{ label?: string, value?: any }>
+    listData?: Array<{ label?: string, value?: any }>
     list_opntion?: JSX.Element;
     list_major_job_names?: Array<IJobName>
 }
@@ -59,7 +59,7 @@ class ListMajorJobNames extends PureComponent<ListMajorJobNamesProps, ListMajorJ
             jobGroupName: undefined,
             list_id: [],
             list_name: [],
-            list_data: [],
+            listData: [],
             list_major_job_names: []
         }
     }

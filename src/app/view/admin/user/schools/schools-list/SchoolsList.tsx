@@ -264,7 +264,10 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
 
   searchSchools = async () => {
     let { pageIndex, pageSize, body } = this.state;
-    await this.props.getListSchools(pageIndex, pageSize, body);
+    await this.setState({ loadingTable: true })
+    await setTimeout(() => {
+      this.props.getListSchools(pageIndex, pageSize, body);
+    }, 250);
   };
 
   searchFilter = async () => {
@@ -332,11 +335,10 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
     this.setState({ body });
 
     if (
-      type !== TYPE.SCHOOLS.username ||
-      type !== TYPE.SCHOOLS.email ||
-      type !== TYPE.SCHOOLS.shortName
+      type === TYPE.SCHOOLS.regionID ||
+      type === TYPE.SCHOOLS.connected
     ) {
-      this.searchFilter();
+      this.searchSchools();
     }
   };
 
@@ -394,7 +396,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
         </Modal>
         <div className="common-content">
           <h5>
-            Danh sách nhà trường
+            Danh sách nhà trường ({totalItems})
             {/* <Button
               icon="filter"
               onClick={() => this.searchFilter()}
@@ -444,7 +446,8 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                   onChange={(event: any) =>
                     this.onChangeFilter(
                       event.target.value,
-                      TYPE.SCHOOLS.email)
+                      TYPE.SCHOOLS.email
+                    )
                   }
                   onPressEnter={(event: any) => this.searchFilter()}
                 />
@@ -490,6 +493,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
               columns={this.columns}
               loading={loadingTable}
               dataSource={dataTable}
+              locale={{ emptyText: 'Không có dữ liệu' }}
               scroll={{ x: 1100 }}
               bordered
               pagination={{

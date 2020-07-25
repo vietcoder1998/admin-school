@@ -16,7 +16,7 @@ interface IState {
     listJobGroups?: Array<IJobGroup>;
     jobGroupName?: string;
     jobGroupID?: number;
-    list_data?: Array<{ label: string, value: number }>
+    listData?: Array<{ label: string, value: number }>
 }
 
 interface IProps extends StateProps, DispatchProps {

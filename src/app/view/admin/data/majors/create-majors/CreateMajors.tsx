@@ -12,10 +12,10 @@ import {IMajor} from '../../../../../../models/majors';
 
 interface CreateMajorsState {
     name?: string;
-    list_branches?: Array<IMajor>;
+    listBranches?: Array<IMajor>;
     branchName?: string;
     branchID?: number;
-    list_data?: Array<{ label: string, value: number }>
+    listData?: Array<{ label: string, value: number }>
 }
 
 interface CreateMajorsProps extends StateProps, DispatchProps {
@@ -30,18 +30,18 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
         this.state = {
             name: "",
             branchID: 0,
-            list_branches: [],
+            listBranches: [],
             branchName: undefined,
         }
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.list_branches !== prevState.list_branches) {
-            let list_data: any = [];
-            nextProps.list_branches.forEach((item: any) => list_data.push({value: item.id, label: item.name}));
+        if (nextProps.listBranches !== prevState.listBranches) {
+            let listData: any = [];
+            nextProps.listBranches.forEach((item: any) => listData.push({value: item.id, label: item.name}));
             return {
-                list_branches: nextProps.list_branches,
-                list_data,
+                listBranches: nextProps.listBranches,
+                listData,
             }
         }
 
@@ -69,9 +69,9 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
     };
 
     handleChoseMajor = (id: number) => {
-        let {list_data} = this.state;
-        if (list_data) {
-            list_data.forEach(item => {
+        let {listData} = this.state;
+        if (listData) {
+            listData.forEach(item => {
                 if (item.value === id) {
                     this.setState({branchName: item.label});
                 }
@@ -82,7 +82,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
 
 
     render() {
-        let {name, list_data, branchID, branchName} = this.state;
+        let {name, listData, branchID, branchName} = this.state;
         return (
             <>
                 <div>
@@ -103,7 +103,7 @@ class CreateMajors extends PureComponent<CreateMajorsProps, CreateMajorsState> {
                     title="Chọn nhóm ngành"
                     placeholder="Chọn nhóm ngành"
                     value={branchName}
-                    listValue={list_data}
+                    listValue={listData}
                     style={{padding: "10px 0px"}}
                     onChange={this.handleChoseMajor}
                     onSearch={(event) =>this.props.getListMajors(0, 10, event)}
@@ -137,7 +137,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_branches: state.Branches.items,
+    listBranches: state.Branches.items,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

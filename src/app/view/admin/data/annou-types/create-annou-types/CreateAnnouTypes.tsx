@@ -1,4 +1,4 @@
-import React, { PureComponent,  } from 'react'
+import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
 import { Divider, Button, Icon, Select, InputNumber } from 'antd';
 import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
@@ -131,7 +131,13 @@ class CreateAnnouTypes extends PureComponent<ICreateAnnouTypesProps, ICreateAnno
                     widthLabel="100px"
                     style={{ padding: "10px 30px" }}
                 >
-                    <InputNumber min={-10000000} max={1000000} defaultValue={0} onChange={(priority: number) => this.setState({ priority })} />
+                    <InputNumber
+                        min={-10000000}
+                        max={1000000}
+                        defaultValue={0}
+                        onChange={
+                            (priority: number) => this.setState({ priority })}
+                    />
                 </InputTitle>
                 <Button
                     type="primary"

@@ -426,8 +426,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     value={findIdWithValue(listJobNames, body.jobNameIDs, "id", "name")}
                     onChange={
                         (event: any) => {
-                            let list_data = findIdWithValue(listJobNames, event, "name", "id")
-                            body.jobNameIDs = list_data;
+                            let listData = findIdWithValue(listJobNames, event, "name", "id")
+                            body.jobNameIDs = listData;
                             this.setState({ body })
                         }
                     }
@@ -445,8 +445,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     value={findIdWithValue(listSkills, body.skillIDs, "id", "name")}
                     onChange={
                         (event: any) => {
-                            let list_data = findIdWithValue(listSkills, event, "name", "id")
-                            body.skillIDs = list_data;
+                            let listData = findIdWithValue(listSkills, event, "name", "id")
+                            body.skillIDs = listData;
                             this.setState({ body })
                         }
                     }
@@ -465,8 +465,8 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                     value={findIdWithValue(listLanguages, body.languageIDs, "id", "name")}
                     onChange={
                         (event: any) => {
-                            let list_data = findIdWithValue(listLanguages, event, "name", "id")
-                            body.languageIDs = list_data;
+                            let listData = findIdWithValue(listLanguages, event, "name", "id")
+                            body.languageIDs = listData;
                             this.setState({ body })
                         }
                     }
@@ -685,6 +685,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 2000 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

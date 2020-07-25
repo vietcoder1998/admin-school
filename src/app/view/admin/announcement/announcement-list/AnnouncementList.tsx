@@ -25,7 +25,7 @@ let ImageRender = (props: any) => {
         return <Avatar shape={'square'} src={props.src} alt={props.alt} style={{ width: "60px", height: "60px" }} />
     } else {
         return <div style={{ width: "60px", height: "60px", padding: "20px 0px" }}>
-            <Icon type="file-image" style={{fontSize: 20}}/>
+            <Icon type="file-image" style={{ fontSize: 20 }} />
         </div>
     }
 };
@@ -43,7 +43,7 @@ interface IAnnouncementListProps extends StateProps, DispatchProps {
 
 interface IAnnouncementListState {
     dataTable?: Array<any>;
-       search?: any;
+    search?: any;
     pageIndex?: number;
     pageSize?: number;
     state?: string;
@@ -54,13 +54,13 @@ interface IAnnouncementListState {
     showModal?: boolean;
     pendingJob?: any;
     message?: string;
-    list_annou_types?: Array<any>;
+    listAnnouTypes?: Array<any>;
     valueType?: string;
     announcementTypeID?: number;
     createdDate?: number;
     adminID?: string;
     hidden?: boolean;
-    list_announcements?: Array<any>;
+    listAnnoucements?: Array<any>;
     id?: string;
     loadingTable?: boolean;
     open_config_modal?: boolean;
@@ -83,12 +83,12 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
         super(props);
         this.state = {
             target: undefined,
-            list_annou_types: [],
+            listAnnouTypes: [],
             announcementTypeID: undefined,
             createdDate: undefined,
             adminID: undefined,
             hidden: undefined,
-            list_announcements: [],
+            listAnnoucements: [],
             id: "",
             loadingTable: true,
             initLoading: false,
@@ -222,18 +222,18 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
     };
 
     static getDerivedStateFromProps(nextProps: IAnnouncementListProps, prevState: IAnnouncementListState) {
-        if (nextProps.list_annou_types !== prevState.list_annou_types) {
+        if (nextProps.listAnnouTypes !== prevState.listAnnouTypes) {
             return {
-                list_annou_types: nextProps.list_annou_types,
+                listAnnouTypes: nextProps.listAnnouTypes,
                 valueType: "Tất cả",
                 announcementTypeID: null
             }
         };
 
-        if (nextProps.list_announcements !== prevState.list_announcements) {
+        if (nextProps.listAnnoucements !== prevState.listAnnoucements) {
             let { pageIndex, pageSize, pageIndexAC, pageSizeAC, body } = prevState;
             let dataTable: any = [];
-            nextProps.list_announcements.forEach((item: any, index: number) => {
+            nextProps.listAnnoucements.forEach((item: any, index: number) => {
                 const EditJob = (item?: any) => (
                     <>
                         <Tooltip
@@ -346,12 +346,12 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                 });
             });
             return {
-                list_announcements: nextProps.list_annou_types,
+                listAnnoucements: nextProps.listAnnoucements,
                 dataTable,
                 loadingTable: false,
             };
         }
-        return { loadingTable: false };
+        return null;
     };
 
     getData = async () => {
@@ -380,7 +380,11 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
+        await this.setState({
+            pageIndex: event.current - 1,
+            loadingTable: true,
+            pageSize: event.pageSize
+        });
         await this.searchAnnouncement();
     };
 
@@ -395,43 +399,54 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
             target,
         } = this.state;
 
-        await this.props.getListAnnouncements(
-            pageIndex,
-            pageSize,
-            {
-                createdDate,
-                adminID,
-                announcementTypeID,
-                hidden,
-                target
-            }
-        );
+        await this.setState({ loadingTable: true });
+        await setTimeout(() => {
+            this.props.getListAnnouncements(
+                pageIndex,
+                pageSize,
+                {
+                    createdDate,
+                    adminID,
+                    announcementTypeID,
+                    hidden,
+                    target
+                }
+            );
+        }, 250);
+
     };
 
     onChangeTarget = (event: any) => {
         this.setState({ target: event });
         this.props.getListTypeManagement({ target: event });
+        this.searchAnnouncement();
     };
 
     onChangeJobName = (event: any) => {
-        this.setState({ jobNameID: event })
+        this.setState({ jobNameID: event });
+        this.searchAnnouncement();
     };
 
-    onChangeFilter = (event: any) => {
-        let { list_annou_types } = this.state;
+    onChangeFilter = async (event: any) => {
+        let { listAnnouTypes } = this.state;
         if (event === null) {
-            this.setState({ announcementTypeID: undefined, valueType: undefined })
-        } else if (list_annou_types) {
-            list_annou_types.forEach(item => {
+            this.setState({ announcementTypeID: undefined, valueType: undefined, })
+        } else if (listAnnouTypes) {
+            listAnnouTypes.forEach(item => {
                 if (item.id === event) {
-                    this.setState({ valueType: item.name, announcementTypeID: item.id })
+                    this.setState({
+                        valueType: item.name,
+                        announcementTypeID: item.id,
+                    });
+                    this.searchAnnouncement();
                 }
             })
         }
     };
 
     onChangeCreatedDate = (event: any) => {
-        this.setState({ createdDate: momentToUnix(event) })
+        this.setState({ createdDate: momentToUnix(event) });
+        this.searchAnnouncement();
     };
 
     onChangeHidden = (event: any) => {
@@ -447,7 +462,8 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                 hidden = undefined;
                 break;
         }
-        this.setState({ hidden })
+        this.setState({ hidden });
+        this.searchAnnouncement();
     };
 
     toggleModalConfig = () => {
@@ -508,7 +524,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
     render() {
         let {
             dataTable,
-            list_annou_types,
+            listAnnouTypes,
             valueType,
             loadingTable,
             open_config_modal,
@@ -664,18 +680,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
 
 
                     <h5>
-                        Danh sách bài viết
-                        <Button
-                            onClick={() => this.searchAnnouncement()}
-                            type="primary"
-                            style={{
-                                float: "right",
-                                margin: "0px 5px"
-                            }}
-                        >
-                            <Icon type="filter" />
-                            Lọc
-                        </Button>
+                        Danh sách bài viết ({totalItems})
                         <Button
                             onClick={() => this.searchAnnouncement()}
                             type="primary"
@@ -724,8 +729,8 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                                 >
                                     <Option value={undefined}>Tất cả</Option>
                                     {
-                                        list_annou_types &&
-                                        list_annou_types.map((item, index) => <Option key={index}
+                                        listAnnouTypes &&
+                                        listAnnouTypes.map((item, index) => <Option key={index}
                                             value={item.id}>{item.name}</Option>)
                                     }
                                 </Select>
@@ -758,6 +763,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1450 }}
                             bordered={true}
                             pagination={{ total: totalItems, showSizeChanger: true }}
@@ -801,8 +807,8 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-    list_annou_types: state.AnnouTypes.items,
-    list_announcements: state.Announcements.items,
+    listAnnouTypes: state.AnnouTypes.items,
+    listAnnoucements: state.Announcements.items,
     annoucement_detail: state.AnnouncementDetail.data,
     totalItems: state.Announcements.totalItems,
     list_annou_comment: state.AnnouComments.items,

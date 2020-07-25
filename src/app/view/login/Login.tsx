@@ -45,20 +45,18 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
   }
 
   componentDidMount() {
-    // let is_authen = localStorage.getItem("token") ? true : false;
-    this.AutoLogin();
+    // this.AutoLogin();
   }
 
-  AutoLogin = async () => {
-    if (localStorage.getItem("refreshToken")) {
-      let refreshToken = localStorage.getItem("refreshToken");
-      await loginUser({ refreshToken }, TYPE.REFESH_LOGIN);
-      // this.setState({ loginSuccess: true });
-    
-    } else {
+  // AutoLogin = async () => {
+  //   if (localStorage.getItem("refreshToken")) {
+  //     let refreshToken = localStorage.getItem("refreshToken");
+  //     await loginUser({ refreshToken }, TYPE.REFESH_LOGIN);
+  //     // this.setState({ loginSuccess: true });
+  //   } else {
      
-    }
-  };
+  //   }
+  // };
 
   createRequest = async () => {
     let { password, username } = this.state;

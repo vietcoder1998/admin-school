@@ -18,7 +18,7 @@ interface ListBranchesProps extends StateProps, DispatchProps {
 };
 
 interface ListBranchesState {
-    list_branches: Array<ILanguage>,
+    listBranches: Array<ILanguage>,
     loadingTable: boolean;
     dataTable: Array<any>;
     pageIndex: number;
@@ -34,7 +34,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            list_branches: [],
+            listBranches: [],
             loadingTable: true,
             dataTable: [],
             pageIndex: 0,
@@ -52,10 +52,10 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
     };
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.list_branches !== prevState.list_branches) {
+        if (nextProps.listBranches !== prevState.listBranches) {
             let dataTable: any = [];
             let { pageIndex, pageSize } = prevState;
-            nextProps.list_branches.forEach((item: any, index: number) => {
+            nextProps.listBranches.forEach((item: any, index: number) => {
                 dataTable.push({
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
@@ -64,7 +64,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
             });
 
             return {
-                list_branches: nextProps.list_branches,
+                listBranches: nextProps.listBranches,
                 dataTable,
                 loadingTable: false
             }
@@ -236,6 +236,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         columns={this.columns}
                         loading={loadingTable}
                         dataSource={dataTable}
+locale={{ emptyText: 'Không có dữ liệu' }}
                         scroll={{ x: 400 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}
@@ -255,7 +256,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state: any, ownProps?: any) => ({
-    list_branches: state.Branches.items,
+    listBranches: state.Branches.items,
     totalItems: state.Branches.totalItems
 });
 

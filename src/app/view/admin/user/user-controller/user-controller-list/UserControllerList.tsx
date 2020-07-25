@@ -46,7 +46,7 @@ interface IUserControllerListState {
   id?: string;
   loadingTable?: boolean;
   body?: IUserControllerFilter;
-  list_user_controller?: Array<IUserController>;
+  listUserController?: Array<IUserController>;
   banned_state?: string;
   filter?: any;
   visible?: boolean;
@@ -73,7 +73,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         createdDate: null,
         lastActive: null,
       },
-      list_user_controller: [],
+      listUserController: [],
       visible: false,
       newPassword: null,
       filter: {
@@ -201,12 +201,12 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     prevState?: IUserControllerListState
   ) {
     if (
-      nextProps.list_user_controller &&
-      nextProps.list_user_controller !== prevState.list_user_controller
+      nextProps.listUserController &&
+      nextProps.listUserController !== prevState.listUserController
     ) {
       let { pageIndex, pageSize } = prevState;
       let dataTable = [];
-      nextProps.list_user_controller.forEach(
+      nextProps.listUserController.forEach(
         (item: IUserController, index: number) => {
           dataTable.push({
             key: item.id,
@@ -226,11 +226,12 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         }
       );
       return {
-        list_user_controller: nextProps.list_user_controller,
+        listUserController: nextProps.listUserController,
         dataTable,
+        loadingTable: false
       };
     }
-    return {};
+    return null;
   }
 
   async componentDidMount() {
@@ -255,9 +256,6 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
     let { pageIndex, pageSize, body } = this.state;
     this.setState({ loadingTable: true });
     await this.props.getListUserControllers(pageIndex, pageSize, body);
-    this.setState({
-      loadingTable: false,
-    });
   };
 
   searchFilter = async () => {
@@ -360,7 +358,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         </Modal>
         <div className="common-content">
           <h5>
-            Danh sách người dùng
+            Danh sách người dùng ({totalItems})
             <Button
               icon="filter"
               onClick={() => {
@@ -453,6 +451,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
               columns={this.columns}
               loading={loadingTable}
               dataSource={dataTable}
+              locale={{ emptyText: 'Không có dữ liệu' }}
               scroll={{ x: 850 }}
               bordered
               pagination={{
@@ -495,7 +494,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 });
 
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
-  list_user_controller: state.UserControllers.items,
+  listUserController: state.UserControllers.items,
   totalItems: state.UserControllers.totalItems,
 });
 

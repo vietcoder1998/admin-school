@@ -297,7 +297,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
             }
         }
 
-        return null
+        return { loadingTable: false }
     };
 
     async componentDidMount() {
@@ -312,13 +312,24 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
     };
 
     setPageIndex = async (event: any) => {
-        await this.setState({ pageIndex: event.current - 1, loadingTable: true, pageSize: event.pageSize });
+        await this.setState({
+            pageIndex: event.current - 1,
+            loadingTable: true,
+            pageSize: event.pageSize
+        });
         await this.searchEventSchool();
     };
 
     searchEventSchool = async () => {
-        let { body, pageIndex, pageSize } = this.state;
-        await this.props.getListEventSchools(body, pageIndex, pageSize);
+        let {
+            body,
+            pageIndex,
+            pageSize
+        } = this.state;
+        await this.setState({ loadingTable: true })
+        await setTimeout(() => {
+            this.props.getListEventSchools(body, pageIndex, pageSize);
+        }, 250);
     };
 
     onCloseDrawer = () => {
@@ -521,13 +532,13 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                         onChange={(event) => {
                                             if (event && event[0]) {
                                                 body.startedDate = event[0].unix() * 1000;
-                                                
-                                            } else 
+
+                                            } else
                                                 body.startedDate = null
 
                                             if (event && event[1]) {
                                                 body.finishedDate = event[1].unix() * 1000;
-                                            } else  body.finishedDate = null
+                                            } else body.finishedDate = null
 
                                             this.setState({ body });
                                         }}
@@ -541,6 +552,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 950 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

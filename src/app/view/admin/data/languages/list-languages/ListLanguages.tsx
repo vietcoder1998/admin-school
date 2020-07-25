@@ -266,6 +266,7 @@ class ListLanguages extends PureComponent<
                 columns={this.columns}
                 loading={loadingTable}
                 dataSource={dataTable}
+locale={{ emptyText: 'Không có dữ liệu' }}
                 useFixedHeader={true}
                 scroll={{ y: 500 }}
                 bordered

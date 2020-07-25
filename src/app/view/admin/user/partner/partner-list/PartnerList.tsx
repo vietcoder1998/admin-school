@@ -372,6 +372,7 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1400 }}
                             bordered
                             pagination={{ total: 0, showSizeChanger: true }}

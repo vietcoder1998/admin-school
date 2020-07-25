@@ -122,7 +122,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         <>
             <Dropdown
                 overlay={this.menu}
-                trigger="click"
+                trigger={["click"]}
             >
                 <Tooltip title="Đổi trạng thái kết nối">
                     <Button
@@ -309,7 +309,6 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         await setTimeout(() => {
             this.props.getListConnectEmSchool(pageIndex, pageSize, body);
         }, 250);
-        await this.setState({ loadingTable: false })
     };
 
     onChangeFilter = (event: any, param?: string) => {
@@ -420,7 +419,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
             <>
                 <div className="common-content">
                     <h5>
-                        Danh sách kết nối doanh nghiệp - nhà trường
+                        Danh sách kết nối doanh nghiệp - nhà trường ({totalItems})
                     </h5>
                     <div className="table-operations">
                         <Row >
@@ -499,6 +498,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 1100 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}

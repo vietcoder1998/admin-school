@@ -23,8 +23,13 @@ import Announcement from './announcement';
 import Event from './event';
 import Connect from './connect';
 
+//@ts-ignore
+import WorksvnBanner from "../../../assets/image/worksvn-banner.jpg";
+
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
+//@ts-ignore
+const DefaultBanner = () => <div  style={{ width: '100%', textAlign: 'center', padding: 'calc(50vh - 206px) 20px' }}><img alt="worksvn banner" src={WorksvnBanner} /></div>
 
 interface AdminState {
     show_menu: boolean;
@@ -93,7 +98,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         clearStorage()
     };
 
-    componentWillUnmount() {
+    async componentWillUnmount() {
         window.removeEventListener("scroll", () => { });
     }
 
@@ -125,7 +130,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
                         <Tooltip title={"Cập nhật phiên bản"}>
-                            <ClearCache auto={true} duration={60000}>
+                            <ClearCache auto={true} duration={6000}>
                                 {({ isLatestVersion, emptyCacheStorage }) =>
                                     <div>
                                         {!isLatestVersion && (
@@ -191,10 +196,13 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        <Breadcrumb style={{ padding: 20 }} >
+                        <Breadcrumb
+                            style={{ padding: 20 }}
+                        >
                             <Breadcrumb.Item >
                                 <a href='/admin' >
                                     <Icon type="home" />
+                                    Trang chủ
                                 </a>
                             </Breadcrumb.Item>
                             {data_breakcumb.map((item: any) => {
@@ -217,13 +225,14 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             {/* <Col sm={1} md={1} lg={2}></Col> */}
                             <Col sm={24} md={24} lg={24}>
                                 {!loading ? <Switch>
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.PENDING_JOBS}`} component={PendingJobs} />
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.ANNOUNCEMENT}`} component={Announcement} />
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.DATA}`} component={Data} />
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.ROLES}`} component={RoleAdmins} />
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.USER}`} component={User} />
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.EVENT}`} component={Event} />
-                                    <ErrorBoundaryRoute path={`${match.url}${routePath.CONNECT}`} component={Connect} />
+                                    <ErrorBoundaryRoute exact path={match.url||'admin'} component={DefaultBanner} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.PENDING_JOBS}`} component={PendingJobs} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.ANNOUNCEMENT}`} component={Announcement} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.DATA}`} component={Data} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.ROLES}`} component={RoleAdmins} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.USER}`} component={User} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.EVENT}`} component={Event} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.CONNECT}`} component={Connect} />
                                 </Switch> : <Loading />}
                             </Col >
                             {/* <Col sm={1} md={1} lg={2}></Col> */}

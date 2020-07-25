@@ -217,6 +217,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                             columns={this.columns}
                             loading={loadingTable}
                             dataSource={dataTable}
+                            locale={{ emptyText: 'Không có dữ liệu' }}
                             scroll={{ x: 650 }}
                             bordered
                             pagination={{ total: totalItems, showSizeChanger: true }}
