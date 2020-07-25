@@ -730,6 +730,7 @@ class StudentsList extends PureComponent<
                       : (body.createdDate = null);
                     this.setState({ body });
                     this.forceUpdate();
+                    this.searchStudents();
                   }}
                 />
               </Col>
