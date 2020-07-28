@@ -207,7 +207,7 @@ class StudentsList extends PureComponent<
       title: "Họ và tên",
       dataIndex: "name",
       key: "name",
-      width: 160,
+      width: 180,
       render: ({ item }) => this.renderName(item),
     },
     {
@@ -250,7 +250,7 @@ class StudentsList extends PureComponent<
       width: 80,
     },
     {
-      title: "Tỉnh thành",
+      title: "Tỉnh ",
       dataIndex: "region",
       className: "action",
       key: "region",
@@ -296,8 +296,8 @@ class StudentsList extends PureComponent<
           school: item.school
             ? item.school.name + `(${item.school.shortName})`
             : "Chưa cập nhật",
-          region: item.region ? item.region.name : "Chưa cập nhật",
-          major: item.major ? item.major.name : "Chưa cập nhật",
+          region: item.region ? item.region.name : "",
+          major: item.major ? item.major.name : "",
           createdDate:
             item.createdDate === -1
               ? "Chưa cập nhật"

@@ -58,7 +58,7 @@ function viewCount(
                 target="_blank"
             >
                 <Tooltip title={`Xem chi tiết (${type})`}>
-                    <div style={{ color }}>
+                    <div style={{ color: count === 0 ? "gray" : color }}>
                         {count} <Icon type={icon} />
                     </div>
                 </Tooltip>
@@ -66,14 +66,15 @@ function viewCount(
         </div >);
 };
 
-const ViewPriority = (props?: { priority?: string, timeLeft?: string }) => {
-    let { priority } = props;
+const ViewPriority = (props?: { priority?: string, timeLeft?: string | number }) => {
+    let { priority, timeLeft } = props;
+    let ntimeLeft = timeLeft && timeLeft !== -1 ? timeLeft : "Hết hạn"
     switch (priority) {
         case TYPE.TOP:
             return (
                 <Tooltip title={"Gói tuyển dụng gấp"} placement="left">
                     <div className='top f-sm'>
-                        ({props.timeLeft})
+                        {ntimeLeft}
                     </div>
                 </Tooltip>
             );
@@ -81,7 +82,7 @@ const ViewPriority = (props?: { priority?: string, timeLeft?: string }) => {
             return (
                 <Tooltip title={"Gói tìm kiếm nổi bật"} placement="left">
                     <div className='high_light f-sm'>
-                        ({props.timeLeft})
+                        {ntimeLeft}
                     </div>
                 </Tooltip>
             );
@@ -89,7 +90,7 @@ const ViewPriority = (props?: { priority?: string, timeLeft?: string }) => {
             return (
                 <Tooltip title={"Gói tuyển dụng trong ngày"} placement="left">
                     <div className='in_day f-sm'>
-                        ({props.timeLeft})
+                        {ntimeLeft}
                     </div>
                 </Tooltip>
             );
@@ -237,6 +238,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         {
             title: 'Tên NTD',
             dataIndex: 'employerName',
+            className: 'action',
             key: 'employerName',
             width: 150,
         },
@@ -313,6 +315,10 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             width: 80,
         }
     ];
+
+    viewname = ({ name, state }) => (
+        <></>
+    )
 
     options = [
         {
@@ -422,7 +428,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     eid: item.employerID,
                     key: item.id,
                     index: (index + (pageIndex ? pageIndex : 0) * (pageSize ? pageSize : 10) + 1),
-                    title: item.jobTitle,
+                    title: item.jobTitle + " " + (!item.expired ? "(Còn hạn)" : "(Hết hạn)"),
                     jobName: item.jobName ? item.jobName.name : "",
                     jobType: item.jobType,
                     employerBranchName: item.employerBranchName ? item.employerBranchName : "",
@@ -438,7 +444,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         id: item.id
                     },
                     address: item.address ? item.address : "",
-                    hidden: `${!item.hidden ? "Hiện" : "Ẩn"}, ${!item.expired ? "Còn hạn" : "Hết hạn"}`,
+                    hidden: !item.hidden ? "Hiện" : "Ẩn",
                     priority:
                         <>
                             <ViewPriority priority={item.priority.homePriority} timeLeft={item.priority.homeTimeLeft} />
@@ -620,7 +626,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         if (type && type === TYPE.DELETE) {
             await _requestToServer(
                 DELETE,
-                JOB_ANNOUNCEMENTS ,
+                JOB_ANNOUNCEMENTS,
                 [id],
                 undefined,
                 undefined,
@@ -770,7 +776,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     visible={opjd}
                     title={"Chi tiết công việc"}
                     destroyOnClose={true}
-                    onOk={() =>this.createRequest()}
+                    onOk={() => this.createRequest()}
                     width={'90vw'}
                     onCancel={() => {
                         this.setState({ opjd: false, loading: false });
@@ -830,9 +836,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     >
                         <h6>Các gói của bạn</h6>
                         <>
-                            <label className='top'>Gói tuyển dụng gấp: {listJobService.homeTopQuantiy}</label>
-                            <label className='in_day'>Gói tuyển dụng trong ngày: {listJobService.homeInDayQuantity}</label>
-                            <label className='high_light'>Gói tìm kiếm nổi bật:  {listJobService.searchHighLightQuantity}</label>
+                            <label className='top f-b'>Gói tuyển dụng gấp: {listJobService.homeTopQuantiy}</label>
+                            <label className='in_day f-b'>Gói tuyển dụng trong ngày: {listJobService.homeInDayQuantity}</label>
+                            <label className='high_light f-b'>Gói tìm kiếm nổi bật:  {listJobService.searchHighLightQuantity}</label>
                         </>
                         <hr />
                         <h6>Hãy chọn gói phù hợp cho bạn <Icon type="check" style={{ color: "green" }} /></h6>

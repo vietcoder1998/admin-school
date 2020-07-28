@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Avatar, Menu, Tooltip, Popconfirm, Dropdown } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Avatar, Menu, Tooltip, Dropdown } from 'antd';
 import { timeConverter } from '../../../../../utils/convertTime';
 import { TYPE } from '../../../../../const/type';
 import { IptLetterP } from '../../../layout/common/Common';
@@ -133,7 +133,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                 </Tooltip>
 
             </Dropdown>
-            <Popconfirm
+            {/* <Popconfirm
                 placement="topRight"
                 title={"Xóa kết nối"}
                 onConfirm={() => this.createRequest(TYPE.DELETE)}
@@ -151,7 +151,7 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                     theme="twoTone"
                     twoToneColor="red"
                 />
-            </Popconfirm>
+            </Popconfirm> */}
         </>)
 
     EmployerName = (data: any) =>
@@ -177,10 +177,10 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
         }}>
             <Menu.Item key={TYPE.PENDING}>
                 Đang chờ
-          </Menu.Item>
+            </Menu.Item>
             <Menu.Item key={TYPE.ACCEPTED}>
                 Chấp nhận
-          </Menu.Item>
+            </Menu.Item>
             <Menu.Divider />
             <Menu.Item key={TYPE.REJECTED} style={{ color: "red" }}>
                 Từ chối
@@ -478,8 +478,8 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                                     <Option value={TYPE.FALSE}>Khác</Option>
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tình trạng kết nối"} />
+                            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4} >
+                                <IptLetterP value={"Trạng thái"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"

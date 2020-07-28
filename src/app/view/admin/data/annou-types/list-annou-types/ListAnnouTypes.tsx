@@ -88,7 +88,7 @@ class ListAnnouTypes extends PureComponent<IListAnnouTypesProps, IListAnnouTypes
             title: 'Độ ưu tiên',
             dataIndex: 'priority',
             key: 'priority',
-            width: 100,
+            width: 90,
             className: 'action',
 
         },

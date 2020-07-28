@@ -123,7 +123,14 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                     }}
                 />
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
+                    <Header
+                        style={{
+                            background: '#fff',
+                            padding: 0,
+                            boxShadow: "2px 5px 5px -3px rgba(173,173,173,1)",
+                            border: "none"
+                        }}
+                    >
                         <Icon
                             className="trigger"
                             type={show_menu ? 'menu-unfold' : 'menu-fold'}

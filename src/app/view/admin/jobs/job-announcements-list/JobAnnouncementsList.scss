@@ -4,17 +4,58 @@
   }
 
   .content-edit {
-      padding: 20px 5px;
+    padding: 20px 5px;
   }
 }
 
-.high_light{ color: white; background-color: rgb(255, 166, 0); padding: 10px 20px; margin: 5px; border-radius: 3px; height: auto;}
-.normal{color: rgb(41, 41, 41); background-color: rgb(159, 255, 245); padding: 10px 20px; margin: 5px; border-radius: 3px;}
-.in_day{color: rgb(54, 54, 54); background-color: rgb(105, 192, 255); padding: 10px 20px; margin: 5px; border-radius: 3px;}
-.top{color: rgb(236, 236, 236); background-color: red; padding: 10px 20px; margin: 5px; border-radius: 3px;}
-.unlock{color: rgb(35, 35, 35); background-color: rgb(242, 246, 156); padding: 10px 20px; margin: 5px; border-radius: 3px;}
-.italic {font-style: italic;}
+.high_light {
+  color: rgb(255, 166, 0);
+  border-color: rgb(255, 166, 0);
+  padding: 0px 5px;
+  margin: 5px;
+  border-radius: 3px;
+  height: auto;
+}
+.normal {
+  color: rgb(159, 255, 245);
+  border-color: rgb(159, 255, 245);
+  padding: 0px 5px;
+  margin: 5px;
+  border-radius: 3px;
+}
+.in_day {
+  color: rgb(105, 192, 255);
+  border-color: rgb(105, 192, 255);
+  padding: 0px 5px;
+  margin: 5px;
+  border-radius: 3px;
+}
+.top {
+  color: red;
+  border-color: red;
+  padding: 0px 5px;
+  margin: 5px;
+  border-radius: 3px;
+}
+.unlock {
+  color: rgb(35, 35, 35);
+  border-color: rgb(242, 246, 156);
+  padding: 0px 5px;
+  margin: 5px;
+  border-radius: 3px;
+}
+.italic {
+  font-style: italic;
+}
 
 .f-sm {
   font-size: 0.8rem;
+  background-color: whitesmoke;
+  border: solid 1px;
+}
+
+.f-b {
+  font-size: 0.8rem;
+  background-color: whitesmoke;
+  border: solid 1px;
 }
