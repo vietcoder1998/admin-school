@@ -1,12 +1,12 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Avatar } from 'antd';
+import { Icon, Table, Button, Avatar, Popconfirm } from 'antd';
 import { Link } from 'react-router-dom';
 import { TYPE } from '../../../../../../const/type';
 // import { REDUX_SAGA } from '../../../../../../const/actions';
 import { DELETE } from '../../../../../../const/method';
 import { _requestToServer } from '../../../../../../services/exec';
-import { ROLES } from '../../../../../../services/api/private.api';
+import { ADMIN } from '../../../../../../services/api/private.api';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IAppState } from '../../../../../../redux/store/reducer';
 import { IAdminAccount } from '../../../../../../models/admin-accounts';
@@ -93,25 +93,27 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         theme="twoTone"
                     />
                 </Link>
-                <Icon
-                    className='test'
-                    style={{ padding: 5, margin: 2 }}
-                    type="delete"
-                    theme="twoTone"
-                    twoToneColor="red"
-                    onClick={() => this.toggleModal(TYPE.DELETE)}
-                />
+                <Popconfirm
+                    title="Xóa tài khoản admin"
+                    onConfirm={this.removeAdminAccounts}
+                    okText="Xóa"
+                    cancelText="Hủy"
+                    okType="danger"
+                    placement="topRight"
+                >
+                    <Icon
+                        className='test'
+                        style={{ padding: 5, margin: 2 }}
+                        type="delete"
+                        theme="twoTone"
+                        twoToneColor="red"
+                    />
+                </Popconfirm>
+
             </>
         );
     }
 
-    toggleModal = (type?: string) => {
-        let { openModal } = this.state;
-        this.setState({ openModal: !openModal });
-        if (type) {
-            this.setState({ type })
-        }
-    };
 
     columns = [
         {
@@ -202,11 +204,10 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
     removeAdminAccounts = async () => {
         let { id } = this.state;
         await _requestToServer(
-            DELETE, ROLES,
+            DELETE, ADMIN,
             [id],
         ).then(res => {
             this.props.getListAdminAccounts();
-            this.toggleModal();
         })
     };
 
@@ -237,7 +238,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
                         columns={this.columns}
                         loading={loadingTable}
                         dataSource={dataTable}
-locale={{ emptyText: 'Không có dữ liệu' }}
+                        locale={{ emptyText: 'Không có dữ liệu' }}
                         scroll={{ x: 1150 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}

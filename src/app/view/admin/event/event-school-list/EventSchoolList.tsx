@@ -297,7 +297,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
             }
         }
 
-        return { loadingTable: false }
+        return null
     };
 
     async componentDidMount() {
@@ -340,7 +340,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
         await this.searchEventSchool();
     };
 
-    onChangeFilter = (event: any, param?: string) => {
+    onChangeFilter = async (event: any, param?: string) => {
         let { body } = this.state;
         let { listSchools } = this.props;
         let value: any = event;
@@ -358,7 +358,8 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
         };
 
         body[param] = value;
-        this.setState({ body });
+        await this.setState({ body });
+        await this.searchEventSchool();
     };
 
     uploadToServer = (event) => {
@@ -459,24 +460,10 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                             icon={"plus"}
                             children="Thêm sự kiện mới"
                         />
-
-                        <Button
-                            onClick={
-                                () =>
-                                    this.requeryData()
-                            }
-                            type="primary"
-                            style={{
-                                float: "right",
-                                margin: "0px 10px",
-                            }}
-                            icon={"filter"}
-                            children="Lọc"
-                        />
                     </h5>
                     <div className="table-operations">
                         <Row >
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            <Col xs={24} sm={12} md={8} lg={12} xl={12} xxl={12} >
                                 <IptLetterP value={"Tên trường"} />
                                 <Select
                                     showSearch
@@ -494,7 +481,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4} >
                                 <IptLetterP value={"Bắt đầu"} />
                                 <Select
                                     showSearch
@@ -507,7 +494,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     <Option value={TYPE.FALSE}>Chưa bắt đầu</Option>
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4} >
                                 <IptLetterP value={"Kết thúc"} />
                                 <Select
                                     showSearch
@@ -516,8 +503,8 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     onChange={(event: any) => this.onChangeFilter(event, TYPE.EVENT_FILTER.finished)}
                                 >
                                     <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.MALE}>Đã kết thúc </Option>
-                                    <Option value={TYPE.FEMALE}>Chưa kết thúc</Option>
+                                    <Option value={TYPE.TRUE}>Đã kết thúc </Option>
+                                    <Option value={TYPE.FALSE}>Chưa kết thúc</Option>
                                 </Select>
                             </Col>
                             <Col xs={24} sm={24} md={16} lg={12} xl={12} xxl={12} >

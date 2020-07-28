@@ -23,8 +23,8 @@ export const routePath = {
     ROLES_ADMIN: '/role-admins',
     ADMIN_ACCOUNTS: "/admin-accounts",
     ANNOU_TYPE: "/annou-types",
-    USER_CONTROLLER:'/user-controller',
-    EM_CONTROLLER:'/em-controller',
+    USER_CONTROLLER: '/user-controller',
+    EM_CONTROLLER: '/em-controller',
     EM_BRANCHES: '/em-branches',
     SCHOOLS: '/schools',
     STUDENTS: '/students',
@@ -58,8 +58,11 @@ export const routeLink = {
     ADMIN_ACCOUNTS: routePath.ADMIN + routePath.ROLES + routePath.ADMIN_ACCOUNTS,
 
     // job management
-    PENDING_JOBS: routePath.ADMIN + routePath.PENDING_JOBS,
-    ANNOUCEMENT: routePath.ADMIN + routePath.ANNOUNCEMENT ,
+    PENDING_JOBS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
+    JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.JOBS + routePath.JOB_ANNOUNCEMENTS,
+    // announcement
+    ANNOUCEMENT: routePath.ADMIN + routePath.ANNOUNCEMENT,
+    //event
     EVENT: routePath.ADMIN + routePath.EVENT,
 
     // user management
@@ -72,7 +75,6 @@ export const routeLink = {
     PARTNER: routePath.ADMIN + routePath.USER + routePath.PARTNER,
 
     // Job Annoucement
-    JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.PENDING_JOBS + routePath.JOB_ANNOUNCEMENTS,
 
     // Connect
     EM_SCHOOL: routePath.ADMIN + routePath.CONNECT + routePath.EM_SCHOOL,
@@ -96,10 +98,10 @@ export const breakCumb = [
     // pendingjob
     { label: "pending-jobs", name: "Xét duyệt ", icon: null, url: routeLink.PENDING_JOBS + routePath.LIST, disable: true },
     // Data
-    { label: "languages", name: "Ngôn ngữ", icon: null, url:routeLink.LANGUAGES + routePath.LIST, disable: true },
-    { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST, disable: true  },
-    { label: "type-schools", name: "Loại trường", icon: null, url: routeLink.TYPE_SCHOOLS + routePath.LIST, disable: true  },
-    { label: "regions", name: "Tỉnh thành", icon: null, url: routeLink.REGIONS + routePath.LIST, disable: true  },
+    { label: "languages", name: "Ngôn ngữ", icon: null, url: routeLink.LANGUAGES + routePath.LIST, disable: true },
+    { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST, disable: true },
+    { label: "type-schools", name: "Loại trường", icon: null, url: routeLink.TYPE_SCHOOLS + routePath.LIST, disable: true },
+    { label: "regions", name: "Tỉnh thành", icon: null, url: routeLink.REGIONS + routePath.LIST, disable: true },
     { label: "job-names", name: "Loại công việc", icon: null, url: routeLink.JOB_NAMES + routePath.LIST, disable: true },
     { label: "skills", name: "Kỹ năng", icon: null, url: routeLink.SKILLS + routePath.LIST, disable: true },
     { label: "job-groups", name: "Nhóm công việc", icon: null, url: routeLink.JOB_GROUPS + routePath.LIST, disable: true },
@@ -108,12 +110,12 @@ export const breakCumb = [
     { label: "event", name: "Sự kiện", icon: null, url: routeLink.EVENT + routePath.LIST, disable: true },
     { label: "working-tools", name: "Công cụ", icon: null, url: routeLink.WORKING_TOOL + routePath.LIST, disable: true },
     // User
-    { label: "user-controller", name: "Quản lý người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST, disable: true },
-    { label: "em-controller", name: "Quản lý NTD", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST, disable: true },
-    { label: "em-branches", name: "Danh sách chi nhánh", icon: null, url: routeLink.EM_BRANCHES + routePath.LIST, disable: true },
-    { label: "schools", name: "Danh sách trường", icon: null, url: routeLink.SCHOOLS + routePath.LIST, disable: true },
-    { label: "students", name: "Danh sách sinh viên", icon: null, url: routeLink.STUDENTS + routePath.LIST, disable: true },
-    { label: "job-announcements", name: "Quản lí bài đăng", icon: null, url: routeLink.JOB_ANNOUNCEMENTS + routePath.LIST, disable: true },
+    { label: "user-controller", name: "Người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST, disable: true },
+    { label: "em-controller", name: "Nhà tuyển dụng", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST, disable: true },
+    { label: "em-branches", name: "Chi nhánh", icon: null, url: routeLink.EM_BRANCHES + routePath.LIST, disable: true },
+    { label: "schools", name: "Nhà trường trường", icon: null, url: routeLink.SCHOOLS + routePath.LIST, disable: true },
+    { label: "students", name: "Sinh viên", icon: null, url: routeLink.STUDENTS + routePath.LIST, disable: true },
+    { label: "job-announcements", name: "Bài đăng", icon: null, url: routeLink.JOB_ANNOUNCEMENTS + routePath.LIST, disable: true },
     { label: "candidates", name: "Hồ sơ ứng viên", icon: null, url: routeLink.CANDIDATES + routePath.LIST, disable: true },
     { label: "partner", name: "Cộng tác viên", icon: null, url: routeLink.PARTNER + routePath.LIST, disable: true },
     // Role
@@ -130,3 +132,260 @@ export interface IBrk {
     url?: string;
     disable?: boolean;
 };
+
+export const arrRoute = breakCumb.forEach((item: any, index) => ({ index, label: item.label, name: item.name }));
+export const label = [
+
+];
+
+export const routeOption = [
+    {
+        value: routePath.JOBS,
+        label: 'Bài đăng',
+        children: [
+            {
+                value: routePath.JOB_ANNOUNCEMENTS,
+                label: "Bài đăng",
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.PENDING_JOBS,
+                label: 'Xét duyệt',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: routePath.DATA,
+        label: 'Dữ liệu',
+        children: [
+            {
+                value: routePath.LANGUAGES,
+                label: 'Ngôn ngữ',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.MAJORS,
+                label: 'Chuyên ngành',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.REGIONS,
+                label: 'Tỉnh thành',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.JOB_NAMES,
+                label: 'Loại công việc',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.SCHOOLS,
+                label: 'Loại trường',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.SKILLS,
+                label: 'Loại kỹ năng',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.JOB_GROUPS,
+                label: 'Nhóm công việc',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.BRANCHES,
+                label: 'Nhóm ngành',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.ANNOU_TYPE,
+                label: 'Nhóm bài viết',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.WORKING_TOOL,
+                label: 'Công cụ',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: routePath.EVENT,
+        label: 'Sự kiện',
+        children: [
+            {
+                value: routePath.LIST,
+                label: 'Danh sách',
+            },
+        ],
+    },
+    {
+        value: routePath.ANNOUNCEMENT,
+        label: 'Bài viết',
+        children: [
+            {
+                value: routePath.LIST,
+                label: 'Danh sách',
+            },
+        ],
+    },
+    {
+        value: routePath.ROLES,
+        label: 'Quản trị',
+        children: [
+            {
+                value: routePath.ADMIN_ACCOUNTS,
+                label: 'Admin',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.ROLES_ADMIN,
+                label: 'Phân quyền',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: routePath.USER,
+        label: 'Tài khoản',
+        children: [
+            {
+                value: routePath.USER_CONTROLLER,
+                label: 'Người dùng',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.EMPLOYER,
+                label: 'Nhà tuyển dụng',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.SCHOOLS,
+                label: 'Nhà trường',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+            {
+                value: routePath.STUDENTS,
+                label: 'Sinh viên',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: routePath.CONNECT,
+        label: 'Kết nối',
+        children: [
+            {
+                value: routePath.EM_SCHOOL,
+                label: 'Nhà trường - doanh nghiệp',
+                children: [
+                    {
+                        value: routePath.LIST,
+                        label: 'Danh sách',
+                    },
+                ],
+            },
+        ],
+    },
+];
+
+export const mapApiFolder = (arr?: Array<String>) => {
+    if (arr && arr.length > 0) {
+        let route = routePath.ADMIN;
+        arr.forEach((item, index) => { route += item });
+        window.location.href = route;
+        return route;
+    }
+}

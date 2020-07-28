@@ -3,7 +3,7 @@ import { GET, POST, PUT, DELETE } from '../const/method';
 import { _delete, _get, _post, _put } from './base-api';
 import Swal from 'sweetalert2';
 import { authHeaders } from "./auth";
-import clearStorage from '../services/clearStorage';
+import clearStorage from './clear-storage';
 export const _requestToServer = async (
     method: string,
     api: string,

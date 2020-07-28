@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { Icon, Table, Button, Row, Col, Input } from "antd";
+import { Icon, Table, Button, Row, Col } from "antd";
 import { REDUX_SAGA } from "../../../../../../const/actions";
 import { ISkills } from "../../../../../../models/skills";
 import { Link } from "react-router-dom";
@@ -11,6 +11,8 @@ import { PUT, DELETE } from "../../../../../../const/method";
 import { SKILLS } from "../../../../../../services/api/private.api";
 import { TYPE } from "../../../../../../const/type";
 import { routeLink, routePath } from "../../../../../../const/break-cumb";
+import Search from "antd/lib/input/Search";
+import { IptLetterP } from "../../../../layout/common/Common";
 
 interface ListSkillsProps extends StateProps, DispatchProps {
   match: Readonly<any>;
@@ -198,8 +200,8 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
               widthInput="250px"
             />
           ) : (
-            <div>Bạn chắc chắn sẽ xóa kỹ năng: {name}</div>
-          )}
+              <div>Bạn chắc chắn sẽ xóa kỹ năng: {name}</div>
+            )}
         </ModalConfig>
         <Row>
           <Col sm={12} md={8} lg={5} xl={6} xxl={8} />
@@ -207,7 +209,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             <h5>
               Danh sách kỹ năng
               <Button
-                onClick={() => {}}
+                onClick={() => { }}
                 type="primary"
                 style={{
                   float: "right",
@@ -221,7 +223,8 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
             </h5>
             <Row>
               <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
-                <Input
+                <IptLetterP value={"Tên kỹ năng"} />
+                <Search
                   placeholder="Tất cả"
                   style={{ width: "100%" }}
                   value={search}
@@ -230,19 +233,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
                   }
                   onPressEnter={(event: any) =>
                     this.props.getListSkills(pageIndex, pageSize, search)
-                  }
-                  suffix={
-                    search && search.length > 0 ? (
-                      <Icon
-                        type={"close-circle"}
-                        theme={"filled"}
-                        onClick={() => this.setState({ search: null })}
-                      />
-                    ) : (
-                      <Icon type={"search"} />
-                    )
-                  }
-                />
+                  } />
               </Col>
             </Row>
             <Table
@@ -250,7 +241,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
               columns={this.columns}
               loading={loadingTable}
               dataSource={dataTable}
-locale={{ emptyText: 'Không có dữ liệu' }}
+              locale={{ emptyText: 'Không có dữ liệu' }}
               scroll={{ x: 400 }}
               bordered
               pagination={{ total: totalItems, showSizeChanger: true }}

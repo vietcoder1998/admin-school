@@ -1,4 +1,4 @@
-import { IJobAnnouncements } from './../../models/job-announcements';
+import { IJobAnnouncements, IJobAnnouncementsFilter } from './../../models/job-announcements';
 import { POST } from '../../const/method';
 import { JOB_ANNOUNCEMENTS } from '../../services/api/private.api';
 import { takeEvery, put, call, } from 'redux-saga/effects';
@@ -26,7 +26,25 @@ function* getListJobAnnouncementsData(action: any) {
 
 function callJobAnnouncements(action: any) {
     try {
-        let body = {};
+        let body: IJobAnnouncementsFilter = {
+            employerID: null,
+            excludedJobIDs: null,
+            expired: null,
+            jobGroupIDs: null,
+            jobLocationFilter: null,
+            jobNameIDs: null,
+            jobShiftFilter: null,
+            jobType: null,
+            searchExpired: null,
+            searchPriority: null,
+            email: null,
+            hasAcceptedApplied: null,
+            hasPendingApplied: null,
+            hasRejectedApplied: null,
+            hidden: null,
+            homeExpired: null,
+            homePriority: null
+        };
 
         if (action.body) {
             body = action.body
@@ -34,7 +52,7 @@ function callJobAnnouncements(action: any) {
 
         let res = _requestToServer(
             POST,
-            JOB_ANNOUNCEMENTS ,
+            JOB_ANNOUNCEMENTS,
             body,
             {
                 pageIndex: action.pageIndex ? action.pageIndex : 0,

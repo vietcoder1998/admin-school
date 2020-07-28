@@ -1,5 +1,4 @@
-import React, {  } from 'react'
-import './PendingJobs.scss';
+import React, { } from 'react'
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import PendingJobsList from './pending-jobs-list/PendingJobsList';
 import PendingJobsCreate from './pending-jobs-create/PendingJobsCreate';
@@ -9,21 +8,21 @@ import JobAnnouncementsApply from './job-announcements-apply/JobAnnouncementsApp
 const Switch = require("react-router-dom").Switch;
 
 
-interface IPendingJobsProps {
+interface IProps {
     match: Readonly<any>;
     getListJobNames: Function;
     getListTypeManagement: Function;
 }
 
-function PendingJobs(props?: IPendingJobsProps) {
+function Jobs(props?: IProps) {
     let { path } = props.match;
     return (
         < >
             <Switch>
-                <ErrorBoundaryRoute exact path={`${path}/list`} component={PendingJobsList} />
-                <ErrorBoundaryRoute exact path={`${path}/create`} component={PendingJobsCreate} />
-                <ErrorBoundaryRoute exact path={`${path}/fix/:id`} component={PendingJobsCreate} />
-                <ErrorBoundaryRoute exact path={`${path}/copy/:id`} component={PendingJobsCreate} />
+                <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/list`} component={PendingJobsList} />
+                <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/create`} component={PendingJobsCreate} />
+                <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/fix/:id`} component={PendingJobsCreate} />
+                <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/copy/:id`} component={PendingJobsCreate} />
                 <ErrorBoundaryRoute exact path={`${path + routePath.JOB_ANNOUNCEMENTS + routePath.APPLY}/:id`} component={JobAnnouncementsApply} />
                 <ErrorBoundaryRoute exact path={`${path + routePath.JOB_ANNOUNCEMENTS + routePath.LIST}`} component={JobAnnouncementsList} />
             </Switch>
@@ -31,4 +30,4 @@ function PendingJobs(props?: IPendingJobsProps) {
     )
 }
 
-export default PendingJobs;
+export default Jobs;

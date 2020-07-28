@@ -1,9 +1,10 @@
 @import '../scss/common';
 .login {
-    padding: calc(50vh - 240px) 10px;
+    padding: calc(50vh - 240px) 5vw;
     height: 100vh;
     background-image: url('../../../assets/image/login-image.jpg');
     font-family: $font_base;
+    border-radius: 3px;
     
     .r-p-content {
         background-color: rgba(255, 255, 255, 0.673);

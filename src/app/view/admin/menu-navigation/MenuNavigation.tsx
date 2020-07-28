@@ -68,13 +68,13 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="14">
-                        <Link to='/admin/pending-jobs/list'>
+                        <Link to={routeLink.PENDING_JOBS + routePath.LIST}>
                             <Icon type="audit" />
                             <span>Xét duyệt</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="15">
-                        <Link to='/admin/pending-jobs/create'>
+                        <Link to={routeLink.PENDING_JOBS + routePath.CREATE}>
                             <Icon type="plus-square" />
                             <span>Đăng hộ</span>
                         </Link>

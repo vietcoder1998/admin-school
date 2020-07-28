@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import FallBack from './FallBack';
 
 const Route = require("react-router-dom").Route;
-const Admin = lazy(() => import('./../app/view/admin/Admin'));
+const Admin = lazy(() => import('./../app/view/admin/index'));
 const Login = lazy(() => import('./../app/view/login/Login'));
 const NotFound = lazy(() => import('./../app/view/not-found/NotFound'));
 

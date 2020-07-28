@@ -1,20 +1,18 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip } from 'antd';
-import './Admin.scss';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop } from 'antd';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
 import { REDUX_SAGA, REDUX } from '../../../const/actions';
 import { connect } from 'react-redux';
 
-import Data from './data/Data';
-import clearStorage from '../../../services/clearStorage';
+import Data from './data';
+import clearStorage from '../../../services/clear-storage';
 import RoleAdmins from './roles-admin';
-import PendingJobs from './pending-jobs';
 import User from './user';
 
 import { DropdownConfig, OptionConfig } from '../layout/config/DropdownConfig';
-import { breakCumb, IBrk, routePath, routeLink } from '../../../const/break-cumb';
+import { breakCumb, IBrk, routePath, routeLink, routeOption, mapApiFolder } from '../../../const/break-cumb';
 import { IAppState } from '../../../redux/store/reducer';
 import ClearCache from 'react-clear-cache';
 
@@ -25,17 +23,19 @@ import Connect from './connect';
 
 //@ts-ignore
 import WorksvnBanner from "../../../assets/image/worksvn-banner.jpg";
+import Jobs from './jobs';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
 //@ts-ignore
-const DefaultBanner = () => <div  style={{ width: '100%', textAlign: 'center', padding: 'calc(50vh - 206px) 20px' }}><img alt="worksvn banner" src={WorksvnBanner} /></div>
+const DefaultBanner = () => <div style={{ width: '100%', textAlign: 'center', padding: 'calc(50vh - 206px) 20px' }}><img alt="worksvn banner" src={WorksvnBanner} /></div>
 
 interface AdminState {
     show_menu: boolean;
     location?: string;
     data_breakcumb: Array<string>
     loading?: boolean;
+    showCas?: boolean;
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -62,10 +62,12 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             location: "/",
             data_breakcumb: [],
             loading: false,
+            showCas: false
         }
     }
 
     async componentDidMount() {
+        await this.props.getProfileAdmin(localStorage.getItem('userID'));
         await this.props.getListJobNames();
         await this.props.getListTypeManagement({ target: null });
         await this.props.getListJobGroups();
@@ -75,11 +77,10 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         await this.props.getListRegions();
         await this.props.getListRoles();
         await this.props.getListSkills();
-        await this.props.getProfileAdmin(localStorage.getItem('userID'));
     }
 
     static getDerivedStateFromProps(nextProps?: any, prevState?: any) {
-        if (nextProps.location.pathname !== prevState.pathname) {
+        if (nextProps.location.pathname !== prevState.pathname && prevState !== "/login") {
             localStorage.setItem("last_url", nextProps.location.pathname);
             let list_breakcumb = nextProps.location.pathname.split("/");
             let data_breakcumb: any = [];
@@ -103,10 +104,15 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     }
 
     render() {
-        let { show_menu, data_breakcumb, loading } = this.state;
+        let { show_menu, data_breakcumb, loading, showCas } = this.state;
         let { match } = this.props;
+        let name = localStorage.getItem("name");
+        if (name && name.length > 5) {
+            name = name.slice(0, 5) + "...";
+        }
         return (
             <Layout>
+                <BackTop />
                 <MenuNavigation
                     show_menu={show_menu}
                     onCallLoading={() => {
@@ -128,6 +134,36 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 color: 'white'
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
+                        />
+                        <Tooltip title="Tìm chỉ mục">
+                            <Icon
+                                className="trigger"
+                                type="search"
+                                style={{
+                                    margin: "15px 20px",
+                                    fontSize: 20,
+                                    zIndex: 999,
+                                    color: 'white',
+                                }}
+                                onClick={() => this.setState({ showCas: !showCas })}
+                            />
+                        </Tooltip>
+                        <Cascader
+                            placeholder="Tìm kiếm thư mục"
+                            style={{
+                                margin: "9px 5% 9px 0",
+                                zIndex: showCas ? 999 : -1,
+                                borderColor: "white",
+                                width: "40%",
+                                top: showCas ? -60 : 0
+                            }}
+                            showSearch={true}
+                            options={routeOption}
+                            onChange={
+                                (event: any) => {
+                                    mapApiFolder(event);
+                                }
+                            }
                         />
                         <Tooltip title={"Cập nhật phiên bản"}>
                             <ClearCache auto={true} duration={6000}>
@@ -157,16 +193,21 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         <div className="avatar-header" >
                             <DropdownConfig
                                 param={
-                                    <Avatar
-                                        icon="user"
-                                        style={{
-                                            width: "30px",
-                                            height: "30px",
-                                            border: "solid #168ECD 2px",
-                                            margin: "-28px 5px 0"
-                                        }}
-                                        src={localStorage.getItem('avatarUrl')}
-                                    />
+                                    <>
+                                        <Avatar
+                                            icon="user"
+                                            style={{
+                                                width: "30px",
+                                                height: "30px",
+                                                border: "solid #168ECD 2px",
+                                                margin: "-28px 5px 0"
+                                            }}
+                                            src={localStorage.getItem('avatarUrl')}
+                                        />
+                                        <span className="avt-name">
+                                            {localStorage.getItem("name")}
+                                        </span>
+                                    </>
                                 }
                             >
                                 <OptionConfig
@@ -225,8 +266,8 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             {/* <Col sm={1} md={1} lg={2}></Col> */}
                             <Col sm={24} md={24} lg={24}>
                                 {!loading ? <Switch>
-                                    <ErrorBoundaryRoute exact path={match.url||'admin'} component={DefaultBanner} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.PENDING_JOBS}`} component={PendingJobs} />
+                                    <ErrorBoundaryRoute exact path={match.url || 'admin'} component={DefaultBanner} />
+                                    <ErrorBoundaryRoute path={`${match.url + routePath.JOBS}`} component={Jobs} />
                                     <ErrorBoundaryRoute path={`${match.url + routePath.ANNOUNCEMENT}`} component={Announcement} />
                                     <ErrorBoundaryRoute path={`${match.url + routePath.DATA}`} component={Data} />
                                     <ErrorBoundaryRoute path={`${match.url + routePath.ROLES}`} component={RoleAdmins} />

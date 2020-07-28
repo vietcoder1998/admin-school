@@ -34,6 +34,9 @@ import StuInsertExels from "./StuInsertExels";
 import moment from "moment";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 import Search from "antd/lib/input/Search";
+import { ISchool } from "../../../../../../models/schools";
+
+let { Option } = Select;
 
 interface IStudentsListProps extends StateProps, DispatchProps {
   match?: any;
@@ -217,7 +220,7 @@ class StudentsList extends PureComponent<
       title: "Email",
       dataIndex: "email",
       key: "email",
-      width: 120,
+      width: 100,
     },
 
     {
@@ -228,6 +231,12 @@ class StudentsList extends PureComponent<
       width: 100,
     },
     {
+      title: "Trường học",
+      dataIndex: "school",
+      key: "school",
+      width: 200,
+    },
+    {
       title: "Ngành học",
       dataIndex: "major",
       className: "action",
@@ -235,10 +244,10 @@ class StudentsList extends PureComponent<
       width: 100,
     },
     {
-      title: "Trường học",
-      dataIndex: "school",
-      key: "school",
-      width: 200,
+      title: "Mã SV",
+      dataIndex: "studentCode",
+      key: "studentCode",
+      width: 80,
     },
     {
       title: "Tỉnh thành",
@@ -292,7 +301,8 @@ class StudentsList extends PureComponent<
           createdDate:
             item.createdDate === -1
               ? "Chưa cập nhật"
-              : timeConverter(item.createdDate, 1000, "DD/MM/YYYY"),
+              : timeConverter(item.createdDate, 1000, "hh:mm:ss DD/MM/YYYY"),
+          studentCode: item.studentCode
         });
       });
       return {
@@ -309,6 +319,7 @@ class StudentsList extends PureComponent<
     await this.searchStudents();
     await this.props.getListSchools(0, 10, { name: "" });
   }
+
   renderName = (item) => {
     return (
       <div>
@@ -438,12 +449,26 @@ class StudentsList extends PureComponent<
 
   onChangeFilter = (value?: any, type?: string) => {
     let { body } = this.state;
-    let { listRegions } = this.props;
-    listRegions.forEach((item: IRegion) => {
-      if (item.name === value) {
-        value = item.id;
-      }
-    });
+    let { listRegions, listSchools } = this.props;
+
+    switch (type) {
+      case TYPE.STUDENT_FILTER.regionID:
+        listRegions.forEach((item: IRegion) => {
+          if (item.name === value) {
+            value = item.id;
+          }
+        });
+        break;
+      case TYPE.STUDENT_FILTER.schoolID:
+        listSchools.forEach((item: IRegion) => {
+          if (item.name === value) {
+            value = item.id;
+          }
+        });
+        break;
+      default:
+        break;
+    }
 
     switch (value) {
       case TYPE.TRUE:
@@ -474,7 +499,6 @@ class StudentsList extends PureComponent<
 
   advancedFilter = () => {
     let { body } = this.state;
-
     let { listSkills, listLanguages } = this.props;
 
     let list_skill_options = listSkills.map((item: ISkill, index: number) => (
@@ -683,6 +707,38 @@ class StudentsList extends PureComponent<
           </h5>
           <div className="table-operations">
             <Row style={{ marginBottom: 10 }}>
+              <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={6} >
+                <IptLetterP value={"Tên trường"} />
+                <Select
+                  showSearch
+                  defaultValue="Tất cả"
+                  style={{ width: "100%" }}
+                  onChange={(event: any) => this.onChangeFilter(event, TYPE.STUDENT_FILTER.schoolID)}
+                  onSearch={(event) => this.props.getListSchools({ name: event }, 0, 10)}
+                >
+                  <Option key={1} value={null}>Tất cả</Option>
+                  {
+                    listSchools && listSchools.map((item?: ISchool, i?: any) =>
+                      (<Option key={item.id} value={item.name}>{item.name + '(' + item.email + ')'} </Option>)
+                    )
+                  }
+                </Select>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                <IptLetterP value={"Mã sinh viên"} />
+                <Search
+                  placeholder="Tất cả"
+                  style={{ width: "100%" }}
+                  onChange={(event: any) =>
+                    this.onChangeFilter(
+                      event.target.value,
+                      TYPE.STUDENT_FILTER.studentCode
+                    )
+                  }
+                  onPressEnter={(event: any) => this.searchFilter()}
+                />
+
+              </Col>
               <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
                 <IptLetterP value={"Email"} />
                 <Search
@@ -786,7 +842,7 @@ class StudentsList extends PureComponent<
               loading={loadingTable}
               dataSource={dataTable}
               locale={{ emptyText: 'Không có dữ liệu' }}
-              scroll={{ x: 1070 }}
+              scroll={{ x: 1130 }}
               bordered
               pagination={{ total: totalItems, pageSize: 10 }}
               size="middle"

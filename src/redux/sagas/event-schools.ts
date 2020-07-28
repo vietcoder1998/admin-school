@@ -26,26 +26,24 @@ function* getListEventSchoolsData(action: any) {
 }
 
 function callEventSchools(action: any) {
-    if (action.body) {
-        try {
-            let res = _requestToServer(
-                POST,
-                EVENT_SCHOOLS + '/query',
-                action.body ? action.body : null,
-                {
-                    pageIndex: action.pageIndex ? action.pageIndex : 0,
-                    pageSize: action.pageSize ? action.pageSize : 10,
-                },
-                undefined,
-                undefined,
-                false,
-                false
-            )
-            return res
+    try {
+        let res = _requestToServer(
+            POST,
+            EVENT_SCHOOLS + '/query',
+            action.body ? action.body : null,
+            {
+                pageIndex: action.pageIndex ? action.pageIndex : 0,
+                pageSize: action.pageSize ? action.pageSize : 10,
+            },
+            undefined,
+            undefined,
+            false,
+            false
+        )
+        return res
 
-        } catch (error) {
-            throw error;
-        }
+    } catch (error) {
+        throw error;
     }
 }
 

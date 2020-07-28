@@ -12,16 +12,18 @@ function* getAdminAccountDetailData(action: any) {
         data = res.data
     }
 
-    if (action.id === localStorage.getItem("userID")) {
-        console.log("true")
-        localStorage.setItem("avatarUrl", data.avatarUrl)
+    if (
+        action.id === localStorage.getItem("userID") || action.role === 1
+    ) {
+        localStorage.setItem("avatarUrl", data.avatarUrl);
+        localStorage.setItem("name", data.firstName);
     }
-    
+
     yield put({
         type: REDUX.ADMIN_ACCOUNTS.GET_ADMIN_ACCOUNT_DETAIL,
         data
     });
-};
+}
 
 function callAdminAccountDetail(action: any) {
     try {
@@ -36,7 +38,7 @@ function callAdminAccountDetail(action: any) {
     } catch (e) {
         throw e;
     }
-};
+}
 
 export function* AdminAccountDetailWatcher() {
     yield takeEvery(

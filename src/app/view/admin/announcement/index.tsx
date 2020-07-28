@@ -1,5 +1,4 @@
 import React, { PureComponent,  } from 'react'
-import './Announcement.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';
 import AnnouncementList from './announcement-list/AnnouncementList';

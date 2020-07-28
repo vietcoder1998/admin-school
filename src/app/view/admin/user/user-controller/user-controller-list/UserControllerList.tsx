@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import {
-  Button,
   Table,
   Icon,
   Popconfirm,
@@ -26,6 +25,7 @@ import {
 } from "./../../../../../../models/user-controller";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 import Search from "antd/lib/input/Search";
+
 
 interface IUserControllerListProps extends StateProps, DispatchProps {
   match?: any;
@@ -359,21 +359,9 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
         <div className="common-content">
           <h5>
             Danh sách người dùng ({totalItems})
-            <Button
-              icon="filter"
-              onClick={() => {
-                this.searchFilter();
-              }}
-              type="primary"
-              style={{
-                float: "right",
-              }}
-            >
-              Lọc
-            </Button>
           </h5>
           <Row>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+            <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
               <IptLetterP value={"Tên tài khoản"}>
                 <Search
                   placeholder="ex: works"
@@ -423,7 +411,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                 </Select.Option>
               </Select>
             </Col>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4}>
               <IptLetterP value={"Trạng thái cấm"} />
               <Select
                 showSearch
@@ -490,6 +478,16 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
       pageIndex,
       pageSize,
       body,
+    }),
+  getListSChool: (
+    body?: string,
+    pageIndex?: number,
+    pageSize?: number) =>
+    dispatch({
+      type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS,
+      body,
+      pageIndex,
+      pageSize
     }),
 });
 

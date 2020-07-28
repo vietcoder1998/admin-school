@@ -11,6 +11,7 @@ import { TYPE } from '../../../../../const/type';
 import { ModalConfig } from '../../../layout/modal-config/ModalConfig';
 import { REDUX_SAGA } from '../../../../../const/actions';
 import { IAppState } from '../../../../../redux/store/reducer';
+import { IptLetterP } from '../../../layout/common/Common';
 
 interface IProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -238,7 +239,8 @@ class ListWorkingTools extends PureComponent<IProps, IState> {
                             </Button>
                         </h5>
                         <Row>
-                            <Col sm={12} md={8} lg={8} xl={8} xxl={8}>
+                            <IptLetterP value={"Tên công cụ"} />
+                            <Col sm={12} md={16} lg={16} xl={16} xxl={8}>
                                 <Input
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}

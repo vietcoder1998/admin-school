@@ -1,3 +1,4 @@
+import { routeLink, routePath } from './../const/break-cumb';
 import { TYPE } from "./../const/type";
 // import { toUnixTime } from "./../utils/toUnixTime";
 import { _requestToServer } from "./exec";
@@ -18,7 +19,7 @@ export function loginUser(data?: any, type?: string) {
     ),
     process.env.REACT_APP_API_HOST,
     false,
-    false
+    true
   )
     .then((res) => {
       if (res && res.code === 200) {
@@ -30,23 +31,24 @@ export function loginUser(data?: any, type?: string) {
         // cookie.set("t_e_actk", timeEnd + res.data.accessTokenExpSecs, {
         //   path: "/",
         // });
-       
+
         localStorage.setItem("userID", res.data.userID);
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
+
+
         let last_url = localStorage.getItem("last_url");
         if (last_url) {
           window.location.href = last_url;
         } else {
-          window.location.href = "/admin/pending-jobs/list";
+          window.location.href = routeLink.PENDING_JOBS + routePath.LIST;
         }
       }
     })
-    .catch((e) => {
-     
-    });
+
 }
 
 // export function loginByRefreshToken() {
 //     _requestToServer(POST, type === )
 // }
+

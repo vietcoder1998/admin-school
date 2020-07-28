@@ -108,7 +108,9 @@ export const TYPE = {
         hasRejectedApplied: "hasRejectedApplied",
         jobShiftFilter: "jobShiftFilter",
         jobLocationFilter: "jobLocationFilter",
-        highlight: "highlight"
+        highlight: "highlight",
+        contactEmail: "contactEmail",
+        contactPhone: "contactPhone",
     },
 
     EVENT_EM_FILER: {
@@ -131,7 +133,9 @@ export const TYPE = {
         languageIDs: "languageIDs",
         unlocked: "unlocked",
         ids: "ids",
-        username: "username"
+        username: "username",
+        schoolID: "schoolID",
+        studentCode: "studentCode"
     },
 
     CANDIDATES_FILTER: {

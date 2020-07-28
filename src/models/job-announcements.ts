@@ -60,7 +60,7 @@ export interface IJobAnnouncementsFilter {
     expired?: boolean;
     hidden?: boolean;
     employerID?: string;
-    jobType: null | undefined | string;
+    jobType?: null | undefined | string;
     homePriority?: string;
     homeExpired?: boolean;
     searchPriority?: string;
@@ -71,12 +71,14 @@ export interface IJobAnnouncementsFilter {
     hasPendingApplied?: boolean;
     hasAcceptedApplied?: boolean;
     hasRejectedApplied?: boolean;
+    contactEmail?: string;
+    contactPhone?: string;
     jobShiftFilter?: {
         gender?: string;
         weekDays?: any;
         dayTime?: string;
     };
-    jobLocationFilter: {
+    jobLocationFilter?: {
         regionID: string | null,
         lat: 0,
         lon: 0,

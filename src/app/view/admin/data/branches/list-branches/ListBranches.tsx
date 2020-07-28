@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Input } from 'antd';
+import { Icon, Table, Button, Row, Col } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { ILanguage } from '../../../../../../models/languages';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,8 @@ import { PUT, DELETE } from '../../../../../../const/method';
 import { BRANCHES } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
+import { IptLetterP } from '../../../../layout/common/Common';
+import Search from 'antd/lib/input/Search';
 
 interface ListBranchesProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -211,23 +213,13 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                     </h5>
                     <Row>
                         <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Input
+                            <IptLetterP value={"Tên nhóm ngành"} />
+                            <Search
                                 placeholder="Tất cả"
                                 style={{ width: "100%" }}
                                 value={search}
                                 onChange={(event: any) => this.setState({ search: event.target.value })}
                                 onPressEnter={(event: any) => this.props.getListBranches(pageIndex, pageSize, search)}
-                                suffix={
-                                    search &&
-                                        search.length > 0 ?
-                                        <Icon
-                                            type={"close-circle"}
-                                            theme={"filled"}
-                                            onClick={
-                                                () => this.setState({ search: null })
-                                            }
-                                        /> : <Icon type={"search"} />
-                                }
                             />
                         </Col>
                     </Row>
@@ -236,7 +228,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                         columns={this.columns}
                         loading={loadingTable}
                         dataSource={dataTable}
-locale={{ emptyText: 'Không có dữ liệu' }}
+                        locale={{ emptyText: 'Không có dữ liệu' }}
                         scroll={{ x: 400 }}
                         bordered
                         pagination={{ total: totalItems, showSizeChanger: true }}

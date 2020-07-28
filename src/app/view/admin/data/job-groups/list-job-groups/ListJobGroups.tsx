@@ -1,6 +1,6 @@
 import React, { PureComponent, } from 'react'
 import { connect } from 'react-redux';
-import { Icon, Table, Button, Row, Col, Input } from 'antd';
+import { Icon, Table, Button, Row, Col } from 'antd';
 import { REDUX_SAGA } from '../../../../../../const/actions';
 import { IJobGroup } from '../../../../../../models/job-groups';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,8 @@ import { PUT, DELETE } from '../../../../../../const/method';
 import { JOB_GROUPS } from '../../../../../../services/api/private.api';
 import { TYPE } from '../../../../../../const/type';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
+import Search from 'antd/lib/input/Search';
+import { IptLetterP } from '../../../../layout/common/Common';
 
 interface ListJobGroupsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -211,23 +213,13 @@ class ListJobGroups extends PureComponent<ListJobGroupsProps, ListJobGroupsState
                         </h5>
                         <Row>
                             <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Input
+                                <IptLetterP value="Tên nhóm công việc" />
+                                <Search
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
                                     value={search}
                                     onChange={(event: any) => this.setState({ search: event.target.value })}
                                     onPressEnter={(event: any) => this.props.getListJobGroups(pageIndex, pageSize, search)}
-                                    suffix={
-                                        search &&
-                                            search.length > 0 ?
-                                            <Icon
-                                                type={"close-circle"}
-                                                theme={"filled"}
-                                                onClick={
-                                                    () => this.setState({ search: null })
-                                                }
-                                            /> : <Icon type={"search"} />
-                                    }
                                 />
                             </Col>
                         </Row>

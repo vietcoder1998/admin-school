@@ -468,6 +468,20 @@ ul {
   }
 }
 
+.avt-name {
+  position: relative;
+  top: -10px;
+  color: white;
+  font-weight: 550;
+}
+
+.avatar-header {
+    position: fixed;
+    right: 20px;
+    top: -10px;
+    height: 60px;
+}
+
 // Tiltle
 .title {
   margin: 10px 0px;

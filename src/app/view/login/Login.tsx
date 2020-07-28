@@ -33,13 +33,12 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
     this.state = {
       email: "",
       exactly: false,
-      is_loading: true,
+      is_loading: false,
       err_msg: "",
       password: null,
       username: null,
       show_password: false,
       state: "LOGIN",
-
       loginSuccess: false,
     };
   }
@@ -54,13 +53,15 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
   //     await loginUser({ refreshToken }, TYPE.REFESH_LOGIN);
   //     // this.setState({ loginSuccess: true });
   //   } else {
-     
+
   //   }
   // };
 
   createRequest = async () => {
     let { password, username } = this.state;
-    loginUser({ username, password }, TYPE.NORMAL_LOGIN);
+    await this.setState({ is_loading: true })
+    await loginUser({ username, password }, TYPE.NORMAL_LOGIN);
+    await this.setState({is_loading: false})
   };
 
   handleSubmit = (e) => {
@@ -73,7 +74,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
   };
 
   render() {
-    let { err_msg, password, username, show_password } = this.state;
+    let { err_msg, password, username, show_password, is_loading } = this.state;
     const { getFieldDecorator } = this.props.form;
     let icon = {
       color: "red",
@@ -109,7 +110,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                 <p className="a_c">
                   <img
                     src={LGW}
-                    style={{ width: 180, height: 50 }}
+                    style={{ width: 180, height: 50, marginTop: 25 }}
                     alt="workvn-logo"
                   />
                 </p>
@@ -198,6 +199,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                     className="login-form-button"
                     style={{ width: "100%" }}
                     onClick={this.handleSubmit}
+                    icon={is_loading ? "loading" : null}
                   >
                     Đăng nhập
                   </Button>
@@ -211,7 +213,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                                   </p> */}
               </div>
             </Col>
-            <Col xs={0} sm={4} md={5} lg={6} xl={8}></Col>
+            <Col xs={0} sm={4} md={5} lg={6} xl={8} xxl={9}></Col>
           </Row>
         </div>
       </div>

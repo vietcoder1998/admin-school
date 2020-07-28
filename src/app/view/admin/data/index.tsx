@@ -1,5 +1,4 @@
 import React, { PureComponent,  } from 'react'
-import './Data.scss';
 import ErrorBoundaryRoute from '../../../../routes/ErrorBoundaryRoute';
 import { connect } from 'react-redux';
 import Languages from './languages/Languages';

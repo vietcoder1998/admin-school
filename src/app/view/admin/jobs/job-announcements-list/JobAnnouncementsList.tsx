@@ -27,6 +27,7 @@ import { IEmployer } from '../../../../../models/employers';
 import JobDetail from '../../../layout/job-detail/JobDetail';
 import JobSuitableCandidate from '../../../layout/job-suitable-candidate/JobSuitableCandidate';
 import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
+import Search from 'antd/lib/input/Search';
 
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
@@ -64,6 +65,7 @@ function viewCount(
             </Link>
         </div >);
 };
+
 const ViewPriority = (props?: { priority?: string, timeLeft?: string }) => {
     let { priority } = props;
     switch (priority) {
@@ -106,6 +108,7 @@ interface IJobAnnouncementsListProps extends StateProps, DispatchProps {
     getListJobService: (id?: string) => any;
     getListEmployer: (body?: any, pageIndex?: number, pageSize?: number) => any;
     getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) => any;
+    getListSchools: Function;
     handleDrawer: Function;
     handleModal: Function;
     getCanDetail?: Function;
@@ -211,7 +214,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         },
         {
             title: 'Tiêu đề',
-            width: 200,
+            width: 150,
             dataIndex: 'title',
             className: 'action',
             key: 'title',
@@ -221,7 +224,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             title: 'Tên công việc',
             dataIndex: 'jobName',
             key: 'jobName',
-            width: 200,
+            width: 150,
         },
         {
             title: 'Ứng tuyển',
@@ -235,7 +238,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             title: 'Tên NTD',
             dataIndex: 'employerName',
             key: 'employerName',
-            width: 200,
+            width: 150,
         },
         {
             title: 'Chi nhánh',
@@ -258,13 +261,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             width: 100,
         },
         {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
-            className: 'action',
-            key: 'address',
-            width: 200,
-        },
-        {
             title: 'Email',
             dataIndex: 'employerBranchEmail',
             className: 'action',
@@ -277,6 +273,13 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             className: 'action',
             key: 'employerBranchPhone',
             width: 100,
+        },
+        {
+            title: 'Địa chỉ',
+            dataIndex: 'address',
+            className: 'action',
+            key: 'address',
+            width: 200,
         },
         {
             title: 'Ngày đăng',
@@ -576,7 +579,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
         body[param] = value;
         this.setState({ body });
-        this.searchJobAnnouncement()
+        if (param !== TYPE.JOB_FILTER.contactEmail || param !== TYPE.JOB_FILTER.contactEmail ) {
+            this.searchJobAnnouncement()
+        }
     };
 
     onChangeCreatedDate = (event) => {
@@ -941,6 +946,34 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         </h5>
                         <div className="table-operations">
                             <Row >
+                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                                    <IptLetterP value={"Email"} />
+                                    <Search
+                                        placeholder="Tất cả"
+                                        style={{ width: "100%" }}
+                                        onChange={(event: any) =>
+                                            this.onChangeFilter(
+                                                event.target.value,
+                                                TYPE.JOB_FILTER.contactEmail
+                                            )
+                                        }
+                                        onPressEnter={(event: any) => this.searchJobAnnouncement()}
+                                    />
+                                </Col>
+                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                                    <IptLetterP value={"Phone"} />
+                                    <Search
+                                        placeholder="Tất cả"
+                                        style={{ width: "100%" }}
+                                        onChange={(event: any) =>
+                                            this.onChangeFilter(
+                                                event.target.value,
+                                                TYPE.JOB_FILTER.contactPhone
+                                            )
+                                        }
+                                        onPressEnter={(event: any) => this.searchJobAnnouncement()}
+                                    />
+                                </Col>
                                 <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={6} >
                                     <IptLetterP value={"Tên nhà tuyển dụng"} />
                                     <Select
@@ -948,7 +981,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         defaultValue="Tất cả"
                                         style={{ width: "100%" }}
                                         onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.employerID)}
-                                        onSearch={(event) => { this.props.getListEmployer({ employerName: event }, 0, 10) }}
+                                        onSearch={(event) => this.props.getListEmployer({ employerName: event }, 0, 10)}
                                     >
                                         <Option key={1} value={null}>Tất cả</Option>
                                         {
@@ -1103,8 +1136,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                 columns={this.columns}
                                 loading={loadingTable}
                                 dataSource={dataTable}
-                            locale={{ emptyText: 'Không có dữ liệu' }}
-                                scroll={{ x: 2060 }}
+                                locale={{ emptyText: 'Không có dữ liệu' }}
+                                scroll={{ x: 1910 }}
                                 bordered
                                 pagination={{ total: totalItems, showSizeChanger: true }}
                                 size="middle"
@@ -1144,7 +1177,6 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, body, pageIndex, pageSize }),
     getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) =>
         dispatch({ type: REDUX_SAGA.JOB_SUITABLE_CANDIDATE.GET_JOB_SUITABLE_CANDIDATE, jid, pageIndex, pageSize }),
-
 });
 
 const mapStateToProps = (state: IAppState, ownProps: any) => ({

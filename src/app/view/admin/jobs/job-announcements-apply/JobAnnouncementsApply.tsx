@@ -9,7 +9,7 @@ import { IEmBranch } from '../../../../../models/em-branches';
 import { _requestToServer } from '../../../../../services/exec';
 import { PUT } from '../../../../../const/method';
 import { APPLY_JOB } from '../../../../../services/api/private.api';
-import { IApplyJob } from './../../../../../models/apply-jobs';
+import { IApplyJob } from '../../../../../models/apply-jobs';
 import { ApplyJobItem } from '../../../layout/job-apply/JobApplyItem';
 import { routeLink, routePath } from '../../../../../const/break-cumb';
 import './JobAnnouncementsApply.scss';

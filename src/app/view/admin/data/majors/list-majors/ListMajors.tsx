@@ -13,6 +13,7 @@ import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 import { routeLink, routePath } from '../../../../../../const/break-cumb';
 import findIdWithValue from '../../../../../../utils/findIdWithValue';
 import Search from 'antd/lib/input/Search';
+import { IptLetterP } from '../../../../layout/common/Common';
 
 interface ListMajorsProps extends StateProps, DispatchProps {
     match: Readonly<any>;
@@ -343,6 +344,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                         </h5>
                         <Row>
                             <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                <IptLetterP value={"Tên chuyên ngành"} />
                                 <Search
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
@@ -354,6 +356,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                 />
                             </Col>
                             <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                <IptLetterP value={"Chọn nhóm ngành"} />
                                 <Select
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}

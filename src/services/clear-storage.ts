@@ -2,7 +2,10 @@
 // import {notification} from "antd";
 
 export default async function clearStorage() {
-    localStorage.clear();
+    localStorage.removeItem("userID");
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+
     // let cookies = new Cookies();
     // await cookies.remove("actk", { path: "/" });
     // await cookies.remove("t_e_actk", { path: "/" });
