@@ -488,8 +488,8 @@ class ConnectEmSchoolList extends React.Component<IProps, IState> {
                                 >
                                     <Option value={null}>Tất cả</Option>
                                     <Option value={TYPE.PENDING}>Đang chờ </Option>
-                                    <Option value={TYPE.ACCEPTED}>Đã chấp nhận</Option>
-                                    <Option value={TYPE.REJECTED}>Đã chấp nhận</Option>
+                                    <Option value={TYPE.ACCEPTED}>Chấp nhận</Option>
+                                    <Option value={TYPE.REJECTED}>Từ chối</Option>
                                 </Select>
                             </Col>
                         </Row>
