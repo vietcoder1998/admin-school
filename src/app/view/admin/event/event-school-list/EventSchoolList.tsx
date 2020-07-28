@@ -463,7 +463,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                     </h5>
                     <div className="table-operations">
                         <Row >
-                            <Col xs={24} sm={12} md={8} lg={12} xl={12} xxl={12} >
+                            <Col xs={24} sm={12} md={8} lg={10} xl={10} xxl={10} >
                                 <IptLetterP value={"Tên trường"} />
                                 <Select
                                     showSearch
@@ -481,7 +481,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4} >
+                            <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                 <IptLetterP value={"Bắt đầu"} />
                                 <Select
                                     showSearch
@@ -494,7 +494,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     <Option value={TYPE.FALSE}>Chưa bắt đầu</Option>
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4} >
+                            <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                 <IptLetterP value={"Kết thúc"} />
                                 <Select
                                     showSearch
@@ -507,7 +507,7 @@ class EventSchoolsList extends React.Component<IEventSchoolsListProps, IEventSch
                                     <Option value={TYPE.FALSE}>Chưa kết thúc</Option>
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={24} md={16} lg={12} xl={12} xxl={12} >
+                            <Col xs={24} sm={24} md={16} lg={6} xl={6} xxl={6} >
                                 <IptLetterP
                                     value="Chọn thời gian sự kiện"
                                 >

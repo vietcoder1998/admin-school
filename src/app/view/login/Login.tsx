@@ -130,7 +130,7 @@ class Login extends PureComponent<ILoginProps, ILoginState> {
                         <Input
                           prefix={
                             <Icon
-                              type="lock"
+                              type="user"
                               style={{ color: "rgba(0,0,0,.25)" }}
                             />
                           }

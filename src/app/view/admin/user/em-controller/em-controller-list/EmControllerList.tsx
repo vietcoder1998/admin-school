@@ -316,7 +316,7 @@ class EmControllerList extends PureComponent<
 
   searchEmControllers = async () => {
     let { pageIndex, pageSize, body } = this.state;
-    await this.setState({loadingTable: true});
+    await this.setState({ loadingTable: true });
     await this.props.getListEmControllers(pageIndex, pageSize, body);
   };
 
@@ -484,78 +484,79 @@ class EmControllerList extends PureComponent<
               Import
             </Button>
           </h5>
-          <Row>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-              <IptLetterP value={"Tên tài khoản"}>
-                <Search
-                  placeholder="ex: daipham.uet@gmail.com"
-                  onChange={(event: any) =>
-                    this.onChangeFilter(
-                      event.target.value,
-                      TYPE.EM_CONTROLLER.username
-                    )
-                  }
-                  onPressEnter={this.searchEmControllers}
-                />
-              </IptLetterP>
-            </Col>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-              <IptLetterP value={"Tên nhà tuyển dụng"}>
-                <Search
-                  placeholder="ex: works"
-                  onChange={(event: any) =>
-                    this.onChangeFilter(
-                      event.target.value,
-                      TYPE.EM_CONTROLLER.employerName
-                    )
-                  }
-                  onPressEnter={this.searchFilter}
-                />
-              </IptLetterP>
-            </Col>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-              <IptLetterP value={"Tỉnh thành"} />
-              <Select
-                showSearch
-                defaultValue="Tất cả"
-                style={{ width: "100%" }}
-                onChange={(event: any) =>
-                  this.onChangeFilter(event, TYPE.EM_CONTROLLER.regionID)
-                }
-              >
-                <Select.Option value={null}>Tất cả</Select.Option>
-                {listRegions && listRegions.length >= 1
-                  ? listRegions.map((item: IRegion, index: number) => (
-                    <Select.Option key={index} value={item.name}>
-                      {item.name}
-                    </Select.Option>
-                  ))
-                  : null}
-              </Select>
-            </Col>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-              <IptLetterP value={"Trạng thái xác thực"} />
-              <Select
-                showSearch
-                style={{ width: "100%" }}
-                defaultValue="Tất cả"
-                onChange={(event?: any) =>
-                  this.onChangeFilter(event, TYPE.EM_CONTROLLER.profileVerified)
-                }
-              >
-                <Select.Option key="1" value={null}>
-                  Tất cả
-                </Select.Option>
-                <Select.Option key="2" value={TYPE.TRUE}>
-                  Đã xác thực
-                </Select.Option>
-                <Select.Option key="3" value={TYPE.FALSE}>
-                  Không xác thực
-                </Select.Option>
-              </Select>
-            </Col>
-          </Row>
+
           <div className="table-operations">
+            <Row>
+              <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4}>
+                <IptLetterP value={"Tên tài khoản"}>
+                  <Search
+                    placeholder="ex: daipham.uet@gmail.com"
+                    onChange={(event: any) =>
+                      this.onChangeFilter(
+                        event.target.value,
+                        TYPE.EM_CONTROLLER.username
+                      )
+                    }
+                    onPressEnter={this.searchEmControllers}
+                  />
+                </IptLetterP>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+                <IptLetterP value={"Tên nhà tuyển dụng"}>
+                  <Search
+                    placeholder="ex: works"
+                    onChange={(event: any) =>
+                      this.onChangeFilter(
+                        event.target.value,
+                        TYPE.EM_CONTROLLER.employerName
+                      )
+                    }
+                    onPressEnter={this.searchFilter}
+                  />
+                </IptLetterP>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Tỉnh thành"} />
+                <Select
+                  showSearch
+                  defaultValue="Tất cả"
+                  style={{ width: "100%" }}
+                  onChange={(event: any) =>
+                    this.onChangeFilter(event, TYPE.EM_CONTROLLER.regionID)
+                  }
+                >
+                  <Select.Option value={null}>Tất cả</Select.Option>
+                  {listRegions && listRegions.length >= 1
+                    ? listRegions.map((item: IRegion, index: number) => (
+                      <Select.Option key={index} value={item.name}>
+                        {item.name}
+                      </Select.Option>
+                    ))
+                    : null}
+                </Select>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Xác thực"} />
+                <Select
+                  showSearch
+                  style={{ width: "100%" }}
+                  defaultValue="Tất cả"
+                  onChange={(event?: any) =>
+                    this.onChangeFilter(event, TYPE.EM_CONTROLLER.profileVerified)
+                  }
+                >
+                  <Select.Option key="1" value={null}>
+                    Tất cả
+                </Select.Option>
+                  <Select.Option key="2" value={TYPE.TRUE}>
+                    Có
+                </Select.Option>
+                  <Select.Option key="3" value={TYPE.FALSE}>
+                    Không 
+                </Select.Option>
+                </Select>
+              </Col>
+            </Row>
             <Table
               // @ts-ignore
               columns={this.columns}

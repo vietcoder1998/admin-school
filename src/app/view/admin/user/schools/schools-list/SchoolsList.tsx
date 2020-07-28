@@ -452,7 +452,7 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                   onPressEnter={(event: any) => this.searchFilter()}
                 />
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
                 <IptLetterP value={"Tỉnh thành"} />
                 <Select
                   showSearch
@@ -472,8 +472,8 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                     : null}
                 </Select>
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                <IptLetterP value={"Yêu cầu kết nối"} />
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Kết nối"} />
                 <Select
                   showSearch
                   defaultValue="Tất cả"
@@ -483,8 +483,8 @@ class SchoolsList extends PureComponent<ISchoolsListProps, ISchoolsListState> {
                   }
                 >
                   <Option value={null}>Tất cả</Option>
-                  <Option value={TYPE.TRUE}>Đã gửi </Option>
-                  <Option value={TYPE.FALSE}>Chưa gửi</Option>
+                  <Option value={TYPE.TRUE}>Đã có </Option>
+                  <Option value={TYPE.FALSE}>Chưa có</Option>
                 </Select>
               </Col>
             </Row>

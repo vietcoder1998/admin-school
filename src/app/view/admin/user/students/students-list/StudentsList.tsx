@@ -707,7 +707,7 @@ class StudentsList extends PureComponent<
           </h5>
           <div className="table-operations">
             <Row style={{ marginBottom: 10 }}>
-              <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={6} >
+              <Col xs={24} sm={12} md={16} lg={9} xl={9} xxl={9} >
                 <IptLetterP value={"Tên trường"} />
                 <Select
                   showSearch
@@ -753,8 +753,8 @@ class StudentsList extends PureComponent<
                   onPressEnter={(event: any) => this.searchFilter()}
                 />
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                <IptLetterP value={"Tìm việc"} />
+              <Col xs={24} sm={12} md={4} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Xác thực"} />
                 <Select
                   showSearch
                   defaultValue="Tất cả"
@@ -762,15 +762,22 @@ class StudentsList extends PureComponent<
                   onChange={(event: any) =>
                     this.onChangeFilter(
                       event,
-                      TYPE.STUDENT_FILTER.lookingForJob
+                      TYPE.STUDENT_FILTER.profileVerified
                     )
                   }
                 >
-                  <Select.Option value={null}>Tất cả</Select.Option>
-                  <Select.Option value={TYPE.TRUE}>Có</Select.Option>
-                  <Select.Option value={TYPE.FALSE}>Đã có việc</Select.Option>
+                  <Select.Option key="1" value={null}>
+                    Tất cả
+                  </Select.Option>
+                  <Select.Option key="2" value={TYPE.TRUE}>
+                    Có
+                  </Select.Option>
+                  <Select.Option key="3" value={TYPE.FALSE}>
+                    Không
+                  </Select.Option>
                 </Select>
               </Col>
+
               <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
                 <IptLetterP value={"Ngày tạo tài khoản"} />
                 <DatePicker
@@ -811,8 +818,8 @@ class StudentsList extends PureComponent<
                     : null}
                 </Select>
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-                <IptLetterP value={"Trạng thái xác thực"} />
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Tìm việc"} />
                 <Select
                   showSearch
                   defaultValue="Tất cả"
@@ -820,19 +827,13 @@ class StudentsList extends PureComponent<
                   onChange={(event: any) =>
                     this.onChangeFilter(
                       event,
-                      TYPE.STUDENT_FILTER.profileVerified
+                      TYPE.STUDENT_FILTER.lookingForJob
                     )
                   }
                 >
-                  <Select.Option key="1" value={null}>
-                    Tất cả
-                  </Select.Option>
-                  <Select.Option key="2" value={TYPE.TRUE}>
-                    Đã xác thực
-                  </Select.Option>
-                  <Select.Option key="3" value={TYPE.FALSE}>
-                    Không xác thực
-                  </Select.Option>
+                  <Select.Option value={null}>Tất cả</Select.Option>
+                  <Select.Option value={TYPE.TRUE}>Có</Select.Option>
+                  <Select.Option value={TYPE.FALSE}>Đã có việc</Select.Option>
                 </Select>
               </Col>
             </Row>

@@ -968,7 +968,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         onPressEnter={(event: any) => this.searchJobAnnouncement()}
                                     />
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                                <Col xs={24} sm={12} md={8} lg={5} xl={5} xxl={5}>
                                     <IptLetterP value={"Phone"} />
                                     <Search
                                         placeholder="Tất cả"
@@ -982,7 +982,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         onPressEnter={(event: any) => this.searchJobAnnouncement()}
                                     />
                                 </Col>
-                                <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={6} >
+                                <Col xs={24} sm={12} md={16} lg={7} xl={7} xxl={7} >
                                     <IptLetterP value={"Tên nhà tuyển dụng"} />
                                     <Select
                                         showSearch
@@ -999,17 +999,36 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         }
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                    <IptLetterP value={"Trạng thái hoạt động"} />
+                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                    <IptLetterP value={"Loại công việc"} />
                                     <Select
                                         showSearch
+                                        placeholder="Tất cả"
                                         defaultValue="Tất cả"
+                                        optionFilterProp="children"
                                         style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobType)}
                                     >
                                         <Option value={null}>Tất cả</Option>
-                                        <Option value={TYPE.FALSE}>Còn hạn</Option>
-                                        <Option value={TYPE.TRUE}>Hết hạn</Option>
+                                        <Option value={TYPE.FULLTIME}>Toàn thời gian</Option>
+                                        <Option value={TYPE.PARTTIME}>Bán thời gian</Option>
+                                        <Option value={TYPE.INTERNSHIP}>Thực tập sinh</Option>
+                                    </Select>
+                                </Col>
+                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                    <IptLetterP value={"Ẩn/hiện"} />
+                                    <Select
+                                        showSearch
+                                        placeholder="Tất cả"
+                                        defaultValue="Tất cả"
+                                        optionFilterProp="children"
+                                        style={{ width: "100%" }}
+                                        value={valueType}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.hidden)}
+                                    >
+                                        <Option value={null}>Tất cả</Option>
+                                        <Option value={TYPE.TRUE}>Đang ẩn</Option>
+                                        <Option value={TYPE.FALSE}>Đang hiện</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
@@ -1046,22 +1065,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         }
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                    <IptLetterP value={"Loại công việc"} />
-                                    <Select
-                                        showSearch
-                                        placeholder="Tất cả"
-                                        defaultValue="Tất cả"
-                                        optionFilterProp="children"
-                                        style={{ width: "100%" }}
-                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobType)}
-                                    >
-                                        <Option value={null}>Tất cả</Option>
-                                        <Option value={TYPE.FULLTIME}>Toàn thời gian</Option>
-                                        <Option value={TYPE.PARTTIME}>Bán thời gian</Option>
-                                        <Option value={TYPE.INTERNSHIP}>Thực tập sinh</Option>
-                                    </Select>
-                                </Col>
+
                                 <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                     <IptLetterP value={"Gói dịch vụ"} />
                                     <Cascader
@@ -1081,8 +1085,21 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         }
                                     />
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                    <IptLetterP value={"Trạng thái gói dịch vụ"} />
+                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                    <IptLetterP value={"Hoạt động"} />
+                                    <Select
+                                        showSearch
+                                        defaultValue="Tất cả"
+                                        style={{ width: "100%" }}
+                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
+                                    >
+                                        <Option value={null}>Tất cả</Option>
+                                        <Option value={TYPE.FALSE}>Còn hạn</Option>
+                                        <Option value={TYPE.TRUE}>Hết hạn</Option>
+                                    </Select>
+                                </Col>
+                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                    <IptLetterP value={"HSD dịch vụ"} />
                                     <Select
                                         showSearch
                                         defaultValue="Tất cả"
@@ -1096,23 +1113,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         <Option value={TYPE.TRUE}>Hết hạn</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                    <IptLetterP value={"Trạng thái ẩn/hiện"} />
-                                    <Select
-                                        showSearch
-                                        placeholder="Tất cả"
-                                        defaultValue="Tất cả"
-                                        optionFilterProp="children"
-                                        style={{ width: "100%" }}
-                                        value={valueType}
-                                        onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.hidden)}
-                                    >
-                                        <Option value={null}>Tất cả</Option>
-                                        <Option value={TYPE.TRUE}>Đang ẩn</Option>
-                                        <Option value={TYPE.FALSE}>Đang hiện</Option>
-                                    </Select>
-                                </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+
+                                <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8} >
                                     <IptLetterP value={"Chứa trạng thái ứng tuyển"} />
                                     <Checkbox
                                         indeterminate={un_checkbox}

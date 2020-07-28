@@ -360,80 +360,81 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
           <h5>
             Danh sách người dùng ({totalItems})
           </h5>
-          <Row>
-            <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
-              <IptLetterP value={"Tên tài khoản"}>
-                <Search
-                  placeholder="ex: works"
-                  onChange={(event: any) =>
-                    this.onChangeFilter(
-                      event.target.value,
-                      TYPE.USER_CONTROLLER.username
-                    )
-                  }
-                  onPressEnter={() => this.searchFilter()}
-                />
-              </IptLetterP>
-            </Col>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-              <IptLetterP value={"Địa chỉ Email"}>
-                <Search
-                  placeholder="ex: works@gmail.com"
-                  onChange={(event: any) =>
-                    this.onChangeFilter(
-                      event.target.value,
-                      TYPE.USER_CONTROLLER.email
-                    )
-                  }
-                  onPressEnter={() => this.searchFilter()}
-                />
-              </IptLetterP>
-            </Col>
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
-              <IptLetterP value={"Trạng thái hoạt động"} />
-              <Select
-                showSearch
-                placeholder="Tất cả"
-                optionFilterProp="children"
-                style={{ width: "100%" }}
-                onChange={(event?: any) =>
-                  this.onChangeFilter(event, TYPE.USER_CONTROLLER.activated)
-                }
-              >
-                <Select.Option key="1" value={null}>
-                  Tất cả
-                </Select.Option>
-                <Select.Option key="3" value={TYPE.TRUE}>
-                  Đang hoạt động
-                </Select.Option>
-                <Select.Option key="4" value={TYPE.FALSE}>
-                  Không hoạt động
-                </Select.Option>
-              </Select>
-            </Col>
-            <Col xs={24} sm={12} md={8} lg={4} xl={4} xxl={4}>
-              <IptLetterP value={"Trạng thái cấm"} />
-              <Select
-                showSearch
-                style={{ width: "100%" }}
-                defaultValue="Tất cả"
-                onChange={(event?: any) =>
-                  this.onChangeFilter(event, TYPE.USER_CONTROLLER.banned)
-                }
-              >
-                <Select.Option key="1" value={null}>
-                  Tất cả
-                </Select.Option>
-                <Select.Option key="2" value={TYPE.TRUE}>
-                  Đang bị cấm
-                </Select.Option>
-                <Select.Option key="3" value={TYPE.FALSE}>
-                  Không bị cấm
-                </Select.Option>
-              </Select>
-            </Col>
-          </Row>
           <div className="table-operations">
+            <Row>
+              <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+                <IptLetterP value={"Tên tài khoản"}>
+                  <Search
+                    placeholder="ex: works"
+                    onChange={(event: any) =>
+                      this.onChangeFilter(
+                        event.target.value,
+                        TYPE.USER_CONTROLLER.username
+                      )
+                    }
+                    onPressEnter={() => this.searchFilter()}
+                  />
+                </IptLetterP>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                <IptLetterP value={"Địa chỉ Email"}>
+                  <Search
+                    placeholder="ex: works@gmail.com"
+                    onChange={(event: any) =>
+                      this.onChangeFilter(
+                        event.target.value,
+                        TYPE.USER_CONTROLLER.email
+                      )
+                    }
+                    onPressEnter={() => this.searchFilter()}
+                  />
+                </IptLetterP>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Hoạt động"} />
+                <Select
+                  showSearch
+                  placeholder="Tất cả"
+                  optionFilterProp="children"
+                  defaultValue="Tất cả"
+                  style={{ width: "100%" }}
+                  onChange={(event?: any) =>
+                    this.onChangeFilter(event, TYPE.USER_CONTROLLER.activated)
+                  }
+                >
+                  <Select.Option key="1" value={null}>
+                    Tất cả
+                </Select.Option>
+                  <Select.Option key="3" value={TYPE.TRUE}>
+                    Có
+                </Select.Option>
+                  <Select.Option key="4" value={TYPE.FALSE}>
+                    Không 
+                </Select.Option>
+                </Select>
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                <IptLetterP value={"Bị cấm"} />
+                <Select
+                  showSearch
+                  style={{ width: "100%" }}
+                  defaultValue="Tất cả"
+                  onChange={(event?: any) =>
+                    this.onChangeFilter(event, TYPE.USER_CONTROLLER.banned)
+                  }
+                >
+                  <Select.Option key="1" value={null}>
+                    Tất cả
+                </Select.Option>
+                  <Select.Option key="2" value={TYPE.TRUE}>
+                    Có
+                </Select.Option>
+                  <Select.Option key="3" value={TYPE.FALSE}>
+                    Không
+                </Select.Option>
+                </Select>
+              </Col>
+            </Row>
             <Table
               // @ts-ignore
               columns={this.columns}
