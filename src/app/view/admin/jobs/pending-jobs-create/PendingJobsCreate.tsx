@@ -17,6 +17,7 @@ import { IJobName } from '../../../../../models/job-type';
 import { IEmBranch, IEmBranchesFilter } from '../../../../../models/em-branches';
 import { IEmployerFilter, IEmployer } from '../../../../../models/employers';
 import { ISkill } from '../../../../../models/skills';
+import { routeLink, routePath } from '../../../../../const/break-cumb';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -572,7 +573,7 @@ class PendingJobsCreate extends Component<IProps, IState> {
                             margin: "10px 10px",
                         }}
                         icon={"close"}
-                        onClick={() => { this.props.history.push('/v1/admin/jobs/job-announcements/list') }}
+                        onClick={() => { this.props.history.push(routeLink.PENDING_JOBS + routePath.LIST) }}
                     >
                         {ct_btn_ex}
                     </Button>

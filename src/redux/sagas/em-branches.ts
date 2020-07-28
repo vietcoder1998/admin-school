@@ -32,7 +32,6 @@ function callEmBranches(action: any) {
             regionID: null
         };
 
-
         if (action.body) {
             body = action.body
         };

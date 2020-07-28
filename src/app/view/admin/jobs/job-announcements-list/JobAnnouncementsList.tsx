@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio, Empty } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio, Empty, Popconfirm } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
 import './JobAnnouncementsList.scss';
 import { TYPE } from '../../../../../const/type';
@@ -375,16 +375,21 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         }}
                     />
                 </Tooltip>
-                <Tooltip placement="bottom" title={"Xóa bài đăng"}>
+                <Popconfirm
+                    placement="bottom"
+                    title={"Xóa bài đăng"}
+                    okText="Xóa"
+                    okType="danger"
+                    onConfirm={() => this.createRequest(DELETE)}
+                >
                     <Icon
                         className='test'
                         style={{ padding: "5px 5px", margin: 2 }}
                         type="delete"
                         theme="twoTone"
                         twoToneColor="red"
-                        onClick={() => this.props.handleModal({ msg: "Bạn muốn xóa bài đăng này", type_modal: TYPE.DELETE })}
                     />
-                </Tooltip>
+                </Popconfirm>
             </>
         )
     }
@@ -579,7 +584,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
         body[param] = value;
         this.setState({ body });
-        if (param !== TYPE.JOB_FILTER.contactEmail || param !== TYPE.JOB_FILTER.contactEmail ) {
+        if (param !== TYPE.JOB_FILTER.contactEmail || param !== TYPE.JOB_FILTER.contactEmail) {
             this.searchJobAnnouncement()
         }
     };
@@ -603,7 +608,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         this.setState({ hidden });
     };
 
-    createRequest = async () => {
+    createRequest = async (type?: string) => {
         let {
             homePriority,
             searchPriority,
@@ -611,6 +616,24 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             eid
         } = this.state;
         let { modalState } = this.props;
+
+        if (type && type === TYPE.DELETE) {
+            await _requestToServer(
+                DELETE,
+                JOB_ANNOUNCEMENTS ,
+                [id],
+                undefined,
+                undefined,
+                undefined,
+                true,
+                false
+            ).then((res) => {
+                if (res) {
+                    this.searchJobAnnouncement();
+                }
+            })
+        }
+
         await this.setState({ loading: true });
         switch (modalState.type_modal) {
             case TYPE.JOB_FILTER.homePriority:
@@ -655,27 +678,6 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 );
                 break;
 
-            case TYPE.DELETE:
-                await _requestToServer(
-                    DELETE,
-                    JOB_ANNOUNCEMENTS + `/${id}`,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    true,
-                    false
-                ).then((res) => {
-                    if (res) {
-                        this.searchJobAnnouncement();
-                        this.props.handleModal();
-                    }
-                }).finally(
-                    () => this.setState({
-                        loading: false
-                    })
-                )
-                break;
             default:
                 break;
         };
@@ -735,7 +737,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     visible={modalState.openModal}
                     title={"Workvn thông báo"}
                     destroyOnClose={true}
-                    onOk={this.createRequest}
+                    onOk={() => this.createRequest}
                     onCancel={() => {
                         this.setState({ message: null, loading: false });
                         this.props.handleModal();
@@ -768,7 +770,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     visible={opjd}
                     title={"Chi tiết công việc"}
                     destroyOnClose={true}
-                    onOk={this.createRequest}
+                    onOk={() =>this.createRequest()}
                     width={'90vw'}
                     onCancel={() => {
                         this.setState({ opjd: false, loading: false });

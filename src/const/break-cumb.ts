@@ -332,7 +332,7 @@ export const routeOption = [
                 ],
             },
             {
-                value: routePath.EMPLOYER,
+                value: routePath.EM_CONTROLLER,
                 label: 'Nhà tuyển dụng',
                 children: [
                     {

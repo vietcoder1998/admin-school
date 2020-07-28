@@ -135,7 +135,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             }}
                             onClick={() => this.setState({ show_menu: !show_menu })}
                         />
-                        <Tooltip title="Tìm chỉ mục">
+                        <Tooltip title="Tìm chỉ mục " placement={"bottom"}>
                             <Icon
                                 className="trigger"
                                 type="search"
