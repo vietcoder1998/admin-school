@@ -460,7 +460,7 @@ class PendingJobsCreate extends Component<IProps, IState> {
                         </Select>
                     </InputTitle>
                     <InputTitle
-                        title="Chọn loại kĩ năng"
+                        title="Chọn loại Kỹ"
                         widthLabel="200px"
                     >
                         <Select

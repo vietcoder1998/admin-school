@@ -272,7 +272,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                     <Col md={0} lg={0} xl={1} xxl={4} />
                     <Col md={24} lg={24} xl={22} xxl={16} >
                         <h5>
-                            Danh sách loại công việc
+                            Danh sách loại công việc ({totalItems})
                         <Button
                                 onClick={() => {
                                 }}
@@ -290,7 +290,7 @@ class ListJobNames extends PureComponent<IListJobNamesProps, IListJobNamesState>
                         </h5>
                         <Row>
                             <Col sm={12} md={8} lg={8} xl={8} xxl={8}>
-                                <IptLetterP value="Tên loại công việc" />
+                                <IptLetterP value="Tên công việc" />
                                 <Search
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}

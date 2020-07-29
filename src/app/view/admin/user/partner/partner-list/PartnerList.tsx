@@ -299,12 +299,13 @@ class PartnerList extends PureComponent<IPartnerListProps, IPartnerListState> {
 
         let {
             listRegions,
+            totalItems
         } = this.props
         return (
             <>
                 <div className="common-content">
                     <h5>
-                        Danh sách cộng tác viên
+                        Danh sách cộng tác viên ({totalItems})
                         <Button
                             icon="filter"
                             onClick={() => this.searchPartner()}

@@ -238,7 +238,7 @@ class ListLanguages extends PureComponent<
         <div>
           <Row gutter={10}>
             <Col span={10}>
-              <h4>Danh sách ngôn ngữ</h4>
+        <h4>Danh sách ngôn ngữ ({totalItems})</h4>
             </Col>
             <Col span={1}>
               <Popover content="Xóa đã chọn" trigger="click">

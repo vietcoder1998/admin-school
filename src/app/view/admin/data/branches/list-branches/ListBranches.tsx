@@ -195,7 +195,7 @@ class ListBranches extends PureComponent<ListBranchesProps, ListBranchesState> {
                 <Col md={2} lg={5} xl={6} xxl={8} />
                 <Col md={20} lg={14} xl={12} xxl={8}>
                     <h5>
-                        Danh sách nhóm ngành
+                        Danh sách nhóm ngành ({totalItems})
                         <Button
                             onClick={() => {
                             }}

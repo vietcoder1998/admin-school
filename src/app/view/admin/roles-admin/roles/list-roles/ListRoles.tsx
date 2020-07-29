@@ -197,7 +197,7 @@ class ListRoles extends PureComponent<ListRolesProps, ListRolesState> {
                     <Col md={2} lg={0} xl={2} xxl={4} />
                     <Col md={20} lg={24} xl={20} xxl={16}>
                         <h5>
-                            Danh sách quyền
+                            Danh sách quyền ({totalItems})
                              <Button
                                 onClick={() => {
                                 }}

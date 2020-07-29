@@ -223,7 +223,7 @@ class ListWorkingTools extends PureComponent<IProps, IState> {
                     <Col md={0} lg={5} xl={6} xxl={4} />
                     <Col md={24} lg={14} xl={12} xxl={16} >
                         <h5>
-                            Danh sách công cụ làm việc
+                            Danh sách công cụ làm việc ({totalItems})
                         <Button
                                 onClick={() => {
                                 }}

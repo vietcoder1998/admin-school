@@ -207,7 +207,7 @@ class ListSkills extends PureComponent<ListSkillsProps, ListSkillsState> {
           <Col sm={12} md={8} lg={5} xl={6} xxl={8} />
           <Col sm={12} md={8} lg={14} xl={12} xxl={8}>
             <h5>
-              Danh sách kỹ năng
+              Danh sách kỹ năng ({totalItems})
               <Button
                 onClick={() => { }}
                 type="primary"

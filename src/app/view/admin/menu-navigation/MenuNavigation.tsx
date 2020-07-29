@@ -160,7 +160,7 @@ export default function MenuNavigation(props: IMenuNavigationProps) {
                     <Menu.Item key="8">
                         <Link to={routeLink.SKILLS + routePath.LIST}>
                             <Icon type="profile" />
-                            <span>Kĩ năng</span>
+                            <span>Kỹ năng</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="9">

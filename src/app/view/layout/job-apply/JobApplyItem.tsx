@@ -97,7 +97,7 @@ export function ApplyJobItem(props: IApplyCanItem) {
                                     <span>Thái độ</span>   <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
                                 </li>
                                 <li>
-                                    <span>Kĩ năng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
+                                    <span>Kỹ năng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />
                                 </li>
                                 <li>
                                     <span>Hài lòng</span>  <Rate disabled defaultValue={2} style={{ fontSize: 12, float: "right" }} />

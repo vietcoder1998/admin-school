@@ -966,20 +966,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                     <div className="table-operations">
                         <Row >
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái hoạt động"} />
-                                <Select
-                                    showSearch
-                                    defaultValue="Tất cả"
-                                    style={{ width: "100%" }}
-                                    onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.expired)}
-                                >
-                                    <Option value={null}>Tất cả</Option>
-                                    <Option value={TYPE.FALSE}>Còn hạn</Option>
-                                    <Option value={TYPE.TRUE}>Hết hạn</Option>
-                                </Select>
-                            </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Tên việc đăng tuyển"} />
+                                <IptLetterP value={"Tên công việc"} />
                                 <Select
                                     showSearch
                                     defaultValue="Tất cả"
@@ -1013,12 +1000,12 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                     }
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                            <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                 <IptLetterP value={"Loại công việc"} />
                                 <Select
                                     showSearch
                                     placeholder="Tất cả"
-                                    defaultValue="Tất cả"
+                                    defaultValue="Loại công việc"
                                     optionFilterProp="children"
                                     style={{ width: "100%" }}
                                     onChange={(event: any) => this.onChangeFilter(event, TYPE.JOB_FILTER.jobType)}
@@ -1062,7 +1049,7 @@ class EventJobsList extends PureComponent<IEventJobsListProps, IEventJobsListSta
                                 </Select>
                             </Col>
                             <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
-                                <IptLetterP value={"Trạng thái ẩn/hiện"} />
+                                <IptLetterP value={"Ẩn/hiện"} />
                                 <Select
                                     showSearch
                                     placeholder="Tất cả"

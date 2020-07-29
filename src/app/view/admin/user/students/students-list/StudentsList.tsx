@@ -541,7 +541,7 @@ class StudentsList extends PureComponent<
           }}
         />
         <hr />
-        <IptLetterP value={"Loại kĩ năng"} />
+        <IptLetterP value={"Loại kỹ năng"} />
         <Select
           mode="multiple"
           size="default"

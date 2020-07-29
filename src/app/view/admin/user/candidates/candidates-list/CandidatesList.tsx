@@ -437,7 +437,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                 </Select>
             </>
             <>
-                <IptLetterP value={"Loại kĩ năng"} />
+                <IptLetterP value={"Loại Kỹ năng"} />
                 <Select
                     mode="multiple"
                     size="default"
@@ -552,7 +552,7 @@ class CandidatesList extends React.Component<ICandidatesListProps, ICandidatesLi
                 <CanInsertExels openImport={openImport} handleImport={() => this.handleVisible()} />
                 <div className="common-content">
                     <h5>
-                        Danh sách ứng viên
+                        Danh sách ứng viên ({totalItems})
                         <Button
                             icon="upload"
                             onClick={() => this.handleVisible()}

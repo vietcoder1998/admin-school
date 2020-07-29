@@ -59,7 +59,7 @@ export const routeLink = {
 
     // job management
     PENDING_JOBS: routePath.ADMIN + routePath.JOBS + routePath.PENDING_JOBS,
-    JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.JOBS + routePath.JOB_ANNOUNCEMENTS,
+    JOB_ANNOUNCEMENTS: routePath.ADMIN + routePath.JOBS ,
     // announcement
     ANNOUCEMENT: routePath.ADMIN + routePath.ANNOUNCEMENT,
     //event
@@ -82,44 +82,44 @@ export const routeLink = {
 
 export const breakCumb = [
     // SubMenu
-    { label: "jobs", name: "Tuyển dụng", icon: null, url: routePath.JOBS, disable: true },
-    { label: "create", name: "Tạo mới", icon: null, url: routePath.CREATE, disable: true },
+    { label: "jobs", name: "Bài đăng", icon: "file-done", url: routePath.JOBS, disable: true },
+    { label: "create", name: "Tạo mới", icon: "file-add", url: routePath.CREATE, disable: true },
     { label: "detail", name: "Chi tiết", icon: null, url: routePath.DETAIL, disable: true },
-    { label: "list", name: "Danh sách", icon: null, url: routePath.LIST, disable: true },
+    { label: "list", name: "Danh sách", icon: "reconciliation", url: routePath.LIST, disable: true },
     { label: "fix", name: "Chỉnh sửa", icon: null, url: routePath.FIX, disable: true },
-    { label: "data", name: "Danh mục dữ liêu", icon: "database", url: routePath.DATA, disable: true },
-    { label: "role", name: "Quản trị", icon: null, url: routePath.ROLES, disable: true },
-    { label: "user", name: "Quản lý tài khoản", icon: null, url: routePath.USER, disable: true },
-    { label: "pending-jobs", name: "Bài đăng đang chờ", icon: null, url: routePath.PENDING_JOBS, disable: true },
-    { label: "announcements", name: "Bài viết", icon: null, url: routePath.ANNOUNCEMENT, disable: true },
-    { label: "connect", name: "Kết nối", icon: null, url: routePath.CONNECT, disable: true },
+    { label: "data", name: "Dữ liêu", icon: "database", url: routePath.DATA, disable: true },
+    { label: "role", name: "Quản trị", icon: "property-safety", url: routePath.ROLES, disable: true },
+    { label: "user", name: "Tài khoản", icon: "user", url: routePath.USER, disable: true },
+    { label: "pending-jobs", name: "Xét duyệt", icon: "audit", url: routePath.PENDING_JOBS, disable: true },
+    { label: "announcements", name: "Bài viết", icon: "form", url: routePath.ANNOUNCEMENT, disable: true },
+    { label: "connect", name: "Kết nối", icon: "api", url: routePath.CONNECT, disable: true },
     // annoucement
-    { label: "annoucement", name: "Quản lý bài viết", icon: null, url: routeLink.ANNOUCEMENT + routePath.LIST, disable: true },
+    { label: "annoucement", name: "Bài viết", icon: null, url: routeLink.ANNOUCEMENT + routePath.LIST, disable: true },
     // pendingjob
     { label: "pending-jobs", name: "Xét duyệt ", icon: null, url: routeLink.PENDING_JOBS + routePath.LIST, disable: true },
     // Data
-    { label: "languages", name: "Ngôn ngữ", icon: null, url: routeLink.LANGUAGES + routePath.LIST, disable: true },
-    { label: "majors", name: "Loại ngành nghề", icon: null, url: routeLink.MAJORS + routePath.LIST, disable: true },
-    { label: "type-schools", name: "Loại trường", icon: null, url: routeLink.TYPE_SCHOOLS + routePath.LIST, disable: true },
-    { label: "regions", name: "Tỉnh thành", icon: null, url: routeLink.REGIONS + routePath.LIST, disable: true },
-    { label: "job-names", name: "Loại công việc", icon: null, url: routeLink.JOB_NAMES + routePath.LIST, disable: true },
-    { label: "skills", name: "Kỹ năng", icon: null, url: routeLink.SKILLS + routePath.LIST, disable: true },
-    { label: "job-groups", name: "Nhóm công việc", icon: null, url: routeLink.JOB_GROUPS + routePath.LIST, disable: true },
-    { label: "branches", name: "Nhóm ngành", icon: null, url: routeLink.BRANCHES + routePath.LIST, disable: true },
-    { label: "annou-types", name: "Loại bài viết", icon: null, url: routeLink.ANNOU_TYPE + routePath.LIST, disable: true },
-    { label: "event", name: "Sự kiện", icon: null, url: routeLink.EVENT + routePath.LIST, disable: true },
-    { label: "working-tools", name: "Công cụ", icon: null, url: routeLink.WORKING_TOOL + routePath.LIST, disable: true },
+    { label: "languages", name: "Ngôn ngữ", icon: "message", url: routeLink.LANGUAGES + routePath.LIST, disable: true },
+    { label: "majors", name: "Chuyên ngành", icon: "contacts", url: routeLink.MAJORS + routePath.LIST, disable: true },
+    { label: "type-schools", name: "Loại trường", icon: "reconciliation", url: routeLink.TYPE_SCHOOLS + routePath.LIST, disable: true },
+    { label: "regions", name: "Tỉnh thành", icon: "environment", url: routeLink.REGIONS + routePath.LIST, disable: true },
+    { label: "job-names", name: "Loại công việc", icon: "idcard", url: routeLink.JOB_NAMES + routePath.LIST, disable: true },
+    { label: "skills", name: "Kỹ năng", icon: "profile", url: routeLink.SKILLS + routePath.LIST, disable: true },
+    { label: "job-groups", name: "Nhóm công việc", icon: "team", url: routeLink.JOB_GROUPS + routePath.LIST, disable: true },
+    { label: "branches", name: "Nhóm ngành", icon: "apartment", url: routeLink.BRANCHES + routePath.LIST, disable: true },
+    { label: "annou-types", name: "Nhóm bài viết", icon: "container", url: routeLink.ANNOU_TYPE + routePath.LIST, disable: true },
+    { label: "event", name: "Sự kiện", icon: "star", url: routeLink.EVENT + routePath.LIST, disable: true },
+    { label: "working-tools", name: "Công cụ", icon: "tool", url: routeLink.WORKING_TOOL + routePath.LIST, disable: true },
     // User
-    { label: "user-controller", name: "Người dùng", icon: null, url: routeLink.USER_CONTROLLER + routePath.LIST, disable: true },
-    { label: "em-controller", name: "Nhà tuyển dụng", icon: null, url: routeLink.EM_CONTROLLER + routePath.LIST, disable: true },
+    { label: "user-controller", name: "Người dùng", icon: "user", url: routeLink.USER_CONTROLLER + routePath.LIST, disable: true },
+    { label: "em-controller", name: "Nhà tuyển dụng", icon: "shop", url: routeLink.EM_CONTROLLER + routePath.LIST, disable: true },
     { label: "em-branches", name: "Chi nhánh", icon: null, url: routeLink.EM_BRANCHES + routePath.LIST, disable: true },
-    { label: "schools", name: "Nhà trường trường", icon: null, url: routeLink.SCHOOLS + routePath.LIST, disable: true },
-    { label: "students", name: "Sinh viên", icon: null, url: routeLink.STUDENTS + routePath.LIST, disable: true },
+    { label: "schools", name: "Nhà trường trường", icon: "share-alt", url: routeLink.SCHOOLS + routePath.LIST, disable: true },
+    { label: "students", name: "Sinh viên", icon: "team", url: routeLink.STUDENTS + routePath.LIST, disable: true },
     { label: "job-announcements", name: "Bài đăng", icon: null, url: routeLink.JOB_ANNOUNCEMENTS + routePath.LIST, disable: true },
-    { label: "candidates", name: "Hồ sơ ứng viên", icon: null, url: routeLink.CANDIDATES + routePath.LIST, disable: true },
+    { label: "candidates", name: "Hồ sơ ứng viên", icon: "prfile", url: routeLink.CANDIDATES + routePath.LIST, disable: true },
     { label: "partner", name: "Cộng tác viên", icon: null, url: routeLink.PARTNER + routePath.LIST, disable: true },
     // Role
-    { label: "role-admins", name: "Phân quyền", icon: null, url: routeLink.ROLES_ADMIN + routePath.LIST, disable: true },
+    { label: "role-admins", name: "Phân quyền", icon: "audit", url: routeLink.ROLES_ADMIN + routePath.LIST, disable: true },
     { label: "admin-accounts", name: "Tài khoản admin", icon: null, url: routeLink.ADMIN_ACCOUNTS + routePath.LIST, disable: true },
     // Connect
     { label: "em-school", name: "NTD - Nhà trường", icon: null, url: routeLink.EM_SCHOOL + routePath.LIST, disable: true },
@@ -134,24 +134,14 @@ export interface IBrk {
 };
 
 export const arrRoute = breakCumb.forEach((item: any, index) => ({ index, label: item.label, name: item.name }));
-export const label = [
-
-];
-
 export const routeOption = [
     {
         value: routePath.JOBS,
         label: 'Bài đăng',
         children: [
             {
-                value: routePath.JOB_ANNOUNCEMENTS,
-                label: "Bài đăng",
-                children: [
-                    {
-                        value: routePath.LIST,
-                        label: 'Danh sách',
-                    },
-                ],
+                value: routePath.LIST,
+                label: "Danh sách",
             },
             {
                 value: routePath.PENDING_JOBS,

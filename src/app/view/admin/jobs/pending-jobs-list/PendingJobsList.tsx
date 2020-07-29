@@ -410,7 +410,7 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                     <div>
                         <div className="table-operations">
                             <Row>
-                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
+                                <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
                                     <IptLetterP value={"Tên nhà tuyển dụng"} />
                                     <Select
                                         showSearch
@@ -425,22 +425,6 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                                                 (<Option key={item.id} value={item.employerName}>{item.employerName + '(' + item.email + ')'} </Option>)
                                             )
                                         }
-                                    </Select>
-                                </Col>
-                                <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
-                                    <p>
-                                        <IptLetter value={"Loại công việc"} />
-                                    </p>
-                                    <Select
-                                        showSearch
-                                        defaultValue="Tất cả"
-                                        style={{ width: "100%" }}
-                                        onChange={this.onChangeJobType}
-                                    >
-                                        <Option key="1" value={undefined}>Tất cả</Option>
-                                        <Option key="2" value={TYPE.PARTTIME}>Part-time</Option>
-                                        <Option key="3" value={TYPE.FULLTIME}>Full-time</Option>
-                                        <Option key="4" value={TYPE.INTERNSHIP}>Thực tập</Option>
                                     </Select>
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5.5} xl={6} xxl={6}>
@@ -475,6 +459,22 @@ class PendingJobsList extends PureComponent<IPendingJobListProps, IPendingJobLis
                                             listJobNames.map((item: any, index: number) =>
                                                 <Option key={index + 1} value={item.id}>{item.name}</Option>)
                                         }
+                                    </Select>
+                                </Col>
+                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3}>
+                                    <p>
+                                        <IptLetter value={"Loại công việc"} />
+                                    </p>
+                                    <Select
+                                        showSearch
+                                        defaultValue="Tất cả"
+                                        style={{ width: "100%" }}
+                                        onChange={this.onChangeJobType}
+                                    >
+                                        <Option key="1" value={undefined}>Tất cả</Option>
+                                        <Option key="2" value={TYPE.PARTTIME}>Part-time</Option>
+                                        <Option key="3" value={TYPE.FULLTIME}>Full-time</Option>
+                                        <Option key="4" value={TYPE.INTERNSHIP}>Thực tập</Option>
                                     </Select>
                                 </Col>
                             </Row>

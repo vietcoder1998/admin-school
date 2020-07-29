@@ -135,7 +135,7 @@ class JobAnnouncementsApply extends Component<IProps, IState> {
                 list_pending,
                 list_rejected,
                 list_accepted,
-                loadingTable: false 
+                loadingTable: false
             }
         }
 
@@ -181,7 +181,7 @@ class JobAnnouncementsApply extends Component<IProps, IState> {
     }
 
     render() {
-        let { studentDetail } = this.props;
+        let { studentDetail, totalItems } = this.props;
         let {
             state,
             list_rejected,
@@ -191,13 +191,13 @@ class JobAnnouncementsApply extends Component<IProps, IState> {
             loading,
             default_id,
             l_btn,
-            openDrawer
+            openDrawer,
         } = this.state;
 
         return (
             <div className='common-content'>
                 <h5>
-                    Danh sách ứng viên công việc
+                    Danh sách ứng viên công việc ({totalItems})
                 </h5>
                 <Divider orientation="left" >Danh sách yêu cầu</Divider>
                 <Drawer
@@ -376,7 +376,8 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     listSkills: state.Skills.items,
     listEmBranches: state.EmBranches.items,
     listApplyCans: state.ApplyCans.items,
-    studentDetail: state.StudentDetail
+    studentDetail: state.StudentDetail,
+    totalItems: state.ApplyCans.totalItems
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

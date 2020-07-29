@@ -23,8 +23,8 @@ function Jobs(props?: IProps) {
                 <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/create`} component={PendingJobsCreate} />
                 <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/fix/:id`} component={PendingJobsCreate} />
                 <ErrorBoundaryRoute exact path={`${path + routePath.PENDING_JOBS}/copy/:id`} component={PendingJobsCreate} />
-                <ErrorBoundaryRoute exact path={`${path + routePath.JOB_ANNOUNCEMENTS + routePath.APPLY}/:id`} component={JobAnnouncementsApply} />
-                <ErrorBoundaryRoute exact path={`${path + routePath.JOB_ANNOUNCEMENTS + routePath.LIST}`} component={JobAnnouncementsList} />
+                <ErrorBoundaryRoute exact path={`${path + routePath.APPLY}/:id`} component={JobAnnouncementsApply} />
+                <ErrorBoundaryRoute exact path={`${path + routePath.LIST}`} component={JobAnnouncementsList} />
             </Switch>
         </>
     )

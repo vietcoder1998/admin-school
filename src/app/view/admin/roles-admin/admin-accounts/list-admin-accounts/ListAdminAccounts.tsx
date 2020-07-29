@@ -218,7 +218,7 @@ class ListAdminAccounts extends PureComponent<IListAdminAccountsProps, IListAdmi
             <>
                 <div>
                     <h5>
-                        Danh sách admin
+                        Danh sách admin ({totalItems})
                         <Button
                             onClick={() => {
                             }}
