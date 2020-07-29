@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs, Input } from 'antd';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -65,11 +65,11 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         const panes = [
             {
                 title: 'Mặc định',
-                content: this.tabDefault({loading: false, match: this.props.match}),
+                content: this.tabDefault({ loading: false, match: this.props.match }),
                 key: '3',
                 closable: false,
             },
-            { title: 'Tab 1', content: 'Content of Tab 1', key: '1' },
+            { title: <Input />, content: <DefaultBanner />, key: '1' },
             { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
         ];
         this.state = {
@@ -323,31 +323,36 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             onEdit={this.onEdit}
                         >
                             {this.state.panes.map(pane => (
-                                <Tabs.TabPane tab={pane.title} key={pane.key} closable={pane.closable}>                        <Breadcrumb
-                                    style={{ padding: 20 }}
+                                <Tabs.TabPane
+                                    tab={pane.title}
+                                    key={pane.key}
+                                    closable={pane.closable}
                                 >
-                                    <Breadcrumb.Item >
-                                        <a href='/admin' >
-                                            <Icon type="home" />
+                                    <Breadcrumb
+                                        style={{ padding: 20 }}
+                                    >
+                                        <Breadcrumb.Item >
+                                            <a href='/admin' >
+                                                <Icon type="home" />
                                         Trang chủ
                                     </a>
-                                    </Breadcrumb.Item>
-                                    {data_breakcumb.map((item: any) => {
-                                        let newBreakCump = null;
-                                        breakCumb.forEach((item_brk: IBrk, index: number) => {
-                                            if (item_brk.label === item) {
-                                                newBreakCump = (
-                                                    <Breadcrumb.Item key={index}>
-                                                        {item_brk.icon ? <Icon type={item_brk.icon} style={{ margin: 3 }} /> : null}
-                                                        {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
-                                                    </Breadcrumb.Item>
-                                                )
-                                            }
-                                        })
+                                        </Breadcrumb.Item>
+                                        {data_breakcumb.map((item: any) => {
+                                            let newBreakCump = null;
+                                            breakCumb.forEach((item_brk: IBrk, index: number) => {
+                                                if (item_brk.label === item) {
+                                                    newBreakCump = (
+                                                        <Breadcrumb.Item key={index}>
+                                                            {item_brk.icon ? <Icon type={item_brk.icon} style={{ margin: 3 }} /> : null}
+                                                            {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
+                                                        </Breadcrumb.Item>
+                                                    )
+                                                }
+                                            })
 
-                                        return newBreakCump
-                                    })}
-                                </Breadcrumb>
+                                            return newBreakCump
+                                        })}
+                                    </Breadcrumb>
                                     {pane.content}
                                 </Tabs.TabPane>
                             ))}
