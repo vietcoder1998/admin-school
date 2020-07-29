@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs } from 'antd';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -24,6 +24,8 @@ import Connect from './connect';
 //@ts-ignore
 import WorksvnBanner from "../../../assets/image/worksvn-banner.jpg";
 import Jobs from './jobs';
+import { PendingJobs } from '../../../redux/reducers/pending-jobs';
+import PendingJobsList from './jobs/pending-jobs-list/PendingJobsList';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
@@ -36,6 +38,9 @@ interface AdminState {
     data_breakcumb: Array<string>
     loading?: boolean;
     showCas?: boolean;
+    api?: string;
+    activeKey?: string;
+    panes?: any;
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -57,14 +62,63 @@ interface AdminProps extends StateProps, DispatchProps {
 class Admin extends PureComponent<AdminProps, AdminState> {
     constructor(props: any) {
         super(props);
+        const panes = [
+            {
+                title: 'Mặc định',
+                content: this.tabDefault({loading: false, match: this.props.match}),
+                key: '3',
+                closable: false,
+            },
+            { title: 'Tab 1', content: 'Content of Tab 1', key: '1' },
+            { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
+        ];
         this.state = {
             show_menu: false,
             location: "/",
             data_breakcumb: [],
             loading: false,
-            showCas: false
+            showCas: false,
+            api: null,
+            activeKey: panes[0].key,
+            panes,
         }
     }
+
+    newTabIndex = 0;
+
+    add = () => {
+        const { panes } = this.state;
+        const activeKey = `newTab${this.newTabIndex++}`;
+        panes.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey });
+        this.setState({ panes, activeKey });
+    };
+
+    remove = targetKey => {
+        let { activeKey } = this.state;
+        let lastIndex;
+        this.state.panes.forEach((pane, i) => {
+            if (pane.key === targetKey) {
+                lastIndex = i - 1;
+            }
+        });
+        const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+        if (panes.length && activeKey === targetKey) {
+            if (lastIndex >= 0) {
+                activeKey = panes[lastIndex].key;
+            } else {
+                activeKey = panes[0].key;
+            }
+        }
+        this.setState({ panes, activeKey });
+    };
+
+    onChange = activeKey => {
+        this.setState({ activeKey });
+    };
+
+    onEdit = (targetKey, action) => {
+        this[action](targetKey);
+    };
 
     async componentDidMount() {
         await this.props.getProfileAdmin(localStorage.getItem('userID'));
@@ -103,8 +157,27 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         window.removeEventListener("scroll", () => { });
     }
 
+
+    tabDefault = ({ loading, match }) => (<Row>
+        {/* <Col sm={1} md={1} lg={2}></Col> */}
+        <Col sm={24} md={24} lg={24}>
+            {!loading ? <Switch>
+                <ErrorBoundaryRoute exact path={match.url || 'admin'} component={DefaultBanner} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.JOBS}`} component={Jobs} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.ANNOUNCEMENT}`} component={Announcement} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.DATA}`} component={Data} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.ROLES}`} component={RoleAdmins} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.USER}`} component={User} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.EVENT}`} component={Event} />
+                <ErrorBoundaryRoute path={`${match.url + routePath.CONNECT}`} component={Connect} />
+            </Switch> : <Loading />}
+        </Col >
+        {/* <Col sm={1} md={1} lg={2}></Col> */}
+    </Row>)
+
+
     render() {
-        let { show_menu, data_breakcumb, loading, showCas } = this.state;
+        let { show_menu, data_breakcumb, loading, showCas, api } = this.state;
         let { match } = this.props;
         let name = localStorage.getItem("name");
         if (name && name.length > 5) {
@@ -122,6 +195,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         }, 300);
                     }}
                 />
+
                 <Layout>
                     <Header
                         style={{
@@ -167,9 +241,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             showSearch={true}
                             options={routeOption}
                             onChange={
-                                (event: any) => {
-                                    mapApiFolder(event);
-                                }
+                                (event: any) => this.setState({ api: mapApiFolder(event) })
                             }
                         />
                         <Tooltip title={"Cập nhật phiên bản"}>
@@ -244,47 +316,43 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             border: "solid #80808036 1px"
                         }}
                     >
-                        <Breadcrumb
-                            style={{ padding: 20 }}
+                        <Tabs
+                            onChange={this.onChange}
+                            activeKey={this.state.activeKey}
+                            type="editable-card"
+                            onEdit={this.onEdit}
                         >
-                            <Breadcrumb.Item >
-                                <a href='/admin' >
-                                    <Icon type="home" />
-                                    Trang chủ
-                                </a>
-                            </Breadcrumb.Item>
-                            {data_breakcumb.map((item: any) => {
-                                let newBreakCump = null;
-                                breakCumb.forEach((item_brk: IBrk, index: number) => {
-                                    if (item_brk.label === item) {
-                                        newBreakCump = (
-                                            <Breadcrumb.Item key={index}>
-                                                {item_brk.icon ? <Icon type={item_brk.icon} style={{ margin: 3 }} /> : null}
-                                                {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
-                                            </Breadcrumb.Item>
-                                        )
-                                    }
-                                })
+                            {this.state.panes.map(pane => (
+                                <Tabs.TabPane tab={pane.title} key={pane.key} closable={pane.closable}>                        <Breadcrumb
+                                    style={{ padding: 20 }}
+                                >
+                                    <Breadcrumb.Item >
+                                        <a href='/admin' >
+                                            <Icon type="home" />
+                                        Trang chủ
+                                    </a>
+                                    </Breadcrumb.Item>
+                                    {data_breakcumb.map((item: any) => {
+                                        let newBreakCump = null;
+                                        breakCumb.forEach((item_brk: IBrk, index: number) => {
+                                            if (item_brk.label === item) {
+                                                newBreakCump = (
+                                                    <Breadcrumb.Item key={index}>
+                                                        {item_brk.icon ? <Icon type={item_brk.icon} style={{ margin: 3 }} /> : null}
+                                                        {!item_brk.disable ? <a href={item_brk.url} >{item_brk.name}</a> : <label>{item_brk.name}</label>}
+                                                    </Breadcrumb.Item>
+                                                )
+                                            }
+                                        })
 
-                                return newBreakCump
-                            })}
-                        </Breadcrumb>
-                        <Row>
-                            {/* <Col sm={1} md={1} lg={2}></Col> */}
-                            <Col sm={24} md={24} lg={24}>
-                                {!loading ? <Switch>
-                                    <ErrorBoundaryRoute exact path={match.url || 'admin'} component={DefaultBanner} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.JOBS}`} component={Jobs} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.ANNOUNCEMENT}`} component={Announcement} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.DATA}`} component={Data} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.ROLES}`} component={RoleAdmins} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.USER}`} component={User} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.EVENT}`} component={Event} />
-                                    <ErrorBoundaryRoute path={`${match.url + routePath.CONNECT}`} component={Connect} />
-                                </Switch> : <Loading />}
-                            </Col >
-                            {/* <Col sm={1} md={1} lg={2}></Col> */}
-                        </Row>
+                                        return newBreakCump
+                                    })}
+                                </Breadcrumb>
+                                    {pane.content}
+                                </Tabs.TabPane>
+                            ))}
+                        </Tabs>
+
                     </Content>
                 </Layout>
             </Layout >

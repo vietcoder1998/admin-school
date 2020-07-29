@@ -969,7 +969,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     />
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={5} xl={5} xxl={5}>
-                                    <IptLetterP value={"Phone"} />
+                                    <IptLetterP value={"Số điện thoại"} />
                                     <Search
                                         placeholder="Tất cả"
                                         style={{ width: "100%" }}
