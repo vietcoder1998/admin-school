@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs, Input } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs, Input, Affix } from 'antd';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -22,15 +22,17 @@ import Event from './event';
 import Connect from './connect';
 
 //@ts-ignore
-import WorksvnBanner from "../../../assets/image/worksvn-banner.jpg";
 import Jobs from './jobs';
 import { PendingJobs } from '../../../redux/reducers/pending-jobs';
 import PendingJobsList from './jobs/pending-jobs-list/PendingJobsList';
+import DetailRouter from '../../../routes/DetailRouter';
+import DefaultBanner from '../layout/common/DefaultBanner';
+import rtCpn from '../../../routes/DetailRouter';
 
 const Switch = require("react-router-dom").Switch;
 const { Content, Header } = Layout;
 //@ts-ignore
-const DefaultBanner = () => <div style={{ width: '100%', textAlign: 'center', padding: 'calc(50vh - 206px) 20px' }}><img alt="worksvn banner" src={WorksvnBanner} /></div>
+
 
 interface AdminState {
     show_menu: boolean;
@@ -41,6 +43,7 @@ interface AdminState {
     api?: string;
     activeKey?: string;
     panes?: any;
+    content?: JSX.Element;
 }
 
 interface AdminProps extends StateProps, DispatchProps {
@@ -66,11 +69,18 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             {
                 title: 'Mặc định',
                 content: this.tabDefault({ loading: false, match: this.props.match }),
-                key: '3',
+                key: '0',
                 closable: false,
+                find: true,
+                api: null,
             },
-            { title: <Input />, content: <DefaultBanner />, key: '1' },
-            { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
+            {
+                title: 'Tab1',
+                content: <DefaultBanner />,
+                key: '1',
+                api: null,
+                find: false,
+            },
         ];
         this.state = {
             show_menu: false,
@@ -78,18 +88,38 @@ class Admin extends PureComponent<AdminProps, AdminState> {
             data_breakcumb: [],
             loading: false,
             showCas: false,
-            api: null,
+            api: '/admin',
             activeKey: panes[0].key,
             panes,
         }
     }
 
     newTabIndex = 0;
+    api = "";
+    content = null;
+
+    find = () => {
+        return <Cascader
+            placeholder="Tìm kiếm thư mục"
+            showSearch={true}
+            options={routeOption}
+            onChange={
+                (event: any) => {
+                    let api = mapApiFolder(event);
+                    const { panes, activeKey } = this.state;
+                    panes[activeKey].content = rtCpn({ route: api });
+                    panes[activeKey].title = api;
+                    this.setState({ panes });
+                    this.forceUpdate();
+                }
+            }
+        />
+    }
 
     add = () => {
         const { panes } = this.state;
-        const activeKey = `newTab${this.newTabIndex++}`;
-        panes.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey });
+        const activeKey = `newkey${panes.length+1}`
+        panes.push({ title: 'New Tab', content: <DefaultBanner />, key: activeKey, show: true });
         this.setState({ panes, activeKey });
     };
 
@@ -113,7 +143,19 @@ class Admin extends PureComponent<AdminProps, AdminState> {
     };
 
     onChange = activeKey => {
-        this.setState({ activeKey });
+        let { panes } = this.state;
+        console.log(activeKey);
+
+        let newPanes = panes.map((item, index) => {
+            if (item.key === activeKey) {
+                item.find = true;
+            } else {
+                item.find = false;
+            }
+
+            return item;
+        })
+        this.setState({ activeKey, panes: newPanes });
     };
 
     onEdit = (targetKey, action) => {
@@ -157,12 +199,11 @@ class Admin extends PureComponent<AdminProps, AdminState> {
         window.removeEventListener("scroll", () => { });
     }
 
-
     tabDefault = ({ loading, match }) => (<Row>
         {/* <Col sm={1} md={1} lg={2}></Col> */}
         <Col sm={24} md={24} lg={24}>
             {!loading ? <Switch>
-                <ErrorBoundaryRoute exact path={match.url || 'admin'} component={DefaultBanner} />
+                <ErrorBoundaryRoute exact path={null || '/admin'} component={DefaultBanner} />
                 <ErrorBoundaryRoute path={`${match.url + routePath.JOBS}`} component={Jobs} />
                 <ErrorBoundaryRoute path={`${match.url + routePath.ANNOUNCEMENT}`} component={Announcement} />
                 <ErrorBoundaryRoute path={`${match.url + routePath.DATA}`} component={Data} />
@@ -241,7 +282,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             showSearch={true}
                             options={routeOption}
                             onChange={
-                                (event: any) => this.setState({ api: mapApiFolder(event) })
+                                (event: any) => window.location.href =  mapApiFolder(event) 
                             }
                         />
                         <Tooltip title={"Cập nhật phiên bản"}>
@@ -324,7 +365,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                         >
                             {this.state.panes.map(pane => (
                                 <Tabs.TabPane
-                                    tab={pane.title}
+                                    tab={!pane.find || pane.key === '0' ? pane.title : this.find()}
                                     key={pane.key}
                                     closable={pane.closable}
                                 >
@@ -333,7 +374,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                     >
                                         <Breadcrumb.Item >
                                             <a href='/admin' >
-                                                <Icon type="home" />
+                                        <Icon type="home" />
                                         Trang chủ
                                     </a>
                                         </Breadcrumb.Item>
@@ -357,7 +398,6 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                                 </Tabs.TabPane>
                             ))}
                         </Tabs>
-
                     </Content>
                 </Layout>
             </Layout >

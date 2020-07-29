@@ -375,7 +375,8 @@ export const mapApiFolder = (arr?: Array<String>) => {
     if (arr && arr.length > 0) {
         let route = routePath.ADMIN;
         arr.forEach((item, index) => { route += item });
-        window.location.href = route;
+        // window.location.href = route;
+        console.log(route);
         return route;
     }
 }
