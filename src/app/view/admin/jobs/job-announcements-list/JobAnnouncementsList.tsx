@@ -567,7 +567,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 break;
             case TYPE.JOB_FILTER.employerID:
                 if (value) {
-                    let data = listEmployer.filter((item: IEmployer, index: number) => { return item.employerName === event });
+                    let data = listEmployer.filter((item: IEmployer, i: number) => { return (item.employerName+i) === value });
                     if (data.length > 0) {
                         value = data[0].id
                     }
@@ -994,7 +994,9 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         <Option key={1} value={null}>Tất cả</Option>
                                         {
                                             listEmployer && listEmployer.map((item?: IEmController, i?: any) =>
-                                                (<Option key={item.id} value={item.employerName}>{item.employerName + '(' + item.email + ')'} </Option>)
+                                                (
+                                                    <Option key={item.id} value={item.employerName+i}>{item.employerName + '(' + item.email + ')'} </Option>
+                                                )
                                             )
                                         }
                                     </Select>

@@ -482,8 +482,10 @@ class PendingJobsCreate extends Component<IProps, IState> {
                     <InputTitle
                         title="Chọn loại ngôn ngữ"
                         widthLabel="200px"
+                        id={"lg"}
                     >
                         <Select
+                            id={"lg"}
                             mode="multiple"
                             size="default"
                             placeholder="ex: English, Vietnamese"

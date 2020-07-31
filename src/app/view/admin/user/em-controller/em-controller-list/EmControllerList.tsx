@@ -16,9 +16,8 @@ import "./EmControllerList.scss";
 import { timeConverter } from "../../../../../../utils/convertTime";
 import { IAppState } from "../../../../../../redux/store/reducer";
 import { REDUX_SAGA, REDUX } from "../../../../../../const/actions";
-import { _requestToServer } from "../../../../../../services/exec";
-import { DELETE, PUT } from "../../../../../../const/method";
-import { EM_CONTROLLER, USER_CONTROLLER } from "../../../../../../services/api/private.api";
+import { DELETE, PUT, POST } from "../../../../../../const/method";
+import { EM_CONTROLLER, USER_CONTROLLER, EMPLOYER, EVENT_SCHOOLS } from "../../../../../../services/api/private.api";
 import { TYPE } from "../../../../../../const/type";
 import { IptLetterP } from "../../../../layout/common/Common";
 import {
@@ -35,8 +34,15 @@ import IImportCan from "../../../../../../models/import-can";
 import EmInsertExels from "./EmInsertExels";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 import Search from "antd/lib/input/Search";
+import { IJobEmployerServices } from "../../../../../../models/job-employer-services";
+import TextArea from "antd/lib/input/TextArea";
+import { IEmployer } from "../../../../../../models/employers";
+import { ISchool } from "../../../../../../models/schools";
+import { IEventEm } from "../../../../../../models/event-em";
+import { _requestToServer } from "../../../../../../services/exec";
+import JobEmList from "./JobEmList";
 
-interface IEmControllerListProps extends StateProps, DispatchProps {
+interface IProps extends StateProps, DispatchProps {
   match?: any;
   history?: any;
   location?: any;
@@ -50,7 +56,7 @@ interface IEmControllerListProps extends StateProps, DispatchProps {
   importFile?: (params?: IImportCan) => any;
 }
 
-interface IEmControllerListState {
+interface IState {
   dataTable?: Array<any>;
   search?: any;
   pageIndex?: number;
@@ -66,19 +72,22 @@ interface IEmControllerListState {
   openImport?: boolean;
   visible?: boolean;
   newPassword?: string;
+  emsBody?: IJobEmployerServices;
+  employerServicesList?: IEmployer[];
+  schoolList?: ISchool[];
+  eventList?: IEventEm[];
+  esid?: string;
+  evid?: string;
 }
 
-class EmControllerList extends PureComponent<
-  IEmControllerListProps,
-  IEmControllerListState
-  > {
+class EmControllerList extends PureComponent<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
       dataTable: [],
       pageIndex: 0,
       pageSize: 10,
-      showModal: false,
+      showModal: true,
       loading: false,
       id: null,
       loadingTable: true,
@@ -90,12 +99,33 @@ class EmControllerList extends PureComponent<
         profileVerified: null,
         ids: [],
       },
+      esid: null,
+      evid: null,
       listUserController: [],
       openImport: false,
       visible: false,
       newPassword: null,
+      emsBody: {
+        allEmployers: null,
+        employerIDs: [],
+        message: null,
+        jobLimitExists: null,
+        topLimit: null,
+        inDayLimit: null,
+        highlightLimit: null,
+        titleHighlightLimit: null,
+        jobLimit: null,
+        unlockLimit: null
+      },
+      employerServicesList: [
+
+      ]
     };
   }
+
+  employerServicesList = [
+
+  ]
 
   EditToolAction = () => {
     let { id } = this.state;
@@ -215,14 +245,9 @@ class EmControllerList extends PureComponent<
     },
   ];
 
-  onToggleDrawer = () => {
-    let { showModal } = this.state;
-    this.setState({ showModal: !showModal });
-  };
-
   static getDerivedStateFromProps(
-    nextProps?: IEmControllerListProps,
-    prevState?: IEmControllerListState
+    nextProps?: IProps,
+    prevState?: IState
   ) {
     if (
       nextProps.listUserController &&
@@ -286,6 +311,7 @@ class EmControllerList extends PureComponent<
     }
   };
 
+
   onChangePw = async () => {
     let { newPassword, id } = this.state;
     let api = USER_CONTROLLER + `/${id}/password`;
@@ -344,6 +370,7 @@ class EmControllerList extends PureComponent<
       default:
         break;
     }
+
     await _requestToServer(
       method,
       api,
@@ -412,6 +439,7 @@ class EmControllerList extends PureComponent<
 
     return (
       <>
+        <JobEmList />
         <DrawerConfig width={"50vw"} title={"Thông tin nhà tuyển dụng"}>
           <EmInfo data={employerDetail} />
           <Button
@@ -462,16 +490,15 @@ class EmControllerList extends PureComponent<
         <div className="common-content">
           <h5>
             Danh sách nhà tuyển dụng ({totalItems})
-            {/* <Button
-              icon="filter"
-              onClick={() => this.searchFilter()}
+            <Button
+              icon="dollar"
               type="primary"
               style={{
                 float: "right",
               }}
             >
-              Lọc
-            </Button> */}
+              Dịch vụ tuyển dụng
+            </Button>
             <Button
               icon="upload"
               onClick={() => this.handleVisible()}
@@ -552,7 +579,7 @@ class EmControllerList extends PureComponent<
                     Có
                 </Select.Option>
                   <Select.Option key="3" value={TYPE.FALSE}>
-                    Không 
+                    Không
                 </Select.Option>
                 </Select>
               </Col>

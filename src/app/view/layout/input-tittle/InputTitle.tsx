@@ -20,6 +20,7 @@ interface IInputitleProps {
     widthSelect?: string;
     onChange?: Function;
     onSearch?: Function;
+    id?: string;
 }
 
 interface INewSelect {
@@ -31,6 +32,7 @@ interface INewSelect {
     onChange?: Function;
     onSearch?: Function;
     style?: CSSProperties;
+    id?: string;
 }
 
 interface INewInput {
@@ -39,6 +41,7 @@ interface INewInput {
     defaultValue?: string;
     widthInput?: string;
     onChange?: Function;
+    id?: string;
 }
 
 interface INewNewTextArea {
@@ -48,10 +51,11 @@ interface INewNewTextArea {
     widthInput?: string;
     onChange?: Function;
     rows?: number;
+    id?: string;
 }
 
 export const NewInput = (props: INewInput) => {
-    let { defaultValue, value, placeholder, onChange, widthInput } = props;
+    let { defaultValue, value, placeholder, onChange, widthInput, id } = props;
 
     return (
         <Input
@@ -65,7 +69,7 @@ export const NewInput = (props: INewInput) => {
 };
 
 export const NewTextArea = (props: INewNewTextArea) => {
-    let { defaultValue, value, placeholder, onChange, widthInput, rows } = props;
+    let { defaultValue, value, placeholder, onChange, widthInput, rows, id } = props;
     return (
         <TextArea
             placeholder={placeholder}
@@ -80,7 +84,6 @@ export const NewTextArea = (props: INewNewTextArea) => {
 
 export const NewSelect = (props: INewSelect) => {
     let { placeholder, listValue, onChange, widthSelect, defaultValue, style, value, onSearch } = props;
-
     if (value) {
         return (
             <Select
@@ -136,14 +139,19 @@ export const InputTitle = (props: IInputitleProps) => {
         widthSelect,
         onSearch,
         rows,
+        id
     } = props;
     let ComponentReturn;
-    const defaultStyle = {
-    };
+    if (!id) {
+        id = randomID(6);
+    }
+    const defaultStyle = {};
+    
     switch (props.type) {
         case TYPE.INPUT:
             ComponentReturn = (
                 <NewInput
+                    id={id}
                     widthInput={widthInput}
                     value={value}
                     defaultValue={defaultValue}
@@ -155,6 +163,7 @@ export const InputTitle = (props: IInputitleProps) => {
         case TYPE.TEXT_AREA:
             ComponentReturn = (
                 <NewTextArea
+                    id={id}
                     widthInput={widthInput}
                     value={value}
                     defaultValue={defaultValue}
@@ -163,10 +172,10 @@ export const InputTitle = (props: IInputitleProps) => {
                     rows={rows}
                 />);
             break;
-
         case TYPE.SELECT:
             ComponentReturn = (
                 <NewSelect
+                    id={id}
                     value={value}
                     defaultValue={defaultValue}
                     listValue={listValue}
@@ -197,7 +206,7 @@ export const InputTitle = (props: IInputitleProps) => {
                         width: !props.widthLabel ? "150px" : props.widthLabel
                     }}
                 >
-                    {props.title}
+                    <label htmlFor={id}> {props.title}</label>
                 </div>
                 {children ? children : ComponentReturn}
             </div>)

@@ -35,7 +35,7 @@ export const convertStringToArray = (value?: string): Array<IArrReturn> => {
         return arr;
 
     } else {
-        arr.push({ index: 1, value: "-" + value });
+        arr.push({ index: 1, value: " " + value });
         return arr;
     }
 
