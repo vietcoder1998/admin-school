@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs, Input, Affix } from 'antd';
+import { Layout, Icon, Avatar, Breadcrumb, Row, Col, Tooltip, Cascader, BackTop, Tabs } from 'antd';
 
 import MenuNavigation from './menu-navigation/MenuNavigation';
 import ErrorBoundaryRoute from '../../../routes/ErrorBoundaryRoute';
@@ -23,9 +23,6 @@ import Connect from './connect';
 
 //@ts-ignore
 import Jobs from './jobs';
-import { PendingJobs } from '../../../redux/reducers/pending-jobs';
-import PendingJobsList from './jobs/pending-jobs-list/PendingJobsList';
-import DetailRouter from '../../../routes/DetailRouter';
 import DefaultBanner from '../layout/common/DefaultBanner';
 import rtCpn from '../../../routes/DetailRouter';
 
@@ -218,8 +215,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
 
 
     render() {
-        let { show_menu, data_breakcumb, loading, showCas, api } = this.state;
-        let { match } = this.props;
+        let { show_menu, data_breakcumb, loading, showCas } = this.state;
         let name = localStorage.getItem("name");
         if (name && name.length > 5) {
             name = name.slice(0, 5) + "...";
@@ -286,7 +282,7 @@ class Admin extends PureComponent<AdminProps, AdminState> {
                             }
                         />
                         <Tooltip title={"Cập nhật phiên bản"}>
-                            <ClearCache auto={true} duration={6000}>
+                            <ClearCache auto={true} duration={10000}>
                                 {({ isLatestVersion, emptyCacheStorage }) =>
                                     <div>
                                         {!isLatestVersion && (

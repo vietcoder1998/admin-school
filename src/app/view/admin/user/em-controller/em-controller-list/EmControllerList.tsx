@@ -16,8 +16,8 @@ import "./EmControllerList.scss";
 import { timeConverter } from "../../../../../../utils/convertTime";
 import { IAppState } from "../../../../../../redux/store/reducer";
 import { REDUX_SAGA, REDUX } from "../../../../../../const/actions";
-import { DELETE, PUT, POST } from "../../../../../../const/method";
-import { EM_CONTROLLER, USER_CONTROLLER, EMPLOYER, EVENT_SCHOOLS } from "../../../../../../services/api/private.api";
+import { DELETE, PUT } from "../../../../../../const/method";
+import { EM_CONTROLLER, USER_CONTROLLER } from "../../../../../../services/api/private.api";
 import { TYPE } from "../../../../../../const/type";
 import { IptLetterP } from "../../../../layout/common/Common";
 import {
@@ -35,12 +35,10 @@ import EmInsertExels from "./EmInsertExels";
 import { InputTitle } from "../../../../layout/input-tittle/InputTitle";
 import Search from "antd/lib/input/Search";
 import { IJobEmployerServices } from "../../../../../../models/job-employer-services";
-import TextArea from "antd/lib/input/TextArea";
 import { IEmployer } from "../../../../../../models/employers";
 import { ISchool } from "../../../../../../models/schools";
 import { IEventEm } from "../../../../../../models/event-em";
 import { _requestToServer } from "../../../../../../services/exec";
-import JobEmList from "./JobEmList";
 
 interface IProps extends StateProps, DispatchProps {
   match?: any;
@@ -439,7 +437,6 @@ class EmControllerList extends PureComponent<IProps, IState> {
 
     return (
       <>
-        <JobEmList />
         <DrawerConfig width={"50vw"} title={"Thông tin nhà tuyển dụng"}>
           <EmInfo data={employerDetail} />
           <Button

@@ -29,6 +29,7 @@ import JobDetail from '../../../layout/job-detail/JobDetail';
 import JobSuitableCandidate from '../../../layout/job-suitable-candidate/JobSuitableCandidate';
 import CandidatetInfo from '../../../layout/candidate-info/CandidatetInfo';
 import Search from 'antd/lib/input/Search';
+import JobEmList from './JobEmList';
 
 let { Option } = Select;
 let CheckboxGroup = Checkbox.Group;
@@ -111,6 +112,7 @@ interface IJobAnnouncementsListProps extends StateProps, DispatchProps {
     getListEmployer: (body?: any, pageIndex?: number, pageSize?: number) => any;
     getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) => any;
     getListSchools: Function;
+    getListEventSchools: Function;
     handleDrawer: Function;
     handleModal: Function;
     getCanDetail?: Function;
@@ -150,6 +152,7 @@ interface IJobAnnouncementsListState {
     eid?: string;
     opjd?: boolean;
     jid?: string;
+    showSv?: boolean;
 };
 
 class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJobAnnouncementsListState> {
@@ -202,6 +205,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             type_modal: null,
             eid: null,
             jid: null,
+            showSv: false,
         };
     }
 
@@ -494,7 +498,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
     };
 
     async componentDidMount() {
-        await this.props.getListEmployer(undefined, 0, 10)
+        await this.props.getListEmployer(undefined, 0, 10);
+        await this.props.getListSchools(undefined, 0, 10);
         await this.searchJobAnnouncement();
     };
 
@@ -717,6 +722,11 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
         await this.props.handleModal();
     }
 
+    onToggleSv = () => {
+        let { showSv } = this.state;
+        this.setState({ showSv: !showSv })
+    }
+
     render() {
         let {
             dataTable,
@@ -731,7 +741,8 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             body,
             loading,
             opjd,
-            jid
+            jid,
+            showSv
         } = this.state;
 
         let {
@@ -741,10 +752,12 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
             listEmployerBranches,
             listJobService,
             listEmployer,
+            listSchool,
+            listEventSchools,
             modalState,
             jobDetail,
             jobSuitableCandidates,
-            CanDetail
+            CanDetail,
         } = this.props;
 
         let homeExpiration = jobAnnouncementDetail.priority.homeExpiration;
@@ -754,6 +767,16 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
 
         return (
             <>
+                <JobEmList
+                    listEm={listEmployer}
+                    listSchool={listSchool}
+                    listEventSchool={listEventSchools}
+                    getListEmployer={this.props.getListEmployer}
+                    getListSchools={this.props.getListSchools}
+                    getListEventSchools={this.props.getListEventSchools}
+                    showSv={showSv}
+                    onToggleSv={this.onToggleSv}
+                />
                 <Modal
                     visible={modalState.openModal}
                     title={"Workvn thông báo"}
@@ -945,16 +968,16 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                     <div className="common-content">
                         <h5>
                             Quản lý bài đăng {`(${totalItems})`}
-                            {/* <Button
-                                onClick={() => this.searchJobAnnouncement()}
+                            <Button
+                                onClick={() => this.onToggleSv()}
                                 type="primary"
                                 style={{
                                     float: "right",
                                     margin: "0px 10px",
                                 }}
-                                icon={loadingTable ? "loading" : "filter"}
-                                children="Lọc"
-                            /> */}
+                                icon={loading ? "loading" : "dollar"}
+                                children="Kích hoạt hàng loạt"
+                            />
                             <Link to={routeLink.PENDING_JOBS + routePath.CREATE} >
                                 <Button
                                     type="primary"
@@ -969,7 +992,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         </h5>
                         <div className="table-operations">
                             <Row >
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                                <Col xs={12} sm={12} md={8} lg={6} xl={6} xxl={6}>
                                     <IptLetterP value={"Email"} />
                                     <Search
                                         placeholder="Tất cả"
@@ -983,7 +1006,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         onPressEnter={(event: any) => this.searchJobAnnouncement()}
                                     />
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={5} xl={5} xxl={5}>
+                                <Col xs={12} sm={12} md={8} lg={5} xl={5} xxl={5}>
                                     <IptLetterP value={"Số điện thoại"} />
                                     <Search
                                         placeholder="Tất cả"
@@ -997,7 +1020,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         onPressEnter={(event: any) => this.searchJobAnnouncement()}
                                     />
                                 </Col>
-                                <Col xs={24} sm={12} md={16} lg={7} xl={7} xxl={7} >
+                                <Col xs={12} sm={12} md={16} lg={7} xl={7} xxl={7} >
                                     <IptLetterP value={"Tên nhà tuyển dụng"} />
                                     <Select
                                         showSearch
@@ -1016,7 +1039,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         }
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                <Col xs={12} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                     <IptLetterP value={"Loại công việc"} />
                                     <Select
                                         showSearch
@@ -1032,7 +1055,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         <Option value={TYPE.INTERNSHIP}>Thực tập sinh</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                <Col xs={12} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                     <IptLetterP value={"Ẩn/hiện"} />
                                     <Select
                                         showSearch
@@ -1048,7 +1071,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         <Option value={TYPE.FALSE}>Đang hiện</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <Col xs={12} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                     <IptLetterP value={"Tên việc đăng tuyển"} />
                                     <Select
                                         showSearch
@@ -1064,7 +1087,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         }
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <Col xs={12} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                     <IptLetterP value={"Chi nhánh"} />
                                     <Select
                                         showSearch
@@ -1083,7 +1106,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     </Select>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} >
+                                <Col xs={12} sm={12} md={8} lg={6} xl={6} xxl={6} >
                                     <IptLetterP value={"Gói dịch vụ"} />
                                     <Cascader
                                         placeholder="Không chọn gói"
@@ -1102,7 +1125,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         }
                                     />
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                <Col xs={12} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                     <IptLetterP value={"Hoạt động"} />
                                     <Select
                                         showSearch
@@ -1115,7 +1138,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         <Option value={TYPE.TRUE}>Hết hạn</Option>
                                     </Select>
                                 </Col>
-                                <Col xs={24} sm={12} md={8} lg={3} xl={3} xxl={3} >
+                                <Col xs={12} sm={12} md={8} lg={3} xl={3} xxl={3} >
                                     <IptLetterP value={"HSD dịch vụ"} />
                                     <Select
                                         showSearch
@@ -1131,7 +1154,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                     </Select>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8} >
+                                <Col xs={12} sm={12} md={8} lg={8} xl={8} xxl={8} >
                                     <IptLetterP value={"Chứa trạng thái ứng tuyển"} />
                                     <Checkbox
                                         indeterminate={un_checkbox}
@@ -1202,6 +1225,10 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
         dispatch({ type: REDUX_SAGA.STUDENTS.GET_STUDENT_DETAIl, id }),
     getListEmployer: (body?: string, pageIndex?: number, pageSize?: number) =>
         dispatch({ type: REDUX_SAGA.EMPLOYER.GET_EMPLOYER, body, pageIndex, pageSize }),
+    getListSchools: (body?: string, pageIndex?: number, pageSize?: number) =>
+        dispatch({ type: REDUX_SAGA.SCHOOLS.GET_SCHOOLS, body, pageIndex, pageSize }),
+    getListEventSchools: (body?: string, pageIndex?: number, pageSize?: number) =>
+        dispatch({ type: REDUX_SAGA.EVENT_SCHOOLS.GET_LIST_EVENT_SCHOOLS, body, pageIndex, pageSize }),
     getListJobSuitableCandidate: (jid?: string, pageIndex?: number, pageSize?: number) =>
         dispatch({ type: REDUX_SAGA.JOB_SUITABLE_CANDIDATE.GET_JOB_SUITABLE_CANDIDATE, jid, pageIndex, pageSize }),
 });
@@ -1212,6 +1239,8 @@ const mapStateToProps = (state: IAppState, ownProps: any) => ({
     listEmployerBranches: state.EmBranches.items,
     listJobService: state.JobServices,
     listEmployer: state.Employers.items,
+    listSchool: state.Schools.items,
+    listEventSchools: state.EventSchools.items,
     CanDetail: state.StudentDetail,
     jobAnnouncementDetail: state.JobAnnouncementDetail,
     modalState: state.MutilBox.modalState,

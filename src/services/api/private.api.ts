@@ -41,3 +41,4 @@ export const EVENT_SCHOOLS = '/api/admins/schools/events';
 export const WORKING_TOOLS = '/api/admins/data/workingTools';
 export const CONNECT_EM_SCHOOL = (id?: string) => `/api/admins/schools/${id}/connections/employers`;
 export const ADMIN = '/api/admins'
+export const EM_SERVICE = (evid?: string) => `/api/admins/employers${evid?('/schools/events/'+evid):''}/services`

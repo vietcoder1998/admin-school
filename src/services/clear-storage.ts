@@ -5,6 +5,7 @@ export default async function clearStorage() {
     localStorage.removeItem("userID");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("last_url");
 
     // let cookies = new Cookies();
     // await cookies.remove("actk", { path: "/" });

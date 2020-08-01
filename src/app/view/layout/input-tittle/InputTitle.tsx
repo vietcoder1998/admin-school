@@ -59,6 +59,7 @@ export const NewInput = (props: INewInput) => {
 
     return (
         <Input
+            id={id}
             placeholder={placeholder}
             defaultValue={defaultValue}
             style={{ width: widthInput ? widthInput : "auto" }}
@@ -72,6 +73,7 @@ export const NewTextArea = (props: INewNewTextArea) => {
     let { defaultValue, value, placeholder, onChange, widthInput, rows, id } = props;
     return (
         <TextArea
+            id={id}
             placeholder={placeholder}
             defaultValue={defaultValue}
             style={{ width: widthInput ? widthInput : "auto" }}
@@ -146,7 +148,7 @@ export const InputTitle = (props: IInputitleProps) => {
         id = randomID(6);
     }
     const defaultStyle = {};
-    
+
     switch (props.type) {
         case TYPE.INPUT:
             ComponentReturn = (

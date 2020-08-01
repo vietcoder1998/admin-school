@@ -5,7 +5,7 @@
  * @param typeReturn type param of arr_ex to return
  */
 
-export default function findIdWithValue  (arr_ex?: Array<any>, value?: any, param?: string, typeReturn?: string): any {
+export default function findIdWithValue  (arr_ex?: Array<any>, value?: any, param?: string, typeReturn?: string, i?:boolean): any {
     let result: any;
     if (value && arr_ex) {
         if (typeof value === "string" || typeof value === "number") {
@@ -20,7 +20,7 @@ export default function findIdWithValue  (arr_ex?: Array<any>, value?: any, para
             if (value && value !== []) {
                 let list_arr = [];
                 value.forEach((element: string | number, index: number) => {
-                    let new_arr = arr_ex.filter((item: any, index: number) => { return item[param] === element });
+                    let new_arr = arr_ex.filter((item: any, index: number) => { if(i) {return (item[param]+index)=== element}else return(item[param]===element) });
                     new_arr.forEach((item: any, index: any) => list_arr.push(item[typeReturn]));
                 });
 

@@ -535,9 +535,9 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
         } = this.state;
 
         let {
-            annoucement_detail,
+            AnnoucementDetail,
             totalItems,
-            list_annou_comment,
+            listAnnouComment,
             openDrawer
         } = this.props;
         return (
@@ -550,7 +550,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                     destroyOnClose={true}
                 >
                     {
-                        annoucement_detail.id ?
+                        AnnoucementDetail.id ?
                             <Tabs activeKey={tab_key} onChange={(event: any) => this.setState({ tab_key: event })}>
                                 <TabPane
                                     tab={
@@ -564,19 +564,19 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                                     }}
                                     key={"1"}
                                 >
-                                    <h5>{annoucement_detail.title}</h5>
+                                    <h5>{AnnoucementDetail.title}</h5>
                                     <div className="annou-edit-modal">
                                         <p>
                                             <Icon type="user" />
                                             <IptLetter
-                                                value={" " + annoucement_detail.admin.firstName + " " + annoucement_detail.admin.lastName} />
+                                                value={" " + AnnoucementDetail.admin.firstName + " " + AnnoucementDetail.admin.lastName} />
                                         </p>
                                         <p>
                                             <Icon type="calendar" />
-                                            <IptLetter value={timeConverter(annoucement_detail.createdDate, 1000)} />
+                                            <IptLetter value={timeConverter(AnnoucementDetail.createdDate, 1000)} />
                                         </p>
                                         <Rate disabled defaultValue={4} />
-                                        <div className="content-edit" dangerouslySetInnerHTML={{ __html: annoucement_detail.content }} />
+                                        <div className="content-edit" dangerouslySetInnerHTML={{ __html: AnnoucementDetail.content }} />
                                     </div>
                                 </TabPane>
                                 <TabPane
@@ -593,7 +593,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                                         className="demo-loadmore-list"
                                         loading={initLoading}
                                         loadMore={this.loadMore()}
-                                        dataSource={list_annou_comment}
+                                        dataSource={listAnnouComment}
                                         renderItem={(item: IAnnouComment) => {
                                             let sub_title = "";
                                             switch (item.userType) {
@@ -673,7 +673,7 @@ class AnnouncementList extends PureComponent<IAnnouncementListProps, IAnnounceme
                     handleClose={async () => this.toggleModalConfig()}
                 >
                     <div>
-                        Bạn muốn xóa bài viết: <IptLetter value={annoucement_detail.title} />
+                        Bạn muốn xóa bài viết: <IptLetter value={AnnoucementDetail.title} />
                     </div>
                 </ModalConfig>
                 <div className="common-content">
@@ -809,9 +809,9 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => ({
 const mapStateToProps = (state?: IAppState, ownProps?: any) => ({
     listAnnouTypes: state.AnnouTypes.items,
     listAnnoucements: state.Announcements.items,
-    annoucement_detail: state.AnnouncementDetail.data,
+    AnnoucementDetail: state.AnnouncementDetail.data,
     totalItems: state.Announcements.totalItems,
-    list_annou_comment: state.AnnouComments.items,
+    listAnnouComment: state.AnnouComments.items,
     openDrawer: state.MutilBox.drawerState.openDrawer,
     totalComments: state.AnnouComments.totalItems
 });

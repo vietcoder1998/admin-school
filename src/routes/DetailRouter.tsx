@@ -8,7 +8,7 @@ import UserControllerList from '../app/view/admin/user/user-controller/user-cont
 import EmControllerList from '../app/view/admin/user/em-controller/em-controller-list/EmControllerList';
 import SchoolsList from '../app/view/admin/user/schools/schools-list/SchoolsList';
 import StudentsList from '../app/view/admin/user/students/students-list/StudentsList';
-import EmSchool from '../app/view/admin/connect/em-school';
+// import EmSchool from '../app/view/admin/connect/em-school';
 import ListLanguages from '../app/view/admin/data/languages/list-languages/ListLanguages';
 import ListRegions from '../app/view/admin/data/regions/list-regions/ListRegions';
 import ListJobNames from '../app/view/admin/data/job-names/list-job-names/ListJobNames';
