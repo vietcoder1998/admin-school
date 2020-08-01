@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { REDUX_SAGA, REDUX } from '../../../../../const/actions';
-import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio, Empty, Popconfirm } from 'antd';
+import { Button, Table, Icon, Select, Row, Col, Cascader, Checkbox, Tooltip, Modal, Radio, Empty, Popconfirm, notification } from 'antd';
 import { timeConverter, momentToUnix } from '../../../../../utils/convertTime';
 import './JobAnnouncementsList.scss';
 import { TYPE } from '../../../../../const/type';
@@ -15,6 +15,7 @@ import DrawerConfig from '../../../layout/config/DrawerConfig';
 import { IJobAnnouncementDetail } from '../../../../../models/job-annoucement-detail';
 import { _requestToServer } from '../../../../../services/exec';
 import { DELETE, POST } from '../../../../../const/method';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
     JOB_ANNOUNCEMENTS,
     EM_CONTROLLER
@@ -396,6 +397,20 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                         twoToneColor="red"
                     />
                 </Popconfirm>
+                <Tooltip placement="top" title={"Xem chi tiết(sửa)"}>
+                    <CopyToClipboard
+                        onCopy={() => notification.info({ message: "Copy success" })}
+                        text={`https://works.vn/job-detail/${btoa(id)}`}
+                    >
+                        <Icon
+                            className='test'
+                            style={{ padding: "5px 5px", margin: 2 }}
+                            type="copy"
+                            theme="twoTone"
+                            twoToneColor="gray"
+                        />
+                    </CopyToClipboard>
+                </Tooltip>
             </>
         )
     }
@@ -567,7 +582,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 break;
             case TYPE.JOB_FILTER.employerID:
                 if (value) {
-                    let data = listEmployer.filter((item: IEmployer, i: number) => { return (item.employerName+i) === value });
+                    let data = listEmployer.filter((item: IEmployer, i: number) => { return (item.employerName + i) === value });
                     if (data.length > 0) {
                         value = data[0].id
                     }
@@ -995,7 +1010,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                                         {
                                             listEmployer && listEmployer.map((item?: IEmController, i?: any) =>
                                                 (
-                                                    <Option key={item.id} value={item.employerName+i}>{item.employerName + '(' + item.email + ')'} </Option>
+                                                    <Option key={item.id} value={item.employerName + i}>{item.employerName + '(' + item.email + ')'} </Option>
                                                 )
                                             )
                                         }

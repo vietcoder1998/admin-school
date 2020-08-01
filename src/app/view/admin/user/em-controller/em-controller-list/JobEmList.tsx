@@ -14,7 +14,7 @@ import { InputTitle } from '../../../../layout/input-tittle/InputTitle';
 
 interface IState {
     emsBody?: IJobEmployerServices;
-    employerServicesList?: IEmployer[];
+    emServicesList?: IEmployer[];
     schoolList?: ISchool[];
     eventList?: IEventEm[];
     esid?: string;
@@ -44,19 +44,19 @@ export default class JobEmList extends Component<IProps, IState>{
                 jobLimit: null,
                 unlockLimit: null
             },
-            employerServicesList: [
-
-            ],
+            emServicesList: [],
             evid: null,
             esid: null,
             schoolList: [],
             emList: [],
-            showModal: true
+            showModal: false
         }
+        this.emlist = this.state.emServicesList;
     }
 
+
     static getDerivedStateFromProps(props, state: IState) {
-        if (state.employerServicesList) {
+        if (state.emServicesList) {
             return { loading: true }
         }
     }
@@ -90,6 +90,7 @@ export default class JobEmList extends Component<IProps, IState>{
     };
 
     onSearchEm = async (employerName?: string) => {
+        this.setState({ loading: true })
         await _requestToServer(
             POST, EMPLOYER,
             { employerName },
@@ -100,8 +101,7 @@ export default class JobEmList extends Component<IProps, IState>{
             undefined, undefined, false, false
         ).then(res => {
             if (res && res.data) {
-                this.setState({ employerServicesList: res.data.items });
-                this.forceUpdate();
+                this.setState({ emServicesList: res.data.items }, () => this.forceUpdate());
             }
         });
     }
@@ -118,12 +118,12 @@ export default class JobEmList extends Component<IProps, IState>{
         );
 
         if (res && res.data) {
-            this.setState({ employerServicesList: res.data.items })
+            this.setState({ schoolList: res.data.items })
         }
     }
 
     onSearchEvent = async (employerName?: string) => {
-        let res = await _requestToServer(
+        await _requestToServer(
             POST, EMPLOYER,
             { employerName },
             {
@@ -131,22 +131,31 @@ export default class JobEmList extends Component<IProps, IState>{
                 pageSize: 10
             },
             undefined, undefined, false, false
-        );
-
-        if (res && res.data) {
-            this.setState({ employerServicesList: res.data.items })
-        }
+        ).then(res => {
+            if (res && res.data) {
+                this.setState({ eventList: res.data.items })
+            }
+        });
     };
+
+
+    async componentDidMount() {
+        this.onSearchEm();
+    }
 
     render() {
         let {
             showModal,
             emsBody,
-            employerServicesList,
+            emServicesList,
             schoolList,
             esid,
             evid,
         } = this.state;
+
+        let emOptions = emServicesList && emServicesList.map(
+            (item: IEmployer, index: number) => <Select.Option key={index} children={item.employerName} value={item.id} />
+        )
 
         return (
             <Modal
@@ -170,7 +179,6 @@ export default class JobEmList extends Component<IProps, IState>{
                                 this.setState({ esid })
                             }
                         }
-                        onSearch={event => this.onSearchSchool(event)}
                         style={{ width: '100%' }}
                     >
                         {/* {listEmployerOptions} */}
@@ -183,12 +191,11 @@ export default class JobEmList extends Component<IProps, IState>{
                 >
                     <Select
                         id={"lg"}
-                        mode="multiple"
                         size="default"
                         placeholder="ex: English, Vietnamese"
                         onChange={
                             (event: any) => {
-                                let newEmployerIDs = findIdWithValue(employerServicesList, event, "name", "id")
+                                let newEmployerIDs = findIdWithValue(emServicesList, event, "name", "id")
                                 emsBody.employerIDs = newEmployerIDs;
                                 this.setState({ emsBody })
                             }
@@ -196,12 +203,32 @@ export default class JobEmList extends Component<IProps, IState>{
                         onSearch={event => this.onSearchEm(event)}
                         style={{ width: '100%' }}
                     >
-                        {
 
-                            employerServicesList && employerServicesList.map(
-                                (item: IEmployer, index: number) => (<Select.Option children={item.employerName} value={item.id} />)
-                            )
+                    </Select>
+                </InputTitle>
+                <InputTitle
+                    title="Chọn sự kiện"
+                    widthLabel="200px"
+                    id={"lg"}
+                >
+                    <Select
+                        id={"lg"}
+                        mode="multiple"
+                        size="default"
+                        placeholder="ex: English, Vietnamese"
+                        showSearch={true}
+                        onChange={
+                            (event: any) => {
+                                let newEmployerIDs = findIdWithValue(emServicesList, event, "name", "id")
+                                emsBody.employerIDs = newEmployerIDs;
+                                this.setState({ emsBody })
+                            }
                         }
+                        onSearch={event => this.onSearchEm(event)}
+                        style={{ width: '100%' }}
+                        loading={this.state.loading}
+                    >
+                        {emOptions}
                     </Select>
                 </InputTitle>
                 <label htmlFor="message" children="Tin nhắn" />
