@@ -107,15 +107,6 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
             }
         }
 
-        if (nextProps.listBranches !== prevState.listBranches) {
-            let listData: any = [];
-            nextProps.listBranches.forEach((item: any) => listData.push({ value: item.id, label: item.name }));
-            return {
-                listBranches: nextProps.listBranches,
-                listData,
-            }
-        }
-
         return null;
     };
 
@@ -330,7 +321,7 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                     <Col md={20} lg={24} xl={18} xxl={12}>
                         <h5>
                             Danh sách chuyên ngành ({totalItems})
-                                <Button
+                            <Button
                                 type="primary"
                                 style={{
                                     float: "right",
@@ -338,31 +329,22 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                             >
                                 <Link to={routeLink.MAJORS + routePath.CREATE}>
                                     <Icon type="plus" />
-                                         Thêm mới
-                                    </Link>
+                                        Thêm mới
+                                </Link>
                             </Button>
                         </h5>
                         <Row>
-                            <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
-                                <IptLetterP value={"Tên chuyên ngành"} />
-                                <Search
-                                    placeholder="Tất cả"
-                                    style={{ width: "100%" }}
-                                    value={search}
-                                    onChange={(event: any) => {
-                                        this.setState({ search: event.target.value });
-                                    }}
-                                    onPressEnter={this.searchMajors}
-                                />
-                            </Col>
                             <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
                                 <IptLetterP value={"Chọn nhóm ngành"} />
                                 <Select
                                     placeholder="Tất cả"
                                     style={{ width: "100%" }}
                                     showSearch
-                                    onSearch={() => this.props.getListBranches(0)}
-                                    onChange={(event: any) => this.setState({ brnSearch: findIdWithValue(listBranches, event, "name", "id") })}
+                                    onSearch={event => this.props.getListBranches(0, 10, event)}
+                                    onChange={async (event: any) => {
+                                        await this.setState({ brnSearch: findIdWithValue(listBranches, event, "name", "id") })
+                                        await this.searchMajors();
+                                    }}
                                 >
                                     <Option value={null} children="Tất cả" />
                                     {
@@ -376,6 +358,18 @@ class ListMajors extends PureComponent<ListMajorsProps, ListMajorsState> {
                                             ) : ""
                                     }
                                 </Select>
+                            </Col>
+                            <Col sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                <IptLetterP value={"Tên chuyên ngành"} />
+                                <Search
+                                    placeholder="Tất cả"
+                                    style={{ width: "100%" }}
+                                    value={search}
+                                    onChange={(event: any) => {
+                                        this.setState({ search: event.target.value });
+                                    }}
+                                    onPressEnter={this.searchMajors}
+                                />
                             </Col>
                         </Row>
                         <Table
