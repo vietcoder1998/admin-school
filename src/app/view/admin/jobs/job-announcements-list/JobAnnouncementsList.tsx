@@ -400,7 +400,7 @@ class JobAnnouncementsList extends PureComponent<IJobAnnouncementsListProps, IJo
                 <Tooltip placement="top" title={"Xem chi tiết(sửa)"}>
                     <CopyToClipboard
                         onCopy={() => notification.info({ message: "Copy success" })}
-                        text={`https://works.vn/job-detail/${btoa(id)}`}
+                        text={`${process.env.REACT_APP_WEB_HOST}/job-detail/${btoa(id)}`}
                     >
                         <Icon
                             className='test'
