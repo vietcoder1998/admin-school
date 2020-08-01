@@ -186,7 +186,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
       key: "operation",
       fixed: "right",
       className: "action",
-      width: 100,
+      width: 120,
       render: () => this.EditToolAction(),
     },
   ];
@@ -441,7 +441,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
               loading={loadingTable}
               dataSource={dataTable}
               locale={{ emptyText: 'Không có dữ liệu' }}
-              scroll={{ x: 850 }}
+              scroll={{ x: 920 }}
               bordered
               pagination={{
                 total: totalItems,
@@ -455,7 +455,7 @@ class UserControllerList extends PureComponent<IUserControllerListProps, IUserCo
                   onClick: () => {
                     this.setState({
                       id: record.key,
-                      banned_state: record.banned,
+                      banned_state: record.banned
                     });
                   }, // mouse enter row
                 };
